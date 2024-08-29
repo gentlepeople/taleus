@@ -1,0 +1,47 @@
+{
+  "emulators": {
+    "auth": {
+      "port": 9099,
+      "host": "0.0.0.0"
+    },
+    "functions": {
+      "port": 5001,
+      "host": "0.0.0.0"
+    },
+    "storage": {
+      "port": 9199,
+      "host": "0.0.0.0"
+    },
+    "ui": {
+      "enabled": true,
+      "host": "0.0.0.0",
+      "port": 4000
+    },
+    "logging": {
+      "host": "0.0.0.0",
+      "port": 4500
+    },
+    "hub": {
+      "host": "0.0.0.0",
+      "port": 4400
+    },
+    "eventarc": {
+      "host": "0.0.0.0",
+      "port": 9299
+    }
+  },
+  "functions": {
+    "source": "../workspace/apps/functions",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "isolate",
+      "src"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
