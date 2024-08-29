@@ -1,0 +1,10 @@
+import { PrismaClient } from '{{PRISMA_CLIENT_PACKAGE}}';
+
+export default async ({ prisma = new PrismaClient() }) => {
+  // Migration here...
+  const transactions = [];
+
+  await prisma.$transaction(transactions);
+
+  await prisma.$disconnect();
+};
