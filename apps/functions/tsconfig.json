@@ -5,7 +5,15 @@
     "rootDir": ".",
     "outDir": "dist",
     "types": ["node", "jest"],
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@/common": ["src/common"],
+      "@/providers": ["src/adapter/out/providers"],
+      "@/repositories": ["src/adapter/out/repositories"],
+      "@/domain": ["src/domain"],
+      "@/ports": ["src/application/ports"],
+      "@/services": ["src/application/services"]
+    }
   },
   "exclude": ["dist", "node_modules", "**/*spec.ts"],
   "extends": "@gentlepeople/tsconfig/nest/functions",

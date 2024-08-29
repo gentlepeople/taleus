@@ -1,0 +1,17 @@
+export const TIME_PORT = Symbol('TIME_PORT');
+
+export interface ITimePort {
+  get(
+    date?: string | number | Date,
+    format?: { locale?: string; format?: string; utc?: boolean } | string | string[],
+    locale?: string,
+    strict?: boolean,
+  ): Date;
+  format(data: {
+    template?: string;
+    date?: string | number | Date;
+    format?: { locale?: string; format?: string; utc?: boolean } | string | string[];
+    locale?: string;
+    strict?: boolean;
+  }): string;
+}
