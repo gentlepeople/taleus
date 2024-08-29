@@ -1,0 +1,30 @@
+schema:
+  - http://127.0.0.1:5001/taleus-local/asia-northeast3/graphql
+generates:
+  generated/types.ts:
+    plugins:
+      - typescript
+    config:
+      scalars:
+        jsonb: object
+      namingConvention:
+        enumValues: keep
+  generated/operations.ts:
+    preset: import-types
+    presetConfig:
+      typesPath: ./types
+    plugins:
+      - typescript-operations
+    config:
+      scalars:
+        jsonb: object
+  generated/hooks.ts:
+    plugins:
+      - typescript-react-apollo
+    preset: import-types
+    config:
+      withMutationFn: true
+      scalars:
+        jsonb: object
+    presetConfig:
+      typesPath: ./operations
