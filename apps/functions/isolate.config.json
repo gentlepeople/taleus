@@ -1,0 +1,5 @@
+{
+  "logLevel": "debug",
+  "isolateDirName": "isolate",
+  "workspaceRoot": "../.."
+}

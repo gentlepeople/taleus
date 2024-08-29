@@ -1,0 +1,25 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@/components": "./src/components",
+          "@/theme": "./src/theme",
+          "@/hooks": "./src/hooks",
+          "@/providers": "./src/providers",
+          "@/navigation": "./src/navigation",
+          "@/navigation/*": "./src/navigation/*",
+          "@/layouts": "./src/components/layouts",
+          "@/atoms": "./src/components/atoms",
+          "@/generated": "./src/generated",
+          "@/generated/*": "./src/generated/*",
+          "@/screens": "./src/screens",
+          "@/screens/*": "./src/screens/*",
+          "@/utils": "./src/utils",
+          "@/utils/*": "./src/utils/*"
+        }
+      }
+    ]
+  ]
+}

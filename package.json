@@ -1,0 +1,59 @@
+{
+  "name": "@gentlepeople/taleus",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "turbo run build",
+    "build:watch": "turbo run build:watch",
+    "clean": "git clean -Xdf --exclude=\"!.env\"",
+    "codegen": "turbo run codegen",
+    "codegen:watch": "turbo run codegen:watch",
+    "lint": "turbo run lint",
+    "postinstall": "PODFILE_CHECKSUM=$(cat apps//native/ios/Podfile.lock | shasum | awk '{print $1}') pnpm turbo run _postinstall --filter=@gentlepeople/*-native",
+    "precommit": "pnpm lint-staged",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "prepush": "pnpm type-check",
+    "reset": "pnpm clean && pnpm i",
+    "schema:build": "turbo run build --filter=*-schema",
+    "schema:build:noEngine": "turbo run build:noEngine  --filter=*-schema",
+    "features": "pnpm -C apps/features",
+    "functions": "pnpm -C apps/functions",
+    "infra": "pnpm -C apps/infra",
+    "native": "pnpm -C apps/native",
+    "schema": "pnpm -C apps/schema",
+    "type-check": "turbo run type-check"
+  },
+  "devDependencies": {
+    "dotenv": "16.4.5",
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "@types/eslint-plugin-prettier": "3.1.0",
+    "@types/prettier": "2.7.3",
+    "@typescript-eslint/eslint-plugin": "6.4.0",
+    "@typescript-eslint/parser": "6.4.0",
+    "eslint": "8.43.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.5",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-unused-imports": "1.1.5",
+    "eslint-plugin-yml": "1.2.0",
+    "husky": "8.0.3",
+    "lint-staged": "15.0.2",
+    "prettier": "3.0.0",
+    "prettier-plugin-packagejson": "2.3.0",
+    "prettier-plugin-sort-json": "0.0.3",
+    "syncpack": "11.2.1",
+    "turbo": "1.12.4",
+    "typescript": "5.4.2",
+    "yaml-eslint-parser": "1.1.0"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  },
+  "packageManager": "pnpm@8.10.5",
+  "resolutions": {
+    "react-refresh": "0.14.0"
+  }
+}

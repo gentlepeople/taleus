@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleSuffixes": [".web", ""],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "extends": "./base.json"
+}

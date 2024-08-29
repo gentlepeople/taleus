@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "source": "apps/functions/isolate"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

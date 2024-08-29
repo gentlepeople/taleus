@@ -1,0 +1,27 @@
+{
+  "name": "@gentlepeople/taleus-scripts",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
+    "type-check": "tsc --pretty --noEmit"
+  },
+  "devDependencies": {
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "@gentlepeople/taleus-schema": "workspace:*",
+    "@gentlepeople/tsconfig": "workspace:*",
+    "@types/eslint": "8.40.2",
+    "@types/node": "20.4.9",
+    "@types/prettier": "2.7.3",
+    "eslint": "8.43.0",
+    "prettier": "3.0.0",
+    "prisma": "5.9.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.2"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  },
+  "sideEffects": false
+}

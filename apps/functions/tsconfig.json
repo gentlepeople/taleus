@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+    "types": ["node", "jest"],
+    "noEmit": false
+  },
+  "exclude": ["dist", "node_modules", "**/*spec.ts"],
+  "extends": "@gentlepeople/tsconfig/nest/functions",
+  "include": ["src"]
+}

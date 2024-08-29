@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "moduleSuffixes": [".web", ""],
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "extends": "./base.json"
+}

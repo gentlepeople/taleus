@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["index.ts"],
+  "extends": "@gentlepeople/tsconfig/prisma/schema"
+}

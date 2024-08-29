@@ -1,0 +1,92 @@
+# dependencies
+bin/
+
+node_modules
+.turbo
+# production
+build/
+dist/
+.next/
+
+# bin/
+.ash_history
+.config
+service_account.json
+
+# cache
+.cache
+.node-gyp
+.npm
+.rpt2_cache
+.eslintcache
+*.tsbuildinfo
+
+# coverage
+coverage
+install-state.gz
+# misc
+package-lock.json
+.DS_Store
+.idea/
+*.iml
+*.sw[op]
+jest-cache/
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/*.log
+e2e.log
+logs/**/*
+artifacts
+
+# local env vars
+.env
+.env.local
+.env.*.local
+
+# circleci artifacts
+.dependencies_checksum
+
+# local circleci
+process.yml
+
+# testing artifacts
+junit.xml
+
+# generated files
+**/deployment/network-map.json
+**/.etherlime-store/
+**/.outputParameter
+**/gas.json
+**/gas.md
+**/*.gas.md
+storybook-static
+
+ganache-deployments.json
+ganache-deployments*.json
+
+.vercel
+
+.secrets.local
+.secrets
+
+firebase-debug.log*
+firebase-debug.*.log*
+service-account.json
+google-workspace-service-account.json
+play-store-credentials.json
+auth_export/
+firestore_export/
+firestore-export-*/
+storage_export/
+firebase-export-metadata.json
+service-accounts/
+schema.gql
+.history
+
+# turbo
+apps/**/.turbo

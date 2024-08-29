@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noEmit": false,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "types": ["node"],
+    "plugins": [
+      {
+        "transform": "ts-transformer-keys/transformer"
+      }
+    ]
+  },
+  "extends": "../base.json"
+}

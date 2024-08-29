@@ -1,0 +1,20 @@
+{
+  "name": "@gentlepeople/configs",
+  "scripts": {
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.json,.yaml"
+  },
+  "devDependencies": {
+    "@babel/core": "7.22.8",
+    "@babel/preset-env": "7.22.7",
+    "@babel/preset-react": "7.22.5",
+    "@babel/preset-typescript": "7.22.5",
+    "@graphql-eslint/eslint-plugin": "3.20.1",
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "@gentlepeople/tsconfig": "workspace:*",
+    "babel-plugin-module-resolver": "5.0.0"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  }
+}

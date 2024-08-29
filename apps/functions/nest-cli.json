@@ -1,0 +1,16 @@
+{
+  "collection": "@nestjs/schematics",
+  "compilerOptions": {
+    "watchAssets": true
+  },
+  "language": "ts",
+  "plugins": [
+    {
+      "name": "@nestjs/graphql",
+      "options": {
+        "introspectComments": true
+      }
+    }
+  ],
+  "sourceRoot": "."
+}

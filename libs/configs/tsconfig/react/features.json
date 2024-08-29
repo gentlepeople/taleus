@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "moduleSuffixes": [".web", ".native", ""]
+  },
+  "extends": "./base.json"
+}

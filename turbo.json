@@ -1,0 +1,45 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "pipeline": {
+    "postversion": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "build:noEngine": {
+      "cache": false
+    },
+    "codegen:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "codegen": {
+      "cache": false
+    },
+    "type-check": {
+      "cache": false
+    },
+    "lint": {},
+    "spell": {},
+    "_postinstall": {},
+    "@gentlepeople/*-native#_postinstall": {
+      "dependsOn": [],
+      "outputs": [
+        "ios/Pods/**"
+      ],
+      "env": [
+        "PODFILE_CHECKSUM"
+      ]
+    }
+  }
+}

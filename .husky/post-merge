@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+GREEN_COLOR='\033[0;32m'
+RED_COLOR='\033[0;31m'
+NOCOLOR='\033[0m'
+
+NOW_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+
+MASTER_BRANCH_NAME="master"
+
+ERROR_MESSAGE="The branch name appears to be "$GREEN_COLOR" ["$MASTER_BRANCH_NAME"]. "$NOCOLOR" Do not execute this action. "$RED_COLOR" now branch is: "$NOW_BRANCH_NAME""$NOCOLOR""
+
+function isChanged {
+  git diff --name-only HEAD@{1} HEAD | grep "^$1" > /dev/null 2>&1
+}
+
+if isChanged 'pnpm-lock.yaml'; then
+  echo "!📦pnpm-lock.yaml changed."
+    pnpm install
+  exit 0
+  else
+    echo "📦pnpm-lock.yaml not changed."
+fi

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "noEmit": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useUnknownInCatchVariables": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "composite": false,
+    "removeComments": true,
+    "declaration": false,
+    "declarationMap": false,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false
+  },
+  "extends": "../base.json"
+}

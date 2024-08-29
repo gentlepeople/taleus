@@ -1,0 +1,24 @@
+{
+  "name": "@gentlepeople/taleus-infra",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
+    "seed": "pnpm -C ../schema migrate:reset && pnpm -C ../scripts seed"
+  },
+  "devDependencies": {
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "@gentlepeople/tsconfig": "workspace:*",
+    "@types/eslint": "8.40.2",
+    "@types/prettier": "2.7.3",
+    "eslint": "8.43.0",
+    "firebase-tools": "12.4.3",
+    "prettier": "3.0.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.2"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  }
+}

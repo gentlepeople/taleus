@@ -1,0 +1,13 @@
+{
+  "name": "@gentlepeople/taleus-codegen",
+  "private": true,
+  "version": "0.0.1",
+  "devDependencies": {
+    "typescript": "5.4.2"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  },
+  "sideEffects": false
+}

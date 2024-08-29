@@ -1,0 +1,20 @@
+{
+  "name": "@gentlepeople/tsconfig",
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.json,.yaml"
+  },
+  "devDependencies": {
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "cspell": "6.31.3",
+    "eslint": "8.43.0",
+    "prettier": "3.0.0",
+    "typescript": "5.4.2"
+  },
+  "files": [
+    "base.json",
+    "react/*",
+    "nest/*"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "noImplicitReturns": false,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es6",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true,
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "module": "CommonJS",
+      "target": "ES2019"
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

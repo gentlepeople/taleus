@@ -1,0 +1,30 @@
+{
+  "name": "@gentlepeople/taleus-schema",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
+    "type-check": "tsc --pretty --noEmit"
+  },
+  "devDependencies": {
+    "@prisma/client": "5.9.0",
+    "@gentlepeople/eslint-plugin": "workspace:*",
+    "@gentlepeople/tsconfig": "workspace:*",
+    "apollo": "2.34.0",
+    "prisma": "5.9.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.2"
+  },
+  "engines": {
+    "node": "18.17.1",
+    "pnpm": "8.10.5"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "prisma": {
+    "schema": "schema.prisma"
+  },
+  "sideEffects": false,
+  "types": "dist/index.d.ts"
+}
