@@ -17,6 +17,7 @@
     "reset": "pnpm clean && pnpm i",
     "schema:build": "turbo run build --filter=*-schema",
     "schema:build:noEngine": "turbo run build:noEngine  --filter=*-schema",
+    "docker": "pnpm functions build && pnpm infra docker && pnpm infra seed",
     "features": "pnpm -C apps/features",
     "functions": "pnpm -C apps/functions",
     "infra": "pnpm -C apps/infra",
