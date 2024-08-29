@@ -1,0 +1,24 @@
+version: '3.6'
+name: taleus
+
+services:
+  firebase-tools:
+    image: andreysenov/firebase-tools:12.4.3-node-lts-alpine
+    container_name: taleus-firebase-tools
+    command: sh /home/node/emulator-start.sh
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: '/home/node/service_account.json'
+    ports:
+      - '9199:9199'
+      - '9099:9099'
+      - '5001:5001'
+      - '4000:4000'
+      - '4500:4500'
+      - '4400:4400'
+      - '9299:9299'
+    volumes:
+      - $PWD:/home/node
+      - ../../node_modules:/home/workspace/node_modules
+      - ../../pnpm-lock.yaml:/home/workspace/pnpm-lock.yaml
+      - ../../pnpm-workspace.yaml:/home/workspace/pnpm-workspace.yaml
+      - ../functions:/home/workspace/apps/functions
