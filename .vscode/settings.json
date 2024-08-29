@@ -1,11 +1,14 @@
 {
   "cSpell.words": [
+    "camelcase",
     "codegen",
     "gentlepeople",
     "precommit",
     "preinstall",
     "prepush",
+    "snakecase",
     "taleus",
-    "tsup"
+    "tsup",
+    "Usecase"
   ]
 }

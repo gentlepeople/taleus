@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "docker": "docker-compose down -v && docker-compose up -d",
+    "docker": "dotenv -e .env -- bash -c 'echo $EMULATOR_SERVICE_ACCOUNT | jq \".\" > ../functions/service_account.json' && docker-compose down -v && docker-compose up -d",
     "emulator:watch": "docker-compose logs firebase-tools -f",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
     "seed": "pnpm -C ../schema migrate:reset && pnpm -C ../scripts seed"
@@ -13,8 +13,8 @@
     "@gentlepeople/tsconfig": "workspace:*",
     "@types/eslint": "8.40.2",
     "@types/prettier": "2.7.3",
+    "dotenv-cli": "7.4.2",
     "eslint": "8.43.0",
-    "firebase-tools": "12.4.3",
     "prettier": "3.0.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.2"
