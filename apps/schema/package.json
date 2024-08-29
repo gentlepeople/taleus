@@ -2,8 +2,22 @@
   "name": "@gentlepeople/taleus-schema",
   "private": true,
   "version": "0.0.1",
+  "main": "dist/index.js",
   "scripts": {
+    "apollo:export": "apollo client:download-schema --endpoint=http://127.0.0.1:5001/taleus-local/asia-northeast3/graphql ./schema.graphql",
+    "build": "pnpm prisma generate && pnpm tsc && cp -R ./generated ./dist/",
+    "build:noEngine": "PRISMA_NO_ENGINE=true pnpm prisma generate --no-engine && pnpm tsc && cp -R ./generated ./dist/",
+    "build:watch": "prisma generate --watch",
+    "db:apply": "prisma db push",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
+    "migrate:apply": "prisma migrate deploy && prisma db pull && prisma format && pnpm build",
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:reset": "prisma migrate reset --force --skip-generate --skip-seed && prisma db pull && prisma format && pnpm build",
+    "migrate:status": "prisma migrate status",
+    "prisma:format": "prisma format",
+    "pull": "prisma db pull",
+    "schema:apply": "prisma migrate dev",
+    "studio": "prisma studio",
     "type-check": "tsc --pretty --noEmit"
   },
   "devDependencies": {
@@ -12,7 +26,9 @@
     "@gentlepeople/tsconfig": "workspace:*",
     "apollo": "2.34.0",
     "prisma": "5.9.0",
+    "prisma-dbml-generator": "0.10.0",
     "ts-node": "10.9.2",
+    "typegraphql-prisma-nestjs": "0.2500.1",
     "typescript": "5.4.2"
   },
   "engines": {
