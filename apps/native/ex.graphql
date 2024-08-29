@@ -1,0 +1,8 @@
+query ExampleQuery($memberId: Int!) {
+  member(memberId: $memberId) {
+    createdAt
+    gender
+    memberId
+    updatedAt
+  }
+}
