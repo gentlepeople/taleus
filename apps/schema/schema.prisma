@@ -1,0 +1,27 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/prisma-client"
+  previewFeatures = ["tracing"]
+  binaryTargets   = ["native", "darwin-arm64", "debian-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_DB_URL")
+}
+
+model data_migrations {
+  version     String   @id
+  name        String
+  started_at  DateTime
+  finished_at DateTime
+
+  @@map("_data_migrations")
+}
+
+model member {
+  member_id  Int       @id @default(autoincrement())
+  gender     String    @db.VarChar
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+}
