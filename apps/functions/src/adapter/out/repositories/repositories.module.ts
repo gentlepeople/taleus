@@ -1,17 +1,18 @@
 import { Module, Provider as NestjsProvider } from '@nestjs/common';
 
-import { MemberRepository } from './member.repository';
-import { DatabaseModule } from './prisma';
+import { DatabaseModule } from '../providers/prisma';
 
-import { MEMBER_REPOSITORY } from '@/ports';
+import { UserRepository } from './user.repository';
+
+import { USER_REPOSITORY } from '@/ports';
 
 const RepositoryProviders: NestjsProvider[] = [
-  { provide: MEMBER_REPOSITORY, useClass: MemberRepository },
+  { provide: USER_REPOSITORY, useClass: UserRepository },
 ];
 
 @Module({
   imports: [DatabaseModule],
   providers: RepositoryProviders,
-  exports: [MEMBER_REPOSITORY],
+  exports: [USER_REPOSITORY],
 })
 export class RepositoriesModule {}

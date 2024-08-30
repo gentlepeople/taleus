@@ -1,6 +1,6 @@
 export const CONFIG_PORT = Symbol('CONFIG_PORT');
 
-export interface IConfigPort {
+export interface ConfigPort {
   get(configType: string): void;
   get isDevelopment(): boolean;
 }

@@ -21,6 +21,7 @@
     "@types/prettier": "2.7.3",
     "dayjs": "1.11.10",
     "eslint": "8.43.0",
+    "eslint-config-prettier": "8.5.0",
     "listr2": "7.0.2",
     "chalk": "4.1.2",
     "handlebars": "4.7.8",

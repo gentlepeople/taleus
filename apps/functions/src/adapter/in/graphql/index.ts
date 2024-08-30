@@ -1,2 +1,3 @@
 export * from './register-enum';
-export * from './member';
+export * from './auth';
+export * from './user';

@@ -1,8 +1,8 @@
-query ExampleQuery($memberId: Int!) {
-  member(memberId: $memberId) {
+query ExampleQuery($userId: Int!) {
+  user(userId: $userId) {
     createdAt
     gender
-    memberId
+    userId
     updatedAt
   }
 }

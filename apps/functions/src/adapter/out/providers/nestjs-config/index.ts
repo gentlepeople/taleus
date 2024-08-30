@@ -1,2 +1,2 @@
-export * from './nestjs-config.service';
+export * from './nestjs-config.adapter';
 export * from './config.module';
