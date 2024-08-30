@@ -1,1 +1,1 @@
-export * from './member';
+export * from './service.module';

@@ -7,17 +7,18 @@ import { DirectiveLocation, GraphQLDirective, GraphQLSchema } from 'graphql';
 import { ProviderModule } from 'src/adapter/out/providers';
 
 import * as resolvers from './adapter/in';
+import { AuthServiceModule } from './application/services/auth';
+import { UserServiceModule } from './application/services/user';
 
-import { GlobalExceptionFilter, LoggerMiddleware, upperDirectiveTransformer } from '@/common';
-import { DatabaseModule, RepositoriesModule } from '@/repositories';
-import { MemberApplicationModule } from '@/services';
+import { GlobalExceptionProvider, LoggerMiddleware, upperDirectiveTransformer } from '@/common';
+import { RepositoriesModule } from '@/repositories';
 
 @Module({
   imports: [
     ProviderModule,
-    DatabaseModule,
     RepositoriesModule,
-    MemberApplicationModule,
+    UserServiceModule,
+    AuthServiceModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       useFactory: () => ({
@@ -42,9 +43,10 @@ import { MemberApplicationModule } from '@/services';
   ],
   providers: [
     Logger,
+
     {
       provide: APP_FILTER,
-      useClass: GlobalExceptionFilter,
+      useClass: GlobalExceptionProvider,
     },
     ...Object.values(resolvers),
   ],

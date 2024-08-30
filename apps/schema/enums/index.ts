@@ -1,2 +1,2 @@
 export * from './enum-gender.enum';
-export * from './enum-time-period-type.enum';
+export * from './enum-oauth-provider-type.enum';

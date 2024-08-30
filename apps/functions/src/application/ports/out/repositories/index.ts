@@ -1,1 +1,1 @@
-export * from './member-repository.port';
+export * from './user-repository.port';

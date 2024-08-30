@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { DayjsService } from './dayjs.service';
+import { DayjsAdapter } from './dayjs.adapter';
 
 import { TIME_PORT } from '@/ports';
 
@@ -8,7 +8,7 @@ import { TIME_PORT } from '@/ports';
   providers: [
     {
       provide: TIME_PORT,
-      useClass: DayjsService,
+      useClass: DayjsAdapter,
     },
   ],
   exports: [TIME_PORT],

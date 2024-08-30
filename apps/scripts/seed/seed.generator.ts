@@ -1,6 +1,6 @@
-import { Member } from './member';
+import { User } from './user';
 
 export const seedGenerator = async (): Promise<void> => {
-  // member
-  await Member();
+  // user
+  await User();
 };

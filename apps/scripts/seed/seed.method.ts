@@ -1,5 +1,4 @@
-import { fakerKO, fakerEN, fakerJA, faker } from '@faker-js/faker';
-import { Prisma } from '@gentlepeople/taleus-schema';
+import { fakerKO, faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -18,60 +17,47 @@ export const generatedLog = (serviceName: string, rowCount: number, operation?: 
   );
 };
 
-export const sample_item = <T>(data: Record<string, T> | T[]): T => {
+export const sampleUUID = (): string => {
+  return faker.string.uuid();
+};
+
+export const sampleItem = <T>(data: Record<string, T> | T[]): T => {
   return sample(Object.values(data)) as T;
 };
 
-export const sample_number = (min_number = 0, max_number = 10, step = 1): number => {
+export const sampleNumber = (min_number = 0, max_number = 10, step = 1): number => {
   return sample(range(min_number, max_number, step)) as number;
 };
 
-export const sample_t_name = (): Prisma.InputJsonValue => {
-  return {
-    ko: fakerKO.commerce.productName(),
-    en: fakerEN.commerce.productName(),
-    ja: fakerJA.commerce.productName(),
-  };
+export const sampleName = (): string => {
+  return fakerKO.commerce.productName();
 };
 
-export const sample_name = (locale: 'ko' | 'en' | 'ja' = 'ko'): string => {
-  switch (locale) {
-    case 'ko':
-      return fakerKO.commerce.productName();
-    case 'en':
-      return fakerEN.commerce.productName();
-    case 'ja':
-      return fakerJA.commerce.productName();
-    default:
-      return fakerKO.commerce.productName();
-  }
+export const sampleNames = (): string[] => {
+  return Array.from({ length: sampleNumber() }).map(() => sampleName());
 };
 
-export const sample_names = (locale: 'ko' | 'en' | 'ja' = 'ko'): string[] => {
-  return Array.from({ length: sample_number() }).map(() => sample_name(locale));
-};
-
-export const sample_t_sentence = (): Prisma.InputJsonValue => {
-  return {
-    ko: fakerKO.lorem.sentence(),
-    en: fakerEN.lorem.sentence(),
-    ja: fakerJA.lorem.sentence(),
-  };
+export const sampleSentence = (): string => {
+  return fakerKO.lorem.sentence();
 };
 
 export const nullable = <T>(data: T): T | undefined => {
-  return sample_boolean() ? data : undefined;
+  return sampleBoolean() ? data : undefined;
 };
 
-export const sample_image_url = (): string => {
+export const sampleEmail = (): string => {
+  return faker.internet.email({});
+};
+
+export const sampleImageUrl = (): string => {
   return faker.image.url();
 };
 
-export const sample_internet_url = (): string => {
+export const sampleInternetUrl = (): string => {
   return faker.internet.url();
 };
 
-export const sample_some_items = <T>(data: Record<string, T> | T[]): T[] => {
+export const sampleSomeItems = <T>(data: Record<string, T> | T[]): T[] => {
   const values = Object.values(data);
   const result: T[] = [];
 
@@ -86,7 +72,7 @@ export const sample_some_items = <T>(data: Record<string, T> | T[]): T[] => {
   return result;
 };
 
-export const sample_interval_between_times = (from: dayjs.Dayjs, to: dayjs.Dayjs): dayjs.Dayjs => {
+export const sampleIntervalBetweenTimes = (from: dayjs.Dayjs, to: dayjs.Dayjs): dayjs.Dayjs => {
   const fromMillisecond = dayjs(from).valueOf();
   const toMillisecond = dayjs(to).valueOf();
   const max = toMillisecond - fromMillisecond;
@@ -98,19 +84,29 @@ export const sample_interval_between_times = (from: dayjs.Dayjs, to: dayjs.Dayjs
   return dayjs(randomDate);
 };
 
-export const sample_past_time = () => {
+export const samplePastTime = () => {
   return faker.date.past();
 };
 
-export const sample_created_and_updated_at = (): { created_at: Date; updated_at: Date } => {
+export const sampleAuditTimestamps = (
+  withDeletedAt: Boolean = false,
+): {
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
+} => {
   const createdAt = dayjs(faker.date.past());
-  const updatedAt = sample_interval_between_times(createdAt, dayjs());
+  const updatedAt = sampleIntervalBetweenTimes(createdAt, dayjs());
+  const deletedAt = Math.random() < 0.1 ? dayjs(faker.date.past()).toDate() : undefined;
   return {
-    created_at: createdAt.toDate(),
-    updated_at: updatedAt.toDate(),
+    createdAt: createdAt.toDate(),
+    updatedAt: updatedAt.toDate(),
+    ...(withDeletedAt && {
+      deletedAt: deletedAt,
+    }),
   };
 };
 
-export const sample_boolean = (): boolean => {
+export const sampleBoolean = (): boolean => {
   return sample([true, false]) as boolean;
 };

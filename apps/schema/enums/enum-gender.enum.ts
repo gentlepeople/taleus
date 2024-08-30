@@ -1,5 +1,5 @@
-export enum enum_gender {
+export enum EnumGender {
   'MALE' = 'MALE',
   'FEMALE' = 'FEMALE',
-  'NONE' = 'NONE',
+  'UNKNOWN' = 'UNKNOWN',
 }

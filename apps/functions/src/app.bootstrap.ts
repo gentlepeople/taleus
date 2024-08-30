@@ -52,7 +52,7 @@ export const createGraphQLNestServer = async (): Promise<Express> => {
     };
     app.useGlobalPipes(new ValidationPipe({ ...validationPipeOptions }));
 
-    // const prisma: PrismaService = app.get(PrismaService);
+    // const prisma: PrismaAdapter = app.get(PrismaAdapter);
     // await prisma.enableShutdownHooks(app);
 
     await app.init();
