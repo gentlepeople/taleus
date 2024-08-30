@@ -1,0 +1,39 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/mobile-ui": ["./src/mobile-ui"],
+      "~/screens": ["./src/screens"],
+      "~/providers": ["./src/providers"]
+    },
+    "target": "es6",
+    "lib": ["esnext", "dom"],
+    "allowJs": true,
+    "skipLibCheck": false,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "preserve",
+    "downlevelIteration": true,
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "android", "assets", "bin", "ios"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".babelrc.js",
+    "app.json",
+    "package.json",
+    "types/**/*.d.ts"
+  ],
+  "typeRoots": ["./types"]
+}
