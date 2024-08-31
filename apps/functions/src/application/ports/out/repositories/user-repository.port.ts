@@ -1,8 +1,8 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
+import { EnumGender, EnumOAuthProviderType } from "@gentlepeople/taleus-schema";
 
-import { User } from '@/domain';
+import { User } from "@/domain";
 
-export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
+export const USER_REPOSITORY = Symbol("USER_REPOSITORY");
 
 export interface IUserRepository {
   findOneByUserId(userId: string): Promise<User | null>;
