@@ -1,8 +1,8 @@
 import { LinkingOptions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
-
 import { ValueOf } from 'type-fest';
+
 import { palette } from '~/mobile-ui';
 
 const Example = () => {

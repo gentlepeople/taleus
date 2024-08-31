@@ -45,5 +45,5 @@ export const CTASection = memo<ICTASectionProps>(
         ))}
       </Columns>
     );
-  }
+  },
 );

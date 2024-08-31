@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { auth } from 'firebase-admin';
+import { DecodedIdToken } from 'firebase-admin/auth';
 
 import { AuthenticationPort } from '@/ports';
 
@@ -26,5 +27,9 @@ export class FirebaseAdminAuthAdapter implements AuthenticationPort {
 
   async createCustomToken(uid: string): Promise<string> {
     return await this.auth.createCustomToken(uid);
+  }
+
+  async verifyIdToken(idToken: string): Promise<DecodedIdToken> {
+    return await this.auth.verifyIdToken(idToken);
   }
 }

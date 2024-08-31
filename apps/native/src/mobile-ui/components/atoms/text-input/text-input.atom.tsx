@@ -2,7 +2,6 @@ import { FC, ReactNode } from 'react';
 import { TextInput as NativeTextInput } from 'react-native-paper';
 
 import { palette } from '../../../theme';
-
 import { getTextColorStyle, getTextTypeStyle } from '../text';
 
 export type ITextInputProps = {

@@ -9,7 +9,7 @@ export const Suspender: FC<ISuspenderProps> = () => {
       new Promise<void>((res) => {
         resolve.current = res;
       }),
-    []
+    [],
   );
 
   useEffect(() => {

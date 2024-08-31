@@ -4,7 +4,6 @@ import flattenChildren from 'react-keyed-flatten-children';
 import { Merge } from 'type-fest';
 
 import { spacing } from '../../../theme/spacing';
-
 import { Divider } from '../../atoms';
 import { Box } from '../box';
 

@@ -3,13 +3,15 @@ import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
 import { User } from '@/domain';
-import { IUserRepository, DATABASE_PORT, DatabasePort } from '@/ports';
+import { IUserRepository, DATABASE_PORT, DatabasePort, TIME_PORT, TimePort } from '@/ports';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
   constructor(
     @Inject(DATABASE_PORT)
     private readonly databasePort: DatabasePort,
+    @Inject(TIME_PORT)
+    private readonly timePort: TimePort,
   ) {}
 
   private enumConvert(object: users): User {
@@ -53,8 +55,28 @@ export class UserRepository implements IUserRepository {
     oauthProviderId: string;
   }): Promise<{ userId: string }> {
     const { userId } = await this.databasePort.users.create({
-      data,
+      data: {
+        ...data,
+        birthday: this.timePort.get(data.birthday),
+      },
     });
     return { userId };
+  }
+
+  async updateOne(
+    userId: string,
+    data: {
+      nickname?: string;
+      profileImageUrl?: string;
+      birthday?: Date;
+      gender?: EnumGender;
+    },
+  ): Promise<void> {
+    await this.databasePort.users.update({
+      where: {
+        userId,
+      },
+      data,
+    });
   }
 }

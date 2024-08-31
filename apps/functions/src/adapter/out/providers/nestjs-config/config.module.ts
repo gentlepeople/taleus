@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule as NestjsConfigModule } from '@nestjs/config';
 
 import { NestjsConfigAdapter } from './nestjs-config.adapter';
 
 import { CONFIG_PORT } from '@/ports';
 
+@Global()
 @Module({
   imports: [
     NestjsConfigModule.forRoot({
