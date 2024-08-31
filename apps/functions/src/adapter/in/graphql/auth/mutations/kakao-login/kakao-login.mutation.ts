@@ -15,7 +15,7 @@ export class KakaoLoginMutation {
   @Mutation(() => KakaoLoginResponse, {
     description: 'Authenticates a user via Kakao OAuth, registers if new.',
   })
-  async KakaoLogin(@Args() args: KakaoLoginRequest): Promise<KakaoLoginResponse> {
+  async kakaoLogin(@Args() args: KakaoLoginRequest): Promise<KakaoLoginResponse> {
     const { accessToken } = args;
     const { userId, customToken } = await this.kakaoLoginUsecase.execute(accessToken);
     return { userId, customToken };

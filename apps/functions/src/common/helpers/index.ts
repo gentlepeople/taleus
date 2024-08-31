@@ -1,1 +1,2 @@
 export * from './remove-null-fields.helper';
+export * from './user-permission.helper';

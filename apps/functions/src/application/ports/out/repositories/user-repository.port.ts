@@ -25,5 +25,7 @@ export interface IUserRepository {
       birthday?: Date;
       gender?: EnumGender;
     },
-  ): Promise<void>;
+  ): Promise<boolean>;
+  softDeleteOne(userId: string): Promise<boolean>;
+  findPartnerByUserId(userId: string): Promise<User | null>;
 }

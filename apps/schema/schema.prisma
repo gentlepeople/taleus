@@ -11,22 +11,6 @@ datasource db {
   directUrl = env("POSTGRES_DB_DIRECT_URL")
 }
 
-model users {
-  userId            String    @id @map("user_id") @db.VarChar
-  nickname          String    @db.VarChar
-  email             String    @db.VarChar
-  profileImageUrl   String    @map("profile_image_url") @db.VarChar
-  gender            String    @db.VarChar
-  birthday          DateTime  @db.Timestamp(6)
-  oauthProviderType String    @map("oauth_provider_type") @db.VarChar
-  oauthProviderId   String    @map("oauth_provider_id") @db.VarChar
-  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt         DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt         DateTime? @map("deleted_at") @db.Timestamptz(6)
-
-  @@index([oauthProviderId], map: "index_user_oauth_provider_id")
-}
-
 model data_migrations {
   version     String   @id
   name        String
@@ -34,4 +18,54 @@ model data_migrations {
   finished_at DateTime
 
   @@map("_data_migrations")
+}
+
+model users {
+  userId            String       @id @map("user_id") @db.VarChar
+  nickname          String       @db.VarChar
+  email             String       @db.VarChar
+  profileImageUrl   String       @map("profile_image_url") @db.VarChar
+  gender            String       @db.VarChar
+  birthday          DateTime     @db.Timestamp(6)
+  oauthProviderType String       @map("oauth_provider_type") @db.VarChar
+  oauthProviderId   String       @map("oauth_provider_id") @db.VarChar
+  createdAt         DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt         DateTime?    @map("deleted_at") @db.Timestamptz(6)
+  coupleAsInvitee   couple?      @relation("couple_invitee_idTousers")
+  coupleAsInviter   couple?      @relation("couple_inviter_idTousers")
+  inviteeLogs       couple_log[] @relation("couple_log_invitee_idTousers")
+  inviterLogs       couple_log[] @relation("couple_log_inviter_idTousers")
+
+  @@index([oauthProviderId], map: "index_users_oauth_provider_id")
+}
+
+model couple {
+  coupleId  Int      @id @default(autoincrement()) @map("couple_id")
+  inviterId String   @unique @map("inviter_id") @db.VarChar
+  inviteeId String   @unique @map("invitee_id") @db.VarChar
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  invitee   users    @relation("couple_invitee_idTousers", fields: [inviteeId], references: [userId])
+  inviter   users    @relation("couple_inviter_idTousers", fields: [inviterId], references: [userId])
+
+  @@index([inviteeId], map: "index_couple_invitee_id")
+  @@index([inviterId], map: "index_couple_inviter_id")
+}
+
+model couple_log {
+  couple_log_id Int      @id @default(autoincrement())
+  couple_id     String   @db.VarChar
+  inviter_id    String   @db.VarChar
+  invitee_id    String   @db.VarChar
+  action        String   @db.VarChar
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+  invitee       users    @relation("couple_log_invitee_idTousers", fields: [invitee_id], references: [userId])
+  inviter       users    @relation("couple_log_inviter_idTousers", fields: [inviter_id], references: [userId])
+}
+
+enum enum_couple_action {
+  STARTED
+  ENDED
 }

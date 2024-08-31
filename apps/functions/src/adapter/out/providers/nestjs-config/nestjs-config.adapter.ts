@@ -11,6 +11,6 @@ export class NestjsConfigAdapter implements ConfigPort {
   }
 
   public get isDevelopment(): boolean {
-    return this.configService.get('ENVIRONMENT') === 'local';
+    return this.configService.get('NODE_ENV') === 'local';
   }
 }
