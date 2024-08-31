@@ -1,8 +1,17 @@
 import { Module } from '@nestjs/common';
 
-import { FindUserService, UpdateUserService } from '.';
+import { DeactivateUserService, FindUserService, UpdateUserService } from '.';
 
-import { USER_REPOSITORY, IUserRepository, FIND_USER_USECASE, UPDATE_USER_USECASE } from '@/ports';
+import {
+  USER_REPOSITORY,
+  IUserRepository,
+  FIND_USER_USECASE,
+  UPDATE_USER_USECASE,
+  DEACTIVATE_USER_USECASE,
+  AUTHENTICATION_PORT,
+  AuthenticationPort,
+} from '@/ports';
+import { AuthenticationModule } from '@/providers';
 import { UserRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -13,6 +22,7 @@ const InjectRepositories = [
 ];
 
 @Module({
+  imports: [AuthenticationModule],
   providers: [
     ...InjectRepositories,
     {
@@ -25,7 +35,13 @@ const InjectRepositories = [
       provide: UPDATE_USER_USECASE,
       useFactory: (userRepository: IUserRepository) => new UpdateUserService(userRepository),
     },
+    {
+      inject: [USER_REPOSITORY, AUTHENTICATION_PORT],
+      provide: DEACTIVATE_USER_USECASE,
+      useFactory: (userRepository: IUserRepository, authenticationPort: AuthenticationPort) =>
+        new DeactivateUserService(userRepository, authenticationPort),
+    },
   ],
-  exports: [FIND_USER_USECASE, UPDATE_USER_USECASE],
+  exports: [FIND_USER_USECASE, UPDATE_USER_USECASE, DEACTIVATE_USER_USECASE],
 })
 export class UserServiceModule {}

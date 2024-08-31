@@ -6,6 +6,9 @@ export class User {
   @Field(() => String)
   userId: string;
 
+  @Field(() => Boolean)
+  isAnonymous: boolean;
+
   @Field(() => String)
   nickname: string;
 

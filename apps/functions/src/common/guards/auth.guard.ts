@@ -3,6 +3,8 @@ import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { logger } from 'firebase-functions/v2';
 
+import { DEFAULT_LOCAL_USER_ID } from '../assets';
+
 import { FirebaseAdminAuthAdapter } from '@/providers';
 
 @Injectable()
@@ -23,11 +25,13 @@ export class AuthGuard implements CanActivate {
     }
 
     if (process.env.FUNCTIONS_EMULATOR) {
+      request.user = { uid: DEFAULT_LOCAL_USER_ID };
       return true;
     }
 
     try {
-      await this.firebaseAdminAuthAdapter.verifyIdToken(idToken);
+      const { uid: decodedTokenUid } = await this.firebaseAdminAuthAdapter.verifyIdToken(idToken);
+      request.user = { uid: decodedTokenUid };
       return true;
     } catch (error) {
       logger.error('Error', error);

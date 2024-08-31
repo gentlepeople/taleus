@@ -14,4 +14,10 @@ export class FindUserService implements FindUserUsecase {
     const findUser = await this.userRepository.findOneByUserId(userId);
     return findUser;
   }
+
+  async findPartnerByUserId(userId: string): Promise<User | null> {
+    const findPartner = await this.userRepository.findPartnerByUserId(userId);
+
+    return findPartner;
+  }
 }

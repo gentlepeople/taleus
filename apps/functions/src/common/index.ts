@@ -7,3 +7,4 @@ export * from './middlewares';
 export * from './guards';
 export * from './decorators';
 export * from './helpers';
+export * from './interfaces';

@@ -2,6 +2,8 @@ import { EnumGender, EnumOAuthProviderType, users } from '@gentlepeople/taleus-s
 import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
+import { DEFAULT_ANONYMOUS_USER_OBJECT } from '../../../common';
+
 import { User } from '@/domain';
 import { IUserRepository, DATABASE_PORT, DatabasePort, TIME_PORT, TimePort } from '@/ports';
 
@@ -14,9 +16,16 @@ export class UserRepository implements IUserRepository {
     private readonly timePort: TimePort,
   ) {}
 
-  private enumConvert(object: users): User {
+  private enumConvertAndAnonymizeUser(object: users): User {
+    const { deletedAt } = object;
+    const isDeactivated = !isNull(deletedAt);
+    if (isDeactivated) {
+      return DEFAULT_ANONYMOUS_USER_OBJECT;
+    }
+
     return {
       ...object,
+      isAnonymous: !isDeactivated,
       gender: object.gender as EnumGender,
       oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
     };
@@ -26,11 +35,14 @@ export class UserRepository implements IUserRepository {
     const findUser = await this.databasePort.users.findUnique({
       where: {
         userId,
-        deletedAt: null,
       },
     });
 
-    return isNull(findUser) ? null : this.enumConvert(findUser);
+    if (isNull(findUser)) {
+      return null;
+    }
+
+    return this.enumConvertAndAnonymizeUser(findUser);
   }
 
   async findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null> {
@@ -41,7 +53,7 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    return isNull(findUser) ? null : this.enumConvert(findUser);
+    return isNull(findUser) ? null : this.enumConvertAndAnonymizeUser(findUser);
   }
 
   async createOne(data: {
@@ -71,12 +83,50 @@ export class UserRepository implements IUserRepository {
       birthday?: Date;
       gender?: EnumGender;
     },
-  ): Promise<void> {
+  ): Promise<boolean> {
     await this.databasePort.users.update({
       where: {
         userId,
       },
       data,
     });
+    return true;
+  }
+
+  async softDeleteOne(userId: string): Promise<boolean> {
+    await this.databasePort.users.update({
+      where: {
+        userId,
+      },
+      data: {
+        deletedAt: this.timePort.get(),
+      },
+    });
+    return true;
+  }
+
+  async findPartnerByUserId(userId: string): Promise<User | null> {
+    const findCouple = await this.databasePort.couple.findFirst({
+      where: {
+        OR: [
+          {
+            inviteeId: userId,
+          },
+          { inviterId: userId },
+        ],
+      },
+    });
+
+    const isCouple = !isNull(findCouple);
+
+    if (!isCouple) {
+      return null;
+    }
+
+    const { inviteeId, inviterId } = findCouple;
+    const partnerId = inviterId === userId ? inviteeId : inviterId;
+
+    const findPartner = await this.findOneByUserId(partnerId);
+    return findPartner;
   }
 }
