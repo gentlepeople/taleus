@@ -13,12 +13,20 @@ import {
   TimePort,
   TIME_PORT,
 } from '@/ports';
-import { AuthenticationModule, DatabaseModule, KakaoAuthModule, TimeModule } from '@/providers';
-import { RepositoriesModule } from '@/repositories';
+import { AuthenticationModule, KakaoAuthModule } from '@/providers';
+import { UserRepository } from '@/repositories';
+
+const InjectRepositories = [
+  {
+    provide: USER_REPOSITORY,
+    useClass: UserRepository,
+  },
+];
 
 @Module({
-  imports: [DatabaseModule, AuthenticationModule, KakaoAuthModule, TimeModule, RepositoriesModule],
+  imports: [AuthenticationModule, KakaoAuthModule],
   providers: [
+    ...InjectRepositories,
     {
       inject: [USER_REPOSITORY, AUTHENTICATION_PORT, KAKAO_AUTH_PORT, TIME_PORT],
       provide: KAKAO_LOGIN_USECASE,

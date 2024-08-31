@@ -1,3 +1,4 @@
+import { DEFAULT_PROFILE_IMAGE_URL } from '@/common';
 import { IKakaoAuthPortUserAccountType } from '@/ports';
 
 export const sampleKakaoAccount: IKakaoAuthPortUserAccountType = {
@@ -7,8 +8,7 @@ export const sampleKakaoAccount: IKakaoAuthPortUserAccountType = {
     profile: {
       nickname: '홍길동',
       thumbnail_image_url: 'http://yyy.kakao.com/.../img_110x110.jpg',
-      profile_image_url:
-        'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=https://t1.kakaocdn.net/account_images/default_profile.jpeg',
+      profile_image_url: DEFAULT_PROFILE_IMAGE_URL,
       is_default_image: false,
       is_default_nickname: false,
     },
@@ -28,7 +28,6 @@ export const sampleKakaoAccount: IKakaoAuthPortUserAccountType = {
   properties: {
     nickname: '홍길동카톡',
     thumbnail_image: 'http://xxx.kakao.co.kr/.../aaa.jpg',
-    profile_image:
-      'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=https://t1.kakaocdn.net/account_images/default_profile.jpeg',
+    profile_image: DEFAULT_PROFILE_IMAGE_URL,
   },
 };

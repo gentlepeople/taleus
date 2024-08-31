@@ -1,4 +1,4 @@
-import { Catch, ExceptionFilter, HttpException, ArgumentsHost, HttpStatus } from '@nestjs/common';
+import { Catch, ExceptionFilter, ArgumentsHost, HttpStatus } from '@nestjs/common';
 import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
 import { Request, Response } from 'express';
 import { logger } from 'firebase-functions';
@@ -14,7 +14,7 @@ export class GlobalExceptionProvider implements ExceptionFilter, GqlExceptionFil
     this.dayjsAdapter = new DayjsAdapter();
   }
 
-  async catch(exception: HttpException, host: ArgumentsHost) {
+  async catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();

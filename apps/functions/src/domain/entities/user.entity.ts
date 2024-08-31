@@ -6,8 +6,20 @@ export class User {
   @Field(() => String)
   userId: string;
 
+  @Field(() => String)
+  nickname: string;
+
+  @Field(() => String)
+  email: string;
+
+  @Field(() => String)
+  profileImageUrl: string;
+
   @Field(() => EnumGender)
   gender: EnumGender;
+
+  @Field(() => Date)
+  birthday: Date;
 
   @Field(() => EnumOAuthProviderType)
   oauthProviderType: EnumOAuthProviderType;

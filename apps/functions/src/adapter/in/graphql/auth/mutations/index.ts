@@ -1,1 +1,1 @@
-export * from './kakao';
+export * from './kakao-login';

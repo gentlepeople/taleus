@@ -99,5 +99,5 @@ export const size = Object.fromEntries(
     } else {
       return [keyName, value];
     }
-  })
+  }),
 );

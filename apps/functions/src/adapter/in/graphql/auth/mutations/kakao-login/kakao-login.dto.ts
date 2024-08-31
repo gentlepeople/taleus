@@ -2,7 +2,7 @@ import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
 import { IsOptional, IsString } from 'class-validator';
 
 @ArgsType()
-export class AuthKakaoLoginRequest {
+export class KakaoLoginRequest {
   @Field(() => String, {
     description: 'Authentication access token value. (for Kakao)',
     nullable: true,
@@ -13,7 +13,7 @@ export class AuthKakaoLoginRequest {
 }
 
 @ObjectType()
-export class AuthKakaoLoginResponse {
+export class KakaoLoginResponse {
   @Field(() => String)
   userId: string;
 

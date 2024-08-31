@@ -2,6 +2,7 @@ import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
 import { Inject, Injectable } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
+import { DEFAULT_PROFILE_IMAGE_URL } from '@/common';
 import {
   AUTHENTICATION_PORT,
   AuthenticationPort,
@@ -34,9 +35,7 @@ export class KakaoLoginService implements KakaoLoginUsecase {
 
     const userProperties = {
       nickname: kakaoAccount?.profile?.nickname || '',
-      profileImageUrl:
-        kakaoAccount?.profile.profile_image_url ||
-        'https://img1.kakaocdn.net/thumb/R640x640.q70/?fname=https://t1.kakaocdn.net/account_images/default_profile.jpeg',
+      profileImageUrl: kakaoAccount?.profile.profile_image_url || DEFAULT_PROFILE_IMAGE_URL,
       email: kakaoAccount?.email || '',
       birthday: this.timePort.get(kakaoAccount?.birthday),
       gender: this.getEnumGenderFromString(kakaoAccount?.gender),

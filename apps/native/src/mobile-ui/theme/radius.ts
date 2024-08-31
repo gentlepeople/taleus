@@ -35,5 +35,5 @@ export const radius = Object.fromEntries(
     } else {
       return [keyName, value];
     }
-  })
+  }),
 );

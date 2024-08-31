@@ -4,7 +4,6 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-
 import { useRef } from 'react';
 import { Linking, View } from 'react-native';
 

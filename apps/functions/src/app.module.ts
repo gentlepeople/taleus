@@ -1,24 +1,25 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective, GraphQLSchema } from 'graphql';
 import { ProviderModule } from 'src/adapter/out/providers';
 
 import * as resolvers from './adapter/in';
-import { AuthServiceModule } from './application/services/auth';
-import { UserServiceModule } from './application/services/user';
+import { ServiceModule } from './application/services';
 
-import { GlobalExceptionProvider, LoggerMiddleware, upperDirectiveTransformer } from '@/common';
-import { RepositoriesModule } from '@/repositories';
+import {
+  AuthGuard,
+  GlobalExceptionProvider,
+  LoggerMiddleware,
+  upperDirectiveTransformer,
+} from '@/common';
 
 @Module({
   imports: [
     ProviderModule,
-    RepositoriesModule,
-    UserServiceModule,
-    AuthServiceModule,
+    ServiceModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       useFactory: () => ({
@@ -43,10 +44,13 @@ import { RepositoriesModule } from '@/repositories';
   ],
   providers: [
     Logger,
-
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionProvider,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
     ...Object.values(resolvers),
   ],

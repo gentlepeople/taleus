@@ -56,5 +56,5 @@ export const spacing = Object.fromEntries(
     } else {
       return [keyName, value];
     }
-  })
+  }),
 );
