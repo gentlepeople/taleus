@@ -101,4 +101,19 @@ export class CoupleRepository implements ICoupleRepository {
     });
     return this.convertAnonymizeUser(findCouple);
   }
+
+  async updateOne(
+    coupleId: number,
+    data: {
+      startDate: Date;
+    },
+  ): Promise<boolean> {
+    await this.databasePort.couple.update({
+      where: {
+        coupleId,
+      },
+      data,
+    });
+    return true;
+  }
 }

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 
+import { UpdateCoupleStartDateService } from './update-couple-start-date.service';
+
 import {
   DeactivateUserService,
   FindCoupleService,
@@ -19,6 +21,7 @@ import {
   COUPLE_REPOSITORY,
   REGISTER_COUPLE_USECASE,
   FIND_COUPLE_USECASE,
+  UPDATE_COUPLE_START_DATE_USECASE,
 } from '@/ports';
 import { AuthenticationModule } from '@/providers';
 import { CoupleRepository, UserRepository } from '@/repositories';
@@ -71,6 +74,12 @@ const InjectRepositories = [
       useFactory: (userRepository: IUserRepository, CoupleRepository: CoupleRepository) =>
         new RegisterCoupleService(userRepository, CoupleRepository),
     },
+    {
+      inject: [COUPLE_REPOSITORY],
+      provide: UPDATE_COUPLE_START_DATE_USECASE,
+      useFactory: (CoupleRepository: CoupleRepository) =>
+        new UpdateCoupleStartDateService(CoupleRepository),
+    },
   ],
   exports: [
     FIND_USER_USECASE,
@@ -78,6 +87,7 @@ const InjectRepositories = [
     DEACTIVATE_USER_USECASE,
     REGISTER_COUPLE_USECASE,
     FIND_COUPLE_USECASE,
+    UPDATE_COUPLE_START_DATE_USECASE,
   ],
 })
 export class UserServiceModule {}
