@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 
 import {
   DeactivateUserService,
   FindUserService,
   RegisterCoupleService,
   UpdateUserService,
-} from ".";
+} from '.';
 
 import {
   USER_REPOSITORY,
@@ -17,9 +17,9 @@ import {
   AuthenticationPort,
   COUPLE_REPOSITORY,
   REGISTER_COUPLE_USECASE,
-} from "@/ports";
-import { AuthenticationModule } from "@/providers";
-import { CoupleRepository, UserRepository } from "@/repositories";
+} from '@/ports';
+import { AuthenticationModule } from '@/providers';
+import { CoupleRepository, UserRepository } from '@/repositories';
 
 const InjectRepositories = [
   {
@@ -39,30 +39,30 @@ const InjectRepositories = [
     {
       inject: [USER_REPOSITORY],
       provide: FIND_USER_USECASE,
-      useFactory: (userRepository: IUserRepository) =>
-        new FindUserService(userRepository),
+      useFactory: (userRepository: IUserRepository) => new FindUserService(userRepository),
     },
     {
       inject: [USER_REPOSITORY],
       provide: UPDATE_USER_USECASE,
-      useFactory: (userRepository: IUserRepository) =>
-        new UpdateUserService(userRepository),
+      useFactory: (userRepository: IUserRepository) => new UpdateUserService(userRepository),
     },
     {
       inject: [USER_REPOSITORY, AUTHENTICATION_PORT],
       provide: DEACTIVATE_USER_USECASE,
-      useFactory: (
-        userRepository: IUserRepository,
-        authenticationPort: AuthenticationPort,
-      ) => new DeactivateUserService(userRepository, authenticationPort),
+      useFactory: (userRepository: IUserRepository, authenticationPort: AuthenticationPort) =>
+        new DeactivateUserService(userRepository, authenticationPort),
     },
     {
       inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
       provide: REGISTER_COUPLE_USECASE,
-      useFactory: (
-        userRepository: IUserRepository,
-        CoupleRepository: CoupleRepository,
-      ) => new RegisterCoupleService(userRepository, CoupleRepository),
+      useFactory: (userRepository: IUserRepository, CoupleRepository: CoupleRepository) =>
+        new RegisterCoupleService(userRepository, CoupleRepository),
+    },
+    {
+      inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
+      provide: REGISTER_COUPLE_USECASE,
+      useFactory: (userRepository: IUserRepository, CoupleRepository: CoupleRepository) =>
+        new RegisterCoupleService(userRepository, CoupleRepository),
     },
   ],
   exports: [

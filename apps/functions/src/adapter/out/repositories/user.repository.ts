@@ -1,21 +1,11 @@
-import {
-  EnumGender,
-  EnumOAuthProviderType,
-  users,
-} from "@gentlepeople/taleus-schema";
-import { Injectable, Inject } from "@nestjs/common";
-import isNull from "lodash/isNull";
+import { EnumGender, EnumOAuthProviderType, users } from '@gentlepeople/taleus-schema';
+import { Injectable, Inject } from '@nestjs/common';
+import isNull from 'lodash/isNull';
 
-import { DEFAULT_ANONYMOUS_USER_OBJECT } from "../../../common";
+import { DEFAULT_ANONYMOUS_USER_OBJECT } from '../../../common';
 
-import { User } from "@/domain";
-import {
-  IUserRepository,
-  DATABASE_PORT,
-  DatabasePort,
-  TIME_PORT,
-  TimePort,
-} from "@/ports";
+import { User } from '@/domain';
+import { IUserRepository, DATABASE_PORT, DatabasePort, TIME_PORT, TimePort } from '@/ports';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -55,9 +45,7 @@ export class UserRepository implements IUserRepository {
     return this.enumConvertAndAnonymizeUser(findUser);
   }
 
-  async findOneByOAuthProviderId(
-    oauthProviderId: string,
-  ): Promise<User | null> {
+  async findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null> {
     const findUser = await this.databasePort.users.findFirst({
       where: {
         oauthProviderId,
