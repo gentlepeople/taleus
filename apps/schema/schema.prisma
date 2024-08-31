@@ -42,13 +42,14 @@ model users {
 }
 
 model couple {
-  coupleId  Int      @id @default(autoincrement()) @map("couple_id")
-  inviterId String   @unique @map("inviter_id") @db.VarChar
-  inviteeId String   @unique @map("invitee_id") @db.VarChar
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
-  invitee   users    @relation("couple_invitee_idTousers", fields: [inviteeId], references: [userId])
-  inviter   users    @relation("couple_inviter_idTousers", fields: [inviterId], references: [userId])
+  coupleId  Int       @id @default(autoincrement()) @map("couple_id")
+  inviterId String    @unique @map("inviter_id") @db.VarChar
+  inviteeId String    @unique @map("invitee_id") @db.VarChar
+  startDate DateTime? @map("start_date") @db.Timestamp(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+  invitee   users     @relation("couple_invitee_idTousers", fields: [inviteeId], references: [userId])
+  inviter   users     @relation("couple_inviter_idTousers", fields: [inviterId], references: [userId])
 
   @@index([inviteeId], map: "index_couple_invitee_id")
   @@index([inviterId], map: "index_couple_inviter_id")

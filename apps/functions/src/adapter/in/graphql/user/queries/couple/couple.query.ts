@@ -1,0 +1,46 @@
+import { Inject } from '@nestjs/common';
+import { Resolver, Args, Query, Context, ResolveField, Parent, Int } from '@nestjs/graphql';
+import isNull from 'lodash/isNull';
+
+import { CoupleRequest } from './couple.dto';
+
+import { Auth, checkUserPermission, diffDays, GqlContext } from '@/common';
+import { Couple } from '@/domain';
+import { FIND_COUPLE_USECASE, FindCoupleUsecase } from '@/ports';
+
+@Resolver(() => Couple)
+export class CoupleQuery {
+  constructor(
+    @Inject(FIND_COUPLE_USECASE)
+    private readonly findCoupleUsecase: FindCoupleUsecase,
+  ) {}
+
+  @Query(() => Couple, {
+    nullable: true,
+  })
+  @Auth()
+  async couple(
+    @Args() args: CoupleRequest,
+    @Context() context: GqlContext,
+  ): Promise<Couple | null> {
+    const { coupleId } = args;
+    const findCouple = await this.findCoupleUsecase.findOneByCoupleId(coupleId);
+    const { inviteeId, inviterId } = findCouple;
+    checkUserPermission(context, [inviteeId, inviterId]);
+
+    return findCouple;
+  }
+
+  @ResolveField(() => Int, {
+    description: 'The number of days since the user formed a couple.',
+  })
+  async relationshipDays(@Parent() couple: Couple): Promise<number> {
+    const { startDate } = couple;
+    if (isNull(startDate)) {
+      return -1;
+    }
+
+    const today = new Date();
+    return diffDays(startDate, today);
+  }
+}
