@@ -16,9 +16,7 @@ Export this locally resolved field as a variable to be used in the remainder of 
 https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
 """
 directive @export(
-  """
-  The variable name to export this field as.
-  """
+  """The variable name to export this field as."""
   as: String!
 ) on FIELD
 
@@ -27,9 +25,7 @@ Specify a custom store key for this result. See
 https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
 """
 directive @connection(
-  """
-  Specify the store key.
-  """
+  """Specify the store key."""
   key: String!
 
   """
@@ -38,32 +34,110 @@ directive @connection(
   filter: [String!]
 ) on FIELD
 
+type Couple {
+  coupleId: Int!
+  createdAt: DateTime!
+  inviteeId: String!
+  inviterId: String!
+
+  """The number of days since the user formed a couple."""
+  relationshipDays: Int!
+  startDate: DateTime
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
-type User {
-  createdAt: DateTime!
-  gender: String!
-  userId: Int!
-  updatedAt: DateTime!
+type DeleteUserResponse {
+  success: Boolean!
 }
 
-type UserJoinResponse {
-  user: User!
+enum EnumGender {
+  FEMALE
+  MALE
+  UNKNOWN
+}
+
+enum EnumOAuthProviderType {
+  KAKAO
+}
+
+type KakaoLoginResponse {
+  """Custom token of firebase authentication user.(only if success)"""
+  customToken: String!
+  userId: String!
 }
 
 type Mutation {
+  """Deletes a user account."""
+  deleteUser(userId: String!): DeleteUserResponse!
+
+  """Authenticates a user via Kakao OAuth, registers if new."""
+  kakaoLogin(
+    """Authentication access token value. (for Kakao)"""
+    accessToken: String
+  ): KakaoLoginResponse!
+
+  """Register a couple"""
+  registerCouple(inviteePersonalCode: String!, inviterId: String!): RegisterCoupleResponse!
+
   """
-  Add new version of task assessment data in the "DRAFT" content status.
+  Updates a user's details based on the provided userId and input fields. Only the fields specified in the input will be updated.
   """
-  userJoin(gender: String!): UserJoinResponse!
+  updateUser(input: UpdateUserInputRequest!, userId: String!): UpdateUserResponse!
 }
 
 type Query {
+  couple(coupleId: Int!): Couple
+
+  """get one user by user id."""
+  user(userId: String!): User
+}
+
+type RegisterCoupleResponse {
+  code: String
+  message: String
+  success: Boolean!
+}
+
+"""
+UpdateUserInputRequest allows you to update user details. All fields are optional; only provided fields will be updated.
+"""
+input UpdateUserInputRequest {
+  birthday: DateTime = null
+  gender: String = null
+  nickname: String = null
+  profileImageUrl: String = null
+}
+
+type UpdateUserResponse {
+  user: User!
+}
+
+type User {
+  birthday: DateTime!
+  couple: Couple
+  createdAt: DateTime!
+  email: String!
+  gender: EnumGender!
+  isAnonymous: Boolean!
+
+  """Determine if the user is currently in a couple."""
+  isCoupled: Boolean!
+  nickname: String!
+  oauthProviderType: EnumOAuthProviderType!
+
   """
-  get one user by user id.
+  The user's partner in the couple. If the user is not in a couple, this field will be null.
   """
-  user(userId: Int!): User
+  partner: User
+  personalCode: String!
+  profileImageUrl: String!
+  updatedAt: DateTime!
+
+  """The number of days since the user started using the app."""
+  usageDays: Int!
+  userId: String!
 }

@@ -11,6 +11,9 @@ export class Couple {
   @Field(() => String)
   inviteeId: string;
 
+  @Field(() => Date, { nullable: true })
+  startDate: Date | null;
+
   @Field(() => Date)
   createdAt: Date;
 }
