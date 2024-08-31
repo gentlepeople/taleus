@@ -27,6 +27,9 @@ export class User {
   @Field(() => EnumOAuthProviderType)
   oauthProviderType: EnumOAuthProviderType;
 
+  @Field(() => String)
+  personalCode: string;
+
   @Field(() => Date)
   createdAt: Date;
 

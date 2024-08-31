@@ -26,6 +26,7 @@ export const User = async (): Promise<void> => {
         birthday: samplePastTime(),
         oauthProviderType: EnumOAuthProviderType.KAKAO,
         oauthProviderId: `kakao:${sampleUUID()}`,
+        personalCode: sampleUUID().slice(0, 8),
         ...sampleAuditTimestamps(true),
       }),
     );
