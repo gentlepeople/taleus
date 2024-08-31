@@ -17,6 +17,10 @@ export class UserRepository implements IUserRepository {
   ) {}
 
   private enumConvertAndAnonymizeUser(object: users): User {
+    if (isNull(object)) {
+      return null;
+    }
+
     const { deletedAt } = object;
     const isDeactivated = !isNull(deletedAt);
     if (isDeactivated) {
@@ -38,10 +42,6 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    if (isNull(findUser)) {
-      return null;
-    }
-
     return this.enumConvertAndAnonymizeUser(findUser);
   }
 
@@ -53,7 +53,7 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    return isNull(findUser) ? null : this.enumConvertAndAnonymizeUser(findUser);
+    return this.enumConvertAndAnonymizeUser(findUser);
   }
 
   async createOne(data: {
@@ -65,6 +65,7 @@ export class UserRepository implements IUserRepository {
     gender: EnumGender;
     oauthProviderType: EnumOAuthProviderType;
     oauthProviderId: string;
+    personalCode: string;
   }): Promise<{ userId: string }> {
     const { userId } = await this.databasePort.users.create({
       data: {
@@ -128,5 +129,12 @@ export class UserRepository implements IUserRepository {
 
     const findPartner = await this.findOneByUserId(partnerId);
     return findPartner;
+  }
+
+  async findOneByPersonalCode(personalCode: string): Promise<User | null> {
+    const findUser = await this.databasePort.users.findUnique({
+      where: { personalCode },
+    });
+    return this.enumConvertAndAnonymizeUser(findUser);
   }
 }

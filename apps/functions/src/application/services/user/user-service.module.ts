@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 
-import { DeactivateUserService, FindUserService, UpdateUserService } from '.';
+import {
+  DeactivateUserService,
+  FindUserService,
+  RegisterCoupleService,
+  UpdateUserService,
+} from '.';
 
 import {
   USER_REPOSITORY,
@@ -10,14 +15,20 @@ import {
   DEACTIVATE_USER_USECASE,
   AUTHENTICATION_PORT,
   AuthenticationPort,
+  COUPLE_REPOSITORY,
+  REGISTER_COUPLE_USECASE,
 } from '@/ports';
 import { AuthenticationModule } from '@/providers';
-import { UserRepository } from '@/repositories';
+import { CoupleRepository, UserRepository } from '@/repositories';
 
 const InjectRepositories = [
   {
     provide: USER_REPOSITORY,
     useClass: UserRepository,
+  },
+  {
+    provide: COUPLE_REPOSITORY,
+    useClass: CoupleRepository,
   },
 ];
 
@@ -41,7 +52,18 @@ const InjectRepositories = [
       useFactory: (userRepository: IUserRepository, authenticationPort: AuthenticationPort) =>
         new DeactivateUserService(userRepository, authenticationPort),
     },
+    {
+      inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
+      provide: REGISTER_COUPLE_USECASE,
+      useFactory: (userRepository: IUserRepository, CoupleRepository: CoupleRepository) =>
+        new RegisterCoupleService(userRepository, CoupleRepository),
+    },
   ],
-  exports: [FIND_USER_USECASE, UPDATE_USER_USECASE, DEACTIVATE_USER_USECASE],
+  exports: [
+    FIND_USER_USECASE,
+    UPDATE_USER_USECASE,
+    DEACTIVATE_USER_USECASE,
+    REGISTER_COUPLE_USECASE,
+  ],
 })
 export class UserServiceModule {}

@@ -1,19 +1,19 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
-import { Inject, Injectable } from '@nestjs/common';
-import isNull from 'lodash/isNull';
+import { EnumOAuthProviderType, EnumGender } from '@gentlepeople/taleus-schema';
+import { Injectable, Inject } from '@nestjs/common';
+import { isNull } from 'lodash';
 
-import { DEFAULT_PROFILE_IMAGE_URL, generateRandomCode } from '@/common';
+import { DEFAULT_PROFILE_IMAGE_URL, generateRandomCode } from '../../../common';
 import {
+  KakaoLoginUsecase,
+  USER_REPOSITORY,
+  IUserRepository,
   AUTHENTICATION_PORT,
   AuthenticationPort,
-  IUserRepository,
   KAKAO_AUTH_PORT,
   KakaoAuthPort,
-  KakaoLoginUsecase,
   TIME_PORT,
   TimePort,
-  USER_REPOSITORY,
-} from '@/ports';
+} from '../../ports';
 
 @Injectable()
 export class KakaoLoginService implements KakaoLoginUsecase {
@@ -119,19 +119,13 @@ export class KakaoLoginService implements KakaoLoginUsecase {
 
     while (attempts < maxAttempts) {
       code = generateRandomCode(length);
-
-      if (await this.isUserPersonalCodeUnique(code)) {
+      const existingUser = await this.userRepository.findOneByPersonalCode(code);
+      const isPersonalCodeUnique = !existingUser;
+      if (isPersonalCodeUnique) {
         return code;
       }
-
       attempts++;
     }
-
-    throw new Error(`Failed to generate a unique user personalCode after ${maxAttempts} attempts.`);
-  }
-
-  private async isUserPersonalCodeUnique(code: string): Promise<boolean> {
-    const existingUser = await this.userRepository.findOneByPersonalCode(code);
-    return !existingUser; // Return true if no user with the code exists
+    throw new Error(`Failed to generate a unique user code after ${maxAttempts} attempts.`);
   }
 }

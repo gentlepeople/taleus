@@ -15,6 +15,7 @@ export interface IUserRepository {
     gender: EnumGender;
     oauthProviderType: EnumOAuthProviderType;
     oauthProviderId: string;
+    personalCode: string;
   }): Promise<{ userId: string }>;
   findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null>;
   updateOne(
@@ -28,4 +29,5 @@ export interface IUserRepository {
   ): Promise<boolean>;
   softDeleteOne(userId: string): Promise<boolean>;
   findPartnerByUserId(userId: string): Promise<User | null>;
+  findOneByPersonalCode(personalCode: string): Promise<User | null>;
 }

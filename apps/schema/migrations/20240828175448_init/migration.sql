@@ -18,10 +18,12 @@ CREATE TABLE users (
     birthday TIMESTAMP NOT NULL,
     oauth_provider_type VARCHAR NOT NULL,
     oauth_provider_id VARCHAR NOT NULL,
+    personal_code VARCHAR NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     deleted_at TIMESTAMPTZ NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id),
+    UNIQUE (personal_code)
 );
 
 CREATE INDEX index_users_oauth_provider_id ON users(oauth_provider_id);
