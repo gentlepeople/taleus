@@ -1,4 +1,4 @@
-package com.reactnativeinitialtemplate
+package com.taleus
 
 import android.app.Application
 import com.facebook.react.PackageList
