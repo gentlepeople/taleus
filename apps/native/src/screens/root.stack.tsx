@@ -1,34 +1,36 @@
-import { LinkingOptions } from '@react-navigation/native';
+import { LinkingOptions, NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { ModalProvider } from 'react-native-modalfy';
 import { ValueOf } from 'type-fest';
 
-import { palette } from '~/mobile-ui';
-
-const Example = () => {
-  return <View style={{ width: 100, height: 100, backgroundColor: palette['sub-blueSky'] }} />;
-};
+import { AuthenticatedStack, AuthenticatedStackParamList } from './authenticated';
+import { CommonStack, CommonStackParamList } from './common';
+import { modalStack } from './modal';
+import { UnauthenticatedStack, UnauthenticatedStackParamList } from './unauthenticated';
 
 export type RootStackParamList = {
-  Example: {};
+  AuthenticatedStack: NavigatorScreenParams<AuthenticatedStackParamList>;
+  UnauthenticatedStack: NavigatorScreenParams<UnauthenticatedStackParamList>;
+  CommonStack: NavigatorScreenParams<CommonStackParamList>;
 };
 
 const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export const RootStack = ({}) => {
-  // mobile ui 만 어느정도 셋업하고 github에 올리기
-  // 이후 다른 vscode 창에서 받고, 모니모니 과제 준비(test code, ui 등)
-
   return (
-    <RootStackNavigator.Navigator
-      screenOptions={{
-        headerShown: false,
-        presentation: 'card',
-        animationEnabled: true,
-      }}
-    >
-      <RootStackNavigator.Screen name="Example" component={Example} />
-    </RootStackNavigator.Navigator>
+    <ModalProvider stack={modalStack}>
+      <RootStackNavigator.Navigator
+        screenOptions={{
+          headerShown: false,
+          presentation: 'card',
+          animationEnabled: true,
+        }}
+      >
+        <RootStackNavigator.Screen name="UnauthenticatedStack" component={UnauthenticatedStack} />
+        <RootStackNavigator.Screen name="AuthenticatedStack" component={AuthenticatedStack} />
+        <RootStackNavigator.Screen name="CommonStack" component={CommonStack} />
+      </RootStackNavigator.Navigator>
+    </ModalProvider>
   );
 };
 

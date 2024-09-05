@@ -25,12 +25,12 @@ module.exports = {
   extends: ['prettier', 'plugin:@typescript-eslint/recommended'],
   plugins: [
     '@typescript-eslint',
-    // All packages in this monorepo use Prettier
-    'prettier',
     // We enforce certain rules on how imports are handled
     'import',
     // Remove Unused Imports
     'unused-imports',
+    // All packages in this monorepo use Prettier
+    'prettier',
   ],
   rules: {
     'prettier/prettier': [
