@@ -30,4 +30,10 @@ export interface IUserRepository {
   softDeleteOne(userId: string): Promise<boolean>;
   findPartnerByUserId(userId: string): Promise<User | null>;
   findOneByPersonalCode(personalCode: string): Promise<User | null>;
+  updateNotificationTime(userId: string, notificationTime: Date): Promise<void>;
+  updateNotificationTimeWithPartner(
+    userId: string,
+    partnerId: string,
+    notificationTime: Date,
+  ): Promise<void>;
 }

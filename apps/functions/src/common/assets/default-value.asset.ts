@@ -17,6 +17,7 @@ export const DEFAULT_ANONYMOUS_USER_OBJECT: User = {
   birthday: new Date('0000-01-01'),
   oauthProviderType: EnumOAuthProviderType.KAKAO,
   personalCode: 'N/A',
+  notificationTime: 'N/A',
   createdAt: new Date('0000-01-01'),
   updatedAt: new Date('0000-01-01'),
 };
