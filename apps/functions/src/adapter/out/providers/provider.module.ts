@@ -1,7 +1,14 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 
-import { AuthenticationModule, ConfigModule, DatabaseModule, KakaoAuthModule, TimeModule } from '.';
+import {
+  AuthenticationModule,
+  ConfigModule,
+  DatabaseModule,
+  KakaoAuthModule,
+  TimeModule,
+  PubSubModule,
+} from '.';
 
 const providerModules = [
   LoggerModule.forRoot(),
@@ -10,6 +17,7 @@ const providerModules = [
   DatabaseModule,
   AuthenticationModule,
   KakaoAuthModule,
+  PubSubModule,
 ];
 
 @Module({

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { KakaoLoginService } from './KakaoLoginService';
+import { KakaoLoginService } from './kakao-login.service';
 
 import {
   KAKAO_LOGIN_USECASE,

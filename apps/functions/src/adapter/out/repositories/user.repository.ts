@@ -32,6 +32,9 @@ export class UserRepository implements IUserRepository {
       isAnonymous: !isDeactivated,
       gender: object.gender as EnumGender,
       oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
+      notificationTime: object.notificationTime
+        ? object.notificationTime.toTimeString().slice(0, 5)
+        : null,
     };
   }
 
@@ -136,5 +139,33 @@ export class UserRepository implements IUserRepository {
       where: { personalCode },
     });
     return this.enumConvertAndAnonymizeUser(findUser);
+  }
+
+  async updateNotificationTime(userId: string, notificationTime: Date): Promise<void> {
+    await this.databasePort.users.update({
+      where: {
+        userId,
+      },
+      data: {
+        notificationTime,
+      },
+    });
+  }
+
+  async updateNotificationTimeWithPartner(
+    userId: string,
+    partnerId: string,
+    notificationTime: Date,
+  ): Promise<void> {
+    await this.databasePort.users.updateMany({
+      where: {
+        userId: {
+          in: [userId, partnerId],
+        },
+      },
+      data: {
+        notificationTime,
+      },
+    });
   }
 }

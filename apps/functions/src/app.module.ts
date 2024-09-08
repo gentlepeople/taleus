@@ -27,6 +27,9 @@ import {
         sortSchema: true,
         introspection: true,
         autoSchemaFile: true,
+        // subscriptions: {
+        //   'graphql-ws': true,
+        // },
         transformSchema: (schema: GraphQLSchema) => upperDirectiveTransformer(schema, 'upper'),
         playground: false,
         buildSchemaOptions: {
