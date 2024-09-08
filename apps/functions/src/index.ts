@@ -1,3 +1,4 @@
+import { INestApplication } from '@nestjs/common';
 import { Express } from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions/v2';
@@ -5,6 +6,7 @@ import { GlobalOptions } from 'firebase-functions/v2';
 import { onRequest } from 'firebase-functions/v2/https';
 
 import { createGraphQLNestServer } from './app.bootstrap';
+import { ScheduleDailyMissionService } from './application/services/schedule';
 
 admin.initializeApp();
 
@@ -24,10 +26,24 @@ const functionsGlobalOptions: GlobalOptions = {
 functions.setGlobalOptions({ ...functionsGlobalOptions });
 
 let graphqlNestServer: Express;
+let nestAppContext: INestApplication;
 
 export const graphql = onRequest(async (req, resp) => {
   if (!graphqlNestServer) {
-    graphqlNestServer = await createGraphQLNestServer();
+    const { express, app } = await createGraphQLNestServer();
+    graphqlNestServer = express;
+    nestAppContext = app;
   }
   return graphqlNestServer(req, resp);
+});
+
+export const schedule = functions.scheduler.onSchedule('* * * * * *', async (context) => {
+  if (!graphqlNestServer) {
+    const { express, app } = await createGraphQLNestServer();
+    graphqlNestServer = express;
+    nestAppContext = app;
+  }
+
+  const scheduleDailyMissionService = nestAppContext.get(ScheduleDailyMissionService);
+  await scheduleDailyMissionService.execute();
 });

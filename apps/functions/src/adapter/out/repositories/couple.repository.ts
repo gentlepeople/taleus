@@ -2,16 +2,18 @@ import { couple } from '@gentlepeople/taleus-schema';
 import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
-import { DEFAULT_ANONYMOUS_USER_OBJECT } from '../../../common';
+import { DEFAULT_ANONYMOUS_USER_OBJECT, ONBOARDING_MISSION_ID } from '../../../common';
 
 import { Couple } from '@/domain';
-import { DATABASE_PORT, DatabasePort, ICoupleRepository } from '@/ports';
+import { DATABASE_PORT, DatabasePort, ICoupleRepository, TIME_PORT, TimePort } from '@/ports';
 
 @Injectable()
 export class CoupleRepository implements ICoupleRepository {
   constructor(
     @Inject(DATABASE_PORT)
     private readonly databasePort: DatabasePort,
+    @Inject(TIME_PORT)
+    private readonly timePort: TimePort,
   ) {}
 
   private convertAnonymizeUser(
@@ -44,12 +46,60 @@ export class CoupleRepository implements ICoupleRepository {
     };
   }
 
-  async createOne(inviterId: string, inviteeId: string): Promise<Couple | null> {
-    const createCouple = await this.databasePort.couple.create({
-      data: {
-        inviterId,
-        inviteeId,
-      },
+  async createOneWithAssigningOnboardingMission(
+    inviterId: string,
+    inviteeId: string,
+  ): Promise<Couple | null> {
+    const createCouple = await this.databasePort.$transaction(async (tx) => {
+      const createCouple = await tx.couple.create({
+        data: {
+          inviterId,
+          inviteeId,
+        },
+      });
+      const { coupleId } = createCouple;
+      const onboardingQuestions = await tx.question.findMany({
+        where: {
+          missionId: ONBOARDING_MISSION_ID,
+        },
+      });
+
+      const questionIds = onboardingQuestions.map(({ questionId }) => questionId);
+
+      const missionResponses = await tx.response.findMany({
+        where: {
+          userId: {
+            in: [inviterId, inviteeId],
+          },
+          questionId: {
+            in: questionIds,
+          },
+          deletedAt: null,
+        },
+      });
+
+      const allUsersHaveRespondedToAllQuestions = questionIds.every((questionId) => {
+        const inviterHasResponse = missionResponses.some(
+          (response) => response.userId === inviterId && response.questionId === questionId,
+        );
+        const inviteeHasResponse = missionResponses.some(
+          (response) => response.userId === inviteeId && response.questionId === questionId,
+        );
+        return inviterHasResponse && inviteeHasResponse;
+      });
+
+      const isCoupleMissionCompleted =
+        onboardingQuestions.length > 0 && allUsersHaveRespondedToAllQuestions;
+
+      await tx.coupleMission.create({
+        data: {
+          coupleId,
+          missionId: ONBOARDING_MISSION_ID,
+          isCompleted: isCoupleMissionCompleted,
+        },
+      });
+
+      return createCouple;
     });
     return createCouple;
   }
@@ -115,5 +165,46 @@ export class CoupleRepository implements ICoupleRepository {
       data,
     });
     return true;
+  }
+
+  async findManyWithoutActiveMissionsByNotificationTime(
+    hour: number,
+    minute: number,
+  ): Promise<
+    (Couple & {
+      coupleMission: {
+        missionId: number;
+      }[];
+    })[]
+  > {
+    const date = this.timePort.get();
+    date.setHours(hour, minute);
+    const findCouples = await this.databasePort.couple.findMany({
+      where: {
+        deletedAt: null,
+        inviter: {
+          notificationTime: date,
+          deletedAt: null,
+        },
+        invitee: {
+          deletedAt: null,
+        },
+        coupleMission: {
+          none: {
+            isCompleted: false,
+            deletedAt: null,
+          },
+        },
+      },
+      include: {
+        coupleMission: {
+          select: {
+            missionId: true,
+          },
+        },
+      },
+    });
+
+    return findCouples;
   }
 }

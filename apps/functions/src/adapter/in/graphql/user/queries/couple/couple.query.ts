@@ -6,13 +6,15 @@ import { CoupleRequest } from './couple.dto';
 
 import { Auth, checkUserPermission, diffDays, GqlContext } from '@/common';
 import { Couple } from '@/domain';
-import { FIND_COUPLE_USECASE, FindCoupleUsecase } from '@/ports';
+import { FIND_COUPLE_USECASE, FindCoupleUsecase, TIME_PORT, TimePort } from '@/ports';
 
 @Resolver(() => Couple)
 export class CoupleQuery {
   constructor(
     @Inject(FIND_COUPLE_USECASE)
     private readonly findCoupleUsecase: FindCoupleUsecase,
+    @Inject(TIME_PORT)
+    private readonly timePort: TimePort,
   ) {}
 
   @Query(() => Couple, {
@@ -40,7 +42,7 @@ export class CoupleQuery {
       return -1;
     }
 
-    const today = new Date();
+    const today = this.timePort.get();
     return diffDays(startDate, today);
   }
 }

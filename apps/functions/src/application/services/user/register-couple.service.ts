@@ -53,7 +53,7 @@ export class RegisterCoupleService implements RegisterCoupleUsecase {
       };
     }
 
-    await this.coupleRepository.createOne(inviterId, inviteeId);
+    await this.coupleRepository.createOneWithAssigningOnboardingMission(inviterId, inviteeId);
 
     return { success: true };
   }

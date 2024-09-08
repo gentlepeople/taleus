@@ -1,4 +1,4 @@
-import { EnumGender, EnumOAuthProviderType, users } from '@gentlepeople/taleus-schema';
+import { EnumGender, EnumOAuthProviderType, user } from '@gentlepeople/taleus-schema';
 import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository {
     private readonly timePort: TimePort,
   ) {}
 
-  private enumConvertAndAnonymizeUser(object: users): User {
+  private enumConvertAndAnonymizeUser(object: user): User {
     if (isNull(object)) {
       return null;
     }
@@ -39,7 +39,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findOneByUserId(userId: string): Promise<User | null> {
-    const findUser = await this.databasePort.users.findUnique({
+    const findUser = await this.databasePort.user.findUnique({
       where: {
         userId,
       },
@@ -49,7 +49,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null> {
-    const findUser = await this.databasePort.users.findFirst({
+    const findUser = await this.databasePort.user.findFirst({
       where: {
         oauthProviderId,
         deletedAt: null,
@@ -70,7 +70,7 @@ export class UserRepository implements IUserRepository {
     oauthProviderId: string;
     personalCode: string;
   }): Promise<{ userId: string }> {
-    const { userId } = await this.databasePort.users.create({
+    const { userId } = await this.databasePort.user.create({
       data: {
         ...data,
         birthday: this.timePort.get(data.birthday),
@@ -88,7 +88,7 @@ export class UserRepository implements IUserRepository {
       gender?: EnumGender;
     },
   ): Promise<boolean> {
-    await this.databasePort.users.update({
+    await this.databasePort.user.update({
       where: {
         userId,
       },
@@ -98,7 +98,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async softDeleteOne(userId: string): Promise<boolean> {
-    await this.databasePort.users.update({
+    await this.databasePort.user.update({
       where: {
         userId,
       },
@@ -135,14 +135,14 @@ export class UserRepository implements IUserRepository {
   }
 
   async findOneByPersonalCode(personalCode: string): Promise<User | null> {
-    const findUser = await this.databasePort.users.findUnique({
+    const findUser = await this.databasePort.user.findUnique({
       where: { personalCode },
     });
     return this.enumConvertAndAnonymizeUser(findUser);
   }
 
   async updateNotificationTime(userId: string, notificationTime: Date): Promise<void> {
-    await this.databasePort.users.update({
+    await this.databasePort.user.update({
       where: {
         userId,
       },
@@ -157,7 +157,7 @@ export class UserRepository implements IUserRepository {
     partnerId: string,
     notificationTime: Date,
   ): Promise<void> {
-    await this.databasePort.users.updateMany({
+    await this.databasePort.user.updateMany({
       where: {
         userId: {
           in: [userId, partnerId],

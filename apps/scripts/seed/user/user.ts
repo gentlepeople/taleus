@@ -15,7 +15,7 @@ import {
 export const User = async (): Promise<void> => {
   let count = 0;
   if (AUTO_USER) {
-    const autoUserData = Array.from<Prisma.usersCreateManyInput, Prisma.usersCreateManyInput>(
+    const autoUserData = Array.from<Prisma.userCreateManyInput, Prisma.userCreateManyInput>(
       { length: AUTO_USER_LENGTH },
       () => ({
         userId: sampleUUID(),
@@ -30,7 +30,7 @@ export const User = async (): Promise<void> => {
         ...sampleAuditTimestamps(true),
       }),
     );
-    const { count: autoCount } = await seedPrisma.users.createMany({
+    const { count: autoCount } = await seedPrisma.user.createMany({
       data: autoUserData,
       skipDuplicates: true,
     });

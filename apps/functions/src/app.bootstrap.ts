@@ -1,4 +1,10 @@
-import { LogLevel, LoggerService, ValidationPipe, ValidationPipeOptions } from '@nestjs/common';
+import {
+  INestApplication,
+  LogLevel,
+  LoggerService,
+  ValidationPipe,
+  ValidationPipeOptions,
+} from '@nestjs/common';
 import { NestApplicationOptions } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
@@ -10,19 +16,19 @@ import { AppModule } from './app.module';
 
 import { GlobalExceptionProvider } from '@/common';
 
-export const createGraphQLNestServer = async (): Promise<Express> => {
+export const createGraphQLNestServer = async (): Promise<{
+  express: Express;
+  app: INestApplication;
+}> => {
   const expressInstance = express();
+  let app: INestApplication;
   try {
     // express application
     const expressAdapter = new ExpressAdapter(expressInstance);
     const defaultExpressApplicationProvider: NestApplicationOptions = {
       bufferLogs: true,
     };
-    const app = await NestFactory.create(
-      AppModule,
-      expressAdapter,
-      defaultExpressApplicationProvider,
-    );
+    app = await NestFactory.create(AppModule, expressAdapter, defaultExpressApplicationProvider);
 
     // logger
     const loggerOptions: {
@@ -60,5 +66,5 @@ export const createGraphQLNestServer = async (): Promise<Express> => {
   } catch (err) {
     firebaseLogger.error('Nest broken (taleus-graphql)', err);
   }
-  return expressInstance;
+  return { express: expressInstance, app };
 };
