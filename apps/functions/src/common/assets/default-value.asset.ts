@@ -21,3 +21,5 @@ export const DEFAULT_ANONYMOUS_USER_OBJECT: User = {
   createdAt: new Date('0000-01-01'),
   updatedAt: new Date('0000-01-01'),
 };
+
+export const ONBOARDING_MISSION_ID = 1;

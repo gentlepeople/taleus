@@ -11,6 +11,8 @@ import {
   FIND_USER_USECASE,
   FindCoupleUsecase,
   FindUserUsecase,
+  TIME_PORT,
+  TimePort,
 } from '@/ports';
 
 @Resolver(() => User)
@@ -20,6 +22,8 @@ export class UserQuery {
     private readonly findUserUsecase: FindUserUsecase,
     @Inject(FIND_COUPLE_USECASE)
     private readonly findCoupleUsecase: FindCoupleUsecase,
+    @Inject(TIME_PORT)
+    private readonly timePort: TimePort,
   ) {}
 
   @Query(() => User, {
@@ -50,7 +54,7 @@ export class UserQuery {
   })
   async usageDays(@Parent() user: User): Promise<number> {
     const { createdAt } = user;
-    const today = new Date();
+    const today = this.timePort.get();
     return diffDays(createdAt, today);
   }
 

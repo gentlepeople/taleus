@@ -74,6 +74,7 @@ export class KakaoLoginService implements KakaoLoginUsecase {
         oauthProviderId,
         oauthProviderType,
       });
+
       return createUserId;
     }
     const { userId: findUserId } = findUser;

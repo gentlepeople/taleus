@@ -20,81 +20,87 @@ model data_migrations {
   @@map("_data_migrations")
 }
 
-model users {
-  userId                                                String                 @id @map("user_id") @db.VarChar
-  nickname                                              String                 @db.VarChar
-  email                                                 String                 @db.VarChar
-  profileImageUrl                                       String                 @map("profile_image_url") @db.VarChar
-  gender                                                String                 @db.VarChar
-  birthday                                              DateTime               @db.Timestamp(6)
-  oauthProviderType                                     String                 @map("oauth_provider_type") @db.VarChar
-  oauthProviderId                                       String                 @map("oauth_provider_id") @db.VarChar
-  personalCode                                          String                 @unique @map("personal_code") @db.VarChar
-  notificationTime                                      DateTime?              @map("notification_time") @db.Time(6)
-  createdAt                                             DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                                             DateTime               @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt                                             DateTime?              @map("deleted_at") @db.Timestamptz(6)
-  coupleAsInvitee                                       couple?                @relation("coupleInviteeIdTousers")
-  coupleAsInviter                                       couple?                @relation("coupleInviterIdTousers")
-  missionReminderLogMissionReminderLogReceiverIdTousers mission_reminder_log[] @relation("missionReminderLogReceiverIdTousers")
-  missionReminderLogMissionReminderLogSenderIdTousers   mission_reminder_log[] @relation("missionReminderLogSenderIdTousers")
+model user {
+  userId                                                String               @id @map("user_id") @db.VarChar
+  nickname                                              String               @db.VarChar
+  email                                                 String               @db.VarChar
+  profileImageUrl                                       String               @map("profile_image_url") @db.VarChar
+  gender                                                String               @db.VarChar
+  birthday                                              DateTime             @db.Timestamp(6)
+  oauthProviderType                                     String               @map("oauth_provider_type") @db.VarChar
+  oauthProviderId                                       String               @map("oauth_provider_id") @db.VarChar
+  personalCode                                          String               @unique @map("personal_code") @db.VarChar
+  notificationTime                                      DateTime?            @map("notification_time") @db.Time(6)
+  createdAt                                             DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                                             DateTime             @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt                                             DateTime?            @map("deleted_at") @db.Timestamptz(6)
+  coupleAsInvitee                                       couple?              @relation("coupleInviteeIdTousers")
+  coupleAsInviter                                       couple?              @relation("coupleInviterIdTousers")
+  missionReminderLogMissionReminderLogReceiverIdTousers missionReminderLog[] @relation("missionReminderLogReceiverIdTousers")
+  missionReminderLogMissionReminderLogSenderIdTousers   missionReminderLog[] @relation("missionReminderLogSenderIdTousers")
   response                                              response[]
 
   @@index([oauthProviderId], map: "index_users_oauth_provider_id")
+  @@index([notificationTime], map: "index_users_notification_time")
+  @@map("users")
 }
 
 model couple {
-  coupleId       Int              @id @default(autoincrement()) @map("couple_id")
-  inviterId      String           @unique @map("inviter_id") @db.VarChar
-  inviteeId      String           @unique @map("invitee_id") @db.VarChar
-  startDate      DateTime?        @map("start_date") @db.Timestamp(6)
-  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt      DateTime         @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt      DateTime?        @map("deleted_at") @db.Timestamptz(6)
-  invitee        users            @relation("coupleInviteeIdTousers", fields: [inviteeId], references: [userId])
-  inviter        users            @relation("coupleInviterIdTousers", fields: [inviterId], references: [userId])
-  couple_mission couple_mission[]
+  coupleId      Int             @id @default(autoincrement()) @map("couple_id")
+  inviterId     String          @unique @map("inviter_id") @db.VarChar
+  inviteeId     String          @unique @map("invitee_id") @db.VarChar
+  startDate     DateTime?       @map("start_date") @db.Timestamp(6)
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime        @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt     DateTime?       @map("deleted_at") @db.Timestamptz(6)
+  invitee       user            @relation("coupleInviteeIdTousers", fields: [inviteeId], references: [userId])
+  inviter       user            @relation("coupleInviterIdTousers", fields: [inviterId], references: [userId])
+  coupleMission coupleMission[]
 
   @@index([inviteeId], map: "index_couple_invitee_id")
   @@index([inviterId], map: "index_couple_inviter_id")
 }
 
-model couple_mission {
-  coupleMissionId     Int                    @id @default(autoincrement()) @map("couple_mission_id")
-  coupleId            Int                    @map("couple_id")
-  missionId           Int                    @map("mission_id")
-  isCompleted         Boolean                @default(false) @map("is_completed")
-  reminderClickCount  Int                    @default(0) @map("reminder_click_count")
-  createdAt           DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt           DateTime               @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt           DateTime?              @map("deleted_at") @db.Timestamptz(6)
-  couple              couple                 @relation(fields: [coupleId], references: [coupleId])
-  mission             mission                @relation(fields: [missionId], references: [missionId])
-  missionReminderLogs mission_reminder_log[]
+model coupleMission {
+  coupleMissionId     Int                  @id @default(autoincrement()) @map("couple_mission_id")
+  coupleId            Int                  @map("couple_id")
+  missionId           Int                  @map("mission_id")
+  isCompleted         Boolean              @default(false) @map("is_completed")
+  reminderClickCount  Int                  @default(0) @map("reminder_click_count")
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime             @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt           DateTime?            @map("deleted_at") @db.Timestamptz(6)
+  couple              couple               @relation(fields: [coupleId], references: [coupleId])
+  mission             mission              @relation(fields: [missionId], references: [missionId])
+  missionReminderLogs missionReminderLog[]
+
+  @@map("couple_mission")
 }
 
 model mission {
-  missionId     Int              @id @default(autoincrement()) @map("mission_id")
-  title         String           @db.VarChar
-  category      String           @db.VarChar
-  createdAt     DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt     DateTime         @default(now()) @map("updated_at") @db.Timestamptz(6)
-  coupleMission couple_mission[]
+  missionId     Int             @id @default(autoincrement()) @map("mission_id")
+  title         String          @db.VarChar
+  category      String          @db.VarChar
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime        @default(now()) @map("updated_at") @db.Timestamptz(6)
+  coupleMission coupleMission[]
   question      question[]
 }
 
-model mission_reminder_log {
-  missionReminderLogId                     Int            @id @default(autoincrement()) @map("mission_reminder_log_id")
-  coupleMissionId                          Int            @map("couple_mission_id")
-  senderId                                 String         @map("sender_id") @db.VarChar
-  receiverId                               String         @map("receiver_id") @db.VarChar
-  reminderTime                             DateTime       @default(now()) @map("reminder_time") @db.Timestamptz(6)
-  createdAt                                DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                                DateTime       @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt                                DateTime?      @map("deleted_at") @db.Timestamptz(6)
-  coupleMission                            couple_mission @relation(fields: [coupleMissionId], references: [coupleMissionId])
-  usersMissionReminderLogReceiverIdTousers users          @relation("missionReminderLogReceiverIdTousers", fields: [receiverId], references: [userId])
-  usersMissionReminderLogSenderIdTousers   users          @relation("missionReminderLogSenderIdTousers", fields: [senderId], references: [userId])
+model missionReminderLog {
+  missionReminderLogId                     Int           @id @default(autoincrement()) @map("mission_reminder_log_id")
+  coupleMissionId                          Int           @map("couple_mission_id")
+  senderId                                 String        @map("sender_id") @db.VarChar
+  receiverId                               String        @map("receiver_id") @db.VarChar
+  reminderTime                             DateTime      @default(now()) @map("reminder_time") @db.Timestamptz(6)
+  createdAt                                DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                                DateTime      @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt                                DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  coupleMission                            coupleMission @relation(fields: [coupleMissionId], references: [coupleMissionId])
+  usersMissionReminderLogReceiverIdTousers user          @relation("missionReminderLogReceiverIdTousers", fields: [receiverId], references: [userId])
+  usersMissionReminderLogSenderIdTousers   user          @relation("missionReminderLogSenderIdTousers", fields: [senderId], references: [userId])
+
+  @@map("mission_reminder_log")
 }
 
 model question {
@@ -105,7 +111,6 @@ model question {
   content       String
   createdAt     DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime   @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt     DateTime?  @map("deleted_at") @db.Timestamptz(6)
   mission       mission    @relation(fields: [missionId], references: [missionId])
   response      response[]
 
@@ -121,5 +126,7 @@ model response {
   updatedAt  DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
   deletedAt  DateTime? @map("deleted_at") @db.Timestamptz(6)
   question   question  @relation(fields: [questionId], references: [questionId])
-  users      users     @relation(fields: [userId], references: [userId])
+  user       user      @relation(fields: [userId], references: [userId])
+
+  @@index([userId, questionId], map: "index_response_user_id_question_id")
 }

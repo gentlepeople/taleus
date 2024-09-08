@@ -36,6 +36,7 @@ CREATE TABLE users (
 );
 
 CREATE INDEX index_users_oauth_provider_id ON users(oauth_provider_id);
+CREATE INDEX index_users_notification_time ON users(notification_time);
 
 CREATE TRIGGER users_set_updated_at
 BEFORE UPDATE ON users FOR EACH ROW
@@ -86,7 +87,6 @@ CREATE TABLE question (
     content TEXT NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-    deleted_at TIMESTAMPTZ NULL,
     PRIMARY KEY (question_id),
     UNIQUE (mission_id, question_order),
     FOREIGN KEY (mission_id)
@@ -154,6 +154,8 @@ CREATE TABLE response (
     FOREIGN KEY (user_id)
         REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+CREATE INDEX index_response_user_id_question_id ON response(user_id, question_id);
 
 CREATE TRIGGER response_set_updated_at
 BEFORE UPDATE ON response FOR EACH ROW
