@@ -1,13 +1,23 @@
 import { Inject, Injectable } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
-import { IUserRepository, UpdateNotificationTimeUsecase, USER_REPOSITORY } from '@/ports';
+import { EnumPushNotificationTemplate } from '../../../adapter/out';
+
+import {
+  IUserRepository,
+  MESSAGING_PORT,
+  MessagingPort,
+  UpdateNotificationTimeUsecase,
+  USER_REPOSITORY,
+} from '@/ports';
 
 @Injectable()
 export class UpdateNotificationTimeService implements UpdateNotificationTimeUsecase {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
+    @Inject(MESSAGING_PORT)
+    private readonly messagingPort: MessagingPort,
   ) {}
 
   async execute(userId: string, notificationTime: Date): Promise<void> {
@@ -19,6 +29,12 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
         userId,
         partnerId,
         notificationTime,
+      );
+      const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
+      await this.messagingPort.sendPushNotification(
+        [partnerId],
+        EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
+        { nickname: userNickname },
       );
     } else {
       await this.userRepository.updateNotificationTime(userId, notificationTime);
