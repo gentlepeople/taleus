@@ -2,7 +2,6 @@ import { AuthenticationError } from '@nestjs/apollo';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
-import { logger } from 'firebase-functions';
 import { firstValueFrom, map } from 'rxjs';
 
 import { sampleKakaoAccount } from './kakao-auth.const';
@@ -29,8 +28,7 @@ export class KakaoAuthAdapter implements KakaoAuthPort {
       );
       return kakaoAccount;
     } catch (e: any) {
-      logger.error(e);
-      throw new AuthenticationError(e);
+      throw new AuthenticationError(`Error in KakaoAuthAdapter:getUserAccount: ${e}`);
     }
   }
 }

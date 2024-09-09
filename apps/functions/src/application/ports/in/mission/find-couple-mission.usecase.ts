@@ -6,9 +6,12 @@ export interface FindCoupleMissionUsecase {
   countCompletedByCoupleId(coupleId: number): Promise<number>;
   findCompletedByUserId(
     userId: string,
-    pagination: {
-      take: number;
-      skip: number;
+    options: {
+      shuffle: boolean;
+      pagination: {
+        take: number;
+        skip: number;
+      };
     },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]>;
 }

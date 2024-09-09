@@ -50,7 +50,7 @@ export class MissionLogQuery {
     @Args() args: MissionLogRequest,
     @Context() context: GqlContext,
   ): Promise<MissionLogResponse> {
-    const { userId, take, skip } = args;
+    const { userId, shuffle, take, skip } = args;
     checkUserPermission(context, userId);
 
     const findPartner = await this.findUserUsecase.findPartnerByUserId(userId);
@@ -64,8 +64,11 @@ export class MissionLogQuery {
     const completedCoupleMissions = await this.findCoupleMissionUsecase.findCompletedByUserId(
       userId,
       {
-        take,
-        skip,
+        shuffle,
+        pagination: {
+          take,
+          skip,
+        },
       },
     );
 
