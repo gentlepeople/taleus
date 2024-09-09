@@ -3,6 +3,7 @@ import { CoupleMission, Mission, Question } from '@/domain';
 export const COUPLE_MISSION_REPOSITORY = Symbol('COUPLE_MISSION_REPOSITORY');
 
 export interface ICoupleMissionRepository {
+  findOneByCoupleMissionId(coupleMissionId: number): Promise<CoupleMission | null>;
   createMany(
     data: {
       coupleId: number;
@@ -19,4 +20,5 @@ export interface ICoupleMissionRepository {
     userId: string,
     pagination: { take: number; skip: number },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]>;
+  updateToCompleted(coupleMissionId: number): Promise<void>;
 }

@@ -22,7 +22,7 @@ export class TodayMissionQuery {
     @Inject(GET_TODAY_MISSION_USECASE)
     private readonly getTodayMissionUsecase: GetTodayMissionUsecase,
     @Inject(FIND_QUESTION_USECASE)
-    private readonly findQUestionUsecase: FindQuestionUsecase,
+    private readonly findQuestionUsecase: FindQuestionUsecase,
     @Inject(FIND_RESPONSE_USECASE)
     private readonly findResponseUsecase: FindResponseUsecase,
     @Inject(FIND_USER_USECASE)
@@ -50,7 +50,7 @@ export class TodayMissionQuery {
 
     const { missionId } = mission;
 
-    const missionQuestionSize = await this.findQUestionUsecase.countByMissionId(missionId);
+    const missionQuestionSize = await this.findQuestionUsecase.countByMissionId(missionId);
 
     const userResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
       userId,
