@@ -5,14 +5,14 @@ export class Response {
   @Field(() => Int)
   responseId: number;
 
+  @Field(() => String)
+  userId: string;
+
   @Field(() => Int)
   questionId: number;
 
   @Field(() => Int, { nullable: true })
   coupleMissionId?: number;
-
-  @Field(() => String)
-  userId: string;
 
   @Field(() => String)
   content: string;

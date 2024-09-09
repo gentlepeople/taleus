@@ -18,6 +18,15 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     private readonly timePort: TimePort,
   ) {}
 
+  async findOneByCoupleMissionId(coupleMissionId: number): Promise<CoupleMission | null> {
+    const findCoupleMission = await this.databasePort.coupleMission.findUnique({
+      where: {
+        coupleMissionId,
+      },
+    });
+    return findCoupleMission;
+  }
+
   async createMany(
     data: {
       coupleId: number;
@@ -205,6 +214,17 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
           ),
         },
       };
+    });
+  }
+
+  async updateToCompleted(coupleMissionId: number): Promise<void> {
+    await this.databasePort.coupleMission.update({
+      where: {
+        coupleMissionId,
+      },
+      data: {
+        isCompleted: true,
+      },
     });
   }
 }

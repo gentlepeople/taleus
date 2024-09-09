@@ -45,4 +45,26 @@ export class ResponseRepository implements IResponseRepository {
     });
     return findResponses;
   }
+
+  async createMany(
+    data: {
+      userId: string;
+      questionId: number;
+      coupleMissionId?: number;
+      content: string;
+    }[],
+  ): Promise<void> {
+    await this.databasePort.response.createMany({
+      data,
+    });
+  }
+
+  async countByCoupleMissionId(coupleMissionId: number): Promise<number> {
+    const count = await this.databasePort.response.count({
+      where: {
+        coupleMissionId,
+      },
+    });
+    return count;
+  }
 }

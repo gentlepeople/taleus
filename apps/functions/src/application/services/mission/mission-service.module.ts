@@ -6,6 +6,7 @@ import {
   FindQuestionService,
   FindResponseService,
   GetTodayMissionService,
+  SubmitMissionResponseService,
 } from '.';
 
 import {
@@ -22,6 +23,7 @@ import {
   MISSION_REPOSITORY,
   QUESTION_REPOSITORY,
   RESPONSE_REPOSITORY,
+  SUBMIT_MISSION_RESPONSE_USECASE,
 } from '@/ports';
 import {
   CoupleMissionRepository,
@@ -84,6 +86,20 @@ const InjectRepositories = [
       useFactory: (responseRepository: IResponseRepository) =>
         new FindResponseService(responseRepository),
     },
+    {
+      inject: [RESPONSE_REPOSITORY, COUPLE_MISSION_REPOSITORY, QUESTION_REPOSITORY],
+      provide: SUBMIT_MISSION_RESPONSE_USECASE,
+      useFactory: (
+        responseRepository: IResponseRepository,
+        coupleMissionRepository: ICoupleMissionRepository,
+        questionRepository: IQuestionRepository,
+      ) =>
+        new SubmitMissionResponseService(
+          responseRepository,
+          coupleMissionRepository,
+          questionRepository,
+        ),
+    },
   ],
   exports: [
     FIND_COUPLE_MISSION_USECASE,
@@ -91,6 +107,7 @@ const InjectRepositories = [
     FIND_QUESTION_USECASE,
     GET_TODAY_MISSION_USECASE,
     FIND_RESPONSE_USECASE,
+    SUBMIT_MISSION_RESPONSE_USECASE,
   ],
 })
 export class MissionServiceModule {}

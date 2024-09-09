@@ -8,4 +8,13 @@ export interface IResponseRepository {
     coupleMissionIds: number[],
     userIds: string[],
   ): Promise<Response[]>;
+  createMany(
+    data: {
+      userId: string;
+      questionId: number;
+      coupleMissionId?: number;
+      content: string;
+    }[],
+  ): Promise<void>;
+  countByCoupleMissionId(coupleMissionId: number): Promise<number>;
 }
