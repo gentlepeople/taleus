@@ -74,6 +74,7 @@ export class CoupleRepository implements ICoupleRepository {
           questionId: {
             in: questionIds,
           },
+          coupleMissionId: null,
           deletedAt: null,
         },
       });
@@ -91,11 +92,22 @@ export class CoupleRepository implements ICoupleRepository {
       const isCoupleMissionCompleted =
         onboardingQuestions.length > 0 && allUsersHaveRespondedToAllQuestions;
 
-      await tx.coupleMission.create({
+      const { coupleMissionId: createCoupleMissionId } = await tx.coupleMission.create({
         data: {
           coupleId,
           missionId: ONBOARDING_MISSION_ID,
           isCompleted: isCoupleMissionCompleted,
+        },
+      });
+
+      await tx.response.updateMany({
+        where: {
+          responseId: {
+            in: missionResponses.map(({ responseId }) => responseId),
+          },
+        },
+        data: {
+          coupleMissionId: createCoupleMissionId,
         },
       });
 

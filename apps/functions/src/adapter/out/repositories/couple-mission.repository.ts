@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 
+import { CoupleMission } from '@/domain';
 import { DATABASE_PORT, DatabasePort, ICoupleMissionRepository } from '@/ports';
 
 @Injectable()
@@ -31,5 +32,28 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
       },
     });
     return count;
+  }
+
+  async getOngoingOneByUserId(userId: string): Promise<CoupleMission | null> {
+    const getOngoingCoupleMission = await this.databasePort.coupleMission.findFirst({
+      where: {
+        couple: {
+          OR: [
+            {
+              inviterId: userId,
+            },
+            {
+              inviteeId: userId,
+            },
+          ],
+        },
+        deletedAt: null,
+        isCompleted: false,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return getOngoingCoupleMission;
   }
 }

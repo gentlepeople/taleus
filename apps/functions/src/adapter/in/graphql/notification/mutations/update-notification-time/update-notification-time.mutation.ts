@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
 
 import {
   UpdateNotificationTimeRequest,
   UpdateNotificationTimeResponse,
 } from './update-notification-time.dto';
 
-import { Auth } from '@/common';
+import { Auth, checkUserPermission, GqlContext } from '@/common';
 import {
   FIND_USER_USECASE,
   FindUserUsecase,
@@ -31,8 +31,11 @@ export class UpdateNotificationTimeMutation {
   @Auth()
   async updateNotificationTime(
     @Args() args: UpdateNotificationTimeRequest,
+    @Context() context: GqlContext,
   ): Promise<UpdateNotificationTimeResponse> {
     const { userId, notificationTime } = args;
+    checkUserPermission(context, userId);
+
     const notificationDateTime = this.timePort.get(`2000-01-01T${notificationTime}:00Z`);
 
     await this.updateNotificationTimeUsecase.execute(userId, notificationDateTime);
