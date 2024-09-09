@@ -17,4 +17,5 @@ export interface IResponseRepository {
     }[],
   ): Promise<void>;
   countByCoupleMissionId(coupleMissionId: number): Promise<number>;
+  updateContent(responseId: number, content: string): Promise<Response>;
 }

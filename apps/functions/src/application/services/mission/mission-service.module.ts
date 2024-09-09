@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 
+import { UpdateResponseService } from './update-response.service';
+
 import {
   FindCoupleMissionService,
   FindMissionService,
@@ -24,6 +26,7 @@ import {
   QUESTION_REPOSITORY,
   RESPONSE_REPOSITORY,
   SUBMIT_MISSION_RESPONSE_USECASE,
+  UPDATE_RESPONSE_USECASE,
 } from '@/ports';
 import {
   CoupleMissionRepository,
@@ -100,6 +103,12 @@ const InjectRepositories = [
           questionRepository,
         ),
     },
+    {
+      inject: [RESPONSE_REPOSITORY],
+      provide: UPDATE_RESPONSE_USECASE,
+      useFactory: (responseRepository: IResponseRepository) =>
+        new UpdateResponseService(responseRepository),
+    },
   ],
   exports: [
     FIND_COUPLE_MISSION_USECASE,
@@ -108,6 +117,7 @@ const InjectRepositories = [
     GET_TODAY_MISSION_USECASE,
     FIND_RESPONSE_USECASE,
     SUBMIT_MISSION_RESPONSE_USECASE,
+    UPDATE_RESPONSE_USECASE,
   ],
 })
 export class MissionServiceModule {}
