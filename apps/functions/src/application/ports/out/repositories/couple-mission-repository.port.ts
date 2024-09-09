@@ -7,4 +7,5 @@ export interface ICoupleMissionRepository {
       missionId: number;
     }[],
   ): Promise<number>;
+  countCompletedByCoupleId(coupleId: number): Promise<number>;
 }

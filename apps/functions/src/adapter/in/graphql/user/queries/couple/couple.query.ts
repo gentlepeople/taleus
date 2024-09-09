@@ -6,13 +6,22 @@ import { CoupleRequest } from './couple.dto';
 
 import { Auth, checkUserPermission, diffDays, GqlContext } from '@/common';
 import { Couple } from '@/domain';
-import { FIND_COUPLE_USECASE, FindCoupleUsecase, TIME_PORT, TimePort } from '@/ports';
+import {
+  FIND_COUPLE_MISSION_USECASE,
+  FIND_COUPLE_USECASE,
+  FindCoupleMissionUsecase,
+  FindCoupleUsecase,
+  TIME_PORT,
+  TimePort,
+} from '@/ports';
 
 @Resolver(() => Couple)
 export class CoupleQuery {
   constructor(
     @Inject(FIND_COUPLE_USECASE)
     private readonly findCoupleUsecase: FindCoupleUsecase,
+    @Inject(FIND_COUPLE_MISSION_USECASE)
+    private readonly findCoupleMissionUsecase: FindCoupleMissionUsecase,
     @Inject(TIME_PORT)
     private readonly timePort: TimePort,
   ) {}
@@ -44,5 +53,15 @@ export class CoupleQuery {
 
     const today = this.timePort.get();
     return diffDays(startDate, today);
+  }
+
+  @ResolveField(() => Int, {
+    description: 'The number of missions this couple has completed.',
+  })
+  async completedMissionCount(@Parent() couple: Couple): Promise<number> {
+    const { coupleId } = couple;
+    const coupleCompletedMissionCount =
+      await this.findCoupleMissionUsecase.countCompletedByCoupleId(coupleId);
+    return coupleCompletedMissionCount;
   }
 }

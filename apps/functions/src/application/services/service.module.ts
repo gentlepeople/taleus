@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AuthServiceModule } from './auth';
+import { MissionServiceModule } from './mission';
 import { NotificationServiceModule } from './notification';
 import { ScheduleServiceModule } from './schedule';
 import { UserServiceModule } from './user';
@@ -10,6 +11,7 @@ const ServiceModules = [
   AuthServiceModule,
   NotificationServiceModule,
   ScheduleServiceModule,
+  MissionServiceModule,
 ];
 
 @Module({
