@@ -27,4 +27,14 @@ export class MissionRepository implements IMissionRepository {
     const findMissions = await this.databasePort.mission.findMany();
     return findMissions.map((mission) => this.enumConvert(mission));
   }
+
+  async findOneByMissionId(missionId: number): Promise<Mission | null> {
+    const findMission = await this.databasePort.mission.findUnique({
+      where: {
+        missionId,
+      },
+    });
+
+    return this.enumConvert(findMission);
+  }
 }

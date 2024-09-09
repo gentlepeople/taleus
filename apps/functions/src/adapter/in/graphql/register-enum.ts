@@ -1,4 +1,9 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumMissionCategory,
+  EnumOAuthProviderType,
+  EnumResponseType,
+} from '@gentlepeople/taleus-schema';
 import { registerEnumType } from '@nestjs/graphql';
 
 registerEnumType(EnumGender, {
@@ -7,5 +12,13 @@ registerEnumType(EnumGender, {
 });
 registerEnumType(EnumOAuthProviderType, {
   name: 'EnumOAuthProviderType',
+  description: undefined,
+});
+registerEnumType(EnumMissionCategory, {
+  name: 'EnumMissionCategory',
+  description: undefined,
+});
+registerEnumType(EnumResponseType, {
+  name: 'EnumResponseType',
   description: undefined,
 });

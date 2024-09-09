@@ -73,6 +73,7 @@ model coupleMission {
   couple              couple               @relation(fields: [coupleId], references: [coupleId])
   mission             mission              @relation(fields: [missionId], references: [missionId])
   missionReminderLogs missionReminderLog[]
+  response            response[]
 
   @@map("couple_mission")
 }
@@ -118,15 +119,18 @@ model question {
 }
 
 model response {
-  responseId Int       @id @default(autoincrement()) @map("response_id")
-  questionId Int       @map("question_id")
-  userId     String    @map("user_id") @db.VarChar
-  content    String
-  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
-  deletedAt  DateTime? @map("deleted_at") @db.Timestamptz(6)
-  question   question  @relation(fields: [questionId], references: [questionId])
-  user       user      @relation(fields: [userId], references: [userId])
+  responseId      Int            @id @default(autoincrement()) @map("response_id")
+  coupleMissionId Int?           @map("couple_mission_id")
+  userId          String         @map("user_id") @db.VarChar
+  questionId      Int            @map("question_id")
+  content         String
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime       @default(now()) @map("updated_at") @db.Timestamptz(6)
+  deletedAt       DateTime?      @map("deleted_at") @db.Timestamptz(6)
+  coupleMission   coupleMission? @relation(fields: [coupleMissionId], references: [coupleMissionId], onDelete: Restrict)
+  question        question       @relation(fields: [questionId], references: [questionId])
+  user            user           @relation(fields: [userId], references: [userId])
 
+  @@unique([coupleMissionId, userId, questionId])
   @@index([userId, questionId], map: "index_response_user_id_question_id")
 }
