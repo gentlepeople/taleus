@@ -21,4 +21,15 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
 
     return createCoupleMissionsCount;
   }
+
+  async countCompletedByCoupleId(coupleId: number): Promise<number> {
+    const count = await this.databasePort.coupleMission.count({
+      where: {
+        coupleId,
+        deletedAt: null,
+        isCompleted: true,
+      },
+    });
+    return count;
+  }
 }
