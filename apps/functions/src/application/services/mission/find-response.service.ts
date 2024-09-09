@@ -20,4 +20,15 @@ export class FindResponseService implements FindResponseUsecase {
     );
     return findResponses;
   }
+
+  async findManyByCoupleMissionIdsAndUserIds(
+    coupleMissionIds: number[],
+    userIds: string[],
+  ): Promise<Response[]> {
+    const findResponses = await this.responseRepository.findManyByCoupleMissionIdsAndUserIds(
+      coupleMissionIds,
+      userIds,
+    );
+    return findResponses;
+  }
 }

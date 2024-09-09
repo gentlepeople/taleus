@@ -28,4 +28,21 @@ export class ResponseRepository implements IResponseRepository {
 
     return findResponses;
   }
+
+  async findManyByCoupleMissionIdsAndUserIds(
+    coupleMissionIds: number[],
+    userIds: string[],
+  ): Promise<Response[]> {
+    const findResponses = await this.databasePort.response.findMany({
+      where: {
+        coupleMissionId: {
+          in: coupleMissionIds,
+        },
+        userId: {
+          in: userIds,
+        },
+      },
+    });
+    return findResponses;
+  }
 }
