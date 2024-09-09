@@ -33,7 +33,6 @@ export class ScheduleDailyMissionService {
 
   async execute(): Promise<void> {
     try {
-      logger.log(`ScheduleDailyMissionService.execute: created.`);
       const currentTime = this.timePort.get();
       const currentHour = currentTime.getHours();
       const currentMinute = currentTime.getMinutes();
@@ -84,7 +83,7 @@ export class ScheduleDailyMissionService {
         );
       }
     } catch (e) {
-      logger.error(e);
+      throw new Error(`Error ScheduleDailyMissionService: ${e}`);
     }
   }
 }

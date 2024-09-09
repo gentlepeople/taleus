@@ -15,4 +15,8 @@ export interface ICoupleMissionRepository {
     userId: string,
     pagination: { take: number; skip: number },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]>;
+  findManyCompletedByUserIdSortByHashKey(
+    userId: string,
+    pagination: { take: number; skip: number },
+  ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]>;
 }

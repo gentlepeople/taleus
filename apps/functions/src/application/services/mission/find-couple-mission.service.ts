@@ -23,16 +23,30 @@ export class FindCoupleMissionService implements FindCoupleMissionUsecase {
 
   async findCompletedByUserId(
     userId: string,
-    pagination: {
-      take: number;
-      skip: number;
+    options: {
+      shuffle: boolean;
+      pagination: {
+        take: number;
+        skip: number;
+      };
     },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]> {
-    const findCompletedCoupleMissions =
-      await this.coupleMissionRepository.findManyCompletedByUserIdSortByCreatedAtDesc(
-        userId,
-        pagination,
-      );
+    const { shuffle, pagination } = options;
+    let findCompletedCoupleMissions = null;
+
+    if (shuffle) {
+      findCompletedCoupleMissions =
+        await this.coupleMissionRepository.findManyCompletedByUserIdSortByHashKey(
+          userId,
+          pagination,
+        );
+    } else {
+      findCompletedCoupleMissions =
+        await this.coupleMissionRepository.findManyCompletedByUserIdSortByCreatedAtDesc(
+          userId,
+          pagination,
+        );
+    }
     return findCompletedCoupleMissions;
   }
 }

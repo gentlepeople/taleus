@@ -1,5 +1,5 @@
 import { Field, ArgsType, ObjectType } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 import { PaginationArgs } from '@/common';
 import { Mission, Question, Response } from '@/domain';
@@ -10,6 +10,11 @@ export class MissionLogRequest extends PaginationArgs {
   @IsNotEmpty()
   @IsString()
   userId: string;
+
+  @Field(() => Boolean, { nullable: true, defaultValue: false })
+  @IsOptional()
+  @IsBoolean()
+  shuffle: boolean | null;
 }
 
 @ObjectType()
