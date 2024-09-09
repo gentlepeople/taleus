@@ -2,8 +2,14 @@ import { Module } from '@nestjs/common';
 
 import { UpdateNotificationTimeService } from './update-notification-time.service';
 
-import { UPDATE_NOTIFICATION_TIME_USECASE, IUserRepository, USER_REPOSITORY } from '@/ports';
-import { PubSubModule } from '@/providers';
+import {
+  UPDATE_NOTIFICATION_TIME_USECASE,
+  IUserRepository,
+  USER_REPOSITORY,
+  MESSAGING_PORT,
+  MessagingPort,
+} from '@/ports';
+import { MessagingModule } from '@/providers';
 import { UserRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -14,14 +20,14 @@ const InjectRepositories = [
 ];
 
 @Module({
-  imports: [PubSubModule],
+  imports: [MessagingModule],
   providers: [
     ...InjectRepositories,
     {
-      inject: [USER_REPOSITORY],
+      inject: [USER_REPOSITORY, MESSAGING_PORT],
       provide: UPDATE_NOTIFICATION_TIME_USECASE,
-      useFactory: (userRepository: IUserRepository) =>
-        new UpdateNotificationTimeService(userRepository),
+      useFactory: (userRepository: IUserRepository, messagingPort: MessagingPort) =>
+        new UpdateNotificationTimeService(userRepository, messagingPort),
     },
   ],
   exports: [UPDATE_NOTIFICATION_TIME_USECASE],

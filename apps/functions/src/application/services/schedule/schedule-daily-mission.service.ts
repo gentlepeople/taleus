@@ -1,18 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { logger } from 'firebase-functions/v2';
 
-import { randomElement } from '../../../common';
-
+import { randomElement } from '@/common';
 import {
   COUPLE_MISSION_REPOSITORY,
   COUPLE_REPOSITORY,
   ICoupleMissionRepository,
   ICoupleRepository,
   IMissionRepository,
+  MESSAGING_PORT,
   MISSION_REPOSITORY,
   TIME_PORT,
   TimePort,
+  MessagingPort,
 } from '@/ports';
+import { EnumPushNotificationTemplate } from '@/providers';
 
 @Injectable()
 export class ScheduleDailyMissionService {
@@ -25,6 +27,8 @@ export class ScheduleDailyMissionService {
     private readonly coupleMissionRepository: ICoupleMissionRepository,
     @Inject(TIME_PORT)
     private readonly timePort: TimePort,
+    @Inject(MESSAGING_PORT)
+    private readonly messagingPort: MessagingPort,
   ) {}
 
   async execute(): Promise<void> {
@@ -40,11 +44,13 @@ export class ScheduleDailyMissionService {
         );
 
       const coupleWithCompletedMissionsMap = new Map<number, number[]>();
-      findCouples.forEach(({ coupleId, coupleMission }) => {
+      const userIds = [];
+      findCouples.forEach(({ coupleId, coupleMission, inviteeId, inviterId }) => {
         coupleWithCompletedMissionsMap.set(
           coupleId,
           coupleMission.map(({ missionId }) => missionId),
         );
+        userIds.push(inviteeId, inviterId);
       });
       const allMissions = await this.missionRepository.findAll();
 
@@ -71,6 +77,11 @@ export class ScheduleDailyMissionService {
           `ScheduleDailyMissionService.execute: ${coupleMissionsToCreate.length} created.`,
         );
         await this.coupleMissionRepository.createMany(coupleMissionsToCreate);
+        await this.messagingPort.sendPushNotification(
+          userIds,
+          EnumPushNotificationTemplate.DAILY_MISSION_ALARM,
+          {},
+        );
       }
     } catch (e) {
       logger.error(e);
