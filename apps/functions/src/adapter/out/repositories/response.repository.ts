@@ -67,4 +67,16 @@ export class ResponseRepository implements IResponseRepository {
     });
     return count;
   }
+
+  async updateContent(responseId: number, content: string): Promise<Response> {
+    const updateResponse = await this.databasePort.response.update({
+      where: {
+        responseId,
+      },
+      data: {
+        content,
+      },
+    });
+    return updateResponse;
+  }
 }
