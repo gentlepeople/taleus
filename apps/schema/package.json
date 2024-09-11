@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "apollo:export": "apollo client:download-schema --endpoint=http://127.0.0.1:5001/taleus-local/asia-northeast3/graphql ./schema.graphql",
+    "apollo:export": "FUNCTIONS_GRAPHQL_URL=$(grep FUNCTIONS_GRAPHQL_URL .env | cut -d '=' -f2) && apollo client:download-schema --endpoint=$FUNCTIONS_GRAPHQL_URL ./schema.graphql",
+    "studio:push": "APOLLO_KEY=$(grep APOLLO_KEY .env | cut -d '=' -f2) && pnpm rover graph publish taleus@current --schema ./schema.graphql",
     "build": "pnpm prisma generate && pnpm tsc && cp -R ./generated ./dist/",
     "build:noEngine": "PRISMA_NO_ENGINE=true pnpm prisma generate --no-engine && pnpm tsc && cp -R ./generated ./dist/",
     "build:watch": "prisma generate --watch",
@@ -21,9 +22,10 @@
     "type-check": "tsc --pretty --noEmit"
   },
   "devDependencies": {
-    "@prisma/client": "5.9.0",
+    "@apollo/rover": "0.26.2",
     "@gentlepeople/eslint-plugin": "workspace:*",
     "@gentlepeople/tsconfig": "workspace:*",
+    "@prisma/client": "5.9.0",
     "apollo": "2.34.0",
     "prisma": "5.9.0",
     "prisma-dbml-generator": "0.10.0",

@@ -6,7 +6,6 @@ import { GlobalOptions } from 'firebase-functions/v2';
 import { onRequest } from 'firebase-functions/v2/https';
 
 import { createGraphQLNestServer } from './app.bootstrap';
-import { ScheduleDailyMissionService } from './application/services/schedule';
 
 admin.initializeApp();
 
@@ -37,13 +36,13 @@ export const graphql = onRequest(async (req, resp) => {
   return graphqlNestServer(req, resp);
 });
 
-export const schedule = functions.scheduler.onSchedule('* * * * * *', async (context) => {
-  if (!graphqlNestServer) {
-    const { express, app } = await createGraphQLNestServer();
-    graphqlNestServer = express;
-    nestAppContext = app;
-  }
+// export const schedule = functions.scheduler.onSchedule('* * * * * *', async (context) => {
+//   if (!graphqlNestServer) {
+//     const { express, app } = await createGraphQLNestServer();
+//     graphqlNestServer = express;
+//     nestAppContext = app;
+//   }
 
-  const scheduleDailyMissionService = nestAppContext.get(ScheduleDailyMissionService);
-  await scheduleDailyMissionService.execute();
-});
+//   const scheduleDailyMissionService = nestAppContext.get(ScheduleDailyMissionService);
+//   await scheduleDailyMissionService.execute();
+// });

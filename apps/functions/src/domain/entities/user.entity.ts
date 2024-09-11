@@ -30,8 +30,8 @@ export class User {
   @Field(() => String)
   personalCode: string;
 
-  @Field(() => String)
-  notificationTime: string;
+  @Field(() => String, { nullable: true })
+  notificationTime?: string;
 
   @Field(() => Date)
   createdAt: Date;

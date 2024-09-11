@@ -1,7 +1,10 @@
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective, GraphQLSchema } from 'graphql';
 import { ProviderModule } from 'src/adapter/out/providers';
@@ -10,10 +13,10 @@ import * as resolvers from './adapter/in';
 import { ServiceModule } from './application/services';
 
 import {
-  AuthGuard,
   GlobalExceptionProvider,
   LoggerMiddleware,
   upperDirectiveTransformer,
+  isEmulator,
 } from '@/common';
 
 @Module({
@@ -41,7 +44,16 @@ import {
             }),
           ],
         },
-        plugins: [ApolloServerPluginLandingPageLocalDefault()],
+        plugins: [
+          ...(isEmulator
+            ? [ApolloServerPluginLandingPageLocalDefault()]
+            : [
+                ApolloServerPluginLandingPageProductionDefault({
+                  graphRef: process.env.APOLLO_GRAPH_REF,
+                  embed: true,
+                }),
+              ]),
+        ],
       }),
     }),
   ],
@@ -50,10 +62,6 @@ import {
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionProvider,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
     },
     ...Object.values(resolvers),
   ],
