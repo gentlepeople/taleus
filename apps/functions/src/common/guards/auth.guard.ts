@@ -4,6 +4,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { logger } from 'firebase-functions/v2';
 
 import { DEFAULT_LOCAL_USER_ID } from '../assets';
+import { isEmulator } from '../helpers';
 
 import { FirebaseAdminAuthAdapter } from '@/providers';
 
@@ -24,8 +25,15 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Token not found');
     }
 
-    if (process.env.FUNCTIONS_EMULATOR) {
+    if (isEmulator) {
       request.user = { uid: DEFAULT_LOCAL_USER_ID };
+      return true;
+    }
+
+    const [uid, token] = idToken.split(':');
+
+    if (token == process.env.GOOGLE_SECRET_MASTER_ID_TOKEN) {
+      request.user = { uid };
       return true;
     }
 

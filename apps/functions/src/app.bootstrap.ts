@@ -14,7 +14,7 @@ import { Logger } from 'nestjs-pino';
 
 import { AppModule } from './app.module';
 
-import { GlobalExceptionProvider } from '@/common';
+import { GlobalExceptionProvider, isEmulator } from '@/common';
 
 export const createGraphQLNestServer = async (): Promise<{
   express: Express;
@@ -43,7 +43,7 @@ export const createGraphQLNestServer = async (): Promise<{
 
     // validation pipe
     const validationPipeOptions: ValidationPipeOptions = {
-      enableDebugMessages: Boolean(true),
+      enableDebugMessages: isEmulator,
       skipUndefinedProperties: false,
       skipNullProperties: false,
       skipMissingProperties: false,

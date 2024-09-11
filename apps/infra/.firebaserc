@@ -1,5 +1,6 @@
 {
   "projects": {
-    "local": "taleus-local"
+    "local": "taleus-local",
+    "master": "taleus-c2609"
   }
 }

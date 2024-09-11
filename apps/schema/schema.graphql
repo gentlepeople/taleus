@@ -35,6 +35,8 @@ directive @connection(
 ) on FIELD
 
 type Couple {
+  """The number of missions this couple has completed."""
+  completedMissionCount: Int!
   coupleId: Int!
   createdAt: DateTime!
   inviteeId: String!
@@ -60,14 +62,59 @@ enum EnumGender {
   UNKNOWN
 }
 
+enum EnumMissionCategory {
+  CHALLENGES
+  EMOTIONS
+  FAMILY
+  FUTURE
+  GROWTH
+  HUMOR
+  MEMORIES
+  PREFERENCES
+  RELATIONSHIP
+  ROMANCE
+  UNDERSTANDING
+  VALUES
+}
+
 enum EnumOAuthProviderType {
   KAKAO
+}
+
+enum EnumResponseType {
+  MULTIPLE_CHOICE
+  NUMBER
+  SINGLE_CHOICE
+  TEXT
+  YES_NO
 }
 
 type KakaoLoginResponse {
   """Custom token of firebase authentication user.(only if success)"""
   customToken: String!
   userId: String!
+}
+
+type Mission {
+  category: EnumMissionCategory!
+  missionId: Int!
+  questions: [Question!]!
+  title: String!
+}
+
+type MissionLogMissionData {
+  data: [MissionLogQuestionData!]!
+  mission: Mission!
+}
+
+type MissionLogQuestionData {
+  partnerResponse: Response!
+  question: Question!
+  userResponse: Response!
+}
+
+type MissionLogResponse {
+  data: [MissionLogMissionData!]!
 }
 
 type Mutation {
@@ -82,6 +129,20 @@ type Mutation {
 
   """Register a couple"""
   registerCouple(inviteePersonalCode: String!, inviterId: String!): RegisterCoupleResponse!
+  submitMissionResponse(data: [SubmitMissionResponseRequestData!]!): SubmitMissionResponseResponse!
+
+  """
+  Updates the start date of a couple's relationship to a new specified date.
+  """
+  updateCoupleStartDate(coupleId: Int!, coupleStartDate: DateTime!): UpdateCoupleStartDateResponse!
+  updateNotificationTime(
+    """
+    Notification time represented as formatted string, e.g., "08:00"
+    """
+    notificationTime: String!
+    userId: String!
+  ): UpdateNotificationTimeResponse!
+  updateResponse(newContent: String!, responseId: Int!, userId: String!): UpdateResponseResponse!
 
   """
   Updates a user's details based on the provided userId and input fields. Only the fields specified in the input will be updated.
@@ -91,15 +152,78 @@ type Mutation {
 
 type Query {
   couple(coupleId: Int!): Couple
+  mission(missionId: Int!): Mission
+  missionLog(
+    shuffle: Boolean = false
+
+    """Determines how many items to skip before retrieving data."""
+    skip: Int = null
+
+    """The number of items to retrieve per page."""
+    take: Int = null
+    userId: String!
+  ): MissionLogResponse!
+  todayMission(userId: String!): TodayMissionResponse
 
   """get one user by user id."""
   user(userId: String!): User
+}
+
+type Question {
+  content: String!
+  questionId: Int!
+  questionOrder: Int!
+  responseType: EnumResponseType!
 }
 
 type RegisterCoupleResponse {
   code: String
   message: String
   success: Boolean!
+}
+
+type Response {
+  content: String!
+  coupleMissionId: Int
+  createdAt: DateTime!
+  questionId: Int!
+  responseId: Int!
+  userId: String!
+}
+
+input SubmitMissionResponseRequestData {
+  content: String!
+  coupleMissionId: Int
+  questionId: Int!
+  userId: String!
+}
+
+type SubmitMissionResponseResponse {
+  success: Boolean!
+}
+
+type TodayMissionResponse {
+  coupleCompleted: Boolean!
+  mission: Mission!
+  partnerStatus: TodayMissionStatus!
+  userStatus: TodayMissionStatus!
+}
+
+type TodayMissionStatus {
+  isCompleted: Boolean!
+  responses: [Response!]!
+}
+
+type UpdateCoupleStartDateResponse {
+  couple: Couple!
+}
+
+type UpdateNotificationTimeResponse {
+  user: User!
+}
+
+type UpdateResponseResponse {
+  response: Response!
 }
 
 """
@@ -127,6 +251,7 @@ type User {
   """Determine if the user is currently in a couple."""
   isCoupled: Boolean!
   nickname: String!
+  notificationTime: String!
   oauthProviderType: EnumOAuthProviderType!
 
   """

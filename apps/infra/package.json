@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "docker": "dotenv -e .env -- bash -c 'echo $EMULATOR_SERVICE_ACCOUNT | jq \".\" > ../functions/service_account.json' && docker-compose down -v && docker-compose up -d",
+    "docker": "dotenv -e .env -- bash -c 'echo $EMULATOR_SERVICE_ACCOUNT | jq \".\" > service_account.json' && docker-compose down -v && docker-compose up -d",
     "emulator:watch": "docker-compose logs firebase-tools -f",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
     "seed": "pnpm -C ../schema migrate:reset && pnpm -C ../scripts seed"
