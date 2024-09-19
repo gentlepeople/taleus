@@ -51,10 +51,16 @@ export class CoupleRepository implements ICoupleRepository {
     inviteeId: string,
   ): Promise<Couple | null> {
     const createCouple = await this.databasePort.$transaction(async (tx) => {
+      const { coupleStartDate: inviterCoupleStartDate } = await tx.user.findUnique({
+        where: {
+          userId: inviterId,
+        },
+      });
       const createCouple = await tx.couple.create({
         data: {
           inviterId,
           inviteeId,
+          startDate: inviterCoupleStartDate,
         },
       });
       const { coupleId } = createCouple;

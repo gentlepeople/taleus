@@ -9,6 +9,7 @@ export interface IUserRepository {
     userId: string;
     nickname: string;
     email: string;
+    emailVerified: boolean;
     profileImageUrl: string;
     birthday: Date;
     gender: EnumGender;
@@ -25,15 +26,17 @@ export interface IUserRepository {
     data: {
       nickname?: string;
       profileImageUrl?: string;
-      birthday?: Date;
       gender?: EnumGender;
+      birthday?: Date;
+      coupleStartDate?: Date;
     },
   ): Promise<boolean>;
-  updateNotificationTime(userId: string, notificationTime: Date): Promise<void>;
+  updateCoupleStartDate(userId: string, coupleStartDate: Date): Promise<boolean>;
+  updateNotificationTime(userId: string, notificationTime: Date): Promise<boolean>;
   updateNotificationTimeWithPartner(
     userId: string,
     partnerId: string,
     notificationTime: Date,
-  ): Promise<void>;
+  ): Promise<boolean>;
   softDeleteOne(userId: string): Promise<boolean>;
 }

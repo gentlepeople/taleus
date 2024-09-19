@@ -62,6 +62,7 @@ export class UserRepository implements IUserRepository {
   async createOne(data: {
     userId: string;
     email: string;
+    emailVerified: boolean;
     profileImageUrl: string;
     nickname: string;
     birthday: Date;
@@ -86,6 +87,7 @@ export class UserRepository implements IUserRepository {
       profileImageUrl?: string;
       birthday?: Date;
       gender?: EnumGender;
+      coupleStartDate?: Date;
     },
   ): Promise<boolean> {
     await this.databasePort.user.update({
@@ -141,7 +143,19 @@ export class UserRepository implements IUserRepository {
     return this.enumConvertAndAnonymizeUser(findUser);
   }
 
-  async updateNotificationTime(userId: string, notificationTime: Date): Promise<void> {
+  async updateCoupleStartDate(userId: string, coupleStartDate: Date): Promise<boolean> {
+    await this.databasePort.user.update({
+      where: {
+        userId,
+      },
+      data: {
+        coupleStartDate,
+      },
+    });
+    return true;
+  }
+
+  async updateNotificationTime(userId: string, notificationTime: Date): Promise<boolean> {
     await this.databasePort.user.update({
       where: {
         userId,
@@ -150,13 +164,14 @@ export class UserRepository implements IUserRepository {
         notificationTime,
       },
     });
+    return true;
   }
 
   async updateNotificationTimeWithPartner(
     userId: string,
     partnerId: string,
     notificationTime: Date,
-  ): Promise<void> {
+  ): Promise<boolean> {
     await this.databasePort.user.updateMany({
       where: {
         userId: {
@@ -167,5 +182,6 @@ export class UserRepository implements IUserRepository {
         notificationTime,
       },
     });
+    return true;
   }
 }
