@@ -32,6 +32,12 @@ export class UpdateUserInputRequest {
     defaultValue: null,
   })
   birthday: Date | null;
+
+  @Field(() => Date, {
+    nullable: true,
+    defaultValue: null,
+  })
+  coupleStartDate: Date | null;
 }
 
 @ArgsType()

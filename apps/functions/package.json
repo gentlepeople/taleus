@@ -39,6 +39,7 @@
     "@onesignal/node-onesignal": "5.0.0-alpha-01",
     "apollo-server-core": "3.11.0",
     "apollo-server-errors": "3.3.1",
+    "apple-signin-auth": "1.7.6",
     "axios": "1.7.5",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
@@ -48,6 +49,7 @@
     "firebase": "9.23.0",
     "firebase-admin": "11.10.1",
     "firebase-functions": "4.4.1",
+    "google-auth-library": "9.14.1",
     "graphql": "16.8.1",
     "graphql-query-complexity": "0.12.0",
     "graphql-scalars": "1.22.2",
@@ -64,7 +66,6 @@
     "ws": "8.18.0"
   },
   "devDependencies": {
-    "dotenv-cli": "7.4.2",
     "@gentlepeople/eslint-plugin": "workspace:*",
     "@gentlepeople/tsconfig": "workspace:*",
     "@nestjs/cli": "10.4.1",
@@ -83,6 +84,7 @@
     "@types/string-format": "2.0.3",
     "@types/supertest": "2.0.12",
     "apollo": "2.34.0",
+    "dotenv-cli": "7.4.2",
     "eslint": "8.43.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "3.5.5",

@@ -7,9 +7,10 @@ export interface UpdateUserUsecase {
     userId: string,
     data: Partial<{
       nickname: string;
+      gender: EnumGender;
       profileImageUrl: string;
       birthday: Date;
-      gender: EnumGender;
+      coupleStartDate: Date;
     }>,
   ): Promise<void>;
 }

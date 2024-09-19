@@ -1,8 +1,13 @@
 import { Module } from '@nestjs/common';
 
+import { AppleLoginService } from './apple-login.service';
+import { GoogleLoginService } from './google-login.service';
 import { KakaoLoginService } from './kakao-login.service';
 
 import {
+  APPLE_AUTH_PORT,
+  APPLE_LOGIN_USECASE,
+  AppleAuthPort,
   KAKAO_LOGIN_USECASE,
   AUTHENTICATION_PORT,
   AuthenticationPort,
@@ -12,8 +17,19 @@ import {
   USER_REPOSITORY,
   TimePort,
   TIME_PORT,
+  GOOGLE_AUTH_PORT,
+  GOOGLE_LOGIN_USECASE,
+  GoogleAuthPort,
+  CONFIG_PORT,
 } from '@/ports';
-import { AuthenticationModule, KakaoAuthModule } from '@/providers';
+import {
+  AppleAuthModule,
+  AuthenticationModule,
+  ConfigModule,
+  GoogleAuthModule,
+  KakaoAuthModule,
+  NestjsConfigAdapter,
+} from '@/providers';
 import { UserRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -24,7 +40,21 @@ const InjectRepositories = [
 ];
 
 @Module({
-  imports: [AuthenticationModule, KakaoAuthModule],
+  imports: [
+    AuthenticationModule,
+    KakaoAuthModule,
+    GoogleAuthModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [CONFIG_PORT],
+      useFactory: (configAdapter: NestjsConfigAdapter) => ({
+        option: {
+          GOOGLE_AUTH_CLIENT_ID: configAdapter.get('GOOGLE_AUTH_CLIENT_ID'),
+          GOOGLE_AUTH_CLIENT_SECRET: configAdapter.get('GOOGLE_AUTH_CLIENT_SECRET'),
+        },
+      }),
+    }),
+    AppleAuthModule,
+  ],
   providers: [
     ...InjectRepositories,
     {
@@ -37,7 +67,27 @@ const InjectRepositories = [
         timePort: TimePort,
       ) => new KakaoLoginService(userRepository, authenticationPort, kakaoAuthPort, timePort),
     },
+    {
+      inject: [USER_REPOSITORY, AUTHENTICATION_PORT, GOOGLE_AUTH_PORT, TIME_PORT],
+      provide: GOOGLE_LOGIN_USECASE,
+      useFactory: (
+        userRepository: IUserRepository,
+        authenticationPort: AuthenticationPort,
+        googleAuthPort: GoogleAuthPort,
+        timePort: TimePort,
+      ) => new GoogleLoginService(userRepository, authenticationPort, googleAuthPort, timePort),
+    },
+    {
+      inject: [USER_REPOSITORY, AUTHENTICATION_PORT, APPLE_AUTH_PORT, TIME_PORT],
+      provide: APPLE_LOGIN_USECASE,
+      useFactory: (
+        userRepository: IUserRepository,
+        authenticationPort: AuthenticationPort,
+        appleAuthPort: AppleAuthPort,
+        timePort: TimePort,
+      ) => new AppleLoginService(userRepository, authenticationPort, appleAuthPort, timePort),
+    },
   ],
-  exports: [KAKAO_LOGIN_USECASE],
+  exports: [KAKAO_LOGIN_USECASE, GOOGLE_LOGIN_USECASE, APPLE_LOGIN_USECASE],
 })
 export class AuthServiceModule {}

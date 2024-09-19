@@ -1,8 +1,9 @@
 import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
 import { Inject, Injectable } from '@nestjs/common';
-import isNull from 'lodash/isNull';
 
-import { DEFAULT_PROFILE_IMAGE_URL, generateRandomCode } from '@/common';
+import { findOrSaveUserWithProvider } from './auth-service.method';
+
+import { DEFAULT_PROFILE_IMAGE_URL } from '@/common';
 import {
   AUTHENTICATION_PORT,
   AuthenticationPort,
@@ -37,48 +38,19 @@ export class KakaoLoginService implements KakaoLoginUsecase {
       nickname: kakaoAccount?.profile?.nickname || '',
       profileImageUrl: kakaoAccount?.profile.profile_image_url || DEFAULT_PROFILE_IMAGE_URL,
       email: kakaoAccount?.email || '',
-      birthday: this.timePort.get(kakaoAccount?.birthday),
+      emailVerified: kakaoAccount?.is_email_verified || false,
+      birthday: kakaoAccount?.birthday ? this.timePort.get(kakaoAccount?.birthday) : null,
       gender: this.getEnumGenderFromString(kakaoAccount?.gender),
     };
 
-    const userId = await this.findOrSaveUserWithProvider(
+    const userId = await findOrSaveUserWithProvider(this.userRepository, this.authenticationPort, {
       oauthProviderId,
-      EnumOAuthProviderType.KAKAO,
-      userProperties,
-    );
+      oauthProviderType: EnumOAuthProviderType.KAKAO,
+      oauthUserProperties: userProperties,
+    });
 
     const customToken = await this.authenticationPort.createCustomToken(userId);
     return { userId, customToken };
-  }
-
-  private async findOrSaveUserWithProvider(
-    oauthProviderId: string,
-    oauthProviderType: EnumOAuthProviderType,
-    oauthUserProperties: {
-      nickname: string;
-      email: string;
-      profileImageUrl: string;
-      birthday: Date;
-      gender: EnumGender;
-    },
-  ): Promise<string> {
-    const findUser = await this.userRepository.findOneByOAuthProviderId(oauthProviderId);
-
-    const userNotFound = isNull(findUser);
-    if (userNotFound) {
-      const { uid: authenticationUid } = await this.authenticationPort.createUser();
-
-      const createUserId = await this.saveUser({
-        ...oauthUserProperties,
-        userId: authenticationUid,
-        oauthProviderId,
-        oauthProviderType,
-      });
-
-      return createUserId;
-    }
-    const { userId: findUserId } = findUser;
-    return findUserId;
   }
 
   private getEnumGenderFromString(genderString: string): EnumGender {
@@ -90,49 +62,5 @@ export class KakaoLoginService implements KakaoLoginUsecase {
       default:
         return EnumGender.UNKNOWN;
     }
-  }
-
-  private async saveUser(userProperties: {
-    userId: string;
-    email: string;
-    profileImageUrl: string;
-    nickname: string;
-    birthday: Date;
-    gender: EnumGender;
-    oauthProviderType: EnumOAuthProviderType;
-    oauthProviderId: string;
-  }): Promise<string> {
-    const uniquePersonalCode = await this.generateUniqueUserPersonalCodeWithCheck();
-
-    const { userId: createUserId } = await this.userRepository.createOne({
-      ...userProperties,
-      personalCode: uniquePersonalCode,
-    });
-    return createUserId;
-  }
-
-  private async generateUniqueUserPersonalCodeWithCheck(
-    length: number = 8,
-    maxAttempts: number = 10,
-  ): Promise<string> {
-    let code: string;
-    let attempts = 0;
-
-    while (attempts < maxAttempts) {
-      code = generateRandomCode(length);
-
-      if (await this.isUserPersonalCodeUnique(code)) {
-        return code;
-      }
-
-      attempts++;
-    }
-
-    throw new Error(`Failed to generate a unique user personalCode after ${maxAttempts} attempts.`);
-  }
-
-  private async isUserPersonalCodeUnique(code: string): Promise<boolean> {
-    const existingUser = await this.userRepository.findOneByPersonalCode(code);
-    return !existingUser; // Return true if no user with the code exists
   }
 }
