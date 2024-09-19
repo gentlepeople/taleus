@@ -22,6 +22,7 @@ import {
   REGISTER_COUPLE_USECASE,
   FIND_COUPLE_USECASE,
   UPDATE_COUPLE_START_DATE_USECASE,
+  ICoupleRepository,
 } from '@/ports';
 import { AuthenticationModule } from '@/providers';
 import { CoupleRepository, UserRepository } from '@/repositories';
@@ -47,9 +48,10 @@ const InjectRepositories = [
       useFactory: (userRepository: IUserRepository) => new FindUserService(userRepository),
     },
     {
-      inject: [USER_REPOSITORY],
+      inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
       provide: UPDATE_USER_USECASE,
-      useFactory: (userRepository: IUserRepository) => new UpdateUserService(userRepository),
+      useFactory: (userRepository: IUserRepository, coupleRepository: ICoupleRepository) =>
+        new UpdateUserService(userRepository, coupleRepository),
     },
     {
       inject: [USER_REPOSITORY, AUTHENTICATION_PORT],
@@ -60,25 +62,25 @@ const InjectRepositories = [
     {
       inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
       provide: REGISTER_COUPLE_USECASE,
-      useFactory: (userRepository: IUserRepository, coupleRepository: CoupleRepository) =>
+      useFactory: (userRepository: IUserRepository, coupleRepository: ICoupleRepository) =>
         new RegisterCoupleService(userRepository, coupleRepository),
     },
     {
       inject: [COUPLE_REPOSITORY],
       provide: FIND_COUPLE_USECASE,
-      useFactory: (coupleRepository: CoupleRepository) => new FindCoupleService(coupleRepository),
+      useFactory: (coupleRepository: ICoupleRepository) => new FindCoupleService(coupleRepository),
     },
     {
       inject: [USER_REPOSITORY, COUPLE_REPOSITORY],
       provide: REGISTER_COUPLE_USECASE,
-      useFactory: (userRepository: IUserRepository, CoupleRepository: CoupleRepository) =>
-        new RegisterCoupleService(userRepository, CoupleRepository),
+      useFactory: (userRepository: IUserRepository, coupleRepository: ICoupleRepository) =>
+        new RegisterCoupleService(userRepository, coupleRepository),
     },
     {
-      inject: [COUPLE_REPOSITORY],
+      inject: [COUPLE_REPOSITORY, USER_REPOSITORY],
       provide: UPDATE_COUPLE_START_DATE_USECASE,
-      useFactory: (CoupleRepository: CoupleRepository) =>
-        new UpdateCoupleStartDateService(CoupleRepository),
+      useFactory: (coupleRepository: ICoupleRepository, userRepository: IUserRepository) =>
+        new UpdateCoupleStartDateService(coupleRepository, userRepository),
     },
   ],
   exports: [

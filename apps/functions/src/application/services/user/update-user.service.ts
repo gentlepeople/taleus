@@ -3,13 +3,21 @@ import { UserInputError } from '@nestjs/apollo';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { removeNullFields } from '@/common';
-import { UpdateUserUsecase, IUserRepository, USER_REPOSITORY } from '@/ports';
+import {
+  UpdateUserUsecase,
+  IUserRepository,
+  USER_REPOSITORY,
+  COUPLE_REPOSITORY,
+  ICoupleRepository,
+} from '@/ports';
 
 @Injectable()
 export class UpdateUserService implements UpdateUserUsecase {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
+    @Inject(COUPLE_REPOSITORY)
+    private readonly coupleRepository: ICoupleRepository,
   ) {}
 
   async execute(
@@ -17,8 +25,9 @@ export class UpdateUserService implements UpdateUserUsecase {
     data: Partial<{
       nickname: string;
       profileImageUrl: string;
-      birthday: Date;
       gender: EnumGender;
+      birthday: Date;
+      coupleStartDate: Date;
     }>,
   ): Promise<void> {
     const sanitizedUserData = removeNullFields(data);
@@ -29,5 +38,16 @@ export class UpdateUserService implements UpdateUserUsecase {
     }
 
     await this.userRepository.updateOne(userId, sanitizedUserData);
+
+    const findCouple = await this.coupleRepository.findOneByUserId(userId);
+    if (findCouple && data.coupleStartDate) {
+      const { coupleId, inviterId, inviteeId } = findCouple;
+      await this.coupleRepository.updateOne(coupleId, {
+        startDate: data.coupleStartDate,
+      });
+
+      const partnerId = userId === inviterId ? inviteeId : inviterId;
+      await this.userRepository.updateCoupleStartDate(partnerId, data.coupleStartDate);
+    }
   }
 }

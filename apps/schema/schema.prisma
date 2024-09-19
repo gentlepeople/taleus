@@ -24,9 +24,11 @@ model user {
   userId                                                String               @id @map("user_id") @db.VarChar
   nickname                                              String               @db.VarChar
   email                                                 String               @db.VarChar
+  emailVerified                                         Boolean              @map("email_verified")
   profileImageUrl                                       String               @map("profile_image_url") @db.VarChar
   gender                                                String               @db.VarChar
   birthday                                              DateTime             @db.Timestamp(6)
+  coupleStartDate                                       DateTime?            @map("couple_start_date") @db.Timestamp(6)
   oauthProviderType                                     String               @map("oauth_provider_type") @db.VarChar
   oauthProviderId                                       String               @map("oauth_provider_id") @db.VarChar
   personalCode                                          String               @unique @map("personal_code") @db.VarChar

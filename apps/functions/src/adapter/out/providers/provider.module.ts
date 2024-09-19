@@ -1,7 +1,18 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 
-import { AuthenticationModule, ConfigModule, DatabaseModule, KakaoAuthModule, TimeModule } from '.';
+import {
+  AppleAuthModule,
+  AuthenticationModule,
+  ConfigModule,
+  DatabaseModule,
+  GoogleAuthModule,
+  KakaoAuthModule,
+  NestjsConfigAdapter,
+  TimeModule,
+} from '.';
+
+import { CONFIG_PORT } from '@/ports';
 
 const providerModules = [
   LoggerModule.forRoot(),
@@ -10,6 +21,17 @@ const providerModules = [
   DatabaseModule,
   AuthenticationModule,
   KakaoAuthModule,
+  GoogleAuthModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [CONFIG_PORT],
+    useFactory: (configAdapter: NestjsConfigAdapter) => ({
+      option: {
+        GOOGLE_AUTH_CLIENT_ID: configAdapter.get('GOOGLE_AUTH_CLIENT_ID'),
+        GOOGLE_AUTH_CLIENT_SECRET: configAdapter.get('GOOGLE_AUTH_CLIENT_SECRET'),
+      },
+    }),
+  }),
+  AppleAuthModule,
 ];
 
 @Module({
