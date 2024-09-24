@@ -11,7 +11,7 @@ export class ResponseRepository implements IResponseRepository {
   ) {}
 
   async findManyByCoupleMissionIdAndUserId(
-    coupleMissionId: number,
+    coupleMissionId: bigint,
     userId: string,
   ): Promise<Response[]> {
     const findResponses = await this.databasePort.response.findMany({
@@ -30,7 +30,7 @@ export class ResponseRepository implements IResponseRepository {
   }
 
   async findManyByCoupleMissionIdsAndUserIds(
-    coupleMissionIds: number[],
+    coupleMissionIds: bigint[],
     userIds: string[],
   ): Promise<Response[]> {
     const findResponses = await this.databasePort.response.findMany({
@@ -49,8 +49,8 @@ export class ResponseRepository implements IResponseRepository {
   async createMany(
     data: {
       userId: string;
-      questionId: number;
-      coupleMissionId?: number;
+      questionId: bigint;
+      coupleMissionId?: bigint;
       content: string;
     }[],
   ): Promise<void> {
@@ -59,7 +59,7 @@ export class ResponseRepository implements IResponseRepository {
     });
   }
 
-  async countByCoupleMissionId(coupleMissionId: number): Promise<number> {
+  async countByCoupleMissionId(coupleMissionId: bigint): Promise<number> {
     const count = await this.databasePort.response.count({
       where: {
         coupleMissionId,
@@ -68,7 +68,7 @@ export class ResponseRepository implements IResponseRepository {
     return count;
   }
 
-  async updateContent(responseId: number, content: string): Promise<Response> {
+  async updateContent(responseId: bigint, content: string): Promise<Response> {
     const updateResponse = await this.databasePort.response.update({
       where: {
         responseId,

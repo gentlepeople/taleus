@@ -8,21 +8,21 @@ export interface ICoupleRepository {
     inviteeId: string,
   ): Promise<Couple | null>;
   findOneByUserId(userId: string): Promise<Couple | null>;
-  findOneByCoupleId(coupleId: number): Promise<Couple | null>;
+  findOneByCoupleId(coupleId: bigint): Promise<Couple | null>;
   updateOne(
-    coupleId: number,
+    coupleId: bigint,
     data: {
       startDate: Date;
     },
   ): Promise<boolean>;
-  findManyWithoutActiveMissionsByNotificationTime(
+  findManyRequiredMissionByNotificationTimeWithLatestCompletedMission(
     hour: number,
     minute: number,
   ): Promise<
     (Couple & {
-      coupleMission: {
-        missionId: number;
-      }[];
+      latestCoupleMission: {
+        missionId: bigint;
+      };
     })[]
   >;
 }

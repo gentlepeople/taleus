@@ -1,11 +1,12 @@
 import { EnumResponseType, question } from '@gentlepeople/taleus-schema';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GraphQLBigInt } from 'graphql-scalars';
 import isNull from 'lodash/isNull';
 
 @ObjectType()
 export class Question {
-  @Field(() => Int)
-  questionId: number;
+  @Field(() => GraphQLBigInt)
+  questionId: bigint;
 
   @Field(() => Int)
   questionOrder: number;

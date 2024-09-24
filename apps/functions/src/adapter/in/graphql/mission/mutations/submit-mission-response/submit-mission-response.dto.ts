@@ -1,5 +1,8 @@
-import { ObjectType, Field, ArgsType, InputType, Int } from '@nestjs/graphql';
-import { IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ObjectType, Field, ArgsType, InputType } from '@nestjs/graphql';
+import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { GraphQLBigInt } from 'graphql-scalars';
+
+import { IsBigInt } from '@/common';
 
 @InputType()
 export class SubmitMissionResponseRequestData {
@@ -8,15 +11,15 @@ export class SubmitMissionResponseRequestData {
   @IsString()
   userId: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   @IsDefined()
-  @IsNumber()
-  questionId: number;
+  @IsBigInt()
+  questionId: bigint;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => GraphQLBigInt, { nullable: true })
   @IsOptional()
-  @IsNumber()
-  coupleMissionId?: number;
+  @IsBigInt()
+  coupleMissionId?: bigint;
 
   @Field(() => String)
   @IsNotEmpty()

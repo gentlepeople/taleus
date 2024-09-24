@@ -1,9 +1,9 @@
 import { EnumPushNotificationTemplate } from '@/providers';
 
-export const MESSAGING_PORT = Symbol('MESSAGING_PORT');
+export const PUSH_NOTIFICATION_PORT = Symbol('PUSH_NOTIFICATION_PORT');
 
-export interface MessagingPort {
-  sendPushNotification(
+export interface PushNotificationPort {
+  send(
     userIds: string[],
     templateType: EnumPushNotificationTemplate,
     args: { [key: string]: string | number },

@@ -24,14 +24,14 @@ export class SubmitMissionResponseService implements SubmitMissionResponseUsecas
   async execute(
     data: {
       userId: string;
-      questionId: number;
-      coupleMissionId?: number;
+      questionId: bigint;
+      coupleMissionId?: bigint;
       content: string;
     }[],
   ): Promise<boolean> {
     await this.responseRepository.createMany(data);
 
-    const missionsMap = new Map<number, { userId: string; coupleMissionId: number }>();
+    const missionsMap = new Map<bigint, { userId: string; coupleMissionId: bigint }>();
 
     data.forEach(({ coupleMissionId, userId }) => {
       if (coupleMissionId) {

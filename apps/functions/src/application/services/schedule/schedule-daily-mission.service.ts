@@ -1,23 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { logger } from 'firebase-functions/v2';
+import isNull from 'lodash/isNull';
 
-import { randomElement } from '@/common';
 import {
   COUPLE_MISSION_REPOSITORY,
   COUPLE_REPOSITORY,
   ICoupleMissionRepository,
   ICoupleRepository,
   IMissionRepository,
-  MESSAGING_PORT,
+  PUSH_NOTIFICATION_PORT,
   MISSION_REPOSITORY,
   TIME_PORT,
   TimePort,
-  MessagingPort,
+  PushNotificationPort,
+  ScheduleDailyMissionUsecase,
 } from '@/ports';
 import { EnumPushNotificationTemplate } from '@/providers';
 
 @Injectable()
-export class ScheduleDailyMissionService {
+export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase {
   constructor(
     @Inject(COUPLE_REPOSITORY)
     private readonly coupleRepository: ICoupleRepository,
@@ -27,46 +28,46 @@ export class ScheduleDailyMissionService {
     private readonly coupleMissionRepository: ICoupleMissionRepository,
     @Inject(TIME_PORT)
     private readonly timePort: TimePort,
-    @Inject(MESSAGING_PORT)
-    private readonly messagingPort: MessagingPort,
+    @Inject(PUSH_NOTIFICATION_PORT)
+    private readonly pushNotificationPort: PushNotificationPort,
   ) {}
 
-  async execute(): Promise<void> {
+  async execute(): Promise<number> {
     try {
-      const currentTime = this.timePort.get();
-      const currentHour = currentTime.getHours();
-      const currentMinute = currentTime.getMinutes();
+      const currentTime = this.timePort.dayjs();
+      const currentHour = currentTime.hour();
+      const currentMinute = currentTime.minute();
       const findCouples =
-        await this.coupleRepository.findManyWithoutActiveMissionsByNotificationTime(
+        await this.coupleRepository.findManyRequiredMissionByNotificationTimeWithLatestCompletedMission(
           currentHour,
           currentMinute,
         );
 
-      const coupleWithCompletedMissionsMap = new Map<number, number[]>();
-      const userIds = [];
-      findCouples.forEach(({ coupleId, coupleMission, inviteeId, inviterId }) => {
-        coupleWithCompletedMissionsMap.set(
-          coupleId,
-          coupleMission.map(({ missionId }) => missionId),
-        );
-        userIds.push(inviteeId, inviterId);
-      });
       const allMissions = await this.missionRepository.findAll();
+      const firstMissionId = allMissions.at(0).missionId;
 
-      const coupleMissionsToCreate: { coupleId: number; missionId: number }[] = [];
+      const userIds = new Set<string>();
+      const coupleMissionsToCreate: { coupleId: bigint; missionId: bigint }[] = [];
 
-      findCouples.forEach(({ coupleId, coupleMission }) => {
-        const completedMissions = coupleMission.map(({ missionId }) => missionId);
-
-        const incompleteMissions = allMissions.filter(
-          (mission) => !completedMissions.includes(mission.missionId),
-        );
-
-        if (incompleteMissions.length > 0) {
-          const randomMission = randomElement(incompleteMissions);
+      findCouples.forEach(({ coupleId, latestCoupleMission, inviteeId, inviterId }) => {
+        userIds.add(inviteeId);
+        userIds.add(inviterId);
+        const missingMission = isNull(latestCoupleMission);
+        if (missingMission) {
           coupleMissionsToCreate.push({
             coupleId,
-            missionId: randomMission.missionId,
+            missionId: firstMissionId,
+          });
+        } else {
+          const latestCoupleMissionIndex = allMissions.findIndex(
+            ({ missionId }) => missionId === latestCoupleMission.missionId,
+          );
+          const nextCoupleMission = allMissions.at(
+            (latestCoupleMissionIndex + 1) % allMissions.length,
+          );
+          coupleMissionsToCreate.push({
+            coupleId,
+            missionId: nextCoupleMission.missionId,
           });
         }
       });
@@ -76,12 +77,15 @@ export class ScheduleDailyMissionService {
           `ScheduleDailyMissionService.execute: ${coupleMissionsToCreate.length} created.`,
         );
         await this.coupleMissionRepository.createMany(coupleMissionsToCreate);
-        await this.messagingPort.sendPushNotification(
-          userIds,
+
+        await this.pushNotificationPort.send(
+          Array.from(userIds),
           EnumPushNotificationTemplate.DAILY_MISSION_ALARM,
           {},
         );
+        return coupleMissionsToCreate.length;
       }
+      return 0;
     } catch (e) {
       throw new Error(`Error ScheduleDailyMissionService: ${e}`);
     }

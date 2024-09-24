@@ -10,7 +10,7 @@ export class UpdateResponseService implements UpdateResponseUsecase {
     private readonly responseRepository: IResponseRepository,
   ) {}
 
-  async execute(responseId: number, newContent: string): Promise<Response> {
+  async execute(responseId: bigint, newContent: string): Promise<Response> {
     return await this.responseRepository.updateContent(responseId, newContent);
   }
 }

@@ -28,7 +28,7 @@ import {
   ConfigModule,
   GoogleAuthModule,
   KakaoAuthModule,
-  NestjsConfigAdapter,
+  ConfigAdapter,
 } from '@/providers';
 import { UserRepository } from '@/repositories';
 
@@ -46,7 +46,7 @@ const InjectRepositories = [
     GoogleAuthModule.forRootAsync({
       imports: [ConfigModule],
       inject: [CONFIG_PORT],
-      useFactory: (configAdapter: NestjsConfigAdapter) => ({
+      useFactory: (configAdapter: ConfigAdapter) => ({
         option: {
           GOOGLE_AUTH_CLIENT_ID: configAdapter.get('GOOGLE_AUTH_CLIENT_ID'),
           GOOGLE_AUTH_CLIENT_SECRET: configAdapter.get('GOOGLE_AUTH_CLIENT_SECRET'),

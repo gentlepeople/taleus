@@ -34,10 +34,21 @@ directive @connection(
   filter: [String!]
 ) on FIELD
 
+type AppleLoginResponse {
+  """Custom token of firebase authentication user.(only if success)"""
+  customToken: String!
+  userId: String!
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
 type Couple {
   """The number of missions this couple has completed."""
   completedMissionCount: Int!
-  coupleId: Int!
+  coupleId: BigInt!
   createdAt: DateTime!
   inviteeId: String!
   inviterId: String!
@@ -45,6 +56,10 @@ type Couple {
   """The number of days since the user formed a couple."""
   relationshipDays: Int!
   startDate: DateTime
+}
+
+type DailyMissionResponse {
+  count: Int!
 }
 
 """
@@ -78,6 +93,8 @@ enum EnumMissionCategory {
 }
 
 enum EnumOAuthProviderType {
+  APPLE
+  GOOGLE
   KAKAO
 }
 
@@ -89,6 +106,12 @@ enum EnumResponseType {
   YES_NO
 }
 
+type GoogleLoginResponse {
+  """Custom token of firebase authentication user.(only if success)"""
+  customToken: String!
+  userId: String!
+}
+
 type KakaoLoginResponse {
   """Custom token of firebase authentication user.(only if success)"""
   customToken: String!
@@ -97,7 +120,7 @@ type KakaoLoginResponse {
 
 type Mission {
   category: EnumMissionCategory!
-  missionId: Int!
+  missionId: BigInt!
   questions: [Question!]!
   title: String!
 }
@@ -118,8 +141,25 @@ type MissionLogResponse {
 }
 
 type Mutation {
+  """Authenticates a user via Apple OAuth, registers if new."""
+  appleLogin(
+    """Authentication id token value. (for Apple)"""
+    idToken: String
+
+    """
+    If you want to check nonce claim, provide a string value here. It is used on Open ID for the ID Tokens.
+    """
+    nonce: String = null
+  ): AppleLoginResponse!
+
   """Deletes a user account."""
   deleteUser(userId: String!): DeleteUserResponse!
+
+  """Authenticates a user via Google OAuth, registers if new."""
+  googleLogin(
+    """Authentication id token value. (for Google)"""
+    idToken: String
+  ): GoogleLoginResponse!
 
   """Authenticates a user via Kakao OAuth, registers if new."""
   kakaoLogin(
@@ -129,12 +169,13 @@ type Mutation {
 
   """Register a couple"""
   registerCouple(inviteePersonalCode: String!, inviterId: String!): RegisterCoupleResponse!
+  scheduleDailyMission: DailyMissionResponse!
   submitMissionResponse(data: [SubmitMissionResponseRequestData!]!): SubmitMissionResponseResponse!
 
   """
   Updates the start date of a couple's relationship to a new specified date.
   """
-  updateCoupleStartDate(coupleId: Int!, coupleStartDate: DateTime!): UpdateCoupleStartDateResponse!
+  updateCoupleStartDate(coupleId: BigInt!, coupleStartDate: DateTime!): UpdateCoupleStartDateResponse!
   updateNotificationTime(
     """
     Notification time represented as formatted string, e.g., "08:00"
@@ -142,7 +183,7 @@ type Mutation {
     notificationTime: String!
     userId: String!
   ): UpdateNotificationTimeResponse!
-  updateResponse(newContent: String!, responseId: Int!, userId: String!): UpdateResponseResponse!
+  updateResponse(newContent: String!, responseId: BigInt!, userId: String!): UpdateResponseResponse!
 
   """
   Updates a user's details based on the provided userId and input fields. Only the fields specified in the input will be updated.
@@ -151,8 +192,8 @@ type Mutation {
 }
 
 type Query {
-  couple(coupleId: Int!): Couple
-  mission(missionId: Int!): Mission
+  couple(coupleId: BigInt!): Couple
+  mission(missionId: BigInt!): Mission
   missionLog(
     shuffle: Boolean = false
 
@@ -171,7 +212,7 @@ type Query {
 
 type Question {
   content: String!
-  questionId: Int!
+  questionId: BigInt!
   questionOrder: Int!
   responseType: EnumResponseType!
 }
@@ -184,17 +225,17 @@ type RegisterCoupleResponse {
 
 type Response {
   content: String!
-  coupleMissionId: Int
+  coupleMissionId: BigInt
   createdAt: DateTime!
-  questionId: Int!
-  responseId: Int!
+  questionId: BigInt!
+  responseId: BigInt!
   userId: String!
 }
 
 input SubmitMissionResponseRequestData {
   content: String!
-  coupleMissionId: Int
-  questionId: Int!
+  coupleMissionId: BigInt
+  questionId: BigInt!
   userId: String!
 }
 
@@ -231,6 +272,7 @@ UpdateUserInputRequest allows you to update user details. All fields are optiona
 """
 input UpdateUserInputRequest {
   birthday: DateTime = null
+  coupleStartDate: DateTime = null
   gender: String = null
   nickname: String = null
   profileImageUrl: String = null
@@ -251,7 +293,7 @@ type User {
   """Determine if the user is currently in a couple."""
   isCoupled: Boolean!
   nickname: String!
-  notificationTime: String!
+  notificationTime: String
   oauthProviderType: EnumOAuthProviderType!
 
   """

@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 
-import { PrismaAdapter } from './prisma.adapter';
+import { DatabaseAdapter } from './database.adapter';
 
 import { DATABASE_PORT } from '@/ports';
 
@@ -9,7 +9,7 @@ import { DATABASE_PORT } from '@/ports';
   providers: [
     {
       provide: DATABASE_PORT,
-      useClass: PrismaAdapter,
+      useClass: DatabaseAdapter,
     },
   ],
   exports: [DATABASE_PORT],

@@ -10,7 +10,7 @@ export class FindCoupleService implements FindCoupleUsecase {
     private readonly coupleRepository: ICoupleRepository,
   ) {}
 
-  async findOneByCoupleId(coupleId: number): Promise<Couple | null> {
+  async findOneByCoupleId(coupleId: bigint): Promise<Couple | null> {
     const findCouple = await this.coupleRepository.findOneByCoupleId(coupleId);
     return findCouple;
   }

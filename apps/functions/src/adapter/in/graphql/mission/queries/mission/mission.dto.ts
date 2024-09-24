@@ -1,10 +1,13 @@
-import { Field, ArgsType, Int } from '@nestjs/graphql';
-import { IsDefined, IsNumber } from 'class-validator';
+import { Field, ArgsType } from '@nestjs/graphql';
+import { IsDefined } from 'class-validator';
+import { GraphQLBigInt } from 'graphql-scalars';
+
+import { IsBigInt } from '@/common';
 
 @ArgsType()
 export class MissionRequest {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   @IsDefined()
-  @IsNumber()
-  missionId: number;
+  @IsBigInt()
+  missionId: bigint;
 }

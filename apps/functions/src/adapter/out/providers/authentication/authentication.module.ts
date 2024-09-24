@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { FirebaseAdminAuthAdapter } from './firebase-admin-auth.adapter';
+import { AuthenticationAdapter } from './authentication.adapter';
 
 import { AUTHENTICATION_PORT } from '@/ports';
 
@@ -8,7 +8,7 @@ import { AUTHENTICATION_PORT } from '@/ports';
   providers: [
     {
       provide: AUTHENTICATION_PORT,
-      useClass: FirebaseAdminAuthAdapter,
+      useClass: AuthenticationAdapter,
     },
   ],
   exports: [AUTHENTICATION_PORT],

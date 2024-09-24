@@ -18,7 +18,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     private readonly timePort: TimePort,
   ) {}
 
-  async findOneByCoupleMissionId(coupleMissionId: number): Promise<CoupleMission | null> {
+  async findOneByCoupleMissionId(coupleMissionId: bigint): Promise<CoupleMission | null> {
     const findCoupleMission = await this.databasePort.coupleMission.findUnique({
       where: {
         coupleMissionId,
@@ -29,8 +29,8 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
 
   async createMany(
     data: {
-      coupleId: number;
-      missionId: number;
+      coupleId: bigint;
+      missionId: bigint;
     }[],
   ): Promise<number> {
     const { count: createCoupleMissionsCount } = await this.databasePort.coupleMission.createMany({
@@ -40,7 +40,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     return createCoupleMissionsCount;
   }
 
-  async countCompletedByCoupleId(coupleId: number): Promise<number> {
+  async countCompletedByCoupleId(coupleId: bigint): Promise<number> {
     const count = await this.databasePort.coupleMission.count({
       where: {
         coupleId,
@@ -124,13 +124,13 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     userId: string,
     pagination: { take: number; skip: number },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]> {
-    const todayFormat = this.timePort.format({ template: 'YYYY-MM-DD' });
+    const todayFormat = this.timePort.dayjs().format('YYYY-MM-DD');
 
     const rawCoupleMissions = await this.databasePort.$queryRaw<
       {
-        couple_mission_id: number;
-        couple_id: number;
-        mission_id: number;
+        couple_mission_id: bigint;
+        couple_id: bigint;
+        mission_id: bigint;
         is_completed: boolean;
         reminder_click_count: number;
         cm_create_at: Date;
@@ -139,8 +139,8 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
         m_created_at: Date;
         m_updated_at: Date;
         question: {
-          question_id: number;
-          mission_id: number;
+          question_id: bigint;
+          mission_id: bigint;
           question_order: number;
           response_type: string;
           content: string;
@@ -217,7 +217,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     });
   }
 
-  async updateToCompleted(coupleMissionId: number): Promise<void> {
+  async updateToCompleted(coupleMissionId: bigint): Promise<void> {
     await this.databasePort.coupleMission.update({
       where: {
         coupleMissionId,

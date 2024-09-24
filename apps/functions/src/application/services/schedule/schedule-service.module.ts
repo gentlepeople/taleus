@@ -11,10 +11,11 @@ import {
   ICoupleRepository,
   IMissionRepository,
   MISSION_REPOSITORY,
-  MESSAGING_PORT,
-  MessagingPort,
+  PUSH_NOTIFICATION_PORT,
+  PushNotificationPort,
+  SCHEDULE_DAILY_MISSION_USECASE,
 } from '@/ports';
-import { MessagingModule } from '@/providers';
+import { PushNotificationModule } from '@/providers';
 import { CoupleMissionRepository, CoupleRepository, MissionRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -33,7 +34,7 @@ const InjectRepositories = [
 ];
 
 @Module({
-  imports: [MessagingModule],
+  imports: [PushNotificationModule],
   providers: [
     ...InjectRepositories,
     {
@@ -42,25 +43,25 @@ const InjectRepositories = [
         MISSION_REPOSITORY,
         COUPLE_MISSION_REPOSITORY,
         TIME_PORT,
-        MESSAGING_PORT,
+        PUSH_NOTIFICATION_PORT,
       ],
-      provide: ScheduleDailyMissionService,
+      provide: SCHEDULE_DAILY_MISSION_USECASE,
       useFactory: (
         coupleRepository: ICoupleRepository,
         missionRepository: IMissionRepository,
         coupleMissionRepository: ICoupleMissionRepository,
         timePort: TimePort,
-        messagingPort: MessagingPort,
+        pushNotificationPort: PushNotificationPort,
       ) =>
         new ScheduleDailyMissionService(
           coupleRepository,
           missionRepository,
           coupleMissionRepository,
           timePort,
-          messagingPort,
+          pushNotificationPort,
         ),
     },
   ],
-  exports: [ScheduleDailyMissionService],
+  exports: [SCHEDULE_DAILY_MISSION_USECASE],
 })
 export class ScheduleServiceModule {}

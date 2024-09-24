@@ -1,9 +1,10 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType()
 export class Couple {
-  @Field(() => Int)
-  coupleId: number;
+  @Field(() => GraphQLBigInt)
+  coupleId: bigint;
 
   @Field(() => String)
   inviterId: string;

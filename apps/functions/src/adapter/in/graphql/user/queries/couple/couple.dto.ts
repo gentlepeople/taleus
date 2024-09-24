@@ -1,10 +1,11 @@
-import { Field, ArgsType, Int } from '@nestjs/graphql';
+import { Field, ArgsType } from '@nestjs/graphql';
 import { IsDefined, IsNumber } from 'class-validator';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ArgsType()
 export class CoupleRequest {
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   @IsDefined()
   @IsNumber()
-  coupleId: number;
+  coupleId: bigint;
 }

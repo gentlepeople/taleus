@@ -8,8 +8,9 @@ import {
   DatabaseModule,
   GoogleAuthModule,
   KakaoAuthModule,
-  NestjsConfigAdapter,
+  ConfigAdapter,
   TimeModule,
+  CloudSchedulerModule,
 } from '.';
 
 import { CONFIG_PORT } from '@/ports';
@@ -19,12 +20,13 @@ const providerModules = [
   ConfigModule,
   TimeModule,
   DatabaseModule,
+  CloudSchedulerModule,
   AuthenticationModule,
   KakaoAuthModule,
   GoogleAuthModule.forRootAsync({
     imports: [ConfigModule],
     inject: [CONFIG_PORT],
-    useFactory: (configAdapter: NestjsConfigAdapter) => ({
+    useFactory: (configAdapter: ConfigAdapter) => ({
       option: {
         GOOGLE_AUTH_CLIENT_ID: configAdapter.get('GOOGLE_AUTH_CLIENT_ID'),
         GOOGLE_AUTH_CLIENT_SECRET: configAdapter.get('GOOGLE_AUTH_CLIENT_SECRET'),

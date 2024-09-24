@@ -6,10 +6,10 @@ import {
   UPDATE_NOTIFICATION_TIME_USECASE,
   IUserRepository,
   USER_REPOSITORY,
-  MESSAGING_PORT,
-  MessagingPort,
+  PUSH_NOTIFICATION_PORT,
+  PushNotificationPort,
 } from '@/ports';
-import { MessagingModule } from '@/providers';
+import { PushNotificationModule } from '@/providers';
 import { UserRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -20,14 +20,14 @@ const InjectRepositories = [
 ];
 
 @Module({
-  imports: [MessagingModule],
+  imports: [PushNotificationModule],
   providers: [
     ...InjectRepositories,
     {
-      inject: [USER_REPOSITORY, MESSAGING_PORT],
+      inject: [USER_REPOSITORY, PUSH_NOTIFICATION_PORT],
       provide: UPDATE_NOTIFICATION_TIME_USECASE,
-      useFactory: (userRepository: IUserRepository, messagingPort: MessagingPort) =>
-        new UpdateNotificationTimeService(userRepository, messagingPort),
+      useFactory: (userRepository: IUserRepository, pushNotificationPort: PushNotificationPort) =>
+        new UpdateNotificationTimeService(userRepository, pushNotificationPort),
     },
   ],
   exports: [UPDATE_NOTIFICATION_TIME_USECASE],

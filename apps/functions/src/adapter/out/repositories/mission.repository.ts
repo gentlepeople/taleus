@@ -24,11 +24,15 @@ export class MissionRepository implements IMissionRepository {
   }
 
   async findAll(): Promise<Mission[]> {
-    const findMissions = await this.databasePort.mission.findMany();
+    const findMissions = await this.databasePort.mission.findMany({
+      orderBy: {
+        missionId: 'asc',
+      },
+    });
     return findMissions.map((mission) => this.enumConvert(mission));
   }
 
-  async findOneByMissionId(missionId: number): Promise<Mission | null> {
+  async findOneByMissionId(missionId: bigint): Promise<Mission | null> {
     const findMission = await this.databasePort.mission.findUnique({
       where: {
         missionId,

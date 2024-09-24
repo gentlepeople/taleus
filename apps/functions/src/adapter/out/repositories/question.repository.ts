@@ -23,7 +23,7 @@ export class QuestionRepository implements IQuestionRepository {
     };
   }
 
-  async findManyByMissionId(missionId: number): Promise<Question[]> {
+  async findManyByMissionId(missionId: bigint): Promise<Question[]> {
     const findQuestions = await this.databasePort.question.findMany({
       where: {
         missionId,
@@ -36,7 +36,7 @@ export class QuestionRepository implements IQuestionRepository {
     return findQuestions.map((question) => this.enumConvert(question));
   }
 
-  async countByMissionId(missionId: number): Promise<number> {
+  async countByMissionId(missionId: bigint): Promise<number> {
     const countQuestions = await this.databasePort.question.count({
       where: {
         missionId,

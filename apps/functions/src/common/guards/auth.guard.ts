@@ -6,14 +6,14 @@ import { logger } from 'firebase-functions/v2';
 import { DEFAULT_LOCAL_USER_ID } from '../assets';
 import { isEmulator } from '../helpers';
 
-import { FirebaseAdminAuthAdapter } from '@/providers';
+import { AuthenticationAdapter } from '@/providers';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  private readonly firebaseAdminAuthAdapter: FirebaseAdminAuthAdapter;
+  private readonly authenticationAdapter: AuthenticationAdapter;
 
   constructor(private reflector: Reflector) {
-    this.firebaseAdminAuthAdapter = new FirebaseAdminAuthAdapter();
+    this.authenticationAdapter = new AuthenticationAdapter();
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const { uid: decodedTokenUid } = await this.firebaseAdminAuthAdapter.verifyIdToken(idToken);
+      const { uid: decodedTokenUid } = await this.authenticationAdapter.verifyIdToken(idToken);
       request.user = { uid: decodedTokenUid };
       return true;
     } catch (error) {

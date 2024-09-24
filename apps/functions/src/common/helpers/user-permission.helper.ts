@@ -11,7 +11,7 @@ export function checkUserPermission(context: GqlContext, userId: string | string
   const authenticatedUserId = context.req.user.uid;
 
   if (process.env.NODE_ENV === 'local' && authenticatedUserId === DEFAULT_LOCAL_USER_ID) {
-    return;
+    return true;
   }
 
   if (

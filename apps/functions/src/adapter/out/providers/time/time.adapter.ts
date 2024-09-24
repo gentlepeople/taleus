@@ -7,7 +7,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 // import "dayjs/locale/ja";
 // import "dayjs/locale/en";
 
-import { DEFAULT_LOCALE, DEFAULT_TIMEZONE } from './dayjs.const';
+import { DEFAULT_LOCALE, DEFAULT_TIMEZONE } from './time.const';
 
 import { TimePort } from '@/ports';
 
@@ -61,7 +61,7 @@ dayjs.updateLocale('en', {
 export type Dayjs = DefaultDayjs;
 
 @Injectable()
-export class DayjsAdapter implements TimePort {
+export class TimeAdapter implements TimePort {
   private locale: string;
   private timezone: string;
 
@@ -73,6 +73,15 @@ export class DayjsAdapter implements TimePort {
     dayjs.tz.setDefault(this.timezone);
   }
 
+  public dayjs(
+    date?: string | number | Date,
+    format?: { locale?: string; format?: string; utc?: boolean } | string | string[],
+    locale?: string,
+    strict?: boolean,
+  ): Dayjs {
+    return dayjs(date, format, locale || this.locale, strict);
+  }
+
   public get(
     date?: string | number | Date,
     format?: { locale?: string; format?: string; utc?: boolean } | string | string[],
@@ -80,16 +89,5 @@ export class DayjsAdapter implements TimePort {
     strict?: boolean,
   ): Date {
     return dayjs(date, format, locale || this.locale, strict).toDate();
-  }
-
-  public format(data: {
-    template?: string;
-    date?: string | number | Date;
-    format?: { locale?: string; format?: string; utc?: boolean } | string | string[];
-    locale?: string;
-    strict?: boolean;
-  }): string {
-    const { template, date, format, locale, strict } = data;
-    return dayjs(date, format, locale, strict).format(template);
   }
 }

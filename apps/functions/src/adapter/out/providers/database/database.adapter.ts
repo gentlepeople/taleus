@@ -4,7 +4,7 @@ import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { DatabasePort } from '@/ports';
 
 @Injectable()
-export class PrismaAdapter extends PrismaClient implements OnModuleInit, DatabasePort {
+export class DatabaseAdapter extends PrismaClient implements OnModuleInit, DatabasePort {
   constructor() {
     super({
       log: [
