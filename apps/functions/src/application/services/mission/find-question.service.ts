@@ -10,12 +10,12 @@ export class FindQuestionService implements FindQuestionUsecase {
     private readonly questionRepository: IQuestionRepository,
   ) {}
 
-  async findManyByMissionId(missionId: number): Promise<Question[]> {
+  async findManyByMissionId(missionId: bigint): Promise<Question[]> {
     const findQuestions = await this.questionRepository.findManyByMissionId(missionId);
     return findQuestions;
   }
 
-  async countByMissionId(missionId: number): Promise<number> {
+  async countByMissionId(missionId: bigint): Promise<number> {
     const countQuestions = await this.questionRepository.countByMissionId(missionId);
     return countQuestions;
   }

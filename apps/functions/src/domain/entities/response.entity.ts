@@ -1,18 +1,19 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType()
 export class Response {
-  @Field(() => Int)
-  responseId: number;
+  @Field(() => GraphQLBigInt)
+  responseId: bigint;
 
   @Field(() => String)
   userId: string;
 
-  @Field(() => Int)
-  questionId: number;
+  @Field(() => GraphQLBigInt)
+  questionId: bigint;
 
-  @Field(() => Int, { nullable: true })
-  coupleMissionId?: number;
+  @Field(() => GraphQLBigInt, { nullable: true })
+  coupleMissionId?: bigint;
 
   @Field(() => String)
   content: string;

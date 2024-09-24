@@ -4,10 +4,8 @@ import { auth } from 'firebase-admin';
 import { isEmulator } from '@/common';
 import { AuthenticationPort } from '@/ports';
 
-export type IFirebaseAdminAuthenticationInjectType = {};
-
 @Injectable()
-export class FirebaseAdminAuthAdapter implements AuthenticationPort {
+export class AuthenticationAdapter implements AuthenticationPort {
   private auth: auth.Auth;
 
   constructor() {

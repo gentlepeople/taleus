@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 
-import { DayjsAdapter } from './dayjs.adapter';
+import { TimeAdapter } from './time.adapter';
 
 import { TIME_PORT } from '@/ports';
 
@@ -9,7 +9,7 @@ import { TIME_PORT } from '@/ports';
   providers: [
     {
       provide: TIME_PORT,
-      useClass: DayjsAdapter,
+      useClass: TimeAdapter,
     },
   ],
   exports: [TIME_PORT],

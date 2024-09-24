@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule as NestjsConfigModule } from '@nestjs/config';
 
-import { NestjsConfigAdapter } from './nestjs-config.adapter';
+import { ConfigAdapter } from './config.adapter';
 
 import { CONFIG_PORT } from '@/ports';
 
@@ -16,7 +16,7 @@ import { CONFIG_PORT } from '@/ports';
   providers: [
     {
       provide: CONFIG_PORT,
-      useClass: NestjsConfigAdapter,
+      useClass: ConfigAdapter,
     },
   ],
   exports: [CONFIG_PORT],

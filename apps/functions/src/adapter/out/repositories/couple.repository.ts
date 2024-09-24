@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
 import { DEFAULT_ANONYMOUS_USER_OBJECT, ONBOARDING_MISSION_ID } from '../../../common';
+import { SCHEDULER_DAILY_MISSION_INTERVAL_MINUTES } from '../providers';
 
 import { Couple } from '@/domain';
 import { DATABASE_PORT, DatabasePort, ICoupleRepository, TIME_PORT, TimePort } from '@/ports';
@@ -149,7 +150,7 @@ export class CoupleRepository implements ICoupleRepository {
     return this.convertAnonymizeUser(findCouple);
   }
 
-  async findOneByCoupleId(coupleId: number): Promise<Couple | null> {
+  async findOneByCoupleId(coupleId: bigint): Promise<Couple | null> {
     const findCouple = await this.databasePort.couple.findUnique({
       where: {
         coupleId,
@@ -171,7 +172,7 @@ export class CoupleRepository implements ICoupleRepository {
   }
 
   async updateOne(
-    coupleId: number,
+    coupleId: bigint,
     data: {
       startDate: Date;
     },
@@ -185,23 +186,29 @@ export class CoupleRepository implements ICoupleRepository {
     return true;
   }
 
-  async findManyWithoutActiveMissionsByNotificationTime(
+  async findManyRequiredMissionByNotificationTimeWithLatestCompletedMission(
     hour: number,
     minute: number,
   ): Promise<
     (Couple & {
-      coupleMission: {
-        missionId: number;
-      }[];
+      latestCoupleMission: {
+        missionId: bigint;
+      };
     })[]
   > {
-    const date = this.timePort.get();
-    date.setHours(hour, minute);
+    const date = this.timePort.dayjs();
+    date.set('hour', hour);
+    date.set('minute', minute);
+    const previousDate = date.subtract(SCHEDULER_DAILY_MISSION_INTERVAL_MINUTES, 'minute');
+
     const findCouples = await this.databasePort.couple.findMany({
       where: {
         deletedAt: null,
         inviter: {
-          notificationTime: date,
+          notificationTime: {
+            gt: previousDate.toDate(),
+            lte: date.toDate(),
+          },
           deletedAt: null,
         },
         invitee: {
@@ -216,6 +223,10 @@ export class CoupleRepository implements ICoupleRepository {
       },
       include: {
         coupleMission: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+          take: 1,
           select: {
             missionId: true,
           },
@@ -223,6 +234,9 @@ export class CoupleRepository implements ICoupleRepository {
       },
     });
 
-    return findCouples;
+    return findCouples.map(({ coupleMission, ...data }) => ({
+      latestCoupleMission: coupleMission.length > 0 ? coupleMission[0] : null,
+      ...data,
+    }));
   }
 }

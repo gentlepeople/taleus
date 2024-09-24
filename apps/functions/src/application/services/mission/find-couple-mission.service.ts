@@ -14,7 +14,7 @@ export class FindCoupleMissionService implements FindCoupleMissionUsecase {
     private readonly coupleMissionRepository: ICoupleMissionRepository,
   ) {}
 
-  async countCompletedByCoupleId(coupleId: number): Promise<number> {
+  async countCompletedByCoupleId(coupleId: bigint): Promise<number> {
     const countCompleteMissions = await this.coupleMissionRepository.countCompletedByCoupleId(
       coupleId,
     );

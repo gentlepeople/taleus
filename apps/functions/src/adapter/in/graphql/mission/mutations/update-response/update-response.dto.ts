@@ -1,6 +1,8 @@
-import { ObjectType, Field, ArgsType, Int } from '@nestjs/graphql';
-import { IsDefined, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { GraphQLBigInt } from 'graphql-scalars';
 
+import { IsBigInt } from '@/common';
 import { Response } from '@/domain';
 
 @ArgsType()
@@ -10,10 +12,10 @@ export class UpdateResponseRequest {
   @IsString()
   userId: string;
 
-  @Field(() => Int)
+  @Field(() => GraphQLBigInt)
   @IsDefined()
-  @IsNumber()
-  responseId: number;
+  @IsBigInt()
+  responseId: bigint;
 
   @Field(() => String)
   @IsNotEmpty()

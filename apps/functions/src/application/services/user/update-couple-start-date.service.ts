@@ -17,7 +17,7 @@ export class UpdateCoupleStartDateService implements UpdateCoupleStartDateUsecas
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(coupleId: number, newCoupleStartDate: Date): Promise<void> {
+  async execute(coupleId: bigint, newCoupleStartDate: Date): Promise<void> {
     await this.coupleRepository.updateOne(coupleId, {
       startDate: newCoupleStartDate,
     });

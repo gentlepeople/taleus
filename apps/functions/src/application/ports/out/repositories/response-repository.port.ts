@@ -3,19 +3,19 @@ import { Response } from '@/domain';
 export const RESPONSE_REPOSITORY = Symbol('RESPONSE_REPOSITORY');
 
 export interface IResponseRepository {
-  findManyByCoupleMissionIdAndUserId(coupleMissionId: number, userId: string): Promise<Response[]>;
+  findManyByCoupleMissionIdAndUserId(coupleMissionId: bigint, userId: string): Promise<Response[]>;
   findManyByCoupleMissionIdsAndUserIds(
-    coupleMissionIds: number[],
+    coupleMissionIds: bigint[],
     userIds: string[],
   ): Promise<Response[]>;
   createMany(
     data: {
       userId: string;
-      questionId: number;
-      coupleMissionId?: number;
+      questionId: bigint;
+      coupleMissionId?: bigint;
       content: string;
     }[],
   ): Promise<void>;
-  countByCoupleMissionId(coupleMissionId: number): Promise<number>;
-  updateContent(responseId: number, content: string): Promise<Response>;
+  countByCoupleMissionId(coupleMissionId: bigint): Promise<number>;
+  updateContent(responseId: bigint, content: string): Promise<Response>;
 }

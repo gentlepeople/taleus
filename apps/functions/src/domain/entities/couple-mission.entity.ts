@@ -1,15 +1,16 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GraphQLBigInt } from 'graphql-scalars';
 
 @ObjectType()
 export class CoupleMission {
-  @Field(() => Int)
-  coupleMissionId: number;
+  @Field(() => GraphQLBigInt)
+  coupleMissionId: bigint;
 
-  @Field(() => Int)
-  coupleId: number;
+  @Field(() => GraphQLBigInt)
+  coupleId: bigint;
 
-  @Field(() => Int)
-  missionId: number;
+  @Field(() => GraphQLBigInt)
+  missionId: bigint;
 
   @Field(() => Boolean)
   isCompleted: boolean;

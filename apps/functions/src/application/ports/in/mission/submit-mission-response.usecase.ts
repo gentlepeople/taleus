@@ -4,8 +4,8 @@ export interface SubmitMissionResponseUsecase {
   execute(
     data: {
       userId: string;
-      questionId: number;
-      coupleMissionId?: number;
+      questionId: bigint;
+      coupleMissionId?: bigint;
       content: string;
     }[],
   ): Promise<boolean>;

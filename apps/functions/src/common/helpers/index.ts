@@ -4,4 +4,4 @@ export * from './random-code-generator.helper';
 export * from './date-utils.helper';
 export * from './random-element.helper';
 export * from './sort.helper';
-export * from './emulator.helper';
+export * from './environment.helper';

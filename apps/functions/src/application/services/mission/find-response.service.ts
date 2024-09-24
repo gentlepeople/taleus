@@ -12,7 +12,7 @@ export class FindResponseService implements FindResponseUsecase {
 
   async findManyByUserIdAndCoupleMissionId(
     userId: string,
-    coupleMissionId: number,
+    coupleMissionId: bigint,
   ): Promise<Response[]> {
     const findResponses = await this.responseRepository.findManyByCoupleMissionIdAndUserId(
       coupleMissionId,
@@ -22,7 +22,7 @@ export class FindResponseService implements FindResponseUsecase {
   }
 
   async findManyByCoupleMissionIdsAndUserIds(
-    coupleMissionIds: number[],
+    coupleMissionIds: bigint[],
     userIds: string[],
   ): Promise<Response[]> {
     const findResponses = await this.responseRepository.findManyByCoupleMissionIdsAndUserIds(

@@ -10,7 +10,7 @@ export class FindMissionService implements FindMissionUsecase {
     private readonly missionRepository: IMissionRepository,
   ) {}
 
-  async findOneByMissionId(missionId: number): Promise<Mission | null> {
+  async findOneByMissionId(missionId: bigint): Promise<Mission | null> {
     const findMission = await this.missionRepository.findOneByMissionId(missionId);
     return findMission;
   }

@@ -5,8 +5,8 @@ import { EnumPushNotificationTemplate } from '../../../adapter/out';
 
 import {
   IUserRepository,
-  MESSAGING_PORT,
-  MessagingPort,
+  PUSH_NOTIFICATION_PORT,
+  PushNotificationPort,
   UpdateNotificationTimeUsecase,
   USER_REPOSITORY,
 } from '@/ports';
@@ -16,8 +16,8 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-    @Inject(MESSAGING_PORT)
-    private readonly messagingPort: MessagingPort,
+    @Inject(PUSH_NOTIFICATION_PORT)
+    private readonly pushNotificationPort: PushNotificationPort,
   ) {}
 
   async execute(userId: string, notificationTime: Date): Promise<void> {
@@ -31,7 +31,7 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
         notificationTime,
       );
       const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
-      await this.messagingPort.sendPushNotification(
+      await this.pushNotificationPort.send(
         [partnerId],
         EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
         { nickname: userNickname },

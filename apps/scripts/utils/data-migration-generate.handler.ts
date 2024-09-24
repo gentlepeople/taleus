@@ -29,7 +29,7 @@ const files = (name: string) => {
   const template = readFileSync(TEMPLATE_PATHS).toString();
   const handledTemplate = Handlebars.compile(template);
   const output = handledTemplate({
-    PRISMA_CLIENT_PACKAGE: `@silviahealth/taleus-schema`,
+    PRISMA_CLIENT_PACKAGE: `@gentlepeople/taleus-schema`,
   });
   return {
     [outputPath]: output,

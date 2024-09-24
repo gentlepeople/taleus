@@ -1,11 +1,12 @@
 import { EnumMissionCategory, mission } from '@gentlepeople/taleus-schema';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { GraphQLBigInt } from 'graphql-scalars';
 import isNull from 'lodash/isNull';
 
 @ObjectType()
 export class Mission {
-  @Field(() => Int)
-  missionId: number;
+  @Field(() => GraphQLBigInt)
+  missionId: bigint;
 
   @Field(() => String)
   title: string;

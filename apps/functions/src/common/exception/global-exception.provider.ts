@@ -4,14 +4,14 @@ import { Request, Response } from 'express';
 import { logger } from 'firebase-functions';
 import { GraphQLResolveInfo } from 'graphql';
 
-import { DayjsAdapter } from '@/providers';
+import { TimeAdapter } from '@/providers';
 
 @Catch()
 export class GlobalExceptionProvider implements ExceptionFilter, GqlExceptionFilter {
-  private readonly dayjsAdapter: DayjsAdapter;
+  private readonly dayjsAdapter: TimeAdapter;
 
   constructor() {
-    this.dayjsAdapter = new DayjsAdapter();
+    this.dayjsAdapter = new TimeAdapter();
   }
 
   async catch(exception: any, host: ArgumentsHost) {
@@ -26,9 +26,7 @@ export class GlobalExceptionProvider implements ExceptionFilter, GqlExceptionFil
 
     const errorResponse = {
       statusCode: status,
-      timestamp: this.dayjsAdapter.format({
-        template: 'YYYY년 MM월 DD일 HH시 mm분',
-      }),
+      timestamp: this.dayjsAdapter.dayjs().format('YYYY년 MM월 DD일 HH시 mm분'),
       message: exception?.message,
       name: exception?.name,
     };
