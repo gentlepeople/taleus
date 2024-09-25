@@ -12,6 +12,8 @@ export const palette = {
   'kakao-bg': '#FEE500',
   'banner-bg': '#FFEBD3',
   'content-card-bg': '#FFF5E9',
+  'code-divider': '#F2F2F2',
+  placeholder: '#D9D9D9',
   danger: '#BA1A1A',
   disabled: '#C9C9C9',
   transparent: 'rgba(0,0,0,0)',

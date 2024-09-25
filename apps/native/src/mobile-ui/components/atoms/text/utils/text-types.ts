@@ -25,6 +25,7 @@ export type ITextTypes =
   | 'banner-button'
   | 'card-content'
   | 'biggest'
+  | 'code'
   | 'custom';
 
 export const getTextTypeStyle = (textType: ITextTypes) => {
@@ -154,10 +155,15 @@ export const getTextTypeStyle = (textType: ITextTypes) => {
       fontSize: 25,
       lineHeight: 36.2,
     },
+    ['code']: {
+      fontFamily: 'Pretendard-Medium',
+      fontSize: 24,
+      lineHeight: 34.75,
+    },
     ['body/15/bold']: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 15,
-      lineHeight: 15,
+      lineHeight: 20,
     },
     custom: {},
   };

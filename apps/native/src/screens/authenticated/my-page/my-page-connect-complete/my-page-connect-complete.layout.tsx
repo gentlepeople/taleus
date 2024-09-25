@@ -1,12 +1,12 @@
 import { ReactNode, memo } from 'react';
 import { BasicLayout, Row, Rows, ScrollView } from '~/mobile-ui';
 
-type IMyPage_ConnectCoupleLayoutProps = {
+type IMyPage_ConnectCompleteLayoutProps = {
   header: ReactNode;
   content: ReactNode;
 };
 
-export const MyPage_ConnectCoupleLayout = memo<IMyPage_ConnectCoupleLayoutProps>(
+export const MyPage_ConnectCompleteLayout = memo<IMyPage_ConnectCompleteLayoutProps>(
   ({ header, content }) => {
     return (
       <BasicLayout>

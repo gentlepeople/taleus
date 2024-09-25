@@ -58,7 +58,9 @@ export const TextInput: FC<ITextInputProps> = ({
         },
         contentStyle,
       ]}
-      theme={{ colors: { onSurfaceVariant: palette['text-black'] } }}
+      theme={{
+        colors: { onSurfaceVariant: palette['text-black'] },
+      }}
       style={[
         {
           backgroundColor: 'transparent',
