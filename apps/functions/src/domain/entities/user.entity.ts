@@ -4,45 +4,86 @@ import {
   EnumSubscriptionStatus,
 } from '@gentlepeople/taleus-schema';
 import { Field, ObjectType } from '@nestjs/graphql';
+import isNull from 'lodash/isNull';
+
+export type UserProps = {
+  userId: string;
+  nickname: string;
+  email: string;
+  profileImageUrl: string;
+  gender: EnumGender;
+  birthday: Date;
+  oauthProviderType: EnumOAuthProviderType;
+  personalCode: string;
+  notificationTime?: string;
+  subscriptionStatus: EnumSubscriptionStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: Date;
+};
 
 @ObjectType()
 export class User {
   @Field(() => String)
-  userId: string;
-
-  @Field(() => Boolean)
-  isAnonymous: boolean;
+  readonly userId: string;
 
   @Field(() => String)
-  nickname: string;
+  readonly nickname: string;
 
   @Field(() => String)
-  email: string;
+  readonly email: string;
 
   @Field(() => String)
-  profileImageUrl: string;
+  readonly profileImageUrl: string;
 
   @Field(() => EnumGender)
-  gender: EnumGender;
+  readonly gender: EnumGender;
 
   @Field(() => Date)
-  birthday: Date;
+  readonly birthday: Date;
 
   @Field(() => EnumOAuthProviderType)
-  oauthProviderType: EnumOAuthProviderType;
+  readonly oauthProviderType: EnumOAuthProviderType;
 
   @Field(() => String)
-  personalCode: string;
+  readonly personalCode: string;
 
   @Field(() => String, { nullable: true })
-  notificationTime?: string;
+  readonly notificationTime?: string;
 
   @Field(() => EnumSubscriptionStatus)
-  subscriptionStatus: EnumSubscriptionStatus;
+  readonly subscriptionStatus: EnumSubscriptionStatus;
 
   @Field(() => Date)
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @Field(() => Date)
-  updatedAt: Date;
+  readonly updatedAt: Date;
+
+  @Field(() => Boolean)
+  readonly isAnonymous: boolean;
+
+  constructor(props: UserProps) {
+    this.userId = props.userId;
+    this.nickname = props.nickname;
+    this.email = props.email;
+    this.profileImageUrl = props.profileImageUrl;
+    this.gender = props.gender;
+    this.birthday = props.birthday;
+    this.oauthProviderType = props.oauthProviderType;
+    this.personalCode = props.personalCode;
+    this.notificationTime = props.notificationTime;
+    this.subscriptionStatus = props.subscriptionStatus;
+    this.createdAt = props.createdAt;
+    this.updatedAt = props.updatedAt;
+    this.isAnonymous = !isNull(props.deletedAt);
+  }
+
+  @Field(() => Boolean)
+  get isSubscriptionActive(): boolean {
+    return (
+      this.subscriptionStatus === EnumSubscriptionStatus.ACTIVE ||
+      this.subscriptionStatus === EnumSubscriptionStatus.ACTIVE_TRIAL
+    );
+  }
 }

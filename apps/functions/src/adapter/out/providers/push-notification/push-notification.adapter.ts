@@ -7,7 +7,11 @@ import { mapValues } from 'lodash';
 import { lastValueFrom, map } from 'rxjs';
 import format from 'string-format';
 
-import { EnumPushNotificationTemplate, PushNotificationTemplate } from './push-notification.const';
+import {
+  EnumPushNotificationTemplate,
+  MAX_NICKNAME_LENGTH,
+  PushNotificationTemplate,
+} from './push-notification.const';
 
 import { CONFIG_PORT, ConfigPort, PushNotificationPort } from '@/ports';
 
@@ -38,6 +42,8 @@ export class PushNotificationAdapter implements PushNotificationPort {
     try {
       const template = PushNotificationTemplate[templateType];
 
+      const limitedArgs = this.limitArgsLength(args);
+
       const notificationBody: OneSignal.Notification = {
         target_channel: 'push',
         app_id: this.configPort.get('ONE_SIGNAL_APP_ID'),
@@ -45,8 +51,8 @@ export class PushNotificationAdapter implements PushNotificationPort {
         include_aliases: {
           external_id: userIds,
         },
-        headings: mapValues(template.headings, (value) => format(value, args)),
-        contents: mapValues(template.contents, (value) => format(value, args)),
+        headings: mapValues(template.headings, (value) => format(value, limitedArgs)),
+        contents: mapValues(template.contents, (value) => format(value, limitedArgs)),
         ...(template.app_url && {
           app_url: format(template.app_url, args),
         }),
@@ -68,5 +74,15 @@ export class PushNotificationAdapter implements PushNotificationPort {
       logger.error(`Error sendPushNotification: ${e}`);
       throw e;
     }
+  }
+
+  limitArgsLength(args: { [key: string]: string | number }): {
+    [key: string]: string | number;
+  } {
+    const nickname = args.nickname as string;
+    if (nickname?.length > MAX_NICKNAME_LENGTH) {
+      args.nickname = nickname.slice(0, MAX_NICKNAME_LENGTH);
+    }
+    return args;
   }
 }

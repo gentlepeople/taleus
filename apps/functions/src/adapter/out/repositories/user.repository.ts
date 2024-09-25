@@ -29,19 +29,18 @@ export class UserRepository implements IUserRepository {
     const { deletedAt } = object;
     const isDeactivated = !isNull(deletedAt);
     if (isDeactivated) {
-      return DEFAULT_ANONYMOUS_USER_OBJECT;
+      return new User(DEFAULT_ANONYMOUS_USER_OBJECT);
     }
 
-    return {
+    return new User({
       ...object,
-      isAnonymous: !isDeactivated,
       gender: object.gender as EnumGender,
       oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
       notificationTime: object.notificationTime
         ? object.notificationTime.toTimeString().slice(0, 5)
         : null,
       subscriptionStatus: object.subscriptionStatus as EnumSubscriptionStatus,
-    };
+    });
   }
 
   async findOneByUserId(userId: string): Promise<User | null> {
@@ -106,13 +105,41 @@ export class UserRepository implements IUserRepository {
   }
 
   async softDeleteOne(userId: string): Promise<boolean> {
-    await this.databasePort.user.update({
-      where: {
-        userId,
-      },
-      data: {
-        deletedAt: this.timePort.get(),
-      },
+    await this.databasePort.$transaction(async (tx) => {
+      await tx.user.update({
+        where: {
+          userId,
+        },
+        data: {
+          deletedAt: this.timePort.get(),
+        },
+      });
+      await tx.couple.updateMany({
+        where: {
+          deletedAt: null,
+          OR: [
+            {
+              inviteeId: userId,
+              inviter: {
+                deletedAt: {
+                  not: null,
+                },
+              },
+            },
+            {
+              inviterId: userId,
+              invitee: {
+                deletedAt: {
+                  not: null,
+                },
+              },
+            },
+          ],
+        },
+        data: {
+          deletedAt: new Date(),
+        },
+      });
     });
     return true;
   }
@@ -120,6 +147,7 @@ export class UserRepository implements IUserRepository {
   async findPartnerByUserId(userId: string): Promise<User | null> {
     const findCouple = await this.databasePort.couple.findFirst({
       where: {
+        deletedAt: null,
         OR: [
           {
             inviteeId: userId,
@@ -129,9 +157,7 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    const isCouple = !isNull(findCouple);
-
-    if (!isCouple) {
+    if (isNull(findCouple)) {
       return null;
     }
 
@@ -143,8 +169,8 @@ export class UserRepository implements IUserRepository {
   }
 
   async findOneByPersonalCode(personalCode: string): Promise<User | null> {
-    const findUser = await this.databasePort.user.findUnique({
-      where: { personalCode },
+    const findUser = await this.databasePort.user.findFirst({
+      where: { personalCode, deletedAt: null },
     });
     return this.enumConvertAndAnonymizeUser(findUser);
   }
@@ -153,6 +179,7 @@ export class UserRepository implements IUserRepository {
     await this.databasePort.user.update({
       where: {
         userId,
+        deletedAt: null,
       },
       data: {
         coupleStartDate,
@@ -165,6 +192,7 @@ export class UserRepository implements IUserRepository {
     await this.databasePort.user.update({
       where: {
         userId,
+        deletedAt: null,
       },
       data: {
         notificationTime,
@@ -178,17 +206,18 @@ export class UserRepository implements IUserRepository {
     partnerId: string,
     notificationTime: Date,
   ): Promise<boolean> {
-    await this.databasePort.user.updateMany({
+    const { count } = await this.databasePort.user.updateMany({
       where: {
         userId: {
           in: [userId, partnerId],
         },
+        deletedAt: null,
       },
       data: {
         notificationTime,
       },
     });
-    return true;
+    return count === 2;
   }
 
   async updateSubscriptionStatus(
@@ -199,6 +228,7 @@ export class UserRepository implements IUserRepository {
       await this.databasePort.user.update({
         where: {
           userId,
+          deletedAt: null,
         },
         data: {
           subscriptionStatus,

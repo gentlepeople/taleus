@@ -16,7 +16,7 @@ export class CoupleMission {
   isCompleted: boolean;
 
   @Field(() => Int)
-  reminderClickCount: number;
+  reminderCount: number;
 
   @Field(() => Date)
   createdAt: Date;

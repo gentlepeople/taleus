@@ -58,10 +58,6 @@ type Couple {
   startDate: DateTime
 }
 
-type DailyMissionResponse {
-  count: Int!
-}
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -104,6 +100,15 @@ enum EnumResponseType {
   SINGLE_CHOICE
   TEXT
   YES_NO
+}
+
+enum EnumSubscriptionStatus {
+  ACTIVE
+  ACTIVE_TRIAL
+  CANCELED
+  EXPIRED
+  PAUSED
+  UNSUBSCRIBED
 }
 
 type GoogleLoginResponse {
@@ -169,7 +174,7 @@ type Mutation {
 
   """Register a couple"""
   registerCouple(inviteePersonalCode: String!, inviterId: String!): RegisterCoupleResponse!
-  scheduleDailyMission: DailyMissionResponse!
+  remindMissionPartner(coupleMissionId: BigInt!, userId: String!): RemindMissionPartnerResponse!
   submitMissionResponse(data: [SubmitMissionResponseRequestData!]!): SubmitMissionResponseResponse!
 
   """
@@ -219,6 +224,11 @@ type Question {
 
 type RegisterCoupleResponse {
   code: String
+  message: String
+  success: Boolean!
+}
+
+type RemindMissionPartnerResponse {
   message: String
   success: Boolean!
 }
@@ -292,6 +302,7 @@ type User {
 
   """Determine if the user is currently in a couple."""
   isCoupled: Boolean!
+  isSubscriptionActive: Boolean!
   nickname: String!
   notificationTime: String
   oauthProviderType: EnumOAuthProviderType!
@@ -302,6 +313,7 @@ type User {
   partner: User
   personalCode: String!
   profileImageUrl: String!
+  subscriptionStatus: EnumSubscriptionStatus!
   updatedAt: DateTime!
 
   """The number of days since the user started using the app."""

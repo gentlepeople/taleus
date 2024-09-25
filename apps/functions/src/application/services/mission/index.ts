@@ -4,4 +4,5 @@ export * from './find-question.service';
 export * from './get-today-mission.service';
 export * from './find-response.service';
 export * from './submit-mission-response.service';
+export * from './send-mission-reminder-to-partner.service';
 export * from './mission-service.module';
