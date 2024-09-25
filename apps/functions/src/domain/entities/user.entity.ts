@@ -1,4 +1,8 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumOAuthProviderType,
+  EnumSubscriptionStatus,
+} from '@gentlepeople/taleus-schema';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -32,6 +36,9 @@ export class User {
 
   @Field(() => String, { nullable: true })
   notificationTime?: string;
+
+  @Field(() => EnumSubscriptionStatus)
+  subscriptionStatus: EnumSubscriptionStatus;
 
   @Field(() => Date)
   createdAt: Date;

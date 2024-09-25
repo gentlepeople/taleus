@@ -30,6 +30,7 @@ CREATE TABLE users (
     oauth_provider_id VARCHAR NOT NULL,
     personal_code VARCHAR NOT NULL,
     notification_time TIME NULL,
+    subscription_status VARCHAR NOT NULL DEFAULT 'UNSUBSCRIBED',
     created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     deleted_at TIMESTAMPTZ NULL,

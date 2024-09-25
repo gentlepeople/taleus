@@ -9,15 +9,16 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective, GraphQLSchema } from 'graphql';
 import { ProviderModule } from 'src/adapter/out/providers';
 
-import * as resolvers from './adapter/in';
-import { ServiceModule } from './application/services';
+import * as graphqlResolvers from '.';
 
+import '@/common/enums/register-enum';
 import {
   GlobalExceptionProvider,
   LoggerMiddleware,
   upperDirectiveTransformer,
   isEmulator,
 } from '@/common';
+import { ServiceModule } from '@/services';
 
 @Module({
   imports: [
@@ -63,10 +64,10 @@ import {
       provide: APP_FILTER,
       useClass: GlobalExceptionProvider,
     },
-    ...Object.values(resolvers),
+    ...Object.values(graphqlResolvers),
   ],
 })
-export class AppModule implements NestModule {
+export class GraphqlModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }

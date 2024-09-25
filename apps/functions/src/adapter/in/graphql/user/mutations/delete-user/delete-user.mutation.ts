@@ -3,7 +3,7 @@ import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
 
 import { DeleteUserRequest, DeleteUserResponse } from './delete-user.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { DEACTIVATE_USER_USECASE, DeactivateUserUsecase } from '@/ports';
 
 @Resolver()
@@ -16,7 +16,7 @@ export class DeleteUserMutation {
   @Mutation(() => DeleteUserResponse, {
     description: 'Deletes a user account.',
   })
-  @Auth()
+  @UserAuth()
   async deleteUser(
     @Args() args: DeleteUserRequest,
     @Context() context: GqlContext,

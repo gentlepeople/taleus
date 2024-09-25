@@ -3,7 +3,7 @@ import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
 
 import { UpdateUserRequest, UpdateUserResponse } from './update-user.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   FIND_USER_USECASE,
   FindUserUsecase,
@@ -24,7 +24,7 @@ export class UpdateUserMutation {
     description:
       "Updates a user's details based on the provided userId and input fields. Only the fields specified in the input will be updated.",
   })
-  @Auth()
+  @UserAuth()
   async updateUser(
     @Args() args: UpdateUserRequest,
     @Context() context: GqlContext,

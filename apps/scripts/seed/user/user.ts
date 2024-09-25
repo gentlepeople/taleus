@@ -1,4 +1,9 @@
-import { EnumGender, EnumOAuthProviderType, Prisma } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumOAuthProviderType,
+  EnumSubscriptionStatus,
+  Prisma,
+} from '@gentlepeople/taleus-schema';
 
 import { AUTO_USER, AUTO_USER_LENGTH, seedPrisma } from '../seed.config';
 import {
@@ -30,6 +35,7 @@ export const User = async (): Promise<void> => {
         oauthProviderType: EnumOAuthProviderType.KAKAO,
         oauthProviderId: `kakao:${sampleUUID()}`,
         personalCode: sampleUUID().slice(0, 8),
+        subscriptionStatus: sampleItem(EnumSubscriptionStatus),
         ...sampleAuditTimestamps(true),
       }),
     );

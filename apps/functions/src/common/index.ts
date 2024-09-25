@@ -9,3 +9,4 @@ export * from './decorators';
 export * from './helpers';
 export * from './interfaces';
 export * from './validators';
+export * from './enums';

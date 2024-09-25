@@ -6,7 +6,7 @@ import {
   UpdateNotificationTimeResponse,
 } from './update-notification-time.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   FIND_USER_USECASE,
   FindUserUsecase,
@@ -28,7 +28,7 @@ export class UpdateNotificationTimeMutation {
   ) {}
 
   @Mutation(() => UpdateNotificationTimeResponse)
-  @Auth()
+  @UserAuth()
   async updateNotificationTime(
     @Args() args: UpdateNotificationTimeRequest,
     @Context() context: GqlContext,

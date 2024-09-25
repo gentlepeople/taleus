@@ -3,6 +3,7 @@ import {
   EnumMissionCategory,
   EnumOAuthProviderType,
   EnumResponseType,
+  EnumSubscriptionStatus,
 } from '@gentlepeople/taleus-schema';
 import { registerEnumType } from '@nestjs/graphql';
 
@@ -20,5 +21,9 @@ registerEnumType(EnumMissionCategory, {
 });
 registerEnumType(EnumResponseType, {
   name: 'EnumResponseType',
+  description: undefined,
+});
+registerEnumType(EnumSubscriptionStatus, {
+  name: 'EnumSubscriptionStatus',
   description: undefined,
 });

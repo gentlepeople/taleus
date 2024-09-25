@@ -1,4 +1,8 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumOAuthProviderType,
+  EnumSubscriptionStatus,
+} from '@gentlepeople/taleus-schema';
 
 import { User } from '@/domain';
 
@@ -39,4 +43,8 @@ export interface IUserRepository {
     notificationTime: Date,
   ): Promise<boolean>;
   softDeleteOne(userId: string): Promise<boolean>;
+  updateSubscriptionStatus(
+    userId: string,
+    subscriptionStatus: EnumSubscriptionStatus,
+  ): Promise<boolean>;
 }

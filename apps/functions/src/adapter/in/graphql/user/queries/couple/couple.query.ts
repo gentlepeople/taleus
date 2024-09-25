@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 
 import { CoupleRequest } from './couple.dto';
 
-import { Auth, checkUserPermission, diffDays, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, diffDays, GqlContext } from '@/common';
 import { Couple } from '@/domain';
 import {
   FIND_COUPLE_MISSION_USECASE,
@@ -29,7 +29,7 @@ export class CoupleQuery {
   @Query(() => Couple, {
     nullable: true,
   })
-  @Auth()
+  @UserAuth()
   async couple(
     @Args() args: CoupleRequest,
     @Context() context: GqlContext,

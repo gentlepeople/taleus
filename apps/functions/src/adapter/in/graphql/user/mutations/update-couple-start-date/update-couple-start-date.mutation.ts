@@ -6,7 +6,7 @@ import {
   UpdateCoupleStartDateResponse,
 } from './update-couple-start-date.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   UpdateCoupleStartDateUsecase,
   UPDATE_COUPLE_START_DATE_USECASE,
@@ -26,7 +26,7 @@ export class UpdateCoupleStartDateMutation {
   @Mutation(() => UpdateCoupleStartDateResponse, {
     description: "Updates the start date of a couple's relationship to a new specified date.",
   })
-  @Auth()
+  @UserAuth()
   async updateCoupleStartDate(
     @Args() args: UpdateCoupleStartDateRequest,
     @Context() context: GqlContext,

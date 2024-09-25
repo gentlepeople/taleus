@@ -14,9 +14,11 @@
     "precommit",
     "preinstall",
     "prepush",
+    "REVENUECAT",
     "snakecase",
     "taleus",
     "tsup",
+    "UNCANCELLATION",
     "Usecase"
   ]
 }

@@ -1,11 +1,11 @@
-import { INestApplication } from '@nestjs/common';
 import { Express } from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions/v2';
 import { GlobalOptions } from 'firebase-functions/v2';
 import { onRequest } from 'firebase-functions/v2/https';
 
-import { createGraphQLNestServer } from './app.bootstrap';
+import { createApiNestServer } from './adapter/in/api/api.bootstrap';
+import { createGraphQLNestServer } from './adapter/in/graphql/graphql.bootstrap';
 
 admin.initializeApp();
 
@@ -25,13 +25,19 @@ const functionsGlobalOptions: GlobalOptions = {
 functions.setGlobalOptions({ ...functionsGlobalOptions });
 
 let graphqlNestServer: Express;
-let nestAppContext: INestApplication;
 
 export const graphql = onRequest(async (req, resp) => {
   if (!graphqlNestServer) {
-    const { express, app } = await createGraphQLNestServer();
-    graphqlNestServer = express;
-    nestAppContext = app;
+    graphqlNestServer = await createGraphQLNestServer();
   }
   return graphqlNestServer(req, resp);
+});
+
+let apiNestServer: Express;
+
+export const api = onRequest(async (req, resp) => {
+  if (!apiNestServer) {
+    apiNestServer = await createApiNestServer();
+  }
+  return apiNestServer(req, resp);
 });
