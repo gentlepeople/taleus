@@ -25,8 +25,38 @@ export class ResponseRepository implements IResponseRepository {
         },
       },
     });
-
     return findResponses;
+  }
+
+  async checkAllUsersCompletedCoupleMission(
+    coupleMissionId: bigint,
+    userIds: string[],
+  ): Promise<boolean> {
+    const {
+      mission: { question },
+    } = await this.databasePort.coupleMission.findUnique({
+      where: {
+        coupleMissionId,
+      },
+      select: {
+        mission: {
+          select: {
+            question: true,
+          },
+        },
+      },
+    });
+    const questionCount = question.length;
+    const response = await this.databasePort.response.findMany({
+      where: {
+        coupleMissionId,
+        userId: {
+          in: userIds,
+        },
+      },
+    });
+    const responseCount = response.length;
+    return questionCount > 0 && questionCount * userIds.length === responseCount;
   }
 
   async findManyByCoupleMissionIdsAndUserIds(
@@ -57,15 +87,6 @@ export class ResponseRepository implements IResponseRepository {
     await this.databasePort.response.createMany({
       data,
     });
-  }
-
-  async countByCoupleMissionId(coupleMissionId: bigint): Promise<number> {
-    const count = await this.databasePort.response.count({
-      where: {
-        coupleMissionId,
-      },
-    });
-    return count;
   }
 
   async updateContent(responseId: bigint, content: string): Promise<Response> {

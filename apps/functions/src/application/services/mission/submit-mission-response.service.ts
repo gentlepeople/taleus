@@ -6,8 +6,8 @@ import {
   IResponseRepository,
   COUPLE_MISSION_REPOSITORY,
   ICoupleMissionRepository,
-  IQuestionRepository,
-  QUESTION_REPOSITORY,
+  IUserRepository,
+  USER_REPOSITORY,
 } from '@/ports';
 
 @Injectable()
@@ -17,8 +17,8 @@ export class SubmitMissionResponseService implements SubmitMissionResponseUsecas
     private readonly responseRepository: IResponseRepository,
     @Inject(COUPLE_MISSION_REPOSITORY)
     private readonly coupleMissionRepository: ICoupleMissionRepository,
-    @Inject(QUESTION_REPOSITORY)
-    private readonly questionRepository: IQuestionRepository,
+    @Inject(USER_REPOSITORY)
+    private readonly userRepository: IUserRepository,
   ) {}
 
   async execute(
@@ -31,30 +31,28 @@ export class SubmitMissionResponseService implements SubmitMissionResponseUsecas
   ): Promise<boolean> {
     await this.responseRepository.createMany(data);
 
-    const missionsMap = new Map<bigint, { userId: string; coupleMissionId: bigint }>();
+    const coupleMissionsMap = new Map<bigint, { userId: string; coupleMissionId: bigint }>();
 
     data.forEach(({ coupleMissionId, userId }) => {
       if (coupleMissionId) {
-        missionsMap.set(coupleMissionId, {
+        coupleMissionsMap.set(coupleMissionId, {
           userId,
           coupleMissionId,
         });
       }
     });
 
-    for (const { userId, coupleMissionId } of missionsMap.values()) {
+    for (const { userId, coupleMissionId } of coupleMissionsMap.values()) {
       const { isCompleted: isCoupleMissionCompleted, missionId } =
         await this.coupleMissionRepository.findOneByCoupleMissionId(coupleMissionId);
 
       const needToCheckCompleted = !isCoupleMissionCompleted;
       if (needToCheckCompleted) {
-        const missionQuestionSize = await this.questionRepository.countByMissionId(missionId);
-
-        const allResponsesCount = await this.responseRepository.countByCoupleMissionId(
+        const { userId: partnerId } = await this.userRepository.findPartnerByUserId(userId);
+        const coupleCompleted = await this.responseRepository.checkAllUsersCompletedCoupleMission(
           coupleMissionId,
+          [userId, partnerId],
         );
-
-        const coupleCompleted = missionQuestionSize * 2 == allResponsesCount;
 
         if (coupleCompleted) {
           await this.coupleMissionRepository.updateToCompleted(coupleMissionId);

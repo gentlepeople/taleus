@@ -11,7 +11,7 @@ export interface ICoupleMissionRepository {
     }[],
   ): Promise<number>;
   countCompletedByCoupleId(coupleId: bigint): Promise<number>;
-  getOngoingOneByUserId(userId: string): Promise<CoupleMission | null>;
+  findActiveOneByUserId(userId: string): Promise<CoupleMission | null>;
   findManyCompletedByUserIdSortByCreatedAtDesc(
     userId: string,
     pagination: { take: number; skip: number },

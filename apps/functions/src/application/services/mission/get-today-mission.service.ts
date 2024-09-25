@@ -22,18 +22,18 @@ export class GetTodayMissionService implements GetTodayMissionUsecase {
   async execute(
     userId: string,
   ): Promise<{ mission: Mission; coupleMission: CoupleMission } | null> {
-    const findOngoingCoupleMission = await this.coupleMissionRepository.getOngoingOneByUserId(
+    const findActiveCoupleMission = await this.coupleMissionRepository.findActiveOneByUserId(
       userId,
     );
 
-    if (isNull(findOngoingCoupleMission)) {
+    if (isNull(findActiveCoupleMission)) {
       return null;
     }
-    const { missionId } = findOngoingCoupleMission;
+    const { missionId } = findActiveCoupleMission;
     const findTodayMission = await this.missionRepository.findOneByMissionId(missionId);
     return {
       mission: findTodayMission,
-      coupleMission: findOngoingCoupleMission,
+      coupleMission: findActiveCoupleMission,
     };
   }
 }

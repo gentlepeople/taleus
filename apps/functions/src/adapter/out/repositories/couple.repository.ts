@@ -1,4 +1,5 @@
 import { couple } from '@gentlepeople/taleus-schema';
+import { UserInputError } from '@nestjs/apollo';
 import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
@@ -51,6 +52,19 @@ export class CoupleRepository implements ICoupleRepository {
     inviterId: string,
     inviteeId: string,
   ): Promise<Couple | null> {
+    const usersCount = await this.databasePort.user.count({
+      where: {
+        userId: {
+          in: [inviteeId, inviterId],
+        },
+        deletedAt: null,
+      },
+    });
+    const hasDeletedUser = usersCount < 2;
+    if (hasDeletedUser) {
+      throw new UserInputError('No valid userId provided.');
+    }
+
     const createCouple = await this.databasePort.$transaction(async (tx) => {
       const { coupleStartDate: inviterCoupleStartDate } = await tx.user.findUnique({
         where: {
@@ -82,7 +96,6 @@ export class CoupleRepository implements ICoupleRepository {
             in: questionIds,
           },
           coupleMissionId: null,
-          deletedAt: null,
         },
       });
 
@@ -132,6 +145,7 @@ export class CoupleRepository implements ICoupleRepository {
           },
           { inviterId: userId },
         ],
+        deletedAt: null,
       },
       include: {
         invitee: {
@@ -154,6 +168,7 @@ export class CoupleRepository implements ICoupleRepository {
     const findCouple = await this.databasePort.couple.findUnique({
       where: {
         coupleId,
+        deletedAt: null,
       },
       include: {
         invitee: {
@@ -217,7 +232,6 @@ export class CoupleRepository implements ICoupleRepository {
         coupleMission: {
           none: {
             isCompleted: false,
-            deletedAt: null,
           },
         },
       },

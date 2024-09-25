@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
-import { EnumPushNotificationTemplate } from '../../../adapter/out';
-
 import {
   IUserRepository,
   PUSH_NOTIFICATION_PORT,
@@ -10,6 +8,7 @@ import {
   UpdateNotificationTimeUsecase,
   USER_REPOSITORY,
 } from '@/ports';
+import { EnumPushNotificationTemplate } from '@/providers';
 
 @Injectable()
 export class UpdateNotificationTimeService implements UpdateNotificationTimeUsecase {
@@ -25,17 +24,19 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
     const isCouple = !isNull(partner);
     if (isCouple) {
       const { userId: partnerId } = partner;
-      await this.userRepository.updateNotificationTimeWithPartner(
+      const updateSuccess = await this.userRepository.updateNotificationTimeWithPartner(
         userId,
         partnerId,
         notificationTime,
       );
-      const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
-      await this.pushNotificationPort.send(
-        [partnerId],
-        EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
-        { nickname: userNickname },
-      );
+      if (updateSuccess) {
+        const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
+        await this.pushNotificationPort.send(
+          [partnerId],
+          EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
+          { nickname: userNickname },
+        );
+      }
     } else {
       await this.userRepository.updateNotificationTime(userId, notificationTime);
     }

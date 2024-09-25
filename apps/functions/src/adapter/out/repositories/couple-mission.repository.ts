@@ -44,15 +44,14 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     const count = await this.databasePort.coupleMission.count({
       where: {
         coupleId,
-        deletedAt: null,
         isCompleted: true,
       },
     });
     return count;
   }
 
-  async getOngoingOneByUserId(userId: string): Promise<CoupleMission | null> {
-    const getOngoingCoupleMission = await this.databasePort.coupleMission.findFirst({
+  async findActiveOneByUserId(userId: string): Promise<CoupleMission | null> {
+    const getActiveCoupleMission = await this.databasePort.coupleMission.findFirst({
       where: {
         couple: {
           OR: [
@@ -63,15 +62,16 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
               inviteeId: userId,
             },
           ],
+          deletedAt: null,
         },
-        deletedAt: null,
+
         isCompleted: false,
       },
       orderBy: {
         createdAt: 'desc',
       },
     });
-    return getOngoingCoupleMission;
+    return getActiveCoupleMission;
   }
 
   async findManyCompletedByUserIdSortByCreatedAtDesc(
@@ -89,8 +89,8 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
               inviteeId: userId,
             },
           ],
+          deletedAt: null,
         },
-        deletedAt: null,
         isCompleted: true,
       },
       orderBy: {
@@ -132,7 +132,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
         couple_id: bigint;
         mission_id: bigint;
         is_completed: boolean;
-        reminder_click_count: number;
+        reminder_count: number;
         cm_create_at: Date;
         m_title: string;
         m_category: string;
@@ -153,7 +153,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
                 cm.couple_id,
                 cm.mission_id,
                 cm.is_completed,
-                cm.reminder_click_count,
+                cm.reminder_count,
                 cm.created_at as cm_create_at,
                 m.title as m_title,
                 m.category as m_category,
@@ -175,11 +175,11 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
         JOIN mission m ON cm.mission_id = m.mission_id
         JOIN question q ON q.mission_id = m.mission_id
         WHERE (c.inviter_id = ${userId} OR c.invitee_id = ${userId})
-          AND cm.deleted_at IS NULL
+          AND c.deleted_at IS NULL
           AND cm.is_completed = true
         GROUP BY 
           cm.couple_mission_id, cm.couple_id, cm.mission_id, 
-          cm.is_completed, cm.reminder_click_count, cm.created_at, 
+          cm.is_completed, cm.reminder_count, cm.created_at, 
           m.title, m.category, m.created_at, m.updated_at
         ORDER BY hashtext(cm.mission_id || ${todayFormat})
         LIMIT ${pagination.take} OFFSET ${pagination.skip};
@@ -191,7 +191,7 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
         coupleId: coupleMission.couple_id,
         missionId: coupleMission.mission_id,
         isCompleted: coupleMission.is_completed,
-        reminderClickCount: coupleMission.reminder_click_count,
+        reminderCount: coupleMission.reminder_count,
         createdAt: coupleMission.cm_create_at,
         mission: {
           ...Mission.enumConvert({
