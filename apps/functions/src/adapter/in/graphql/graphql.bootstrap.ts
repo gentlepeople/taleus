@@ -12,14 +12,11 @@ import express, { Express } from 'express';
 import { logger as firebaseLogger } from 'firebase-functions/v2';
 import { Logger } from 'nestjs-pino';
 
-import { AppModule } from './app.module';
+import { GraphqlModule } from './graphql.module';
 
 import { GlobalExceptionProvider, isEmulator } from '@/common';
 
-export const createGraphQLNestServer = async (): Promise<{
-  express: Express;
-  app: INestApplication;
-}> => {
+export const createGraphQLNestServer = async (): Promise<Express> => {
   const expressInstance = express();
   let app: INestApplication;
   try {
@@ -28,7 +25,11 @@ export const createGraphQLNestServer = async (): Promise<{
     const defaultExpressApplicationProvider: NestApplicationOptions = {
       bufferLogs: true,
     };
-    app = await NestFactory.create(AppModule, expressAdapter, defaultExpressApplicationProvider);
+    app = await NestFactory.create(
+      GraphqlModule,
+      expressAdapter,
+      defaultExpressApplicationProvider,
+    );
 
     // logger
     const loggerOptions: {
@@ -66,5 +67,5 @@ export const createGraphQLNestServer = async (): Promise<{
   } catch (err) {
     firebaseLogger.error('Nest broken (taleus-graphql)', err);
   }
-  return { express: expressInstance, app };
+  return expressInstance;
 };

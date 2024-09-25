@@ -8,11 +8,13 @@
     "noEmit": false,
     "paths": {
       "@/common": ["src/common"],
+      "@/common/*": ["src/common/*"],
       "@/providers": ["src/adapter/out/providers"],
       "@/repositories": ["src/adapter/out/repositories"],
       "@/domain": ["src/domain"],
       "@/ports": ["src/application/ports"],
-      "@/services": ["src/application/services"]
+      "@/services": ["src/application/services"],
+      "@/services/*": ["src/application/services/*"]
     }
   },
   "exclude": ["dist", "node_modules", "**/*spec.ts"],

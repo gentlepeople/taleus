@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 
 import { MissionLogRequest, MissionLogResponse } from './mission-log.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { Response } from '@/domain';
 import {
   FIND_COUPLE_MISSION_USECASE,
@@ -45,7 +45,7 @@ export class MissionLogQuery {
   ) {}
 
   @Query(() => MissionLogResponse)
-  @Auth()
+  @UserAuth()
   async missionLog(
     @Args() args: MissionLogRequest,
     @Context() context: GqlContext,

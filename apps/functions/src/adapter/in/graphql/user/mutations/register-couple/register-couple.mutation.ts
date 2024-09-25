@@ -3,7 +3,7 @@ import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
 
 import { RegisterCoupleRequest, RegisterCoupleResponse } from './register-couple.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { RegisterCoupleUsecase, REGISTER_COUPLE_USECASE } from '@/ports';
 
 @Resolver()
@@ -16,7 +16,7 @@ export class RegisterCoupleMutation {
   @Mutation(() => RegisterCoupleResponse, {
     description: 'Register a couple',
   })
-  @Auth()
+  @UserAuth()
   async registerCouple(
     @Args() args: RegisterCoupleRequest,
     @Context() context: GqlContext,

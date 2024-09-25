@@ -1,10 +1,10 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 
-import { AuthGuard } from '../guards';
+import { UserAuthGuard } from '../guards';
 
-export function Auth(...permissions: string[]) {
+export function UserAuth(...permissions: string[]) {
   return applyDecorators(
     // SetMetadata("permissions", permissions),
-    UseGuards(AuthGuard),
+    UseGuards(UserAuthGuard),
   );
 }

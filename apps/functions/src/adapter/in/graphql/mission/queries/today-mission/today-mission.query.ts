@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 
 import { TodayMissionRequest, TodayMissionResponse } from './today-mission.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   GET_TODAY_MISSION_USECASE,
   GetTodayMissionUsecase,
@@ -30,7 +30,7 @@ export class TodayMissionQuery {
   ) {}
 
   @Query(() => TodayMissionResponse, { nullable: true })
-  @Auth()
+  @UserAuth()
   async todayMission(
     @Args() args: TodayMissionRequest,
     @Context() context: GqlContext,

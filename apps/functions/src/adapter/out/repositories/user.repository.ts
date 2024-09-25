@@ -1,4 +1,9 @@
-import { EnumGender, EnumOAuthProviderType, user } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumOAuthProviderType,
+  EnumSubscriptionStatus,
+  user,
+} from '@gentlepeople/taleus-schema';
 import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
@@ -35,6 +40,7 @@ export class UserRepository implements IUserRepository {
       notificationTime: object.notificationTime
         ? object.notificationTime.toTimeString().slice(0, 5)
         : null,
+      subscriptionStatus: object.subscriptionStatus as EnumSubscriptionStatus,
     };
   }
 
@@ -183,5 +189,24 @@ export class UserRepository implements IUserRepository {
       },
     });
     return true;
+  }
+
+  async updateSubscriptionStatus(
+    userId: string,
+    subscriptionStatus: EnumSubscriptionStatus,
+  ): Promise<boolean> {
+    try {
+      await this.databasePort.user.update({
+        where: {
+          userId,
+        },
+        data: {
+          subscriptionStatus,
+        },
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

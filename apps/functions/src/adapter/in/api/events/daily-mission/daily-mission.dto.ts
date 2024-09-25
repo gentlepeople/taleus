@@ -1,7 +1,7 @@
 import { Field, ObjectType, Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class DailyMissionResponse {
+export class EventDailyMissionResponse {
   @Field(() => Int)
   count: number;
 }

@@ -1,4 +1,8 @@
-import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
+import {
+  EnumGender,
+  EnumOAuthProviderType,
+  EnumSubscriptionStatus,
+} from '@gentlepeople/taleus-schema';
 
 import { User } from '../../domain';
 
@@ -18,6 +22,7 @@ export const DEFAULT_ANONYMOUS_USER_OBJECT: User = {
   oauthProviderType: EnumOAuthProviderType.KAKAO,
   personalCode: 'N/A',
   notificationTime: 'N/A',
+  subscriptionStatus: EnumSubscriptionStatus.UNSUBSCRIBED,
   createdAt: new Date('0000-01-01'),
   updatedAt: new Date('0000-01-01'),
 };

@@ -7,7 +7,7 @@ import {
   SubmitMissionResponseResponse,
 } from './submit-mission-response.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { SubmitMissionResponseUsecase, SUBMIT_MISSION_RESPONSE_USECASE } from '@/ports';
 
 @Resolver()
@@ -18,7 +18,7 @@ export class SubmitMissionResponseMutation {
   ) {}
 
   @Mutation(() => SubmitMissionResponseResponse)
-  @Auth()
+  @UserAuth()
   async submitMissionResponse(
     @Args() args: SubmitMissionResponseRequest,
     @Context() context: GqlContext,

@@ -3,7 +3,7 @@ import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
 
 import { UpdateResponseRequest, UpdateResponseResponse } from './update-response.dto';
 
-import { Auth, checkUserPermission, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { UpdateResponseUsecase, UPDATE_RESPONSE_USECASE } from '@/ports';
 
 @Resolver()
@@ -14,7 +14,7 @@ export class UpdateResponseMutation {
   ) {}
 
   @Mutation(() => UpdateResponseResponse)
-  @Auth()
+  @UserAuth()
   async updateResponse(
     @Args() args: UpdateResponseRequest,
     @Context() context: GqlContext,

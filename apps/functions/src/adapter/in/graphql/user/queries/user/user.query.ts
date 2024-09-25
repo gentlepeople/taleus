@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 
 import { UserRequest } from './user.dto';
 
-import { Auth, checkUserPermission, diffDays, GqlContext } from '@/common';
+import { UserAuth, checkUserPermission, diffDays, GqlContext } from '@/common';
 import { Couple, User } from '@/domain';
 import {
   FIND_COUPLE_USECASE,
@@ -30,7 +30,7 @@ export class UserQuery {
     description: 'get one user by user id.',
     nullable: true,
   })
-  @Auth()
+  @UserAuth()
   async user(@Args() args: UserRequest, @Context() context: GqlContext): Promise<User | null> {
     const { userId } = args;
     checkUserPermission(context, userId);
