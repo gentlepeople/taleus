@@ -23,8 +23,8 @@ export const Button = ({
   size = 'medium',
   buttonColor,
   style,
-  textColor = 'white',
-  textType = 'body-1',
+  textColor,
+  textType = 'button',
   textStyle,
   contentStyle,
   labelStyle,
@@ -110,8 +110,8 @@ export const Button = ({
           elevation: 0,
           ...getBorderStyle(),
           borderWidth: 1,
-          backgroundColor: palette['blue-main'],
-          ...(rest.disabled && { backgroundColor: '#959595' }),
+          backgroundColor: palette['primary'],
+          ...(rest.disabled && { backgroundColor: palette['disabled'] }),
           ...(rest.mode === 'outlined'
             ? { borderColor: palette['gray-300'] }
             : { borderColor: palette['transparent'] }),

@@ -9,8 +9,8 @@ import { modalStack } from './modal';
 import { UnauthenticatedStack, UnauthenticatedStackParamList } from './unauthenticated';
 
 export type RootStackParamList = {
-  AuthenticatedStack: NavigatorScreenParams<AuthenticatedStackParamList>;
   UnauthenticatedStack: NavigatorScreenParams<UnauthenticatedStackParamList>;
+  AuthenticatedStack: NavigatorScreenParams<AuthenticatedStackParamList>;
   CommonStack: NavigatorScreenParams<CommonStackParamList>;
 };
 

@@ -9,6 +9,7 @@ module.exports = {
     ],
   ],
   plugins: [
+    'react-native-reanimated/plugin',
     [
       require.resolve('babel-plugin-module-resolver'),
       {
@@ -17,6 +18,7 @@ module.exports = {
           '~/mobile-ui': './src/mobile-ui',
           '~/providers': './src/providers',
           '~/screens': './src/screens',
+          '~/hooks': './src/hooks',
         },
         extensions: [
           '.ios.ts',

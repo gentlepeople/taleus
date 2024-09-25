@@ -1,26 +1,39 @@
 import { FC, ReactNode } from 'react';
 import { TextInput as NativeTextInput } from 'react-native-paper';
 
-import { palette } from '../../../theme';
+import { StyleProp, TextStyle } from 'react-native';
+import { palette, radius, size } from '../../../theme';
 import { getTextColorStyle, getTextTypeStyle } from '../text';
 
 export type ITextInputProps = {
   placeholder: string;
   currentValue: string;
   onChangeText?: (text: string) => void;
-  editable: boolean;
+  editable?: boolean;
   right?: ReactNode;
+  width?: number;
+  textAlignCenter?: boolean;
+  style?: StyleProp<TextStyle>;
+  contentStyle?: StyleProp<TextStyle>;
+  multiLine?: boolean;
+  isLengthOvered?: boolean;
 };
 
 export const TextInput: FC<ITextInputProps> = ({
   placeholder,
   currentValue,
   onChangeText,
-  editable,
+  editable = true,
   right,
+  width,
+  textAlignCenter,
+  style,
+  contentStyle,
+  multiLine = false,
+  isLengthOvered,
 }) => {
-  const textTypeStyle = getTextTypeStyle('body-1');
-  const textColorStyle = getTextColorStyle(currentValue ? 'textPrimary' : 'textSecondary');
+  const textTypeStyle = getTextTypeStyle('body/14/regular');
+  const textColorStyle = getTextColorStyle(currentValue ? 'text-black' : 'gray-20');
 
   const handleChangeTextInput = (text: string) => {
     onChangeText(text);
@@ -35,18 +48,28 @@ export const TextInput: FC<ITextInputProps> = ({
         handleChangeTextInput(text);
       }}
       right={right}
-      multiline={false}
+      multiline={multiLine}
       placeholder={placeholder}
-      contentStyle={{
-        ...textTypeStyle,
-        ...textColorStyle,
-      }}
-      theme={{ colors: { onSurfaceVariant: palette['gray'] } }}
-      style={{
-        backgroundColor: 'transparent',
-      }}
-      outlineColor={palette['gray']}
-      activeOutlineColor={palette['gray']}
+      contentStyle={[
+        {
+          ...textTypeStyle,
+          ...textColorStyle,
+          textAlign: textAlignCenter ? 'center' : 'auto',
+        },
+        contentStyle,
+      ]}
+      theme={{ colors: { onSurfaceVariant: palette['text-black'] } }}
+      style={[
+        {
+          backgroundColor: 'transparent',
+          height: size['10-x'],
+          width: width && width,
+        },
+        style,
+      ]}
+      outlineStyle={{ borderRadius: radius['4-x'] }}
+      outlineColor={isLengthOvered ? palette['danger'] : palette['gray-20']}
+      activeOutlineColor={isLengthOvered ? palette['danger'] : palette['primary']}
       editable={editable}
     />
   );

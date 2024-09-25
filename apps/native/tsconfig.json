@@ -5,7 +5,8 @@
     "paths": {
       "~/mobile-ui": ["./src/mobile-ui"],
       "~/screens": ["./src/screens"],
-      "~/providers": ["./src/providers"]
+      "~/providers": ["./src/providers"],
+      "~/hooks": ["./src/hooks"]
     },
     "target": "es6",
     "lib": ["esnext", "dom"],
@@ -33,7 +34,8 @@
     ".babelrc.js",
     "app.json",
     "package.json",
-    "types/**/*.d.ts"
+    "types/**/*.d.ts",
+    "src/mobile-ui/components/organisms/bottom-tab-navigator"
   ],
   "typeRoots": ["./types"]
 }

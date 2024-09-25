@@ -22,27 +22,29 @@ export const CTASection = memo<ICTASectionProps>(
     return (
       <Columns
         space={spacing['4-x']}
-        padding={isFullWidth ? 0 : spacing['6-x']}
+        padding={isFullWidth ? 0 : spacing['4-x']}
         style={{
           backgroundColor: backgroundColor && backgroundColor,
           borderTopLeftRadius: topRound && radius['4-x'],
           borderTopRightRadius: topRound && radius['4-x'],
         }}
       >
-        {buttons.map(({ mode, label, disabled, ...buttonProps }, index) => (
-          <Column key={index}>
-            <Button
-              {...buttonProps}
-              mode={mode || 'contained'}
-              disabled={disabled}
-              size="xLarge"
-              textColor="white"
-              isFullWidth={isFullWidth}
-            >
-              {label}
-            </Button>
-          </Column>
-        ))}
+        {buttons.map(({ mode, label, disabled, textColor, ...buttonProps }, index) => {
+          return (
+            <Column key={index}>
+              <Button
+                {...buttonProps}
+                mode={mode || 'contained'}
+                disabled={disabled}
+                size="xLarge"
+                textColor={textColor || 'white-100'}
+                isFullWidth={isFullWidth}
+              >
+                {label}
+              </Button>
+            </Column>
+          );
+        })}
       </Columns>
     );
   },

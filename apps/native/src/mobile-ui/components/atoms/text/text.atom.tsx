@@ -1,5 +1,5 @@
 import { ComponentProps, FC, ReactNode } from 'react';
-import { ColorValue, Text as ReactNativeText } from 'react-native';
+import { ColorValue, Text as ReactNativeText, StyleProp, TextStyle } from 'react-native';
 import { Merge } from 'type-fest';
 
 import {
@@ -32,7 +32,7 @@ export const Text: FC<ITextProps> = ({
   children,
   textType,
   textAlignment,
-  color = 'textPrimary',
+  color = 'primary',
   customColor,
   style,
   ...props
@@ -41,7 +41,11 @@ export const Text: FC<ITextProps> = ({
   const textAlignStyle = getTextAlignStyle(textAlignment);
   const textColorStyle = getTextColorStyle(color, customColor);
 
-  const augmentedStyle = { ...textAlignStyle, ...textColorStyle, ...textTypeStyle };
+  const augmentedStyle = {
+    ...textAlignStyle,
+    ...textColorStyle,
+    ...textTypeStyle,
+  } as StyleProp<TextStyle>;
 
   return (
     <ReactNativeText {...props} style={[augmentedStyle, style]}>

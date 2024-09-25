@@ -4,30 +4,14 @@
  *
  * You'll likely spend most of your time in this file.
  */
-import { RouteProp } from '@react-navigation/native';
+import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
-
-import { palette } from '~/mobile-ui';
 
 import { RootStackParamList } from '../root.stack';
-
-const Example = () => {
-  return (
-    <View
-      style={{
-        width: 100,
-        height: 100,
-        backgroundColor: palette['sub-blueSky'],
-      }}
-    />
-  );
-};
+import { AuthenticationStack, AuthenticationStackParamList } from './authentication';
 
 export type UnauthenticatedStackParamList = {
-  //   InitialStack: NavigatorScreenParams<InitialStackParamList>;
-  //   AuthenticationStack: NavigatorScreenParams<AuthenticationStackParamList>;
-  Example: {};
+  AuthenticationStack: NavigatorScreenParams<AuthenticationStackParamList>;
 };
 
 export type UnauthenticatedStackNavigationProp = StackNavigationProp<
@@ -48,7 +32,10 @@ export type IUnauthenticatedStackProps = {
 export const UnauthenticatedStack = () => {
   return (
     <UnauthenticatedStackNavigator.Navigator screenOptions={{ headerShown: false }}>
-      <UnauthenticatedStackNavigator.Screen name="Example" component={Example} />
+      <UnauthenticatedStackNavigator.Screen
+        name="AuthenticationStack"
+        component={AuthenticationStack}
+      />
     </UnauthenticatedStackNavigator.Navigator>
   );
 };

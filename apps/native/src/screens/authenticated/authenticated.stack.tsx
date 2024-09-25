@@ -4,30 +4,20 @@
  *
  * You'll likely spend most of your time in this file.
  */
-import { RouteProp } from '@react-navigation/native';
+import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
-import { View } from 'react-native';
-
-import { palette } from '~/mobile-ui';
 
 import { RootStackParamList } from '../root.stack';
+import { FeedStack, FeedStackParamList } from './feed';
+import { MyPageStack, MyPageStackParamList } from './my-page';
+import { PrimaryStack, PrimaryStackParamList } from './primary';
 
-const Example = () => {
-  return (
-    <View
-      style={{
-        width: 100,
-        height: 100,
-        backgroundColor: palette['sub-blueSky'],
-      }}
-    />
-  );
-};
+// Primary stack 만드는거부터 진행 탭 스크린들
 
 export type AuthenticatedStackParamList = {
-  //   InitialStack: NavigatorScreenParams<InitialStackParamList>;
-  //   AuthenticationStack: NavigatorScreenParams<AuthenticationStackParamList>;
-  Example: {};
+  PrimaryStack: NavigatorScreenParams<PrimaryStackParamList>;
+  FeedStack: NavigatorScreenParams<FeedStackParamList>;
+  MyPageStack: NavigatorScreenParams<MyPageStackParamList>;
 };
 
 export type AuthenticatedStackNavigationProp = StackNavigationProp<
@@ -48,7 +38,9 @@ export type IAuthenticatedStackProps = {
 export const AuthenticatedStack = () => {
   return (
     <AuthenticatedStackNavigator.Navigator screenOptions={{ headerShown: false }}>
-      <AuthenticatedStackNavigator.Screen name="Example" component={Example} />
+      <AuthenticatedStackNavigator.Screen name="PrimaryStack" component={PrimaryStack} />
+      <AuthenticatedStackNavigator.Screen name="FeedStack" component={FeedStack} />
+      <AuthenticatedStackNavigator.Screen name="MyPageStack" component={MyPageStack} />
     </AuthenticatedStackNavigator.Navigator>
   );
 };
