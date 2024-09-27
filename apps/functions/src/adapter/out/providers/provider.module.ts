@@ -11,6 +11,7 @@ import {
   ConfigAdapter,
   TimeModule,
   CloudSchedulerModule,
+  CacheModule,
 } from '.';
 
 import { CONFIG_PORT } from '@/ports';
@@ -18,6 +19,7 @@ import { CONFIG_PORT } from '@/ports';
 const providerModules = [
   LoggerModule.forRoot(),
   ConfigModule,
+  CacheModule,
   TimeModule,
   DatabaseModule,
   CloudSchedulerModule,

@@ -22,6 +22,7 @@ export const DEFAULT_ANONYMOUS_USER_OBJECT: UserProps = {
   personalCode: 'N/A',
   notificationTime: 'N/A',
   subscriptionStatus: EnumSubscriptionStatus.UNSUBSCRIBED,
+  isProfileCompleted: true,
   createdAt: new Date('0000-01-01'),
   updatedAt: new Date('0000-01-01'),
   deletedAt: new Date('0000-01-01'),

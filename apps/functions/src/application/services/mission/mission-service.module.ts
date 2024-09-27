@@ -7,7 +7,7 @@ import {
   FindMissionService,
   FindQuestionService,
   FindResponseService,
-  GetTodayMissionService,
+  GetTodayCoupleMissionService,
   SendMissionReminderToPartnerService,
   SubmitMissionResponseService,
 } from '.';
@@ -103,7 +103,7 @@ const InjectRepositories = [
       useFactory: (
         coupleMissionRepository: ICoupleMissionRepository,
         missionRepository: IMissionRepository,
-      ) => new GetTodayMissionService(coupleMissionRepository, missionRepository),
+      ) => new GetTodayCoupleMissionService(coupleMissionRepository, missionRepository),
     },
     {
       inject: [RESPONSE_REPOSITORY],

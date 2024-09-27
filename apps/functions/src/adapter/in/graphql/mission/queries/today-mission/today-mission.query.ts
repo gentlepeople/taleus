@@ -2,12 +2,12 @@ import { Inject } from '@nestjs/common';
 import { Resolver, Args, Context, Query } from '@nestjs/graphql';
 import isNull from 'lodash/isNull';
 
-import { TodayMissionRequest, TodayMissionResponse } from './today-mission.dto';
+import { TodayCoupleMissionRequest, TodayCoupleMissionResponse } from './today-mission.dto';
 
 import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   GET_TODAY_MISSION_USECASE,
-  GetTodayMissionUsecase,
+  GetTodayCoupleMissionUsecase,
   FIND_RESPONSE_USECASE,
   FindResponseUsecase,
   FIND_USER_USECASE,
@@ -17,10 +17,10 @@ import {
 } from '@/ports';
 
 @Resolver()
-export class TodayMissionQuery {
+export class TodayCoupleMissionQuery {
   constructor(
     @Inject(GET_TODAY_MISSION_USECASE)
-    private readonly getTodayMissionUsecase: GetTodayMissionUsecase,
+    private readonly getTodayCoupleMissionUsecase: GetTodayCoupleMissionUsecase,
     @Inject(FIND_QUESTION_USECASE)
     private readonly findQuestionUsecase: FindQuestionUsecase,
     @Inject(FIND_RESPONSE_USECASE)
@@ -29,24 +29,24 @@ export class TodayMissionQuery {
     private readonly findUserUsecase: FindUserUsecase,
   ) {}
 
-  @Query(() => TodayMissionResponse, { nullable: true })
+  @Query(() => TodayCoupleMissionResponse, { nullable: true })
   @UserAuth()
-  async todayMission(
-    @Args() args: TodayMissionRequest,
+  async todayCoupleMission(
+    @Args() args: TodayCoupleMissionRequest,
     @Context() context: GqlContext,
-  ): Promise<TodayMissionResponse | null> {
+  ): Promise<TodayCoupleMissionResponse | null> {
     const { userId } = args;
     checkUserPermission(context, userId);
 
-    const getTodayMission = await this.getTodayMissionUsecase.execute(userId);
-    if (isNull(getTodayMission)) {
+    const getTodayCoupleMission = await this.getTodayCoupleMissionUsecase.execute(userId);
+    if (isNull(getTodayCoupleMission)) {
       return null;
     }
 
     const {
       mission,
       coupleMission: { coupleMissionId },
-    } = getTodayMission;
+    } = getTodayCoupleMission;
 
     const { missionId } = mission;
 

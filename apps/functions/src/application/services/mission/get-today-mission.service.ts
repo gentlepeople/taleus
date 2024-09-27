@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 
 import { CoupleMission, Mission } from '@/domain';
 import {
-  GetTodayMissionUsecase,
+  GetTodayCoupleMissionUsecase,
   IMissionRepository,
   MISSION_REPOSITORY,
   COUPLE_MISSION_REPOSITORY,
@@ -11,7 +11,7 @@ import {
 } from '@/ports';
 
 @Injectable()
-export class GetTodayMissionService implements GetTodayMissionUsecase {
+export class GetTodayCoupleMissionService implements GetTodayCoupleMissionUsecase {
   constructor(
     @Inject(COUPLE_MISSION_REPOSITORY)
     private readonly coupleMissionRepository: ICoupleMissionRepository,
@@ -30,9 +30,9 @@ export class GetTodayMissionService implements GetTodayMissionUsecase {
       return null;
     }
     const { missionId } = findActiveCoupleMission;
-    const findTodayMission = await this.missionRepository.findOneByMissionId(missionId);
+    const findTodayCoupleMission = await this.missionRepository.findOneByMissionId(missionId);
     return {
-      mission: findTodayMission,
+      mission: findTodayCoupleMission,
       coupleMission: findActiveCoupleMission,
     };
   }
