@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
+import { ONBOARDING_MISSION_ID } from '@/common';
 import { Response } from '@/domain';
 import { RESPONSE_REPOSITORY, FindResponseUsecase, IResponseRepository } from '@/ports';
 
@@ -29,6 +30,15 @@ export class FindResponseService implements FindResponseUsecase {
       coupleMissionIds,
       userIds,
     );
+    return findResponses;
+  }
+
+  async findOnboardingResponseByUserId(userId: string): Promise<Response[]> {
+    const findResponses =
+      await this.responseRepository.findManyByMissionIdAndUserIdExcludingCoupleMissions(
+        ONBOARDING_MISSION_ID,
+        userId,
+      );
     return findResponses;
   }
 }

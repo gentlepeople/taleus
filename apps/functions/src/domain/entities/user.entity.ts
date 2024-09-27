@@ -17,6 +17,7 @@ export type UserProps = {
   personalCode: string;
   notificationTime?: string;
   subscriptionStatus: EnumSubscriptionStatus;
+  isProfileCompleted: boolean;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
@@ -54,6 +55,9 @@ export class User {
   @Field(() => EnumSubscriptionStatus)
   readonly subscriptionStatus: EnumSubscriptionStatus;
 
+  @Field(() => Boolean)
+  readonly isProfileCompleted: boolean;
+
   @Field(() => Date)
   readonly createdAt: Date;
 
@@ -74,6 +78,7 @@ export class User {
     this.personalCode = props.personalCode;
     this.notificationTime = props.notificationTime;
     this.subscriptionStatus = props.subscriptionStatus;
+    this.isProfileCompleted = props.isProfileCompleted;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.isAnonymous = !isNull(props.deletedAt);

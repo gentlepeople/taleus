@@ -33,8 +33,8 @@ export class RegisterCoupleService implements RegisterCoupleUsecase {
     }
     const { userId: inviteeId } = findInvitee;
 
-    const inviterExistsCouple = await this.coupleRepository.findOneByUserId(inviterId);
-    const isInviterAlreadyInCouple = !isNull(inviterExistsCouple);
+    const coupleAsInviter = await this.coupleRepository.findOneByUserId(inviterId);
+    const isInviterAlreadyInCouple = !isNull(coupleAsInviter);
     if (isInviterAlreadyInCouple) {
       return {
         success: false,
@@ -43,8 +43,8 @@ export class RegisterCoupleService implements RegisterCoupleUsecase {
       };
     }
 
-    const inviteeExistsCouple = await this.coupleRepository.findOneByUserId(inviteeId);
-    const isInviteeAlreadyInCouple = !isNull(inviteeExistsCouple);
+    const coupleAsInvitee = await this.coupleRepository.findOneByUserId(inviteeId);
+    const isInviteeAlreadyInCouple = !isNull(coupleAsInvitee);
     if (isInviteeAlreadyInCouple) {
       return {
         success: false,

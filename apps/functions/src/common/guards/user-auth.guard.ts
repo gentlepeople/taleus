@@ -1,4 +1,11 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  forwardRef,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { logger } from 'firebase-functions/v2';
@@ -6,13 +13,17 @@ import { logger } from 'firebase-functions/v2';
 import { DEFAULT_LOCAL_USER_ID } from '../assets';
 import { isLocal } from '../helpers';
 
-import { AuthenticationAdapter } from '@/providers';
+import { AuthenticationAdapter, CacheAdapter } from '@/providers';
 
 @Injectable()
 export class UserAuthGuard implements CanActivate {
   private readonly authenticationAdapter: AuthenticationAdapter;
 
-  constructor(private reflector: Reflector) {
+  constructor(
+    private reflector: Reflector,
+    @Inject(forwardRef(() => CacheAdapter))
+    private cacheAdapter: CacheAdapter,
+  ) {
     this.authenticationAdapter = new AuthenticationAdapter();
   }
 
@@ -36,9 +47,16 @@ export class UserAuthGuard implements CanActivate {
       return true;
     }
 
+    const cachedUserId = await this.cacheAdapter.get(idToken);
+    if (cachedUserId) {
+      request['user'] = { uid: cachedUserId };
+      return true;
+    }
+
     try {
       const { uid: decodedTokenUid } = await this.authenticationAdapter.verifyIdToken(idToken);
       request['user'] = { uid: decodedTokenUid };
+      await this.cacheAdapter.set(idToken, decodedTokenUid);
 
       return true;
     } catch (error) {

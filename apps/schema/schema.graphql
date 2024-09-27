@@ -254,15 +254,15 @@ type SubmitMissionResponseResponse {
 }
 
 type TodayMissionResponse {
-  coupleCompleted: Boolean!
+  coupleCompleted: Boolean
   mission: Mission!
-  partnerStatus: TodayMissionStatus!
-  userStatus: TodayMissionStatus!
+  partnerResponse: TodayMissionResponseObject
+  userResponse: TodayMissionResponseObject!
 }
 
-type TodayMissionStatus {
+type TodayMissionResponseObject {
+  data: [Response!]!
   isCompleted: Boolean!
-  responses: [Response!]!
 }
 
 type UpdateCoupleStartDateResponse {
@@ -302,6 +302,7 @@ type User {
 
   """Determine if the user is currently in a couple."""
   isCoupled: Boolean!
+  isProfileCompleted: Boolean!
   isSubscriptionActive: Boolean!
   nickname: String!
   notificationTime: String

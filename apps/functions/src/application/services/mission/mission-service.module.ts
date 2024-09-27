@@ -14,12 +14,14 @@ import {
 
 import {
   COUPLE_MISSION_REPOSITORY,
+  COUPLE_REPOSITORY,
   FIND_COUPLE_MISSION_USECASE,
   FIND_MISSION_USECASE,
   FIND_QUESTION_USECASE,
   FIND_RESPONSE_USECASE,
   GET_TODAY_MISSION_USECASE,
   ICoupleMissionRepository,
+  ICoupleRepository,
   IMissionReminderRepository,
   IMissionRepository,
   IQuestionRepository,
@@ -41,6 +43,7 @@ import {
 import { PushNotificationModule } from '@/providers';
 import {
   CoupleMissionRepository,
+  CoupleRepository,
   MissionReminderRepository,
   MissionRepository,
   QuestionRepository,
@@ -52,6 +55,10 @@ const InjectRepositories = [
   {
     provide: COUPLE_MISSION_REPOSITORY,
     useClass: CoupleMissionRepository,
+  },
+  {
+    provide: COUPLE_REPOSITORY,
+    useClass: CoupleRepository,
   },
   {
     provide: MISSION_REPOSITORY,
@@ -98,12 +105,13 @@ const InjectRepositories = [
         new FindQuestionService(questionRepository),
     },
     {
-      inject: [COUPLE_MISSION_REPOSITORY, MISSION_REPOSITORY],
+      inject: [COUPLE_MISSION_REPOSITORY, COUPLE_REPOSITORY, MISSION_REPOSITORY],
       provide: GET_TODAY_MISSION_USECASE,
       useFactory: (
         coupleMissionRepository: ICoupleMissionRepository,
+        coupleRepository: ICoupleRepository,
         missionRepository: IMissionRepository,
-      ) => new GetTodayMissionService(coupleMissionRepository, missionRepository),
+      ) => new GetTodayMissionService(coupleMissionRepository, coupleRepository, missionRepository),
     },
     {
       inject: [RESPONSE_REPOSITORY],

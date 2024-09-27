@@ -7,4 +7,5 @@ export * from './apple';
 export * from './database';
 export * from './push-notification';
 export * from './cloud-scheduler';
+export * from './cache';
 export * from './provider.module';

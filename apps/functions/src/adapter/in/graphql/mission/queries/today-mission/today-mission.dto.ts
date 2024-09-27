@@ -12,12 +12,12 @@ export class TodayMissionRequest {
 }
 
 @ObjectType()
-export class TodayMissionStatus {
+export class TodayMissionResponseObject {
   @Field(() => Boolean)
   isCompleted: boolean;
 
   @Field(() => [Response])
-  responses: Response[];
+  data: Response[];
 }
 
 @ObjectType()
@@ -25,12 +25,12 @@ export class TodayMissionResponse {
   @Field(() => Mission)
   mission: Mission;
 
-  @Field(() => Boolean)
-  coupleCompleted: boolean;
+  @Field(() => Boolean, { nullable: true })
+  coupleCompleted: boolean | null;
 
-  @Field(() => TodayMissionStatus)
-  userStatus: TodayMissionStatus;
+  @Field(() => TodayMissionResponseObject)
+  userResponse: TodayMissionResponseObject;
 
-  @Field(() => TodayMissionStatus)
-  partnerStatus: TodayMissionStatus;
+  @Field(() => TodayMissionResponseObject, { nullable: true })
+  partnerResponse: TodayMissionResponseObject | null;
 }

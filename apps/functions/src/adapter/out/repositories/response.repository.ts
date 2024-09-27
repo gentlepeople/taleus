@@ -28,6 +28,27 @@ export class ResponseRepository implements IResponseRepository {
     return findResponses;
   }
 
+  async findManyByMissionIdAndUserIdExcludingCoupleMissions(
+    missionId: bigint,
+    userId: string,
+  ): Promise<Response[]> {
+    const findResponses = await this.databasePort.response.findMany({
+      where: {
+        question: {
+          missionId,
+        },
+        userId,
+        coupleMissionId: null,
+      },
+      orderBy: {
+        question: {
+          questionOrder: 'asc',
+        },
+      },
+    });
+    return findResponses;
+  }
+
   async checkAllUsersCompletedCoupleMission(
     coupleMissionId: bigint,
     userIds: string[],

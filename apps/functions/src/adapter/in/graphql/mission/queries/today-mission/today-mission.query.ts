@@ -38,19 +38,33 @@ export class TodayMissionQuery {
     const { userId } = args;
     checkUserPermission(context, userId);
 
-    const getTodayMission = await this.getTodayMissionUsecase.execute(userId);
-    if (isNull(getTodayMission)) {
+    const getResponse = await this.getTodayMissionUsecase.execute(userId);
+    if (isNull(getResponse)) {
       return null;
     }
 
-    const {
-      mission,
-      coupleMission: { coupleMissionId },
-    } = getTodayMission;
+    const { mission: todayMission, coupleMission } = getResponse;
 
-    const { missionId } = mission;
+    const missionQuestionSize = await this.findQuestionUsecase.countByMissionId(
+      todayMission.missionId,
+    );
 
-    const missionQuestionSize = await this.findQuestionUsecase.countByMissionId(missionId);
+    const notCouple = isNull(coupleMission);
+    if (notCouple) {
+      const userResponses = await this.findResponseUsecase.findOnboardingResponseByUserId(userId);
+      const userCompleted = userResponses.length == missionQuestionSize;
+      return {
+        mission: todayMission,
+        userResponse: {
+          isCompleted: userCompleted,
+          data: userResponses,
+        },
+        coupleCompleted: null,
+        partnerResponse: null,
+      };
+    }
+
+    const { coupleMissionId } = coupleMission;
 
     const userResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
       userId,
@@ -58,28 +72,26 @@ export class TodayMissionQuery {
     );
 
     const partner = await this.findUserUsecase.findPartnerByUserId(userId);
-
     const partnerResponses = isNull(partner)
       ? []
       : await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
           partner.userId,
           coupleMissionId,
         );
-
     const userCompleted = userResponses.length == missionQuestionSize;
     const partnerCompleted = partnerResponses.length == missionQuestionSize;
     const coupleCompleted = userCompleted && partnerCompleted;
 
     return {
-      mission,
+      mission: todayMission,
       coupleCompleted,
-      userStatus: {
+      userResponse: {
         isCompleted: userCompleted,
-        responses: userResponses,
+        data: userResponses,
       },
-      partnerStatus: {
+      partnerResponse: {
         isCompleted: userCompleted,
-        responses: partnerResponses,
+        data: partnerResponses,
       },
     };
   }
