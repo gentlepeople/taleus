@@ -1,13 +1,12 @@
 import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @ArgsType()
 export class AppleLoginRequest {
   @Field(() => String, {
     description: 'Authentication id token value. (for Apple)',
-    nullable: true,
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   idToken: string;
 

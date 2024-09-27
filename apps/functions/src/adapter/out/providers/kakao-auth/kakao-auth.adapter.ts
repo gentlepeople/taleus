@@ -17,6 +17,7 @@ export class KakaoAuthAdapter implements KakaoAuthPort {
       if (accessToken === process.env.KAKAO_SAMPLE_ACCESS_TOKEN) {
         return sampleKakaoAccount;
       }
+
       const kakaoAccount: IKakaoAuthPortUserAccountType = await firstValueFrom(
         this.httpService
           .get('user/me', {

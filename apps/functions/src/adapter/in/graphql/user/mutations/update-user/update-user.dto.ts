@@ -21,7 +21,7 @@ export class UpdateUserInputRequest {
   })
   profileImageUrl: string | null;
 
-  @Field(() => String, {
+  @Field(() => EnumGender, {
     nullable: true,
     defaultValue: null,
   })

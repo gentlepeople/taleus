@@ -16,7 +16,7 @@ import {
   GlobalExceptionProvider,
   LoggerMiddleware,
   upperDirectiveTransformer,
-  isEmulator,
+  isLocal,
 } from '@/common';
 import { ServiceModule } from '@/services';
 
@@ -46,7 +46,7 @@ import { ServiceModule } from '@/services';
           ],
         },
         plugins: [
-          ...(isEmulator
+          ...(isLocal
             ? [ApolloServerPluginLandingPageLocalDefault()]
             : [
                 ApolloServerPluginLandingPageProductionDefault({

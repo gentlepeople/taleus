@@ -32,11 +32,11 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
     private readonly pushNotificationPort: PushNotificationPort,
   ) {}
 
-  async execute(): Promise<number> {
+  async execute(event: { scheduleTime: string }): Promise<number> {
     try {
-      const currentTime = this.timePort.dayjs();
-      const currentHour = currentTime.hour();
-      const currentMinute = currentTime.minute();
+      const eventScheduleTime = this.timePort.dayjs(event.scheduleTime);
+      const currentHour = eventScheduleTime.hour();
+      const currentMinute = eventScheduleTime.minute();
       const findCouples =
         await this.coupleRepository.findManyRequiredMissionByNotificationTimeWithLatestCompletedMission(
           currentHour,

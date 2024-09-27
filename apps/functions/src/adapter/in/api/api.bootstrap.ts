@@ -14,7 +14,7 @@ import { Logger } from 'nestjs-pino';
 
 import { ApiModule } from './api.module';
 
-import { GlobalExceptionProvider, isEmulator } from '@/common';
+import { GlobalExceptionProvider, isLocal } from '@/common';
 
 export const createApiNestServer = async (): Promise<Express> => {
   const expressInstance = express();
@@ -40,7 +40,7 @@ export const createApiNestServer = async (): Promise<Express> => {
 
     // validation pipe
     const validationPipeOptions: ValidationPipeOptions = {
-      enableDebugMessages: isEmulator,
+      enableDebugMessages: isLocal,
       skipUndefinedProperties: false,
       skipNullProperties: false,
       skipMissingProperties: false,

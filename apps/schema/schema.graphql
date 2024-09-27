@@ -149,7 +149,7 @@ type Mutation {
   """Authenticates a user via Apple OAuth, registers if new."""
   appleLogin(
     """Authentication id token value. (for Apple)"""
-    idToken: String
+    idToken: String!
 
     """
     If you want to check nonce claim, provide a string value here. It is used on Open ID for the ID Tokens.
@@ -163,13 +163,13 @@ type Mutation {
   """Authenticates a user via Google OAuth, registers if new."""
   googleLogin(
     """Authentication id token value. (for Google)"""
-    idToken: String
+    idToken: String!
   ): GoogleLoginResponse!
 
   """Authenticates a user via Kakao OAuth, registers if new."""
   kakaoLogin(
     """Authentication access token value. (for Kakao)"""
-    accessToken: String
+    accessToken: String!
   ): KakaoLoginResponse!
 
   """Register a couple"""
@@ -283,7 +283,7 @@ UpdateUserInputRequest allows you to update user details. All fields are optiona
 input UpdateUserInputRequest {
   birthday: DateTime = null
   coupleStartDate: DateTime = null
-  gender: String = null
+  gender: EnumGender = null
   nickname: String = null
   profileImageUrl: String = null
 }

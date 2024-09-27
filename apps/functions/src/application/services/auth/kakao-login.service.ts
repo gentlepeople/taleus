@@ -1,5 +1,6 @@
 import { EnumGender, EnumOAuthProviderType } from '@gentlepeople/taleus-schema';
 import { Inject, Injectable } from '@nestjs/common';
+import isNil from 'lodash/isNil';
 
 import { findOrSaveUserWithProvider } from './auth-service.method';
 
@@ -36,10 +37,10 @@ export class KakaoLoginService implements KakaoLoginUsecase {
 
     const userProperties = {
       nickname: kakaoAccount?.profile?.nickname || '',
-      profileImageUrl: kakaoAccount?.profile.profile_image_url || DEFAULT_PROFILE_IMAGE_URL,
+      profileImageUrl: kakaoAccount?.profile?.profile_image_url || DEFAULT_PROFILE_IMAGE_URL,
       email: kakaoAccount?.email || '',
       emailVerified: kakaoAccount?.is_email_verified || false,
-      birthday: kakaoAccount?.birthday ? this.timePort.get(kakaoAccount?.birthday) : null,
+      birthday: this.timePort.get(kakaoAccount?.birthday),
       gender: this.getEnumGenderFromString(kakaoAccount?.gender),
     };
 
@@ -53,14 +54,16 @@ export class KakaoLoginService implements KakaoLoginUsecase {
     return { userId, customToken };
   }
 
-  private getEnumGenderFromString(genderString: string): EnumGender {
-    switch (genderString.toUpperCase()) {
-      case EnumGender.MALE:
-        return EnumGender.MALE;
-      case EnumGender.FEMALE:
-        return EnumGender.FEMALE;
-      default:
-        return EnumGender.UNKNOWN;
+  private getEnumGenderFromString(genderString?: string): EnumGender {
+    const checkExist = !isNil(genderString);
+    if (checkExist) {
+      switch (genderString.toUpperCase()) {
+        case EnumGender.MALE:
+          return EnumGender.MALE;
+        case EnumGender.FEMALE:
+          return EnumGender.FEMALE;
+      }
     }
+    return EnumGender.UNKNOWN;
   }
 }

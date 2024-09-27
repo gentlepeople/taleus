@@ -4,7 +4,7 @@ import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { logger } from 'firebase-functions/v2';
 
 import { DEFAULT_LOCAL_USER_ID } from '../assets';
-import { isEmulator } from '../helpers';
+import { isLocal } from '../helpers';
 
 import { AuthenticationAdapter } from '@/providers';
 
@@ -24,7 +24,7 @@ export class UserAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token not found');
     }
 
-    if (isEmulator) {
+    if (isLocal) {
       request['user'] = { uid: DEFAULT_LOCAL_USER_ID };
       return true;
     }
@@ -49,13 +49,10 @@ export class UserAuthGuard implements CanActivate {
 
   private getRequest(context: ExecutionContext): any {
     if (context.getType() === 'http') {
-      const ctx = context.switchToHttp();
-      const request = ctx.getRequest();
-      return request;
+      return context.switchToHttp().getRequest();
     } else if (context.getType<GqlContextType>() === 'graphql') {
-      const ctx = GqlExecutionContext.create(context);
-      const request = ctx.getContext().req;
-      return request;
+      const gqlContext = GqlExecutionContext.create(context);
+      return gqlContext.getContext().req;
     }
   }
 
