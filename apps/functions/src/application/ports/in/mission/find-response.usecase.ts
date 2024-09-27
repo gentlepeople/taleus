@@ -8,4 +8,5 @@ export interface FindResponseUsecase {
     coupleMissionIds: bigint[],
     userIds: string[],
   ): Promise<Response[]>;
+  findOnboardingResponseByUserId(userId: string): Promise<Response[]>;
 }

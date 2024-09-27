@@ -28,4 +28,4 @@ export const DEFAULT_ANONYMOUS_USER_OBJECT: UserProps = {
   deletedAt: new Date('0000-01-01'),
 };
 
-export const ONBOARDING_MISSION_ID = 1;
+export const ONBOARDING_MISSION_ID: bigint = BigInt(1);

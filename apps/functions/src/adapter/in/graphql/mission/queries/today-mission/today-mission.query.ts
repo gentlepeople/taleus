@@ -2,12 +2,12 @@ import { Inject } from '@nestjs/common';
 import { Resolver, Args, Context, Query } from '@nestjs/graphql';
 import isNull from 'lodash/isNull';
 
-import { TodayCoupleMissionRequest, TodayCoupleMissionResponse } from './today-mission.dto';
+import { TodayMissionRequest, TodayMissionResponse } from './today-mission.dto';
 
 import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   GET_TODAY_MISSION_USECASE,
-  GetTodayCoupleMissionUsecase,
+  GetTodayMissionUsecase,
   FIND_RESPONSE_USECASE,
   FindResponseUsecase,
   FIND_USER_USECASE,
@@ -17,10 +17,10 @@ import {
 } from '@/ports';
 
 @Resolver()
-export class TodayCoupleMissionQuery {
+export class TodayMissionQuery {
   constructor(
     @Inject(GET_TODAY_MISSION_USECASE)
-    private readonly getTodayCoupleMissionUsecase: GetTodayCoupleMissionUsecase,
+    private readonly getTodayMissionUsecase: GetTodayMissionUsecase,
     @Inject(FIND_QUESTION_USECASE)
     private readonly findQuestionUsecase: FindQuestionUsecase,
     @Inject(FIND_RESPONSE_USECASE)
@@ -29,28 +29,42 @@ export class TodayCoupleMissionQuery {
     private readonly findUserUsecase: FindUserUsecase,
   ) {}
 
-  @Query(() => TodayCoupleMissionResponse, { nullable: true })
+  @Query(() => TodayMissionResponse, { nullable: true })
   @UserAuth()
-  async todayCoupleMission(
-    @Args() args: TodayCoupleMissionRequest,
+  async todayMission(
+    @Args() args: TodayMissionRequest,
     @Context() context: GqlContext,
-  ): Promise<TodayCoupleMissionResponse | null> {
+  ): Promise<TodayMissionResponse | null> {
     const { userId } = args;
     checkUserPermission(context, userId);
 
-    const getTodayCoupleMission = await this.getTodayCoupleMissionUsecase.execute(userId);
-    if (isNull(getTodayCoupleMission)) {
+    const getResponse = await this.getTodayMissionUsecase.execute(userId);
+    if (isNull(getResponse)) {
       return null;
     }
 
-    const {
-      mission,
-      coupleMission: { coupleMissionId },
-    } = getTodayCoupleMission;
+    const { mission: todayMission, coupleMission } = getResponse;
 
-    const { missionId } = mission;
+    const missionQuestionSize = await this.findQuestionUsecase.countByMissionId(
+      todayMission.missionId,
+    );
 
-    const missionQuestionSize = await this.findQuestionUsecase.countByMissionId(missionId);
+    const notCouple = isNull(coupleMission);
+    if (notCouple) {
+      const userResponses = await this.findResponseUsecase.findOnboardingResponseByUserId(userId);
+      const userCompleted = userResponses.length == missionQuestionSize;
+      return {
+        mission: todayMission,
+        userResponse: {
+          isCompleted: userCompleted,
+          data: userResponses,
+        },
+        coupleCompleted: null,
+        partnerResponse: null,
+      };
+    }
+
+    const { coupleMissionId } = coupleMission;
 
     const userResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
       userId,
@@ -58,28 +72,26 @@ export class TodayCoupleMissionQuery {
     );
 
     const partner = await this.findUserUsecase.findPartnerByUserId(userId);
-
     const partnerResponses = isNull(partner)
       ? []
       : await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
           partner.userId,
           coupleMissionId,
         );
-
     const userCompleted = userResponses.length == missionQuestionSize;
     const partnerCompleted = partnerResponses.length == missionQuestionSize;
     const coupleCompleted = userCompleted && partnerCompleted;
 
     return {
-      mission,
+      mission: todayMission,
       coupleCompleted,
-      userStatus: {
+      userResponse: {
         isCompleted: userCompleted,
-        responses: userResponses,
+        data: userResponses,
       },
-      partnerStatus: {
+      partnerResponse: {
         isCompleted: userCompleted,
-        responses: partnerResponses,
+        data: partnerResponses,
       },
     };
   }

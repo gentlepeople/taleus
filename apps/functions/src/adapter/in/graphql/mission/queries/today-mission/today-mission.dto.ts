@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import { Mission, Response } from '@/domain';
 
 @ArgsType()
-export class TodayCoupleMissionRequest {
+export class TodayMissionRequest {
   @Field(() => String)
   @IsNotEmpty()
   @IsString()
@@ -12,25 +12,25 @@ export class TodayCoupleMissionRequest {
 }
 
 @ObjectType()
-export class TodayCoupleMissionStatus {
+export class TodayMissionResponseObject {
   @Field(() => Boolean)
   isCompleted: boolean;
 
   @Field(() => [Response])
-  responses: Response[];
+  data: Response[];
 }
 
 @ObjectType()
-export class TodayCoupleMissionResponse {
+export class TodayMissionResponse {
   @Field(() => Mission)
   mission: Mission;
 
-  @Field(() => Boolean)
-  coupleCompleted: boolean;
+  @Field(() => Boolean, { nullable: true })
+  coupleCompleted: boolean | null;
 
-  @Field(() => TodayCoupleMissionStatus)
-  userStatus: TodayCoupleMissionStatus;
+  @Field(() => TodayMissionResponseObject)
+  userResponse: TodayMissionResponseObject;
 
-  @Field(() => TodayCoupleMissionStatus)
-  partnerStatus: TodayCoupleMissionStatus;
+  @Field(() => TodayMissionResponseObject, { nullable: true })
+  partnerResponse: TodayMissionResponseObject | null;
 }

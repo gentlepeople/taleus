@@ -20,7 +20,7 @@ import {
   FindResponseUsecase,
   FindUserUsecase,
   GET_TODAY_MISSION_USECASE,
-  GetTodayCoupleMissionUsecase,
+  GetTodayMissionUsecase,
 } from '@/ports';
 
 @Resolver()
@@ -33,7 +33,7 @@ export class MissionLogQuery {
     @Inject(FIND_QUESTION_USECASE)
     private readonly findQuestionUsecase: FindQuestionUsecase,
     @Inject(GET_TODAY_MISSION_USECASE)
-    private readonly getTodayCoupleMissionUsecase: GetTodayCoupleMissionUsecase,
+    private readonly getTodayMissionUsecase: GetTodayMissionUsecase,
     @Inject(FIND_QUESTION_USECASE)
     private readonly findQUestionUsecase: FindQuestionUsecase,
     @Inject(FIND_RESPONSE_USECASE)

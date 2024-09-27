@@ -5,6 +5,10 @@ export const RESPONSE_REPOSITORY = Symbol('RESPONSE_REPOSITORY');
 export interface IResponseRepository {
   checkAllUsersCompletedCoupleMission(coupleMissionId: bigint, userIds: string[]): Promise<boolean>;
   findManyByCoupleMissionIdAndUserId(coupleMissionId: bigint, userId: string): Promise<Response[]>;
+  findManyByMissionIdAndUserIdExcludingCoupleMissions(
+    missionId: bigint,
+    userId: string,
+  ): Promise<Response[]>;
   findManyByCoupleMissionIdsAndUserIds(
     coupleMissionIds: bigint[],
     userIds: string[],

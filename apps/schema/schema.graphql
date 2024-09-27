@@ -209,7 +209,7 @@ type Query {
     take: Int = null
     userId: String!
   ): MissionLogResponse!
-  todayCoupleMission(userId: String!): TodayCoupleMissionResponse
+  todayMission(userId: String!): TodayMissionResponse
 
   """get one user by user id."""
   user(userId: String!): User
@@ -253,16 +253,16 @@ type SubmitMissionResponseResponse {
   success: Boolean!
 }
 
-type TodayCoupleMissionResponse {
-  coupleCompleted: Boolean!
+type TodayMissionResponse {
+  coupleCompleted: Boolean
   mission: Mission!
-  partnerStatus: TodayCoupleMissionStatus!
-  userStatus: TodayCoupleMissionStatus!
+  partnerResponse: TodayMissionResponseObject
+  userResponse: TodayMissionResponseObject!
 }
 
-type TodayCoupleMissionStatus {
+type TodayMissionResponseObject {
+  data: [Response!]!
   isCompleted: Boolean!
-  responses: [Response!]!
 }
 
 type UpdateCoupleStartDateResponse {
