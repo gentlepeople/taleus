@@ -79,10 +79,18 @@ export class SendMissionReminderToPartnerService implements SendMissionReminderT
       };
     }
 
-    // 5. Error if user is not subscribed and has already sent a reminder
     const findUser = await this.userRepository.findOneByUserId(userId);
+    const latestCoupleMissionReminderTime =
+      await this.missionReminderRepository.findLatestDateByCoupleMissionId(coupleMissionId);
+
+    // 5. Error if user is not subscribed and has already sent a reminder today
+    const ONE_DAY = 1;
     const isUserNotSubscribedAndHasSentReminder =
-      !findUser.isSubscriptionActive && findCoupleMission.reminderCount > 0;
+      !findUser.isSubscriptionActive &&
+      this.timePort
+        .dayjs()
+        .startOf('day')
+        .diff(this.timePort.dayjs(latestCoupleMissionReminderTime).startOf('day'), 'day') < ONE_DAY;
     if (isUserNotSubscribedAndHasSentReminder) {
       return {
         success: false,
@@ -90,10 +98,8 @@ export class SendMissionReminderToPartnerService implements SendMissionReminderT
       };
     }
 
-    // 6. Error if user is subscribed but tries to send another nudge within 10 minutes
+    // 6. Error if user is subscribed but tries to send another reminder within 10 minutes
     const TEN_MINUTES = 10;
-    const latestCoupleMissionReminderTime =
-      await this.missionReminderRepository.findLatestDateByCoupleMissionId(coupleMissionId);
     const isUserSubscribedAndHasSentReminderRecently =
       findUser.isSubscriptionActive &&
       latestCoupleMissionReminderTime &&

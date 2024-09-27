@@ -1,13 +1,12 @@
 import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @ArgsType()
 export class GoogleLoginRequest {
   @Field(() => String, {
     description: 'Authentication id token value. (for Google)',
-    nullable: true,
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   idToken: string;
 }

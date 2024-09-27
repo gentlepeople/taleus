@@ -80,7 +80,6 @@ export class CloudSchedulerAdapter implements OnModuleInit, CloudSchedulerPort {
     const location = this.configAdapter.get('GCP_LOCATION');
     const jobId = this.configAdapter.get('CLOUD_SCHEDULER_JOB_ID');
     const targetUri = this.configAdapter.get('CLOUD_SCHEDULER_DAILY_MISSION_URL');
-    const serviceAccountEmail = this.configAdapter.get('GCP_SERVICE_ACCOUNT_EMAIL');
 
     const jobName = this.client.jobPath(projectId, location, jobId);
     const jobData: protos.google.cloud.scheduler.v1.IJob = {
@@ -89,15 +88,6 @@ export class CloudSchedulerAdapter implements OnModuleInit, CloudSchedulerPort {
       httpTarget: {
         uri: targetUri,
         httpMethod: 'POST',
-        body: Buffer.from(
-          JSON.stringify({
-            query: `mutation {
-            scheduleDailyMission {
-              count
-            }
-          }`,
-          }),
-        ).toString('base64'),
         headers: {
           'Content-Type': 'application/json',
         },

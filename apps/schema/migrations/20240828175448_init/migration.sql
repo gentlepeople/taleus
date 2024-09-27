@@ -31,6 +31,7 @@ CREATE TABLE users (
     personal_code VARCHAR NOT NULL,
     notification_time TIME NULL,
     subscription_status VARCHAR NOT NULL DEFAULT 'UNSUBSCRIBED',
+    is_profile_completed BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     deleted_at TIMESTAMPTZ NULL,

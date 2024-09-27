@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "apollo:export": "FUNCTIONS_GRAPHQL_URL=$(grep FUNCTIONS_GRAPHQL_URL .env | cut -d '=' -f2) && apollo client:download-schema --endpoint=$FUNCTIONS_GRAPHQL_URL ./schema.graphql",
-    "studio:push": "APOLLO_KEY=$(grep APOLLO_KEY .env | cut -d '=' -f2) && pnpm rover graph publish taleus@current --schema ./schema.graphql",
+    "studio:push": "APOLLO_KEY=$(grep APOLLO_KEY .env | cut -d '=' -f2) pnpm rover graph publish taleus@current --schema ./schema.graphql",
     "build": "pnpm prisma generate && pnpm tsc && cp -R ./generated ./dist/",
     "build:noEngine": "PRISMA_NO_ENGINE=true pnpm prisma generate --no-engine && pnpm tsc && cp -R ./generated ./dist/",
     "build:watch": "prisma generate --watch",

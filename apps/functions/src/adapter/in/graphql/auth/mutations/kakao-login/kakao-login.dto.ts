@@ -1,13 +1,12 @@
 import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @ArgsType()
 export class KakaoLoginRequest {
   @Field(() => String, {
     description: 'Authentication access token value. (for Kakao)',
-    nullable: true,
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   accessToken: string;
 }

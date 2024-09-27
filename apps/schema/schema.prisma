@@ -34,6 +34,7 @@ model user {
   personalCode               String            @unique @map("personal_code") @db.VarChar
   notificationTime           DateTime?         @map("notification_time") @db.Time(6)
   subscriptionStatus         String            @default("UNSUBSCRIBED") @map("subscription_status") @db.VarChar
+  isProfileCompleted         Boolean           @default(false) @map("is_profile_completed")
   createdAt                  DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt                  DateTime          @default(now()) @map("updated_at") @db.Timestamptz(6)
   deletedAt                  DateTime?         @map("deleted_at") @db.Timestamptz(6)
