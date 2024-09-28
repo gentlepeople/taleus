@@ -171,7 +171,7 @@ type Mutation {
   """Register a couple"""
   registerCouple(inviteePersonalCode: String!, inviterId: String!): RegisterCoupleResponse!
   remindMissionPartner(coupleMissionId: BigInt!, userId: String!): RemindMissionPartnerResponse!
-  submitMissionResponse(data: [SubmitMissionResponseRequestData!]!): SubmitMissionResponseResponse!
+  submitMissionResponse(coupleMissionId: BigInt = null, data: [SubmitMissionResponseRequestData!]!, missionId: BigInt!, userId: String!): SubmitMissionResponseResponse!
 
   """
   Updates the start date of a couple's relationship to a new specified date.
@@ -240,12 +240,11 @@ type Response {
 
 input SubmitMissionResponseRequestData {
   content: String!
-  coupleMissionId: BigInt
   questionId: BigInt!
-  userId: String!
 }
 
 type SubmitMissionResponseResponse {
+  message: String
   success: Boolean!
 }
 
