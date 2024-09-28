@@ -2,17 +2,12 @@ import { memo } from 'react';
 import { Pressable } from 'react-native';
 
 import { Box, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
+import { GENDER } from '../../my-page-edit-user-info.const';
 
 type IMyPage_EditUserInfo_GenderViewProps = {
   onSelect: (value: string) => void;
   selectedValue: string;
 };
-
-const GENDER = [
-  { label: '남자', value: 'male' },
-  { label: '여자', value: 'female' },
-  { label: '선택안함', value: 'none' },
-];
 
 export const MyPage_EditUserInfo_GenderView = memo<IMyPage_EditUserInfo_GenderViewProps>(
   ({ onSelect, selectedValue }) => {
@@ -23,6 +18,8 @@ export const MyPage_EditUserInfo_GenderView = memo<IMyPage_EditUserInfo_GenderVi
         </Text>
         <Stack horizontal space={spacing['3.5-x']}>
           {GENDER.map(({ label, value }) => {
+            const key = `${label}_${value}`;
+
             const backgroundColor =
               selectedValue === value ? palette['primary'] : palette['gray-20'];
 
@@ -32,7 +29,7 @@ export const MyPage_EditUserInfo_GenderView = memo<IMyPage_EditUserInfo_GenderVi
 
             return (
               <Pressable
-                key={value}
+                key={key}
                 onPress={handlePressGender}
                 style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
               >

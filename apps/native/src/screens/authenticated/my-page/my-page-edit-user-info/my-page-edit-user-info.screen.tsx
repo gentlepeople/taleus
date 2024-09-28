@@ -33,7 +33,17 @@ export type IMyPage_EditUserInfoScreenProps = {
 };
 
 export const MyPage_EditUserInfoScreen: FC<IMyPage_EditUserInfoScreenProps> = () => {
-  const { editComplete } = MyPage_EditUserInfoController();
+  const {
+    userData,
+    isCTADisabled,
+    writeNickname,
+    selectGender,
+    setBirthDate,
+    setCoupleStartDate,
+    editComplete,
+  } = MyPage_EditUserInfoController();
+
+  const { nickname, gender, birthDate, coupleStartDate } = userData;
 
   const renderContent = () => {
     return (

@@ -1,17 +1,39 @@
-import { memo, useCallback } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { memo, useCallback, useState } from 'react';
 import { Pressable } from 'react-native';
 
 import { Stack, Text, TextInput, size, spacing } from '~/mobile-ui';
 
 type IMyPage_EditUserInfo_AnniversaryViewProps = {
-  onPress: () => void;
+  coupleStartDate: Date;
+  onChangeDate: (date: Date) => void;
 };
 
 export const MyPage_EditUserInfo_AnniversaryView = memo<IMyPage_EditUserInfo_AnniversaryViewProps>(
-  ({ onPress }) => {
-    const handlePressBirthDate = useCallback(() => {
-      onPress();
-    }, [onPress]);
+  ({ coupleStartDate, onChangeDate }) => {
+    const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+
+    const openDatePicker = useCallback(() => {
+      setShowDatePicker(true);
+    }, [setShowDatePicker]);
+
+    const closeDatePicker = useCallback(() => {
+      setShowDatePicker(false);
+    }, [setShowDatePicker]);
+
+    const handleChangeDate = useCallback(
+      (date: Dayjs) => {
+        closeDatePicker();
+
+        onChangeDate(date.toDate());
+      },
+      [onChangeDate],
+    );
+
+    const date = dayjs(coupleStartDate);
+    const year = date.year();
+    const month = date.month() + 1;
+    const day = date.date();
 
     return (
       <Stack paddingX={spacing['6-x']} space={spacing['2-x']}>
@@ -19,13 +41,13 @@ export const MyPage_EditUserInfo_AnniversaryView = memo<IMyPage_EditUserInfo_Ann
           {'우리의 기념일'}
         </Text>
         <Pressable
-          onPress={handlePressBirthDate}
+          onPress={openDatePicker}
           style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
         >
           <Stack horizontal align="center" space={spacing['2.5-x']}>
             <Stack horizontal align="center" space={spacing['2-x']}>
               <TextInput
-                placeholder="2024"
+                placeholder={String(year)}
                 currentValue=""
                 editable={false}
                 width={size['21.25-x']}
@@ -37,7 +59,7 @@ export const MyPage_EditUserInfo_AnniversaryView = memo<IMyPage_EditUserInfo_Ann
             </Stack>
             <Stack horizontal align="center" space={spacing['2-x']}>
               <TextInput
-                placeholder="01"
+                placeholder={String(month).padStart(2, '0')}
                 currentValue=""
                 editable={false}
                 width={size['18.5-x']}
@@ -49,7 +71,7 @@ export const MyPage_EditUserInfo_AnniversaryView = memo<IMyPage_EditUserInfo_Ann
             </Stack>
             <Stack horizontal align="center" space={spacing['2-x']}>
               <TextInput
-                placeholder="01"
+                placeholder={String(day).padStart(2, '0')}
                 currentValue=""
                 editable={false}
                 width={size['18.5-x']}
