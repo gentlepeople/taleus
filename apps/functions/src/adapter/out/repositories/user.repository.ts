@@ -47,6 +47,7 @@ export class UserRepository implements IUserRepository {
     const findUser = await this.databasePort.user.findUnique({
       where: {
         userId,
+        deletedAt: null,
       },
     });
 

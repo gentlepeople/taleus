@@ -11,6 +11,7 @@ export interface UpdateUserUsecase {
       profileImageUrl: string;
       birthday: Date;
       coupleStartDate: Date;
+      isProfileCompleted: boolean;
     }>,
   ): Promise<void>;
 }

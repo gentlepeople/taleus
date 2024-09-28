@@ -280,6 +280,7 @@ input UpdateUserInputRequest {
   birthday: DateTime = null
   coupleStartDate: DateTime = null
   gender: EnumGender = null
+  isProfileCompleted: Boolean = null
   nickname: String = null
   profileImageUrl: String = null
 }
@@ -291,6 +292,7 @@ type UpdateUserResponse {
 type User {
   birthday: DateTime!
   couple: Couple
+  coupleStartDate: DateTime
   createdAt: DateTime!
   email: String!
   gender: EnumGender!

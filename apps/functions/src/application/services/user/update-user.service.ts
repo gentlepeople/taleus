@@ -28,6 +28,7 @@ export class UpdateUserService implements UpdateUserUsecase {
       gender: EnumGender;
       birthday: Date;
       coupleStartDate: Date;
+      isProfileCompleted: boolean;
     }>,
   ): Promise<void> {
     const sanitizedUserData = removeNullFields(data);
