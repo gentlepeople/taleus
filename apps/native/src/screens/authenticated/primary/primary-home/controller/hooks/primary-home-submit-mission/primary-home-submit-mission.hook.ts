@@ -22,16 +22,13 @@ export const usePrimary_HomeSubmitMission: Hook<
   useMutationIndicator([isSubmitting]);
 
   const submitAnswers = useCallback(
-    async ({ answers, coupleMissionId, onCompleted }: ISubmitAnswersParams) => {
+    async ({ answers, missionId, coupleMissionId, onCompleted }: ISubmitAnswersParams) => {
       const result = await submitMission({
         variables: {
-          data: answers.map((answer) => {
-            return {
-              ...answer,
-              userId: currentUser && currentUser.id,
-              coupleMissionId,
-            };
-          }),
+          userId: currentUser && currentUser.id,
+          missionId,
+          data: answers,
+          coupleMissionId: coupleMissionId,
         },
       });
 

@@ -5,6 +5,7 @@ type IPrimary_HomeProgressInput = void;
 type IPrimary_HomeProgressOutput = {
   progress: number;
   incrementProgress: () => void;
+  decrementProgress: () => void;
   resetProgress: () => void;
 };
 
@@ -22,9 +23,17 @@ export const usePrimary_HomeProgress: Hook<
     setProgress((prevProgress) => prevProgress + 1);
   }, [progress, setProgress]);
 
+  const decrementProgress = useCallback(() => {
+    if (progress === INITIAL_PROGRESS) {
+      return;
+    }
+
+    setProgress((prevProgress) => prevProgress - 1);
+  }, [progress, setProgress]);
+
   const resetProgress = useCallback(() => {
     setProgress(INITIAL_PROGRESS);
   }, [setProgress]);
 
-  return { progress, incrementProgress, resetProgress };
+  return { progress, incrementProgress, decrementProgress, resetProgress };
 };

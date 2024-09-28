@@ -8,5 +8,9 @@ query AuthCurrentUser($userId: String!) {
     personalCode
     coupleStartDate
     isProfileCompleted
+    isCoupled
+    couple {
+      coupleId
+    }
   }
 }

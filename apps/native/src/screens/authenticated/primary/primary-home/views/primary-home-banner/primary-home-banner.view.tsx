@@ -4,7 +4,7 @@ import { Pressable } from 'react-native';
 import { Box, DOWN_ARROWS_IMAGE, Image, Stack, Text, palette, radius, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_BannerViewProps = {
-  onPressBannerButton: () => void;
+  onPressBannerButton: () => Promise<void>;
   shouldConnect: boolean;
   hasNoMyReply: boolean;
   hasNoPartnerReply: boolean;
@@ -38,8 +38,8 @@ export const Primary_Home_BannerView = memo<IPrimary_Home_BannerViewProps>(
       }
     };
 
-    const handlePressBannerButton = useCallback(() => {
-      onPressBannerButton();
+    const handlePressBannerButton = useCallback(async () => {
+      await onPressBannerButton();
     }, [onPressBannerButton]);
 
     return (

@@ -24,6 +24,7 @@ export type IOnboardingUserModalParams = {
 
 export type ISubmitAnswersParams = {
   answers: IUserAnswers;
+  missionId: number;
   coupleMissionId?: number;
   onCompleted: () => void;
 };

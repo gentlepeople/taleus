@@ -1,5 +1,15 @@
-mutation Primary_HomeSubmitMission($data: [SubmitMissionResponseRequestData!]!) {
-  submitMissionResponse(data: $data) {
+mutation Primary_HomeSubmitMission(
+  $data: [SubmitMissionResponseRequestData!]!
+  $missionId: BigInt!
+  $userId: String!
+  $coupleMissionId: BigInt
+) {
+  submitMissionResponse(
+    data: $data
+    missionId: $missionId
+    userId: $userId
+    coupleMissionId: $coupleMissionId
+  ) {
     success
   }
 }

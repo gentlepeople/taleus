@@ -2,10 +2,11 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
-import { LoadingSpinner, ScrollView, palette } from '~/mobile-ui';
+import { LoadingSpinner, ScrollView, SlideViewOrganism, palette } from '~/mobile-ui';
 
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
+import { GestureDetector } from 'react-native-gesture-handler';
 import { usePrimary_HomeController } from './controller';
 import { Primary_HomeLayout } from './primary-home.layout';
 import {
@@ -38,8 +39,16 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
     currentUserAnswer,
     isCTADisabled,
     isLastQuestion,
+    direction,
+    animationKeyIndex,
+    panGesture,
+    showBanner,
+    shouldConnect,
+    hasNoMyReply,
+    hasNoPartnerReply,
     setAnswer,
     pressCTA,
+    pressBannerButton,
   } = usePrimary_HomeController();
 
   if (isLoading) {
@@ -48,24 +57,31 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
 
   const renderContent = () => {
     return (
-      <ScrollView style={{ backgroundColor: palette['white-100'] }}>
-        <Primary_Home_BannerView
-          onPressBannerButton={() => {
-            // 여기서 커플 연결(마이페이지 네비) or 독촉 알림 보내기 기능 필요
-          }}
-          shouldConnect={true}
-          hasNoMyReply={false}
-          hasNoPartnerReply={false}
-        />
-        <Primary_Home_QuestionAreaView question={question} progress={progress} />
-        <Primary_Home_ContentAreaView
-          isWritable={isWritable}
-          currentValue={currentValue}
-          onChangeText={setAnswer}
-          progress={progress}
-          currentAnswer={currentUserAnswer}
-        />
-      </ScrollView>
+      <>
+        {showBanner && (
+          <Primary_Home_BannerView
+            onPressBannerButton={pressBannerButton}
+            shouldConnect={shouldConnect}
+            hasNoMyReply={hasNoMyReply}
+            hasNoPartnerReply={hasNoPartnerReply}
+          />
+        )}
+        <GestureDetector gesture={panGesture}>
+          {/* TODO:민기 이거 ScrollView로 처리 가능할지 연구해보기 */}
+          <SlideViewOrganism animationKeyIndex={animationKeyIndex} animationDirection={direction}>
+            <ScrollView style={{ backgroundColor: palette['white-100'] }}>
+              <Primary_Home_QuestionAreaView question={question} progress={progress} />
+              <Primary_Home_ContentAreaView
+                isWritable={isWritable}
+                currentValue={currentValue}
+                onChangeText={setAnswer}
+                progress={progress}
+                currentAnswer={currentUserAnswer}
+              />
+            </ScrollView>
+          </SlideViewOrganism>
+        </GestureDetector>
+      </>
     );
   };
 

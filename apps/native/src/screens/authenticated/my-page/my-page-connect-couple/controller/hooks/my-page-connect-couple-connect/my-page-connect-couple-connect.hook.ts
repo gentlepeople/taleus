@@ -30,7 +30,7 @@ export const useMyPage_ConnectCoupleConnect: Hook<
 
   const connectCouple = useCallback(
     async (inviteePersonalCode: string) => {
-      const result = await connect({
+      await connect({
         variables: {
           inviteePersonalCode,
           inviterId: userId,

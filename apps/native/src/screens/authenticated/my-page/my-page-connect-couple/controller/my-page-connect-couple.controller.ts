@@ -41,8 +41,8 @@ export const useMyPage_ConnectCoupleController: Controller<
   }, [copyToClipboard]);
 
   const connect = useCallback(async () => {
-    await connectCouple('');
-  }, [connectCouple]);
+    await connectCouple(partnerPersonalCode);
+  }, [connectCouple, partnerPersonalCode]);
 
   const share = useCallback(async () => {
     await kakaoShare(personalCode);

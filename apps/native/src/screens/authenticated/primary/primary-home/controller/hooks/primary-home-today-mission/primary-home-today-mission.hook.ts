@@ -11,6 +11,9 @@ type IPrimary_HomeTodayMissionOutput = {
   todayMissionId: number;
   todayQuestions: IQuestions;
   todayAnswers: IUserAnswers;
+  isCoupled: boolean;
+  todayAnswersCompleted: boolean;
+  partnerTodayAnswersCompleted: boolean;
 };
 
 export const usePrimary_HomeTodayMission: Hook<
@@ -39,6 +42,9 @@ export const usePrimary_HomeTodayMission: Hook<
       todayMissionId: null,
       todayQuestions: null,
       todayAnswers: null,
+      isCoupled: null,
+      todayAnswersCompleted: null,
+      partnerTodayAnswersCompleted: null,
     };
   }
 
@@ -49,29 +55,39 @@ export const usePrimary_HomeTodayMission: Hook<
       todayMissionId: null,
       todayQuestions: null,
       todayAnswers: null,
+      isCoupled: null,
+      todayAnswersCompleted: null,
+      partnerTodayAnswersCompleted: null,
     };
   }
 
-  const isTodayWritable = !currentData.todayMission.userResponse.isCompleted;
-  const data = currentData.todayMission.mission;
-  const todayMissionId = data.missionId;
-  const todayQuestions = data.questions.map(({ questionId, questionOrder, content }) => {
-    return {
-      questionId,
-      questionOrder,
-      question: content,
-    };
-  }) as IQuestions;
+  const todayMission = currentData.todayMission;
+  const isTodayWritable = !todayMission.userResponse.isCompleted;
+  const todayMissionData = todayMission.mission;
+  const todayMissionId = todayMissionData.missionId;
+  const todayQuestions = todayMissionData.questions.map(
+    ({ questionId, questionOrder, content }) => {
+      return {
+        questionId,
+        questionOrder,
+        question: content,
+      };
+    },
+  ) as IQuestions;
 
   const todayAnswersCompleted = !isTodayWritable;
   const todayAnswers =
     todayAnswersCompleted &&
-    (currentData.todayMission.userResponse.data.map(({ questionId, content }) => {
+    (todayMission.userResponse.data.map(({ questionId, content }) => {
       return {
         questionId,
         content,
       };
     }) as IUserAnswers);
+
+  const isCoupled = currentUser && currentUser.isCoupled;
+  const partnerTodayAnswersCompleted =
+    isCoupled && todayMission.partnerResponse && todayMission.partnerResponse.isCompleted;
 
   return {
     isTodayMissionLoading: false,
@@ -79,5 +95,8 @@ export const usePrimary_HomeTodayMission: Hook<
     todayMissionId,
     todayQuestions,
     todayAnswers,
+    isCoupled,
+    todayAnswersCompleted,
+    partnerTodayAnswersCompleted,
   };
 };
