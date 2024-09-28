@@ -15,6 +15,7 @@ export type UserProps = {
   birthday: Date;
   oauthProviderType: EnumOAuthProviderType;
   personalCode: string;
+  coupleStartDate?: Date;
   notificationTime?: string;
   subscriptionStatus: EnumSubscriptionStatus;
   isProfileCompleted: boolean;
@@ -49,6 +50,9 @@ export class User {
   @Field(() => String)
   readonly personalCode: string;
 
+  @Field(() => Date, { nullable: true })
+  readonly coupleStartDate?: Date;
+
   @Field(() => String, { nullable: true })
   readonly notificationTime?: string;
 
@@ -76,6 +80,7 @@ export class User {
     this.birthday = props.birthday;
     this.oauthProviderType = props.oauthProviderType;
     this.personalCode = props.personalCode;
+    this.coupleStartDate = props.coupleStartDate;
     this.notificationTime = props.notificationTime;
     this.subscriptionStatus = props.subscriptionStatus;
     this.isProfileCompleted = props.isProfileCompleted;

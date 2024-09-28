@@ -38,6 +38,12 @@ export class UpdateUserInputRequest {
     defaultValue: null,
   })
   coupleStartDate: Date | null;
+
+  @Field(() => Boolean, {
+    nullable: true,
+    defaultValue: null,
+  })
+  isProfileCompleted: boolean | null;
 }
 
 @ArgsType()
