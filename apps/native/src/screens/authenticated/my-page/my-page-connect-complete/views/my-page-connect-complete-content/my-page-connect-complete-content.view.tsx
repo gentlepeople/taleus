@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+
 import { Column, Columns, CustomCTA, Divider, Stack, Text, spacing } from '~/mobile-ui';
 
 type IMyPage_ConnectComplete_ContentViewProps = {

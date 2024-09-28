@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Box, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_QuestionAreaViewProps = {

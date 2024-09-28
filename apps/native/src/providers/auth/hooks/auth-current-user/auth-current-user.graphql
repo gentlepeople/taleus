@@ -1,0 +1,10 @@
+query AuthCurrentUser($userId: String!) {
+  user(userId: $userId) {
+    userId
+    birthday
+    email
+    gender
+    nickname
+    personalCode
+  }
+}

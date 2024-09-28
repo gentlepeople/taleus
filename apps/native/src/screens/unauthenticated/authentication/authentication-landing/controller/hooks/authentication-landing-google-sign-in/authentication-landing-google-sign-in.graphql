@@ -1,0 +1,6 @@
+mutation Authentication_LandingGoogleSignIn($idToken: String!) {
+  googleLogin(idToken: $idToken) {
+    customToken
+    userId
+  }
+}

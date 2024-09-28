@@ -1,4 +1,5 @@
 import { ReactNode, memo } from 'react';
+
 import { BasicLayout, Row, Rows, ScrollView } from '~/mobile-ui';
 
 type IMyPage_ConnectCompleteLayoutProps = {

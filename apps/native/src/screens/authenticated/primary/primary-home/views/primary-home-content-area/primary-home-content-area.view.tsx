@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Box, Inline, Stack, Text, TextInput, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_ContentAreaViewProps = {

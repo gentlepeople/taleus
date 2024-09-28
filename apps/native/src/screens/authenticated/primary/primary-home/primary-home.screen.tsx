@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { ScrollView, palette } from '~/mobile-ui';
 
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
+
 import { Primary_HomeLayout } from './primary-home.layout';
 import {
   Primary_Home_BannerView,
@@ -31,7 +32,6 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
       <ScrollView style={{ backgroundColor: palette['white-100'] }}>
         <Primary_Home_BannerView
           onPressBannerButton={() => {
-            console.log('Pressed');
             // 여기서 커플 연결(마이페이지 네비) or 독촉 알림 보내기 기능 필요
           }}
           shouldConnect={true}

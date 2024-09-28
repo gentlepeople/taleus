@@ -9,7 +9,6 @@ type IPrimary_MyPageNavigationOutput = {
   goWebView: ({ title, uri }: IWebViewParams) => void;
   goEditUserInfo: () => void;
   goConnectCouple: () => void;
-  goPushNotification: () => void;
   goLanding: () => void;
 };
 
@@ -44,14 +43,8 @@ export const usePrimary_MyPageNavigation: Hook<
     });
   }, [navigation]);
 
-  const goPushNotification = useCallback(() => {
-    navigation.navigate('MyPageStack', {
-      screen: 'MyPage_PushNotificationScreen',
-    });
-  }, [navigation]);
-
   const goLanding = useCallback(() => {
-    navigation.navigate('UnauthenticatedStack', {
+    navigation.replace('UnauthenticatedStack', {
       screen: 'AuthenticationStack',
       params: {
         screen: 'Authentication_LandingScreen',
@@ -59,5 +52,5 @@ export const usePrimary_MyPageNavigation: Hook<
     });
   }, [navigation]);
 
-  return { goWebView, goEditUserInfo, goConnectCouple, goPushNotification, goLanding };
+  return { goWebView, goEditUserInfo, goConnectCouple, goLanding };
 };

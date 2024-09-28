@@ -2,11 +2,13 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
 import { FC } from 'react';
-
 import { RefreshControl } from 'react-native';
 import { ValueOf } from 'type-fest';
+
 import { Box, palette, size, spacing } from '~/mobile-ui';
+
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
+
 import { usePrimary_FeedController } from './controller';
 import { Primary_FeedLayout } from './primary-feed.layout';
 import { Primary_Feed_ContentCardView, Primary_Feed_ContentEmptyView } from './views';
@@ -103,7 +105,6 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
         ListEmptyComponent={<Primary_Feed_ContentEmptyView />}
         onEndReachedThreshold={0.2}
         onEndReached={() => {
-          console.log('hi');
           return;
         }}
         refreshControl={

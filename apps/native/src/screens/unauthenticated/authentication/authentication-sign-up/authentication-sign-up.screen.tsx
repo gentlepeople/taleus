@@ -1,8 +1,11 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
+
 import { HeaderOrganism, ScrollView, Stack, spacing } from '~/mobile-ui';
+
 import { AuthenticationStackNavigationProp, AuthenticationStackParamList } from '..';
+
 import { Authentication_SignUpLayout } from './authentication-sign-up.layout';
 import { useAuthentication_SignUpController } from './controller';
 import {
@@ -30,7 +33,28 @@ export type IAuthentication_SignUpScreenProps = {
 };
 
 export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> = ({}) => {
-  const { signUp } = useAuthentication_SignUpController();
+  const {
+    userData,
+    isCTADisabled,
+    writeNickname,
+    selectGender,
+    setBirthDate,
+    setCoupleStartDate,
+    checkPolicy,
+    checkTerms,
+    goPolicyWebView,
+    goTermsWebView,
+    signUp,
+  } = useAuthentication_SignUpController();
+
+  const {
+    nickname,
+    gender,
+    birthDate,
+    coupleStartDate,
+    consentToCollectPersonalInformation,
+    termsOfServiceAgreement,
+  } = userData;
 
   const renderContent = () => {
     return (
@@ -38,24 +62,24 @@ export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> 
         <HeaderOrganism title={'회원가입'} left={{ type: 'button' }} />
         <ScrollView>
           <Stack space={spacing['11.5-x']}>
-            <Authentication_SignUp_NicknameView />
-            <Authentication_SignUp_GenderView
-              onSelect={(value: string) => {
-                console.log(value);
-              }}
-              selectedValue={'male'}
-            />
+            <Authentication_SignUp_NicknameView value={nickname} onChangeText={writeNickname} />
+            <Authentication_SignUp_GenderView onSelect={selectGender} selectedValue={gender} />
             <Authentication_SignUp_BirthDateView
-              onPress={() => {
-                console.log('presssed');
-              }}
+              birthDate={birthDate}
+              onChangeDate={setBirthDate}
             />
             <Authentication_SignUp_AnniversaryView
-              onPress={() => {
-                console.log('pressed');
-              }}
+              coupleStartDate={coupleStartDate}
+              onChangeDate={setCoupleStartDate}
             />
-            <Authentication_SignUp_PolicyView />
+            <Authentication_SignUp_PolicyView
+              isCheckedPolicy={consentToCollectPersonalInformation}
+              isCheckedTerms={termsOfServiceAgreement}
+              onPressPolicy={checkPolicy}
+              onPressTerms={checkTerms}
+              onPressShowPolicy={goPolicyWebView}
+              onPressShowTerms={goTermsWebView}
+            />
           </Stack>
         </ScrollView>
       </Stack>
@@ -65,7 +89,7 @@ export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> 
   return (
     <Authentication_SignUpLayout
       content={renderContent()}
-      footer={<Authentication_SignUp_CTAView onPress={signUp} />}
+      footer={<Authentication_SignUp_CTAView isCTADisabled={isCTADisabled} onPress={signUp} />}
     />
   );
 };

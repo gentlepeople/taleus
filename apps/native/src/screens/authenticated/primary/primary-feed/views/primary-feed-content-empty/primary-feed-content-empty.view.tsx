@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { EMPTY_LIST_LOTTIE, Lottie, Stack, Text, size, spacing } from '~/mobile-ui';
 
 type IPrimary_Feed_ContentEmptyViewProps = {};

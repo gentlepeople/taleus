@@ -6,7 +6,11 @@
  */
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
+
+import { useAuth } from '~/providers';
+
 import { UnauthenticatedStackNavigationProp, UnauthenticatedStackParamList } from '..';
+
 import { Authentication_LandingScreen } from './authentication-landing';
 import { Authentication_SignUpScreen } from './authentication-sign-up';
 
@@ -31,10 +35,19 @@ export type IAuthenticationStackProps = {
 };
 
 export const AuthenticationStack = () => {
+  const { currentUser } = useAuth();
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Authentication_LandingScreen" component={Authentication_LandingScreen} />
-      <Stack.Screen name="Authentication_SignUpScreen" component={Authentication_SignUpScreen} />
+      {!currentUser && (
+        <Stack.Screen
+          name="Authentication_LandingScreen"
+          component={Authentication_LandingScreen}
+        />
+      )}
+      {currentUser && !currentUser.isProfileCompleted && (
+        <Stack.Screen name="Authentication_SignUpScreen" component={Authentication_SignUpScreen} />
+      )}
     </Stack.Navigator>
   );
 };

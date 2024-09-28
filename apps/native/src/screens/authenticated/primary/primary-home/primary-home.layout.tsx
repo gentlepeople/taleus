@@ -1,4 +1,5 @@
 import { ReactNode, memo } from 'react';
+
 import { BasicLayout, Row, Rows } from '~/mobile-ui';
 
 type IPrimary_HomeLayoutProps = {

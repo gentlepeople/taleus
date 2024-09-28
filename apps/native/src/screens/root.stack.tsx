@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ModalProvider } from 'react-native-modalfy';
 import { ValueOf } from 'type-fest';
 
+import { useAuth } from '~/providers';
 import { AuthenticatedStack, AuthenticatedStackParamList } from './authenticated';
 import { CommonStack, CommonStackParamList } from './common';
 import { modalStack } from './modal';
@@ -17,6 +18,8 @@ export type RootStackParamList = {
 const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export const RootStack = ({}) => {
+  const { currentUser } = useAuth();
+
   return (
     <ModalProvider stack={modalStack}>
       <RootStackNavigator.Navigator
@@ -26,7 +29,9 @@ export const RootStack = ({}) => {
           animationEnabled: true,
         }}
       >
-        <RootStackNavigator.Screen name="UnauthenticatedStack" component={UnauthenticatedStack} />
+        {!currentUser?.isProfileCompleted && (
+          <RootStackNavigator.Screen name="UnauthenticatedStack" component={UnauthenticatedStack} />
+        )}
         <RootStackNavigator.Screen name="AuthenticatedStack" component={AuthenticatedStack} />
         <RootStackNavigator.Screen name="CommonStack" component={CommonStack} />
       </RootStackNavigator.Navigator>
@@ -36,6 +41,21 @@ export const RootStack = ({}) => {
 
 export const rootStackLinkingConfig: ValueOf<LinkingOptions<RootStackParamList>, 'config'> = {
   screens: {
+    AuthenticatedStack: {
+      screens: {
+        MyPageStack: {
+          path: 'my-page',
+          screens: {
+            MyPage_ConnectCoupleScreen: {
+              path: 'connect-couple',
+              parse: {
+                partnerPersonalCode: String,
+              },
+            },
+          },
+        },
+      },
+    },
     // UnauthenticatedStack: {
     //   screens: {
     //     InitialStack: {

@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Pressable } from 'react-native';
+
 import { Box, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IMyPage_EditUserInfo_GenderViewProps = {

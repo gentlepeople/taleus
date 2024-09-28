@@ -1,0 +1,6 @@
+mutation Authentication_LadingKaKaoSignIn($accessToken: String!) {
+  kakaoLogin(accessToken: $accessToken) {
+    customToken
+    userId
+  }
+}

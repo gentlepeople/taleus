@@ -6,6 +6,8 @@ import { Authentication_SignUpScreenNavigationProp } from '../../../authenticati
 type IAuthentication_SignUpNavigationInput = void;
 type IAuthentication_SignUpNavigationOutput = {
   goHome: () => void;
+  goPolicyWebView: () => void;
+  goTermsWebView: () => void;
 };
 
 export const useAuthentication_SignUpNavigation: Hook<
@@ -23,5 +25,25 @@ export const useAuthentication_SignUpNavigation: Hook<
     });
   }, [navigation]);
 
-  return { goHome };
+  const goPolicyWebView = useCallback(() => {
+    navigation.navigate('CommonStack', {
+      screen: 'WebViewScreen',
+      params: {
+        title: '개인정보 수집 및 이용 동의',
+        linkUrl: 'https://naver.com',
+      },
+    });
+  }, [navigation]);
+
+  const goTermsWebView = useCallback(() => {
+    navigation.navigate('CommonStack', {
+      screen: 'WebViewScreen',
+      params: {
+        title: '서비스 이용약관 동의',
+        linkUrl: 'https://naver.com',
+      },
+    });
+  }, [navigation]);
+
+  return { goHome, goPolicyWebView, goTermsWebView };
 };

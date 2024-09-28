@@ -8,6 +8,7 @@ import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../root.stack';
+
 import { AuthenticationStack, AuthenticationStackParamList } from './authentication';
 
 export type UnauthenticatedStackParamList = {

@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Box, ScrollView, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IFeed_Detail_PartnerAnswerViewProps = {

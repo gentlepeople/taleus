@@ -1,10 +1,12 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
-
 import { GestureDetector } from 'react-native-gesture-handler';
+
 import { SlideViewOrganism, Stack, spacing } from '~/mobile-ui';
+
 import { FeedStackNavigationProp, FeedStackParamList } from '..';
+
 import { useFeed_DetailController } from './controller';
 import { Feed_DetailLayout } from './feed-detail.layout';
 import {

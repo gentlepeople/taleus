@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Box, Stack, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IFeed_Detail_ProgressViewProps = {

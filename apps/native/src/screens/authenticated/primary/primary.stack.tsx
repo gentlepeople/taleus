@@ -4,10 +4,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
 import { BottomTabNavigator, Icon } from '~/mobile-ui';
+
 import {
   AuthenticatedStackNavigationProp,
   AuthenticatedStackParamList,
 } from '../authenticated.stack';
+
 import { Primary_FeedScreen } from './primary-feed';
 import { Primary_HomeScreen } from './primary-home';
 import { Primary_MyPageScreen } from './primary-my-page';
@@ -37,7 +39,11 @@ export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
   //     usePrimaryTabMixpanel();
 
   return (
-    <Tab.Navigator tabBar={BottomTabNavigator} screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      tabBar={BottomTabNavigator}
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Primary_HomeScreen"
+    >
       <Tab.Screen
         name="Primary_FeedScreen"
         component={Primary_FeedScreen}

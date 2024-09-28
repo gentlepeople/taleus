@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { Pressable } from 'react-native';
+
 import { Box, DOWN_ARROWS_IMAGE, Image, Stack, Text, palette, radius, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_BannerViewProps = {

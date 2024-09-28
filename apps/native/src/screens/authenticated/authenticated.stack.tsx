@@ -8,6 +8,7 @@ import { NavigatorScreenParams, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../root.stack';
+
 import { FeedStack, FeedStackParamList } from './feed';
 import { MyPageStack, MyPageStackParamList } from './my-page';
 import { PrimaryStack, PrimaryStackParamList } from './primary';

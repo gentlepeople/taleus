@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Box, Skeleton, radius, size, spacing } from '~/mobile-ui';
 
 type IPrimary_Feed_ListFooterSkeletonViewProps = {};

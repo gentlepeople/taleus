@@ -4,17 +4,21 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import { useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import { Linking, View } from 'react-native';
 
 import { RootStackParamList, rootStackLinkingConfig } from './root.stack';
 
-export const RootNavigator = ({ children }) => {
+type IRootNavigatorProps = {
+  children: ReactNode;
+};
+
+export const RootNavigator = ({ children }: IRootNavigatorProps) => {
   const navigationRef = useNavigationContainerRef<RootStackParamList>();
   const routeNameRef = useRef<string>();
 
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: ['example_app_url://'],
+    prefixes: ['taleUs://'],
     getInitialURL: async () => {
       const url = await Linking.getInitialURL();
       return url;
@@ -26,7 +30,11 @@ export const RootNavigator = ({ children }) => {
       };
 
       // Listen to incoming links from deep linking
-      Linking.addEventListener('url', onReceiveURL);
+      const subscription = Linking.addEventListener('url', onReceiveURL);
+
+      return () => {
+        subscription.remove();
+      };
     },
     // Custom function to get the URL which was used to open the app
     config: rootStackLinkingConfig,

@@ -1,0 +1,5 @@
+mutation MyPage_ConnectCoupleConnect($inviteePersonalCode: String!, $inviterId: String!) {
+  registerCouple(inviteePersonalCode: $inviteePersonalCode, inviterId: $inviterId) {
+    success
+  }
+}

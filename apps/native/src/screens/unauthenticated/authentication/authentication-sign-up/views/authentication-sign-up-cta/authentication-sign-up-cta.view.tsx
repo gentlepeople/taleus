@@ -1,12 +1,14 @@
 import { memo, useCallback } from 'react';
+
 import { CustomCTA, spacing } from '~/mobile-ui';
 
 type IAuthentication_SignUp_CTAViewProps = {
-  onPress: () => void;
+  isCTADisabled: boolean;
+  onPress: () => Promise<void>;
 };
 
 export const Authentication_SignUp_CTAView = memo<IAuthentication_SignUp_CTAViewProps>(
-  ({ onPress }) => {
+  ({ isCTADisabled, onPress }) => {
     const handlePressCTA = useCallback(() => {
       onPress();
     }, [onPress]);
@@ -20,6 +22,7 @@ export const Authentication_SignUp_CTAView = memo<IAuthentication_SignUp_CTAView
             onPress: handlePressCTA,
             textColor: 'white-100',
             textType: 'button',
+            disabled: isCTADisabled,
           },
         ]}
       />

@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+
 import {
   Box,
   CustomCTA,
@@ -12,13 +13,13 @@ import {
 } from '~/mobile-ui';
 
 type IMyPage_ConnectCouple_MyCodeViewProps = {
-  userCode: string;
+  personalCode: string;
   onPressCopy: () => void;
-  onPressShare: () => void;
+  onPressShare: () => Promise<void>;
 };
 
 export const MyPage_ConnectCouple_MyCodeView = memo<IMyPage_ConnectCouple_MyCodeViewProps>(
-  ({ userCode, onPressCopy, onPressShare }) => {
+  ({ personalCode, onPressCopy, onPressShare }) => {
     const handlePressCopy = useCallback(() => {
       onPressCopy();
     }, [onPressCopy]);
@@ -36,7 +37,7 @@ export const MyPage_ConnectCouple_MyCodeView = memo<IMyPage_ConnectCouple_MyCode
           <PressableQuark onPress={handlePressCopy}>
             <Stack align="center" space={spacing['1-x']}>
               <Text textType="code" color="text-black" textAlignment="center">
-                {userCode}
+                {personalCode}
               </Text>
               <Box
                 style={{

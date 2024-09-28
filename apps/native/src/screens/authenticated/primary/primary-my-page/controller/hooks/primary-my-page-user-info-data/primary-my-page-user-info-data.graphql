@@ -1,0 +1,10 @@
+query Primary_MyPageUserInfoData($userId: String!) {
+  user(userId: $userId) {
+    isCoupled
+    couple {
+      coupleId
+      relationshipDays
+      completedMissionCount
+    }
+  }
+}

@@ -1,12 +1,14 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
+
 import { Stack, Text, TextInput, spacing } from '~/mobile-ui';
 
-type IAuthentication_SignUp_NicknameViewProps = {};
+type IAuthentication_SignUp_NicknameViewProps = {
+  value: string;
+  onChangeText: (text: string) => void;
+};
 
 export const Authentication_SignUp_NicknameView = memo<IAuthentication_SignUp_NicknameViewProps>(
-  () => {
-    const [test, setTest] = useState<string>('');
-
+  ({ value, onChangeText }) => {
     return (
       <Stack paddingX={spacing['6-x']} space={spacing['2-x']}>
         <Text textType="body/14/medium" color="text-black">
@@ -14,8 +16,8 @@ export const Authentication_SignUp_NicknameView = memo<IAuthentication_SignUp_Ni
         </Text>
         <TextInput
           placeholder="나의 애칭 또는 별명을 적어주세요."
-          currentValue={test}
-          onChangeText={setTest}
+          currentValue={value}
+          onChangeText={onChangeText}
           editable
         />
       </Stack>

@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
+import { StyleProp, TextStyle } from 'react-native';
 import { TextInput as NativeTextInput } from 'react-native-paper';
 
-import { StyleProp, TextStyle } from 'react-native';
 import { palette, radius, size } from '../../../theme';
 import { getTextColorStyle, getTextTypeStyle } from '../text';
 
@@ -17,6 +17,7 @@ export type ITextInputProps = {
   contentStyle?: StyleProp<TextStyle>;
   multiLine?: boolean;
   isLengthOvered?: boolean;
+  maxLength?: number;
 };
 
 export const TextInput: FC<ITextInputProps> = ({
@@ -31,6 +32,7 @@ export const TextInput: FC<ITextInputProps> = ({
   contentStyle,
   multiLine = false,
   isLengthOvered,
+  maxLength,
 }) => {
   const textTypeStyle = getTextTypeStyle('body/14/regular');
   const textColorStyle = getTextColorStyle(currentValue ? 'text-black' : 'gray-20');
@@ -73,6 +75,7 @@ export const TextInput: FC<ITextInputProps> = ({
       outlineColor={isLengthOvered ? palette['danger'] : palette['gray-20']}
       activeOutlineColor={isLengthOvered ? palette['danger'] : palette['primary']}
       editable={editable}
+      maxLength={maxLength}
     />
   );
 };

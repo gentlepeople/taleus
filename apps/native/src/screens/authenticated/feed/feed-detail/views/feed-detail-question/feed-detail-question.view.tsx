@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { Stack, Text, spacing } from '~/mobile-ui';
 
 type IFeed_Detail_QuestionViewProps = {

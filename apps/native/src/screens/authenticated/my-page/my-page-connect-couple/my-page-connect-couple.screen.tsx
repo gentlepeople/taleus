@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
 import { Stack, spacing } from '~/mobile-ui';
+
 import { MyPageStackNavigationProp, MyPageStackParamList } from '..';
 
 import { useMyPage_ConnectCoupleController } from './controller';
@@ -29,17 +30,30 @@ export type IMyPage_ConnectCoupleScreenProps = {
 };
 
 export const MyPage_ConnectCoupleScreen: FC<IMyPage_ConnectCoupleScreenProps> = () => {
-  const { copyUserCode, connect } = useMyPage_ConnectCoupleController();
+  const {
+    personalCode,
+    partnerPersonalCode,
+    isCTADisabled,
+    copyUserCode,
+    changePartnerPersonalCode,
+    connect,
+    share,
+  } = useMyPage_ConnectCoupleController();
 
   const renderContent = () => {
     return (
       <Stack space={spacing['4-x']}>
         <MyPage_ConnectCouple_MyCodeView
-          userCode="XV821D"
+          personalCode={personalCode}
           onPressCopy={copyUserCode}
-          onPressShare={() => {}}
+          onPressShare={share}
         />
-        <MyPage_ConnectCouple_InputCodeView onPressConnect={connect} disabled={false} />
+        <MyPage_ConnectCouple_InputCodeView
+          partnerPersonalCode={partnerPersonalCode}
+          onChangeCode={changePartnerPersonalCode}
+          onPressConnect={connect}
+          isCTADisabled={isCTADisabled}
+        />
       </Stack>
     );
   };

@@ -1,14 +1,21 @@
 import { memo } from 'react';
+
 import { Column, Columns, Stack, Text, spacing } from '~/mobile-ui';
 
 type IPrimary_MyPage_UserInfoViewProps = {
   userName: string;
-  datePeriod: number;
-  taleUsUsagePeriod: number;
+  isCoupled: boolean;
+  coupleData?: {
+    relationshipDays: number;
+    completedMissionCount: number;
+  };
 };
 
 export const Primary_MyPage_UserInfoView = memo<IPrimary_MyPage_UserInfoViewProps>(
-  ({ userName, datePeriod, taleUsUsagePeriod }) => {
+  ({ userName, isCoupled, coupleData }) => {
+    const relationshipDays = isCoupled ? 2 : '- ';
+    const completedMissionCount = isCoupled ? coupleData.completedMissionCount : '- ';
+
     return (
       <Stack space={spacing['3-x']} padding={spacing['4-x']}>
         <Text textType="biggest" color="text-black">
@@ -23,7 +30,7 @@ export const Primary_MyPage_UserInfoView = memo<IPrimary_MyPage_UserInfoViewProp
             </Column>
             <Column width="content">
               <Text textType="body/15/bold" color="text-black">
-                {`${datePeriod}일`}
+                {`${relationshipDays}일`}
               </Text>
             </Column>
           </Columns>
@@ -35,7 +42,7 @@ export const Primary_MyPage_UserInfoView = memo<IPrimary_MyPage_UserInfoViewProp
             </Column>
             <Column width="content">
               <Text textType="body/15/bold" color="text-black">
-                {`${taleUsUsagePeriod}일`}
+                {`${completedMissionCount}일`}
               </Text>
             </Column>
           </Columns>

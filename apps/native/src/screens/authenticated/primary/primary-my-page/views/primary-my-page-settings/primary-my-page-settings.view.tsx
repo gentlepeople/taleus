@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+
 import {
   Column,
   Columns,
@@ -10,10 +11,9 @@ import {
   size,
   spacing,
 } from '~/mobile-ui';
-import { IWebViewParams } from '../../primary-my-page.type';
 
 type IPrimary_MyPage_SettingsViewProps = {
-  onPressInquiry: ({ title, uri }: IWebViewParams) => void;
+  onPressInquiry: () => void;
   onPressEditUserInfo: () => void;
   onPressConnectCouple: () => void;
   onPressPushNotification: () => void;
@@ -22,7 +22,7 @@ type IPrimary_MyPage_SettingsViewProps = {
 export const Primary_MyPage_SettingsView = memo<IPrimary_MyPage_SettingsViewProps>(
   ({ onPressInquiry, onPressEditUserInfo, onPressConnectCouple, onPressPushNotification }) => {
     const handlePressInquiry = useCallback(() => {
-      onPressInquiry({ title: '', uri: '' });
+      onPressInquiry();
     }, [onPressInquiry]);
 
     const handlePressEditUserInfo = useCallback(() => {

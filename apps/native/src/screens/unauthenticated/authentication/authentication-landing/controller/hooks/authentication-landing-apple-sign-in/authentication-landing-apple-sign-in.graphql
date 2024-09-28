@@ -1,0 +1,6 @@
+mutation Authentication_LandingAppleSignIn($idToken: String!, $nonce: String) {
+  appleLogin(idToken: $idToken, nonce: $nonce) {
+    customToken
+    userId
+  }
+}

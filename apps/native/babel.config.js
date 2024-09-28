@@ -19,6 +19,7 @@ module.exports = {
           '~/providers': './src/providers',
           '~/screens': './src/screens',
           '~/hooks': './src/hooks',
+          '~/utils': './src/utils',
         },
         extensions: [
           '.ios.ts',

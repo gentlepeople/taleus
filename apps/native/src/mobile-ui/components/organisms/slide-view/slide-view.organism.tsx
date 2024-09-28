@@ -1,6 +1,8 @@
 import { View } from 'moti';
 import { FC, ReactNode } from 'react';
+
 import { useDimensions } from '~/hooks';
+
 import { EDirection } from './slide-view.type';
 
 type ISlideViewOrganismProps = {

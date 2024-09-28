@@ -1,0 +1,7 @@
+mutation MyPage_EditUserUpdateUser($input: UpdateUserInputRequest!, $userId: String!) {
+  updateUser(input: $input, userId: $userId) {
+    user {
+      userId
+    }
+  }
+}

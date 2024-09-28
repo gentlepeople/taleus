@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+
 import { CustomCTA, radius, spacing } from '~/mobile-ui';
 
 type IFeed_Detail_CTAViewProps = {

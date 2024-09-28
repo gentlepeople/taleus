@@ -1,7 +1,9 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp, createStackNavigator } from '@react-navigation/stack';
 import { FC } from 'react';
+
 import { AuthenticatedStackNavigationProp, AuthenticatedStackParamList } from '..';
+
 import { Feed_DetailScreen } from './feed-detail';
 
 export type FeedStackParamList = {

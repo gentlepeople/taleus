@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ComponentProps, FC, ReactElement } from 'react';
 import { Pressable, ViewStyle, useWindowDimensions } from 'react-native';
 import { ValueOf } from 'type-fest';
+
 import { size, spacing } from '../../../theme';
 import { Icon, Text } from '../../atoms';
 import { Box, Stack } from '../../layouts';
@@ -42,7 +43,7 @@ export const HeaderOrganism: FC<IHeaderOrganismProps> = ({
   const { width } = useWindowDimensions();
 
   useBackHandler(() => {
-    if (!!onPressExit) {
+    if (onPressExit) {
       onPressExit();
       return true;
     }
@@ -57,7 +58,7 @@ export const HeaderOrganism: FC<IHeaderOrganismProps> = ({
     }
 
     const handlePressLeftButton = () => {
-      if (!!onPressExit) {
+      if (onPressExit) {
         onPressExit();
         return;
       }
@@ -80,7 +81,7 @@ export const HeaderOrganism: FC<IHeaderOrganismProps> = ({
   };
 
   const renderRight = () => {
-    return null;
+    return <Box />;
   };
 
   return (

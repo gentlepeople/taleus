@@ -1,6 +1,7 @@
 export const palette = {
   primary: '#FF8A00',
   'white-100': '#FFF',
+  'white-a60': 'rgba(255,255,255,0.60)',
   'gray-10': '#F8F8F8',
   'gray-20': '#D1D1D1',
   'gray-30': '#A8A8A8',

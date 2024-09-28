@@ -1,0 +1,7 @@
+mutation Authentication_SignUpUpdateUser($input: UpdateUserInputRequest!, $userId: String!) {
+  updateUser(input: $input, userId: $userId) {
+    user {
+      userId
+    }
+  }
+}

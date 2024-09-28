@@ -1,8 +1,9 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-
 import { FC } from 'react';
 import WebView from 'react-native-webview';
+
+import { BasicLayout, HeaderOrganism } from '~/mobile-ui';
 
 import { CommonStackNavigationProp, CommonStackParamList } from '../common.stack';
 
@@ -23,14 +24,14 @@ export const WebViewScreen: FC<IWebViewScreenProps> = ({ route }) => {
   const title = route.params.title;
 
   return (
-    // <BasicLayout>
-    //   <ModalHeader title={title} />
+    <BasicLayout>
+      <HeaderOrganism title={title} titleSize="small" left={{ type: 'button' }} />
       <WebView
         androidLayerType="software"
         startInLoadingState
         source={{ uri: linkUrl }}
         containerStyle={{ flex: 1 }}
       />
-    // </BasicLayout>
+    </BasicLayout>
   );
 };

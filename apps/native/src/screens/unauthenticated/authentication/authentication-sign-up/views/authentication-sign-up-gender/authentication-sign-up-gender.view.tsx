@@ -1,17 +1,15 @@
+import { EnumGender } from '@gentlepeople/taleus-codegen';
 import { memo } from 'react';
 import { Pressable } from 'react-native';
+
 import { Box, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
 
-type IAuthentication_SignUp_GenderViewProps = {
-  onSelect: (value: string) => void;
-  selectedValue: string;
-};
+import { GENDER } from '../../authentication-sign-up.const';
 
-const GENDER = [
-  { label: '남자', value: 'male' },
-  { label: '여자', value: 'female' },
-  { label: '선택안함', value: 'none' },
-];
+type IAuthentication_SignUp_GenderViewProps = {
+  onSelect: (value: EnumGender) => void;
+  selectedValue: EnumGender;
+};
 
 export const Authentication_SignUp_GenderView = memo<IAuthentication_SignUp_GenderViewProps>(
   ({ onSelect, selectedValue }) => {
@@ -22,6 +20,8 @@ export const Authentication_SignUp_GenderView = memo<IAuthentication_SignUp_Gend
         </Text>
         <Stack horizontal space={spacing['3.5-x']}>
           {GENDER.map(({ label, value }) => {
+            const key = `${label}_${value}`;
+
             const backgroundColor =
               selectedValue === value ? palette['primary'] : palette['gray-20'];
 
@@ -31,6 +31,7 @@ export const Authentication_SignUp_GenderView = memo<IAuthentication_SignUp_Gend
 
             return (
               <Pressable
+                key={key}
                 onPress={handlePressGender}
                 style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
               >

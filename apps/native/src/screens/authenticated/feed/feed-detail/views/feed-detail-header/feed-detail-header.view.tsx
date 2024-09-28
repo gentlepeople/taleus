@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { HeaderOrganism } from '~/mobile-ui';
 
 type IFeed_Detail_HeaderViewProps = {

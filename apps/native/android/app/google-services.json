@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "270612131026",
+    "project_id": "taleus-c2609",
+    "storage_bucket": "taleus-c2609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270612131026:android:a60b2e51cfcebfaf92d10b",
+        "android_client_info": {
+          "package_name": "com.taleus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270612131026-odm7jdpja1lf6tkui12qt11ihqnm8cj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taleus",
+            "certificate_hash": "12bcbbf7725facbe1a6b49a25913ef30c9738ae9"
+          }
+        },
+        {
+          "client_id": "270612131026-3patdjpeg2mud4h5pvd9d4s7kde8jh8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvfnTkeMGJJegqz_blp3wd6d2TUZi3Bas"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270612131026-3patdjpeg2mud4h5pvd9d4s7kde8jh8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

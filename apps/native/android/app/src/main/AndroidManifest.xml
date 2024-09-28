@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.taleus">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -20,6 +20,23 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+          <!-- Kakao SDK 관련 AuthCodeHandlerActivity 정의 -->
+      <activity 
+        android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />        
+          <!-- DeepLink Scheme-->
+          <data android:scheme="taleUs" /> 
+          <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+          <data android:host="oauth"
+                  android:scheme="kakaoa61cbb5c5f55a06de8c5420b0fc4273a" />
+          <data android:host="kakaolink"
+                  android:scheme="kakaoa61cbb5c5f55a06de8c5420b0fc4273a" />
         </intent-filter>
       </activity>
     </application>
