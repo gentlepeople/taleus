@@ -11,7 +11,14 @@ export type IDialogProps = ModalComponentProp<IModalStackParams, void, 'Dialog'>
 
 export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
   const { params, closeModal } = modal;
-  const { title, content, okayButton = true, cancelButton = true, children } = params;
+  const {
+    title,
+    content,
+    buttonHorizontal,
+    okayButton = true,
+    cancelButton = true,
+    children,
+  } = params;
   const { width } = useWindowDimensions();
   const { onPop } = params;
 

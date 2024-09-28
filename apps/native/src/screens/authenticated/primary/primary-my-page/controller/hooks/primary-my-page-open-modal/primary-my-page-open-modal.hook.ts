@@ -24,6 +24,7 @@ export const usePrimary_MyPageOpenModal: Hook<
           label: '할래요',
           onPress: onPressCancel,
         },
+        buttonHorizontal: true,
       });
     },
     [openModal],

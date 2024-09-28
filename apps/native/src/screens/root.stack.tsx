@@ -19,7 +19,7 @@ const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export const RootStack = ({}) => {
   const { currentUser } = useAuth();
-
+  console.log(currentUser);
   return (
     <ModalProvider stack={modalStack}>
       <RootStackNavigator.Navigator

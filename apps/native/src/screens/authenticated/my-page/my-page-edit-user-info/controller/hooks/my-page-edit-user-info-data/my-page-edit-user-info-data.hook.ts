@@ -1,5 +1,4 @@
 import { EnumGender } from '@gentlepeople/taleus-codegen';
-import dayjs from 'dayjs';
 import isEmpty from 'lodash/isEmpty';
 import { useCallback, useState } from 'react';
 import { useAuth } from '~/providers';
@@ -21,20 +20,20 @@ export const useMyPage_EditUserInfo: Hook<
 > = () => {
   const { currentUser } = useAuth();
 
-  const { nickname, birthDate, gender } = currentUser;
+  const { nickname, birthDate, coupleStartDate, gender } = currentUser;
 
   const [userData, setUserData] = useState<IUserData>({
     nickname,
     gender,
-    birthDate: dayjs(birthDate).toDate(),
-    coupleStartDate: dayjs('2024-01-01').toDate(),
+    birthDate: birthDate,
+    coupleStartDate: coupleStartDate,
   });
 
   const isCTADisabled =
     (userData.nickname === nickname &&
       userData.gender === gender &&
-      userData.birthDate === birthDate) ||
-    // &&  userData.coupleStartDate === couplestartDate)
+      userData.birthDate === birthDate &&
+      userData.coupleStartDate === coupleStartDate) ||
     isEmpty(nickname);
 
   const writeNickname = useCallback(

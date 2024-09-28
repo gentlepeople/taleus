@@ -1,10 +1,12 @@
+import { NetworkStatus } from '@apollo/client';
 import { EnumGender, useAuthCurrentUserQuery } from '@gentlepeople/taleus-codegen';
 
 export type IAuthCurrentUser = {
   id: string;
   nickname: string;
   email: string;
-  birthDate: any;
+  birthDate: Date;
+  coupleStartDate: Date;
   gender: EnumGender;
   personalCode: string;
   isProfileCompleted: boolean;
@@ -24,12 +26,16 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
   userId,
 }) => {
   // const [membershipInfo, setMembershipInfo] = useState<CustomerInfo>(null);
-  const { data, loading: isLoadingUserData } = useAuthCurrentUserQuery({
+  const {
+    data,
+    loading: isLoadingUserData,
+    networkStatus,
+  } = useAuthCurrentUserQuery({
     variables: {
       userId: userId,
     },
     skip: !userId,
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'no-cache',
   });
 
   // const { execute: fetchMembershipInfo, loading: isFetchingMembershipInfo } = useAsyncCallback(
@@ -56,7 +62,10 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
     };
   }
 
-  const isLoadingCurrentUser = isLoadingUserData;
+  const isLoadingCurrentUser =
+    isLoadingUserData ||
+    networkStatus === NetworkStatus.refetch ||
+    networkStatus === NetworkStatus.setVariables;
   if (isLoadingCurrentUser) {
     return {
       currentUser: null,
@@ -75,10 +84,11 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
 
   const nickname = data.user.nickname;
   const email = data.user.email;
-  const birthDate = data.user.birthday;
+  const birthDate = data.user.birthday as Date;
+  const coupleStartDate = data.user.coupleStartDate as Date;
   const gender = data.user.gender;
   const personalCode = data.user.personalCode;
-  const isProfileCompleted = true;
+  const isProfileCompleted = data.user.isProfileCompleted;
 
   return {
     currentUser: {
@@ -86,6 +96,7 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
       nickname,
       email,
       birthDate,
+      coupleStartDate,
       gender,
       personalCode,
       isProfileCompleted,

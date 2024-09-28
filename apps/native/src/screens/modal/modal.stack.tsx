@@ -25,6 +25,7 @@ export type IModalStackParams = {
   Dialog: {
     title?: string | ReactElement;
     content?: string;
+    buttonHorizontal?: boolean;
     okayButton?:
       | boolean
       | (Omit<ComponentProps<typeof Button>, 'children' | 'loading'> & {

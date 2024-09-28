@@ -11,12 +11,21 @@ import { useAuth } from '~/providers';
 
 import { UnauthenticatedStackNavigationProp, UnauthenticatedStackParamList } from '..';
 
+import { FC } from 'react';
+import { Box } from '../../../mobile-ui';
 import { Authentication_LandingScreen } from './authentication-landing';
 import { Authentication_SignUpScreen } from './authentication-sign-up';
 
 export type AuthenticationStackParamList = {
   Authentication_LandingScreen: {};
   Authentication_SignUpScreen: {};
+  Authentication_DeperecatedScreen: {};
+};
+
+const Authentication_DeperecatedScreen: FC = () => {
+  // TODO:민기 추후에 시간 있을 때 이거 지우고 Authenticated Stack으로 sign up -> onboarding 으로 이름 바꾸면서 옮기기
+  // 그리고 currentUser 로 rootStack 에서 컨트롤 하기 unauthenticated부터 여기까진 조건부 처리 없이
+  return <Box />;
 };
 
 export type AuthenticationStackNavigationProp = CompositeNavigationProp<
@@ -48,6 +57,10 @@ export const AuthenticationStack = () => {
       {currentUser && !currentUser.isProfileCompleted && (
         <Stack.Screen name="Authentication_SignUpScreen" component={Authentication_SignUpScreen} />
       )}
+      <Stack.Screen
+        name="Authentication_DeperecatedScreen"
+        component={Authentication_DeperecatedScreen}
+      />
     </Stack.Navigator>
   );
 };

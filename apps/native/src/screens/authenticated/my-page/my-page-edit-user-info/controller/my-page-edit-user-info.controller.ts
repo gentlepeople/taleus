@@ -16,10 +16,10 @@ type IMyPage_EditUserInfoControllerOutput = {
   selectGender: (gender: EnumGender) => void;
   setBirthDate: (date: Date) => void;
   setCoupleStartDate: (date: Date) => void;
-  editComplete: () => void;
+  editComplete: () => Promise<void>;
 };
 
-export const MyPage_EditUserInfoController: Controller<
+export const useMyPage_EditUserInfoController: Controller<
   IMyPage_EditUserInfoControllerInput,
   IMyPage_EditUserInfoControllerOutput
 > = () => {
@@ -30,7 +30,7 @@ export const MyPage_EditUserInfoController: Controller<
 
   const editComplete = useCallback(async () => {
     await updateUser({ userData, onSuccess: goBackPrimaryMyPage });
-  }, [goBackPrimaryMyPage]);
+  }, [userData, updateUser, goBackPrimaryMyPage]);
 
   return {
     userData,

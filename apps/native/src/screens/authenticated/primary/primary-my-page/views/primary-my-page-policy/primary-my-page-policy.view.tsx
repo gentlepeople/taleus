@@ -28,7 +28,7 @@ export const Primary_MyPage_PolicyView = memo<IPrimary_MyPage_PolicyViewProps>(
     }, [onPressTerms]);
 
     return (
-      <Stack space={spacing['4-x']} paddingX={spacing['4-x']} paddingTop={spacing['8-x']}>
+      <Stack space={spacing['5-x']} paddingX={spacing['4-x']} paddingTop={spacing['8-x']}>
         <Text textType="body/12/regular" color="disabled">
           {'약관 및 정책'}
         </Text>

@@ -18,10 +18,16 @@ export const usePrimary_MyPageUserInfoData: Hook<
   IPrimary_MyPageUserInfoDataInput,
   IPrimary_MyPageUserInfoDataOutput
 > = () => {
-  const {
-    currentUserId,
-    currentUser: { nickname },
-  } = useAuth();
+  const { currentUserId, currentUser } = useAuth();
+
+  if (!currentUser) {
+    return {
+      isUserInfoDataLoading: false,
+      nickname: '닉네임',
+      isCoupled: null,
+      coupleData: null,
+    };
+  }
 
   const {
     data: currentData,
@@ -38,7 +44,7 @@ export const usePrimary_MyPageUserInfoData: Hook<
   if (isInitialLoading) {
     return {
       isUserInfoDataLoading: true,
-      nickname,
+      nickname: currentUser.nickname,
       isCoupled: null,
       coupleData: null,
     };
@@ -53,7 +59,7 @@ export const usePrimary_MyPageUserInfoData: Hook<
 
   return {
     isUserInfoDataLoading: false,
-    nickname,
+    nickname: currentUser.nickname,
     isCoupled,
     coupleData,
   };

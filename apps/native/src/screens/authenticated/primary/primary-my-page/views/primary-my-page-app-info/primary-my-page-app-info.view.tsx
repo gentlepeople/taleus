@@ -48,7 +48,7 @@ export const Primary_MyPage_AppInfoView = memo<IPrimary_MyPage_AppInfoViewProps>
             </Columns>
           </PressableQuark>
         </Stack>
-        <Stack space={spacing['4-x']}>
+        <Stack space={spacing['5-x']}>
           <PressableQuark onPress={handlePressSignOut}>
             <Columns alignY="center">
               <Column width="fluid">

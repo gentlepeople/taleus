@@ -48,7 +48,9 @@ export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
         name="Primary_FeedScreen"
         component={Primary_FeedScreen}
         // listeners={() => ({
-        //   tabPress: handlePressHomeTab,
+        //   tabPress: () => {
+        //     return;
+        //   },
         // })}
         options={{
           tabBarLabel: '우리기록',

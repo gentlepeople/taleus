@@ -6,7 +6,7 @@ import { IUpdateUserInfoParams } from '../../../authentication-sign-up.type';
 
 type IAuthentication_SignUpUpdateUserInput = void;
 type IAuthentication_SignUpUpdateUserOutput = {
-  updateUserInfo: ({ userData, onSuccess }: IUpdateUserInfoParams) => Promise<void>;
+  updateUserInfo: ({ userData }: IUpdateUserInfoParams) => Promise<void>;
 };
 
 export const useAuthentication_SignUpUpdateUser: Hook<
@@ -15,7 +15,9 @@ export const useAuthentication_SignUpUpdateUser: Hook<
 > = () => {
   const { currentUser } = useAuth();
 
-  const [updateUser, { loading: isUpdatingUser }] = useAuthentication_SignUpUpdateUserMutation();
+  const [updateUser, { loading: isUpdatingUser }] = useAuthentication_SignUpUpdateUserMutation({
+    refetchQueries: 'active',
+  });
 
   useMutationIndicator([isUpdatingUser]);
 
@@ -31,12 +33,12 @@ export const useAuthentication_SignUpUpdateUser: Hook<
             gender,
             birthday: birthDate,
             coupleStartDate,
-            // isProfileCompleted: true,
+            isProfileCompleted: true,
           },
         },
       });
 
-      if (result.data.updateUser.user.userId) {
+      if (result.data.updateUser.user.isProfileCompleted) {
         onSuccess();
       }
     },

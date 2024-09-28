@@ -6,7 +6,7 @@ import { ScrollView, Stack, spacing } from '~/mobile-ui';
 
 import { MyPageStackNavigationProp, MyPageStackParamList } from '..';
 
-import { MyPage_EditUserInfoController } from './controller';
+import { useMyPage_EditUserInfoController } from './controller';
 import { MyPage_EditUserInfoLayout } from './my-page-edit-user-info.layout';
 import {
   MyPage_EditUserInfo_AnniversaryView,
@@ -41,7 +41,7 @@ export const MyPage_EditUserInfoScreen: FC<IMyPage_EditUserInfoScreenProps> = ()
     setBirthDate,
     setCoupleStartDate,
     editComplete,
-  } = MyPage_EditUserInfoController();
+  } = useMyPage_EditUserInfoController();
 
   const { nickname, gender, birthDate, coupleStartDate } = userData;
 
@@ -51,22 +51,12 @@ export const MyPage_EditUserInfoScreen: FC<IMyPage_EditUserInfoScreenProps> = ()
         <MyPage_EditUserInfo_HeaderView />
         <ScrollView>
           <Stack space={spacing['11.5-x']}>
-            <MyPage_EditUserInfo_NicknameView />
-            <MyPage_EditUserInfo_GenderView
-              onSelect={(value: string) => {
-                console.log(value);
-              }}
-              selectedValue={'male'}
-            />
-            <MyPage_EditUserInfo_BirthDateView
-              onPress={() => {
-                console.log('presssed');
-              }}
-            />
+            <MyPage_EditUserInfo_NicknameView value={nickname} onChangeText={writeNickname} />
+            <MyPage_EditUserInfo_GenderView onSelect={selectGender} selectedValue={gender} />
+            <MyPage_EditUserInfo_BirthDateView birthDate={birthDate} onChangeDate={setBirthDate} />
             <MyPage_EditUserInfo_AnniversaryView
-              onPress={() => {
-                console.log('pressed');
-              }}
+              coupleStartDate={coupleStartDate}
+              onChangeDate={setCoupleStartDate}
             />
           </Stack>
         </ScrollView>
@@ -77,7 +67,7 @@ export const MyPage_EditUserInfoScreen: FC<IMyPage_EditUserInfoScreenProps> = ()
   return (
     <MyPage_EditUserInfoLayout
       content={renderContent()}
-      footer={<MyPage_EditUserInfo_CTAView onPress={editComplete} disabled={false} />}
+      footer={<MyPage_EditUserInfo_CTAView onPress={editComplete} isCTADisabled={isCTADisabled} />}
     />
   );
 };

@@ -43,7 +43,7 @@ export const useAuthentication_SignUpController: Controller<
 
   const signUp = useCallback(async () => {
     await updateUserInfo({ userData, onSuccess: goHome });
-  }, [updateUserInfo, goHome]);
+  }, [userData, updateUserInfo, goHome]);
 
   return {
     userData,

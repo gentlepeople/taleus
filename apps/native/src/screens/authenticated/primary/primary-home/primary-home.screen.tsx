@@ -2,10 +2,11 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
-import { ScrollView, palette } from '~/mobile-ui';
+import { LoadingSpinner, ScrollView, palette } from '~/mobile-ui';
 
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
+import { usePrimary_HomeController } from './controller';
 import { Primary_HomeLayout } from './primary-home.layout';
 import {
   Primary_Home_BannerView,
@@ -27,6 +28,12 @@ export type IPrimary_HomeScreenProps = {
 };
 
 export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
+  const { isLoading } = usePrimary_HomeController();
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   const renderContent = () => {
     return (
       <ScrollView style={{ backgroundColor: palette['white-100'] }}>

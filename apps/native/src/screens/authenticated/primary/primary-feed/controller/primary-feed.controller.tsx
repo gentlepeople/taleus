@@ -1,4 +1,4 @@
-import { usePrimary_FeedNavigation } from './hooks';
+import { usePrimary_FeedNavigation, usePrimary_FeedPreventOnboardingUser } from './hooks';
 
 type IPrimary_FeedControllerInput = void;
 type IPrimary_FeedControllerOutput = {
@@ -10,6 +10,7 @@ export const usePrimary_FeedController: Controller<
   IPrimary_FeedControllerOutput
 > = () => {
   const { goFeedDetail } = usePrimary_FeedNavigation();
+  usePrimary_FeedPreventOnboardingUser();
 
   return { goFeedDetail };
 };

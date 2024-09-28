@@ -5,6 +5,7 @@ import {
   usePrimary_MyPageNavigation,
   usePrimary_MyPageOpenModal,
   usePrimary_MyPageOpenNofication,
+  usePrimary_MyPagePreventOnboardingUser,
   usePrimary_MyPageSignOut,
   usePrimary_MyPageUserInfoData,
 } from './hooks';
@@ -36,9 +37,10 @@ export const usePrimary_MyPageController: Controller<
     usePrimary_MyPageUserInfoData();
   const { goWebView, goEditUserInfo, goConnectCouple, goLanding } = usePrimary_MyPageNavigation();
   const { signOut } = usePrimary_MyPageSignOut();
-  const { deleteUser } = usePrimary_MyPageDeleteUser({ goLanding });
+  const { deleteUser } = usePrimary_MyPageDeleteUser();
   const { openDialogModal } = usePrimary_MyPageOpenModal();
   const { openNotificationSetting } = usePrimary_MyPageOpenNofication();
+  usePrimary_MyPagePreventOnboardingUser();
 
   const deleteUserModal = useCallback(() => {
     openDialogModal({ title: DELETE_USER_DIALOG_TITLE, onPressCancel: deleteUser });

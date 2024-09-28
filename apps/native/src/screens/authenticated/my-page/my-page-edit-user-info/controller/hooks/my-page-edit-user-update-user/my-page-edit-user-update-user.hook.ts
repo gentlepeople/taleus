@@ -15,7 +15,9 @@ export const useMyPage_EditUserUpdateUser: Hook<
 > = () => {
   const { currentUser } = useAuth();
 
-  const [updateUserInfo, { loading: isUpdating }] = useMyPage_EditUserUpdateUserMutation();
+  const [updateUserInfo, { loading: isUpdating }] = useMyPage_EditUserUpdateUserMutation({
+    refetchQueries: 'active',
+  });
 
   useMutationIndicator([isUpdating]);
 
@@ -35,7 +37,7 @@ export const useMyPage_EditUserUpdateUser: Hook<
         },
       });
 
-      if (result.data.updateUser.user.userId) {
+      if (result.data.updateUser.user) {
         onSuccess();
       }
     },

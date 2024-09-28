@@ -5,9 +5,7 @@ import { useAsyncCallback } from 'react-async-hook';
 import { useAuth } from '~/providers';
 import { useMutationIndicator } from '../../../../../../../hooks';
 
-type IPrimary_MyPageDeleteUserInput = {
-  goLanding: () => void;
-};
+type IPrimary_MyPageDeleteUserInput = void;
 type IPrimary_MyPageDeleteUserOutput = {
   deleteUser: () => Promise<void>;
 };
@@ -15,16 +13,10 @@ type IPrimary_MyPageDeleteUserOutput = {
 export const usePrimary_MyPageDeleteUser: Hook<
   IPrimary_MyPageDeleteUserInput,
   IPrimary_MyPageDeleteUserOutput
-> = ({ goLanding }) => {
+> = () => {
   const { currentUserId } = useAuth();
 
-  const [deleteUserMutation, { loading: isDeletingUser }] = usePrimary_MyPageSignoutMutation({
-    onCompleted: (result) => {
-      if (result.deleteUser.success) {
-        goLanding();
-      }
-    },
-  });
+  const [deleteUserMutation, { loading: isDeletingUser }] = usePrimary_MyPageSignoutMutation();
 
   const { execute: deleteAccount, loading: isDeletingAccount } = useAsyncCallback(async () => {
     try {

@@ -3,14 +3,14 @@ import { memo, useCallback } from 'react';
 import { CustomCTA, spacing } from '~/mobile-ui';
 
 type IMyPage_EditUserInfo_CTAViewProps = {
-  onPress: () => void;
-  disabled: boolean;
+  onPress: () => Promise<void>;
+  isCTADisabled: boolean;
 };
 
 export const MyPage_EditUserInfo_CTAView = memo<IMyPage_EditUserInfo_CTAViewProps>(
-  ({ onPress, disabled }) => {
-    const handlePressCTA = useCallback(() => {
-      onPress();
+  ({ onPress, isCTADisabled }) => {
+    const handlePressCTA = useCallback(async () => {
+      await onPress();
     }, [onPress]);
 
     return (
@@ -22,7 +22,7 @@ export const MyPage_EditUserInfo_CTAView = memo<IMyPage_EditUserInfo_CTAViewProp
             onPress: handlePressCTA,
             textColor: 'white-100',
             textType: 'button',
-            disabled,
+            disabled: isCTADisabled,
           },
         ]}
       />

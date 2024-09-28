@@ -1,12 +1,13 @@
 import { memo } from 'react';
 import { Pressable } from 'react-native';
 
+import { EnumGender } from '@gentlepeople/taleus-codegen';
 import { Box, Stack, Text, palette, radius, size, spacing } from '~/mobile-ui';
 import { GENDER } from '../../my-page-edit-user-info.const';
 
 type IMyPage_EditUserInfo_GenderViewProps = {
-  onSelect: (value: string) => void;
-  selectedValue: string;
+  onSelect: (value: EnumGender) => void;
+  selectedValue: EnumGender;
 };
 
 export const MyPage_EditUserInfo_GenderView = memo<IMyPage_EditUserInfo_GenderViewProps>(

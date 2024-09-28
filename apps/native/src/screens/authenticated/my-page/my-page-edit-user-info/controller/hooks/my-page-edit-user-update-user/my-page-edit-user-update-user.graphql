@@ -2,6 +2,10 @@ mutation MyPage_EditUserUpdateUser($input: UpdateUserInputRequest!, $userId: Str
   updateUser(input: $input, userId: $userId) {
     user {
       userId
+      nickname
+      gender
+      coupleStartDate
+      birthday
     }
   }
 }

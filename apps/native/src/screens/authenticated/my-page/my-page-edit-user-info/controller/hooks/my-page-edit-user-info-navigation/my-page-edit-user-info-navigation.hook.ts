@@ -15,7 +15,7 @@ export const useMyPage_EditUserInfoNavigation: Hook<
   const navigation = useNavigation<MyPage_EditUserInfoScreenNavigationProp>();
 
   const goBackPrimaryMyPage = useCallback(() => {
-    navigation.goBack();
+    navigation.popToTop();
   }, [navigation]);
 
   return { goBackPrimaryMyPage };

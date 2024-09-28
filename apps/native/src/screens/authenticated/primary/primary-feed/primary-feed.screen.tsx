@@ -99,7 +99,7 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
   const renderContent = () => {
     return (
       <FlashList
-        data={data}
+        data={[]}
         renderItem={renderItem}
         estimatedItemSize={size['50-x']}
         ListEmptyComponent={<Primary_Feed_ContentEmptyView />}

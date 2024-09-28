@@ -1,0 +1,12 @@
+query Primary_HomeOnboarindgQuestionData($missionId: BigInt!) {
+  mission(missionId: $missionId) {
+    category
+    missionId
+    questions {
+      questionId
+      questionOrder
+      responseType
+      content
+    }
+  }
+}
