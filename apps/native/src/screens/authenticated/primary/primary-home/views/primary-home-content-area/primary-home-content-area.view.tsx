@@ -1,17 +1,24 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 import { Box, Inline, Stack, Text, TextInput, palette, radius, size, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_ContentAreaViewProps = {
   isWritable: boolean;
   currentValue: string;
-  onChangeText: (text: string) => void;
   progress: number;
+  onChangeText: (answer: string) => void;
   currentAnswer: string;
 };
 
 export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewProps>(
   ({ isWritable, currentValue, onChangeText, progress, currentAnswer }) => {
+    const handleChangeText = useCallback(
+      (text: string) => {
+        onChangeText(text);
+      },
+      [onChangeText],
+    );
+
     const renderContent = () => {
       if (isWritable) {
         const isLengthOvered = currentValue.length > 200;
@@ -20,8 +27,8 @@ export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewPr
           <Stack paddingX={spacing['4-x']} space={spacing['3-x']}>
             <TextInput
               placeholder="답변을 채워주세요"
-              currentValue=""
-              onChangeText={() => {}}
+              currentValue={currentValue}
+              onChangeText={handleChangeText}
               style={{
                 backgroundColor: '#F0F0F0',
                 borderRadius: radius['3.75-x'],

@@ -1,0 +1,5 @@
+mutation Primary_HomeSubmitMission($data: [SubmitMissionResponseRequestData!]!) {
+  submitMissionResponse(data: $data) {
+    success
+  }
+}

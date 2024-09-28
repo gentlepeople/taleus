@@ -11,14 +11,7 @@ export type IDialogProps = ModalComponentProp<IModalStackParams, void, 'Dialog'>
 
 export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
   const { params, closeModal } = modal;
-  const {
-    title,
-    content,
-    buttonHorizontal,
-    okayButton = true,
-    cancelButton = true,
-    children,
-  } = params;
+  const { title, content, buttonHorizontal, okayButton, cancelButton, children } = params;
   const { width } = useWindowDimensions();
   const { onPop } = params;
 
@@ -87,8 +80,9 @@ export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
           </Text>
         )} */}
         {children}
-        <Stack horizontal space={spacing['3-x']} align="center">
-          {!!cancelButton && (
+        {/* TODO:민기 horizontal false 일 때 위 아래로 full width button들 만들기 */}
+        <Stack horizontal={buttonHorizontal} space={spacing['3-x']}>
+          {buttonHorizontal && !!cancelButton && (
             <PressableQuark onPress={handlePressCancelButton}>
               <Box
                 alignX="center"
@@ -106,13 +100,49 @@ export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
               </Box>
             </PressableQuark>
           )}
-          {!!okayButton && (
+          {!buttonHorizontal && !!cancelButton && (
+            <PressableQuark onPress={handlePressCancelButton}>
+              <Box
+                alignX="center"
+                alignY="center"
+                style={{
+                  width: '100%',
+                  height: size['12-x'],
+                  backgroundColor: palette['gray-20'],
+                  borderRadius: radius['4-x'],
+                }}
+              >
+                <Text textType="body/12/regular" color="white-100">
+                  {typeof cancelButton !== 'boolean' && cancelButton.label}
+                </Text>
+              </Box>
+            </PressableQuark>
+          )}
+          {buttonHorizontal && !!okayButton && (
             <PressableQuark onPress={handlePressOkayButton}>
               <Box
                 alignX="center"
                 alignY="center"
                 style={{
                   width: size['26-x'],
+                  height: size['12-x'],
+                  backgroundColor: palette['black-100'],
+                  borderRadius: radius['4-x'],
+                }}
+              >
+                <Text textType="body/12/regular" color="white-100">
+                  {typeof okayButton !== 'boolean' && okayButton.label}
+                </Text>
+              </Box>
+            </PressableQuark>
+          )}
+          {!buttonHorizontal && !!okayButton && (
+            <PressableQuark onPress={handlePressOkayButton}>
+              <Box
+                alignX="center"
+                alignY="center"
+                style={{
+                  width: '100%',
                   height: size['12-x'],
                   backgroundColor: palette['black-100'],
                   borderRadius: radius['4-x'],

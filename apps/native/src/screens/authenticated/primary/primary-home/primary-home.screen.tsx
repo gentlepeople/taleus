@@ -28,7 +28,19 @@ export type IPrimary_HomeScreenProps = {
 };
 
 export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
-  const { isLoading } = usePrimary_HomeController();
+  const {
+    isLoading,
+    isWritable,
+    progress,
+    question,
+    questionId,
+    currentValue,
+    currentUserAnswer,
+    isCTADisabled,
+    isLastQuestion,
+    setAnswer,
+    pressCTA,
+  } = usePrimary_HomeController();
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -45,23 +57,28 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
           hasNoMyReply={false}
           hasNoPartnerReply={false}
         />
-        <Primary_Home_QuestionAreaView
-          question={'처음 만나게 된 순간을 기억하시나요?\n그 때 어떤 기분이 들었나요?'}
-          progress={1}
-        />
+        <Primary_Home_QuestionAreaView question={question} progress={progress} />
         <Primary_Home_ContentAreaView
-          isWritable={false}
-          currentValue=""
-          onChangeText={() => {}}
-          progress={1}
-          currentAnswer="안녕안녕안녕"
+          isWritable={isWritable}
+          currentValue={currentValue}
+          onChangeText={setAnswer}
+          progress={progress}
+          currentAnswer={currentUserAnswer}
         />
       </ScrollView>
     );
   };
 
   const renderFooter = () => {
-    return <Primary_Home_CTAView disabled isLastQuestion={false} onPressCTA={() => {}} />;
+    return (
+      isWritable && (
+        <Primary_Home_CTAView
+          isCTADisabled={isCTADisabled}
+          isLastQuestion={isLastQuestion}
+          onPressCTA={pressCTA}
+        />
+      )
+    );
   };
 
   return <Primary_HomeLayout content={renderContent()} footer={renderFooter()} />;

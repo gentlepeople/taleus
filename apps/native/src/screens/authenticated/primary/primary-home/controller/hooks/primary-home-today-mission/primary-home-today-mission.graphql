@@ -1,0 +1,25 @@
+query Primary_HomeTodayMission($userId: String!) {
+  todayMission(userId: $userId) {
+    mission {
+      category
+      missionId
+      questions {
+        questionId
+        questionOrder
+        content
+        responseType
+      }
+    }
+    coupleCompleted
+    partnerResponse {
+      isCompleted
+    }
+    userResponse {
+      isCompleted
+      data {
+        questionId
+        content
+      }
+    }
+  }
+}

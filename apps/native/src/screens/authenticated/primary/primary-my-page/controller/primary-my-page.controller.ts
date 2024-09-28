@@ -6,6 +6,7 @@ import {
   usePrimary_MyPageOpenModal,
   usePrimary_MyPageOpenNofication,
   usePrimary_MyPagePreventOnboardingUser,
+  usePrimary_MyPageResetOnboardingAnswer,
   usePrimary_MyPageSignOut,
   usePrimary_MyPageUserInfoData,
 } from './hooks';
@@ -40,11 +41,18 @@ export const usePrimary_MyPageController: Controller<
   const { deleteUser } = usePrimary_MyPageDeleteUser();
   const { openDialogModal } = usePrimary_MyPageOpenModal();
   const { openNotificationSetting } = usePrimary_MyPageOpenNofication();
+  const { resetOnboardingAnswer } = usePrimary_MyPageResetOnboardingAnswer();
   usePrimary_MyPagePreventOnboardingUser();
 
   const deleteUserModal = useCallback(() => {
-    openDialogModal({ title: DELETE_USER_DIALOG_TITLE, onPressCancel: deleteUser });
-  }, [deleteUser, openDialogModal]);
+    openDialogModal({
+      title: DELETE_USER_DIALOG_TITLE,
+      onPressCancel: async () => {
+        resetOnboardingAnswer();
+        await deleteUser();
+      },
+    });
+  }, [deleteUser, openDialogModal, resetOnboardingAnswer]);
 
   const signOutModal = useCallback(() => {
     openDialogModal({ title: SIGN_OUT_DIALOG_TITLE, onPressCancel: signOut });

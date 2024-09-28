@@ -4,16 +4,16 @@ import { CustomCTA, radius, spacing } from '~/mobile-ui';
 
 type IPrimary_Home_CTAViewProps = {
   isLastQuestion: boolean;
-  disabled: boolean;
-  onPressCTA: () => void;
+  isCTADisabled: boolean;
+  onPressCTA: () => Promise<void>;
 };
 
 export const Primary_Home_CTAView = memo<IPrimary_Home_CTAViewProps>(
-  ({ isLastQuestion, disabled, onPressCTA }) => {
+  ({ isLastQuestion, isCTADisabled, onPressCTA }) => {
     const buttonLabel = isLastQuestion ? '답변 제출하기' : '다음';
 
-    const handlePressCTA = useCallback(() => {
-      onPressCTA();
+    const handlePressCTA = useCallback(async () => {
+      await onPressCTA();
     }, [onPressCTA]);
 
     return (
@@ -26,7 +26,7 @@ export const Primary_Home_CTAView = memo<IPrimary_Home_CTAViewProps>(
             onPress: handlePressCTA,
             textColor: 'white-100',
             textType: 'button',
-            disabled,
+            disabled: isCTADisabled,
           },
         ]}
       />

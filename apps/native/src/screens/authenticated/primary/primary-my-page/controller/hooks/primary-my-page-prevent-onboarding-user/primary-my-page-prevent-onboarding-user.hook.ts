@@ -18,6 +18,7 @@ export const usePrimary_MyPagePreventOnboardingUser: Hook<
   const openPreventModal = useCallback(() => {
     openModal('Dialog', {
       title: '로그인을 해야 이용할 수 있어요😄',
+      buttonHorizontal: true,
       okayButton: {
         label: '로그인하러 가기',
         onClose: () => {

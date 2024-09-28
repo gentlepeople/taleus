@@ -2,10 +2,13 @@ import { usePrimary_HomeOnboarindgQuestionDataQuery } from '@gentlepeople/taleus
 import isUndefined from 'lodash/isUndefined';
 import { useAuth } from '~/providers';
 import { checkQueryInitialLoading } from '~/utils';
+import { IQuestions } from '../../../primary-home.type';
 
 type IPrimary_HomeOnboardingQuestionDataInput = void;
 type IPrimary_HomeOnboardingQuestionDataOutput = {
   isOnboardingQuestionLoading: boolean;
+  isOnboarindgUserWritable: boolean;
+  onboardingQuestions: IQuestions;
 };
 
 export const usePrimary_HomeOnboardingQuestionData: Hook<
@@ -30,12 +33,28 @@ export const usePrimary_HomeOnboardingQuestionData: Hook<
   if (isInitialLoading) {
     return {
       isOnboardingQuestionLoading: true,
+      isOnboarindgUserWritable: null,
+      onboardingQuestions: null,
     };
   }
 
+  if (isUndefined(currentData)) {
+    return {
+      isOnboardingQuestionLoading: false,
+      isOnboarindgUserWritable: null,
+      onboardingQuestions: null,
+    };
+  }
+
+  const isOnboarindgUserWritable = !currentUser;
   const data = currentData.mission;
+  const onboardingQuestions = data.questions.map(({ questionId, questionOrder, content }) => {
+    return {
+      questionId,
+      questionOrder,
+      question: content,
+    };
+  }) as IQuestions;
 
-  console.log(data);
-
-  return { isOnboardingQuestionLoading: false };
+  return { isOnboardingQuestionLoading: false, isOnboarindgUserWritable, onboardingQuestions };
 };
