@@ -7,3 +7,5 @@ export * from './time.port';
 export * from './push-notification.port';
 export * from './google-auth.port';
 export * from './cloud-scheduler.port';
+export * from './system-notification.port';
+export * from './analytics.port';

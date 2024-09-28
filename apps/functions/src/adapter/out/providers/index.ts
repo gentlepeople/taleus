@@ -8,4 +8,6 @@ export * from './database';
 export * from './push-notification';
 export * from './cloud-scheduler';
 export * from './cache';
+export * from './system-notification';
+export * from './analytics';
 export * from './provider.module';

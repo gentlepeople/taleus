@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import isNull from 'lodash/isNull';
 
 import {
   RESPONSE_REPOSITORY,
@@ -21,29 +22,44 @@ export class SubmitMissionResponseService implements SubmitMissionResponseUsecas
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async execute(
+  async execute(input: {
+    userId: string;
+    missionId: bigint;
+    coupleMissionId: bigint | null;
     data: {
-      userId: string;
       questionId: bigint;
-      coupleMissionId?: bigint;
       content: string;
-    }[],
-  ): Promise<boolean> {
-    await this.responseRepository.createMany(data);
+    }[];
+  }): Promise<{ success: boolean; message: string | null }> {
+    const { userId, missionId, coupleMissionId, data } = input;
+    if (data.length === 0) return { success: false, message: 'No input data.' };
 
-    const coupleMissionsMap = new Map<bigint, { userId: string; coupleMissionId: bigint }>();
-
-    data.forEach(({ coupleMissionId, userId }) => {
-      if (coupleMissionId) {
-        coupleMissionsMap.set(coupleMissionId, {
+    const isOnboardingMission = isNull(coupleMissionId);
+    if (isOnboardingMission) {
+      const findOnboardingResponse =
+        await this.responseRepository.findManyByMissionIdAndUserIdExcludingCoupleMissions(
+          missionId,
           userId,
-          coupleMissionId,
-        });
+        );
+      const alreadyCompleted = findOnboardingResponse.length > 0;
+      if (alreadyCompleted) {
+        return {
+          success: false,
+          message: 'Already submit response for onboarding mission.',
+        };
       }
-    });
+    }
+    const formattedResponseData = data.map(({ questionId, content }) => ({
+      userId,
+      questionId,
+      content,
+      coupleMissionId,
+    }));
+    await this.responseRepository.createMany(formattedResponseData);
 
-    for (const { userId, coupleMissionId } of coupleMissionsMap.values()) {
-      const { isCompleted: isCoupleMissionCompleted, missionId } =
+    const isCoupleMission = !isNull(coupleMissionId);
+    if (isCoupleMission) {
+      const { isCompleted: isCoupleMissionCompleted } =
         await this.coupleMissionRepository.findOneByCoupleMissionId(coupleMissionId);
 
       const needToCheckCompleted = !isCoupleMissionCompleted;
@@ -59,6 +75,6 @@ export class SubmitMissionResponseService implements SubmitMissionResponseUsecas
         }
       }
     }
-    return true;
+    return { success: true, message: null };
   }
 }

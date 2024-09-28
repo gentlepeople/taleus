@@ -12,6 +12,8 @@ import {
   TimeModule,
   CloudSchedulerModule,
   CacheModule,
+  SystemNotificationModule,
+  AnalyticsModule,
 } from '.';
 
 import { CONFIG_PORT } from '@/ports';
@@ -36,6 +38,8 @@ const providerModules = [
     }),
   }),
   AppleAuthModule,
+  SystemNotificationModule,
+  AnalyticsModule,
 ];
 
 @Module({

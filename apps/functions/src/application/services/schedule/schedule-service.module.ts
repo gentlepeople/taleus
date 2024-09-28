@@ -14,8 +14,13 @@ import {
   PUSH_NOTIFICATION_PORT,
   PushNotificationPort,
   SCHEDULE_DAILY_MISSION_USECASE,
+  SYSTEM_NOTIFICATION_PORT,
 } from '@/ports';
-import { PushNotificationModule } from '@/providers';
+import {
+  PushNotificationModule,
+  SystemNotificationAdapter,
+  SystemNotificationModule,
+} from '@/providers';
 import { CoupleMissionRepository, CoupleRepository, MissionRepository } from '@/repositories';
 
 const InjectRepositories = [
@@ -34,7 +39,7 @@ const InjectRepositories = [
 ];
 
 @Module({
-  imports: [PushNotificationModule],
+  imports: [PushNotificationModule, SystemNotificationModule],
   providers: [
     ...InjectRepositories,
     {
@@ -44,6 +49,7 @@ const InjectRepositories = [
         COUPLE_MISSION_REPOSITORY,
         TIME_PORT,
         PUSH_NOTIFICATION_PORT,
+        SYSTEM_NOTIFICATION_PORT,
       ],
       provide: SCHEDULE_DAILY_MISSION_USECASE,
       useFactory: (
@@ -52,6 +58,7 @@ const InjectRepositories = [
         coupleMissionRepository: ICoupleMissionRepository,
         timePort: TimePort,
         pushNotificationPort: PushNotificationPort,
+        systemNotificationAdapter: SystemNotificationAdapter,
       ) =>
         new ScheduleDailyMissionService(
           coupleRepository,
@@ -59,6 +66,7 @@ const InjectRepositories = [
           coupleMissionRepository,
           timePort,
           pushNotificationPort,
+          systemNotificationAdapter,
         ),
     },
   ],

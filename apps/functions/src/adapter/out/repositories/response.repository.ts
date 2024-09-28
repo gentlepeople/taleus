@@ -77,7 +77,7 @@ export class ResponseRepository implements IResponseRepository {
       },
     });
     const responseCount = response.length;
-    return questionCount > 0 && questionCount * userIds.length === responseCount;
+    return questionCount > 0 && questionCount * userIds.length <= responseCount;
   }
 
   async findManyByCoupleMissionIdsAndUserIds(

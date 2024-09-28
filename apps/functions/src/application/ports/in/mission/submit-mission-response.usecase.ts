@@ -1,12 +1,13 @@
 export const SUBMIT_MISSION_RESPONSE_USECASE = Symbol('SUBMIT_MISSION_RESPONSE_USECASE');
 
 export interface SubmitMissionResponseUsecase {
-  execute(
+  execute(input: {
+    userId: string;
+    missionId: bigint;
+    coupleMissionId: bigint | null;
     data: {
-      userId: string;
       questionId: bigint;
-      coupleMissionId?: bigint;
       content: string;
-    }[],
-  ): Promise<boolean>;
+    }[];
+  }): Promise<{ success: boolean; message?: string }>;
 }

@@ -162,6 +162,12 @@ importers:
       '@onesignal/node-onesignal':
         specifier: 5.0.0-alpha-01
         version: 5.0.0-alpha-01
+      '@slack/types':
+        specifier: 2.14.0
+        version: 2.14.0
+      '@slack/webhook':
+        specifier: 7.0.3
+        version: 7.0.3
       apollo-server-core:
         specifier: 3.11.0
         version: 3.11.0(graphql@16.8.1)
@@ -222,6 +228,9 @@ importers:
       graphql-ws:
         specifier: 5.16.0
         version: 5.16.0(graphql@16.8.1)
+      mixpanel:
+        specifier: 0.18.0
+        version: 0.18.0
       nestjs-pino:
         specifier: 3.3.0
         version: 3.3.0(@nestjs/common@10.4.1)(pino-http@8.3.3)
@@ -7123,6 +7132,22 @@ packages:
     resolution: {integrity: sha512-DE427ROAphMQzU4ENbliGYrBSYPXF+TtLg9S8vzeA+OF4ZKzoDdzfL8sxuMUGS/lgRhM6j1URSk9ghf7Xo1tyA==}
     dev: true
 
+  /@slack/types@2.14.0:
+    resolution: {integrity: sha512-n0EGm7ENQRxlXbgKSrQZL69grzg1gHLAVd+GlRVQJ1NSORo0FrApR7wql/gaKdu2n4TO83Sq/AmeUOqD60aXUA==}
+    engines: {node: '>= 12.13.0', npm: '>= 6.12.0'}
+    dev: false
+
+  /@slack/webhook@7.0.3:
+    resolution: {integrity: sha512-qRPMq3In5znBpRLw4IQvYy8M3+CRd8/FKfZjA0BoNx/Q1qm4+kom8BTaOz+HMoRpnywMbr+4B/Tc5JR3nUJ+ew==}
+    engines: {node: '>= 18', npm: '>= 8.6.0'}
+    dependencies:
+      '@slack/types': 2.14.0
+      '@types/node': 20.4.9
+      axios: 1.7.5
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.22.8):
     resolution: {integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==}
     engines: {node: '>=14'}
@@ -13292,6 +13317,16 @@ packages:
       - supports-color
     dev: true
 
+  /https-proxy-agent@5.0.0:
+    resolution: {integrity: sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==}
+    engines: {node: '>= 6'}
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.3.6(supports-color@8.1.1)
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /https-proxy-agent@5.0.1:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
     engines: {node: '>= 6'}
@@ -15803,6 +15838,15 @@ packages:
     dependencies:
       for-in: 0.1.8
       is-extendable: 0.1.1
+    dev: false
+
+  /mixpanel@0.18.0:
+    resolution: {integrity: sha512-VyUoiLB/S/7abYYHGD5x0LijeuJCUabG8Hb+FvYU3Y99xHf1Qh+s4/pH9lt50fRitAHncWbU1FE01EknUfVVjQ==}
+    engines: {node: '>=10.0'}
+    dependencies:
+      https-proxy-agent: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /mkdirp-classic@0.5.3:

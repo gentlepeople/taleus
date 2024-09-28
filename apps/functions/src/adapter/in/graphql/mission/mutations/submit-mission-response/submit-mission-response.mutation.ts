@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
-import uniqBy from 'lodash/uniqBy';
 
 import {
   SubmitMissionResponseRequest,
@@ -23,18 +22,16 @@ export class SubmitMissionResponseMutation {
     @Args() args: SubmitMissionResponseRequest,
     @Context() context: GqlContext,
   ): Promise<SubmitMissionResponseResponse> {
-    const { data } = args;
-    const emptyInput = data.length == 0;
-    if (emptyInput) {
-      return {
-        success: false,
-      };
-    }
-    const uniqueUserIds = uniqBy(data, 'userId').map(({ userId }) => userId);
-    checkUserPermission(context, uniqueUserIds);
+    const { userId, missionId, coupleMissionId, data } = args;
+    checkUserPermission(context, userId);
 
-    const success = await this.submitMissionResponseUsecase.execute(data);
+    const { success, message } = await this.submitMissionResponseUsecase.execute({
+      userId,
+      missionId,
+      coupleMissionId,
+      data,
+    });
 
-    return { success };
+    return { success, message };
   }
 }
