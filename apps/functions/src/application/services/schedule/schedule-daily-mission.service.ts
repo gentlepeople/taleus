@@ -14,8 +14,13 @@ import {
   TimePort,
   PushNotificationPort,
   ScheduleDailyMissionUsecase,
+  SYSTEM_NOTIFICATION_PORT,
 } from '@/ports';
-import { EnumPushNotificationTemplate } from '@/providers';
+import {
+  EnumSystemNotificationMessageTarget,
+  EnumPushNotificationTemplate,
+  SystemNotificationAdapter,
+} from '@/providers';
 
 @Injectable()
 export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase {
@@ -30,11 +35,13 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
     private readonly timePort: TimePort,
     @Inject(PUSH_NOTIFICATION_PORT)
     private readonly pushNotificationPort: PushNotificationPort,
+    @Inject(SYSTEM_NOTIFICATION_PORT)
+    private readonly systemNotificationAdapter: SystemNotificationAdapter,
   ) {}
 
   async execute(event: { scheduleTime: string }): Promise<number> {
+    const eventScheduleTime = this.timePort.dayjs(event.scheduleTime);
     try {
-      const eventScheduleTime = this.timePort.dayjs(event.scheduleTime);
       const currentHour = eventScheduleTime.hour();
       const currentMinute = eventScheduleTime.minute();
       const findCouples =
@@ -73,9 +80,6 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
       });
 
       if (coupleMissionsToCreate.length > 0) {
-        logger.log(
-          `ScheduleDailyMissionService.execute: ${coupleMissionsToCreate.length} created.`,
-        );
         await this.coupleMissionRepository.createMany(coupleMissionsToCreate);
 
         await this.pushNotificationPort.send(
@@ -83,10 +87,56 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
           EnumPushNotificationTemplate.DAILY_MISSION_ALARM,
           {},
         );
+
+        logger.log(
+          `ScheduleDailyMissionService.execute: ${coupleMissionsToCreate.length} created.`,
+        );
+
+        await this.systemNotificationAdapter.send({
+          target: EnumSystemNotificationMessageTarget.SCHEDULER,
+          content: {
+            status: 'LOG',
+            title: '[SUCCESS] Mission(오늘의 질문) 배달 완료',
+            data: [
+              {
+                dataTitle: 'Schedule Time',
+                dataDescription: eventScheduleTime.format('YYYY년 MM월 DD일 HH시 mm분'),
+              },
+              {
+                dataTitle: 'Couple Count',
+                dataDescription: coupleMissionsToCreate.length,
+              },
+            ],
+          },
+        });
+
         return coupleMissionsToCreate.length;
       }
       return 0;
     } catch (e) {
+      logger.error(
+        `[FAILED] ScheduleDailyMissionService.execute at ${eventScheduleTime.format(
+          'YYYY-MM-DDTHH:mm:ssZ[Z]',
+        )} failed.`,
+      );
+      await this.systemNotificationAdapter.send({
+        target: EnumSystemNotificationMessageTarget.SCHEDULER,
+        content: {
+          status: 'ERROR',
+          title: '[FAILED] Mission(오늘의 질문) 배달 실패',
+          data: [
+            {
+              dataTitle: 'Schedule Time',
+              dataDescription: eventScheduleTime.format('YYYY년 MM월 DD일 HH시 mm분'),
+            },
+            {
+              dataTitle: 'ERROR',
+              dataDescription:
+                'ScheduleDailyMissionService에서 문제가 발생했습니다. 수동으로 해당하는 데이터 확인 후 재실행바랍니다.',
+            },
+          ],
+        },
+      });
       throw new Error(`Error ScheduleDailyMissionService: ${e}`);
     }
   }
