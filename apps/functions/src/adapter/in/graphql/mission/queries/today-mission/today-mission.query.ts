@@ -52,7 +52,7 @@ export class TodayMissionQuery {
     const notCouple = isNull(coupleMission);
     if (notCouple) {
       const userResponses = await this.findResponseUsecase.findOnboardingResponseByUserId(userId);
-      const userCompleted = userResponses.length == missionQuestionSize;
+      const userCompleted = userResponses.length >= missionQuestionSize;
       return {
         mission: todayMission,
         userResponse: {
@@ -78,8 +78,8 @@ export class TodayMissionQuery {
           partner.userId,
           coupleMissionId,
         );
-    const userCompleted = userResponses.length == missionQuestionSize;
-    const partnerCompleted = partnerResponses.length == missionQuestionSize;
+    const userCompleted = userResponses.length >= missionQuestionSize;
+    const partnerCompleted = partnerResponses.length >= missionQuestionSize;
     const coupleCompleted = userCompleted && partnerCompleted;
 
     return {

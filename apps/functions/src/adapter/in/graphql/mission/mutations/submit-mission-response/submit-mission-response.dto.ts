@@ -6,20 +6,10 @@ import { IsBigInt } from '@/common';
 
 @InputType()
 export class SubmitMissionResponseRequestData {
-  @Field(() => String)
-  @IsNotEmpty()
-  @IsString()
-  userId: string;
-
   @Field(() => GraphQLBigInt)
   @IsDefined()
   @IsBigInt()
   questionId: bigint;
-
-  @Field(() => GraphQLBigInt, { nullable: true })
-  @IsOptional()
-  @IsBigInt()
-  coupleMissionId?: bigint;
 
   @Field(() => String)
   @IsNotEmpty()
@@ -29,6 +19,21 @@ export class SubmitMissionResponseRequestData {
 
 @ArgsType()
 export class SubmitMissionResponseRequest {
+  @Field(() => String)
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
+  @Field(() => GraphQLBigInt)
+  @IsNotEmpty()
+  @IsBigInt()
+  missionId: bigint;
+
+  @Field(() => GraphQLBigInt, { nullable: true, defaultValue: null })
+  @IsOptional()
+  @IsBigInt()
+  coupleMissionId?: bigint;
+
   @Field(() => [SubmitMissionResponseRequestData])
   data: SubmitMissionResponseRequestData[];
 }
@@ -37,4 +42,7 @@ export class SubmitMissionResponseRequest {
 export class SubmitMissionResponseResponse {
   @Field(() => Boolean)
   success: boolean;
+
+  @Field(() => String, { nullable: true })
+  message: string | null;
 }
