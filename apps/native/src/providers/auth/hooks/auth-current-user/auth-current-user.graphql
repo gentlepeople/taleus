@@ -12,5 +12,8 @@ query AuthCurrentUser($userId: String!) {
     couple {
       coupleId
     }
+    partner {
+      nickname
+    }
   }
 }

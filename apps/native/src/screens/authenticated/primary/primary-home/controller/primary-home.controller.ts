@@ -6,8 +6,11 @@ import { LAST_PROGRESS } from '../primary-home.const';
 import {
   usePrimary_HomeAnimationKey,
   usePrimary_HomeAnswerInputManager,
+  usePrimary_HomeDayReminderManager,
   usePrimary_HomeGestureHandler,
   usePrimary_HomeKeyboardManager,
+  usePrimary_HomeMinutesReminderManager,
+  usePrimary_HomeMissionReminder,
   usePrimary_HomeNavigation,
   usePrimary_HomeOnboardingQuestionData,
   usePrimary_HomeOnboardingUserAnswer,
@@ -23,9 +26,10 @@ type IPrimary_HomeControllerOutput = {
   isWritable: boolean;
   progress: number;
   question: string;
-  questionId: number;
   currentValue: string;
   currentUserAnswer: string;
+  nickname: string;
+  partnerNickname: string;
   isCTADisabled: boolean;
   isLastQuestion: boolean;
   showBanner: boolean;
@@ -56,6 +60,10 @@ export const usePrimary_HomeController: Controller<
     isCoupled,
     todayAnswersCompleted,
     partnerTodayAnswersCompleted,
+    nickname,
+    partnerNickname,
+    coupleMissionId,
+    isPremiumUser,
   } = usePrimary_HomeTodayMission();
   const { submitAnswers } = usePrimary_HomeSubmitMission();
   const { progress, incrementProgress, decrementProgress, resetProgress } =
@@ -65,8 +73,11 @@ export const usePrimary_HomeController: Controller<
     todayMissionId,
   });
   const { hideKeyboard } = usePrimary_HomeKeyboardManager();
-  const { openOnboardingUserModal } = usePrimary_HomeOpenModal();
+  const { openOnboardingUserModal, openPreventMissionReminderModal } = usePrimary_HomeOpenModal();
   const { goConnectCouple } = usePrimary_HomeNavigation();
+  const { missionReminder } = usePrimary_HomeMissionReminder({ coupleMissionId });
+  const { checkDayReminder } = usePrimary_HomeDayReminderManager();
+  const { checkMinutesReminder } = usePrimary_HomeMinutesReminderManager();
 
   const isLoading = isOnboardingQuestionLoading || isTodayMissionLoading;
   const isWritable = isOnboarindgUserWritable || isTodayWritable;
@@ -201,9 +212,36 @@ export const usePrimary_HomeController: Controller<
     }
 
     if (hasNoPartnerReply) {
-      await console.log('여기 독촉 함수');
+      if (isPremiumUser) {
+        const isBlocked = await checkDayReminder({
+          openPreventModal: openPreventMissionReminderModal,
+        });
+
+        if (isBlocked) {
+          return;
+        }
+      }
+
+      if (!isPremiumUser) {
+        const isBlocked = await checkMinutesReminder({
+          openPreventModal: openPreventMissionReminderModal,
+        });
+
+        if (isBlocked) {
+          return;
+        }
+      }
+
+      await missionReminder();
     }
-  }, [goConnectCouple, isCoupled, hasNoPartnerReply]);
+  }, [
+    checkDayReminder,
+    checkMinutesReminder,
+    openPreventMissionReminderModal,
+    goConnectCouple,
+    isCoupled,
+    hasNoPartnerReply,
+  ]);
 
   useEffectOnceWhen(() => {
     setQuestionIds(questions);
@@ -214,9 +252,10 @@ export const usePrimary_HomeController: Controller<
     isWritable,
     progress,
     question,
-    questionId,
     currentValue,
     currentUserAnswer,
+    nickname,
+    partnerNickname,
     isCTADisabled,
     isLastQuestion,
     showBanner,

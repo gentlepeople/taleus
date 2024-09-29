@@ -34,9 +34,10 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
     isWritable,
     progress,
     question,
-    questionId,
     currentValue,
     currentUserAnswer,
+    nickname,
+    partnerNickname,
     isCTADisabled,
     isLastQuestion,
     direction,
@@ -60,6 +61,8 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
       <>
         {showBanner && (
           <Primary_Home_BannerView
+            nickname={nickname}
+            partnerNickname={partnerNickname}
             onPressBannerButton={pressBannerButton}
             shouldConnect={shouldConnect}
             hasNoMyReply={hasNoMyReply}

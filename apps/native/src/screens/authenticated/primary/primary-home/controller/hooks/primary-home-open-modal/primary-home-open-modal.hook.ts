@@ -7,6 +7,7 @@ import { IOnboardingUserModalParams } from '../../../primary-home.type';
 type IPrimary_HomeOpenModalInput = void;
 type IPrimary_HomeOpenModalOutput = {
   openOnboardingUserModal: ({ onPressOkay }: IOnboardingUserModalParams) => void;
+  openPreventMissionReminderModal: (title: string) => void;
 };
 
 export const usePrimary_HomeOpenModal: Hook<
@@ -42,5 +43,18 @@ export const usePrimary_HomeOpenModal: Hook<
     [openModal, navigation],
   );
 
-  return { openOnboardingUserModal };
+  const openPreventMissionReminderModal = useCallback(
+    (title: string) => {
+      openModal('Dialog', {
+        title,
+        buttonHorizontal: false,
+        okayButton: {
+          label: '확인',
+        },
+      });
+    },
+    [openModal],
+  );
+
+  return { openOnboardingUserModal, openPreventMissionReminderModal };
 };

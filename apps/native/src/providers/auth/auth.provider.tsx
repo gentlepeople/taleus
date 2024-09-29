@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const { currentUser, isLoadingCurrentUser } = useAuthCurrentUser({
     userId,
   });
-
+  console.log(userId);
   if (isFirebaseAuthenticating || isLoadingCurrentUser) {
     return <Suspender />;
   }

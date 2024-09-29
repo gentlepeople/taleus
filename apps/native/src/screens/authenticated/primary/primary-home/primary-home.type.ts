@@ -28,3 +28,7 @@ export type ISubmitAnswersParams = {
   coupleMissionId?: number;
   onCompleted: () => void;
 };
+
+export type IReminderParams = {
+  openPreventModal: (title: string) => void;
+};

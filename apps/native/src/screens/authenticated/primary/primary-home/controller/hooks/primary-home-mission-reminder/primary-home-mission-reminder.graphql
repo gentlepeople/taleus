@@ -1,0 +1,6 @@
+mutation Primary_HomeMissionReminder($coupleMissionId: BigInt!, $userId: String!) {
+  remindMissionPartner(coupleMissionId: $coupleMissionId, userId: $userId) {
+    success
+    message
+  }
+}

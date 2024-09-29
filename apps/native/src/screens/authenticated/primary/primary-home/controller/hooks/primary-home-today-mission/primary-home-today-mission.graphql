@@ -12,6 +12,9 @@ query Primary_HomeTodayMission($userId: String!) {
     }
     coupleMission {
       isCompleted
+      coupleId
+      coupleMissionId
+      reminderCount
     }
     partnerResponse {
       isCompleted

@@ -1,4 +1,5 @@
 import { usePrimary_HomeTodayMissionQuery } from '@gentlepeople/taleus-codegen';
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { useAuth } from '~/providers';
 import { checkQueryInitialLoading } from '~/utils';
@@ -14,6 +15,10 @@ type IPrimary_HomeTodayMissionOutput = {
   isCoupled: boolean;
   todayAnswersCompleted: boolean;
   partnerTodayAnswersCompleted: boolean;
+  nickname: string;
+  partnerNickname: string;
+  coupleMissionId: number;
+  isPremiumUser: boolean;
 };
 
 export const usePrimary_HomeTodayMission: Hook<
@@ -45,6 +50,10 @@ export const usePrimary_HomeTodayMission: Hook<
       isCoupled: null,
       todayAnswersCompleted: null,
       partnerTodayAnswersCompleted: null,
+      nickname: '',
+      partnerNickname: '',
+      coupleMissionId: null,
+      isPremiumUser: null,
     };
   }
 
@@ -58,6 +67,10 @@ export const usePrimary_HomeTodayMission: Hook<
       isCoupled: null,
       todayAnswersCompleted: null,
       partnerTodayAnswersCompleted: null,
+      nickname: '',
+      partnerNickname: '',
+      coupleMissionId: null,
+      isPremiumUser: null,
     };
   }
 
@@ -89,6 +102,13 @@ export const usePrimary_HomeTodayMission: Hook<
   const partnerTodayAnswersCompleted =
     isCoupled && todayMission.partnerResponse && todayMission.partnerResponse.isCompleted;
 
+  const coupleMission = todayMission.coupleMission;
+  const coupleMissionId = !isNull(coupleMission) && coupleMission.coupleMissionId;
+
+  const nickname = currentUser.nickname;
+  const partnerNickname = currentUser.partnerNickname;
+  const isPremiumUser = false;
+
   return {
     isTodayMissionLoading: false,
     isTodayWritable,
@@ -98,5 +118,9 @@ export const usePrimary_HomeTodayMission: Hook<
     isCoupled,
     todayAnswersCompleted,
     partnerTodayAnswersCompleted,
+    nickname,
+    partnerNickname,
+    coupleMissionId,
+    isPremiumUser,
   };
 };

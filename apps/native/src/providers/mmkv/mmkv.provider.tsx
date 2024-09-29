@@ -75,6 +75,8 @@ type IMMKVProviderProps = {
 
 export enum EnumMMKVKeystoreString {
   'ANSWER_BEFORE_SIGN_IN' = 'ANSWER_BEFORE_SIGN_IN',
+  'LAST_REMINDER_TIME_DAY' = 'LAST_REMINDER_TIME_DAY',
+  'LAST_REMINDER_TIME_MINUTES' = 'LAST_REMINDER_TIME_MINUTES',
 }
 
 type IMMKVKeystoreString = EnumMMKVKeystoreString;

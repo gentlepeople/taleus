@@ -19,6 +19,7 @@ export const useMyPage_ConnectCoupleConnect: Hook<
   } = useAuth();
 
   const [connect, { loading: isConnecting }] = useMyPage_ConnectCoupleConnectMutation({
+    refetchQueries: 'active',
     onCompleted: (result) => {
       if (result.registerCouple.success) {
         goConnectComplete();

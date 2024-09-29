@@ -1,0 +1,7 @@
+query MyPage_ConnectCompleteData($userId: String!) {
+  user(userId: $userId) {
+    partner {
+      nickname
+    }
+  }
+}

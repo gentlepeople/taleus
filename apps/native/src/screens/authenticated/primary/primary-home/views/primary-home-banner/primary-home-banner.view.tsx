@@ -5,13 +5,22 @@ import { Box, DOWN_ARROWS_IMAGE, Image, Stack, Text, palette, radius, spacing } 
 
 type IPrimary_Home_BannerViewProps = {
   onPressBannerButton: () => Promise<void>;
+  nickname: string;
+  partnerNickname: string;
   shouldConnect: boolean;
   hasNoMyReply: boolean;
   hasNoPartnerReply: boolean;
 };
 
 export const Primary_Home_BannerView = memo<IPrimary_Home_BannerViewProps>(
-  ({ onPressBannerButton, shouldConnect, hasNoMyReply, hasNoPartnerReply }) => {
+  ({
+    onPressBannerButton,
+    nickname,
+    partnerNickname,
+    shouldConnect,
+    hasNoMyReply,
+    hasNoPartnerReply,
+  }) => {
     const shouldShowButton = !(!shouldConnect && hasNoMyReply && !hasNoPartnerReply);
 
     const getBannerContent = () => {
@@ -20,11 +29,11 @@ export const Primary_Home_BannerView = memo<IPrimary_Home_BannerViewProps>(
       }
 
       if (!hasNoMyReply && hasNoPartnerReply) {
-        return '아직 바나나님의 답변이 없어요😢';
+        return `아직 ${partnerNickname}님의 답변이 없어요😢`;
       }
 
       if (hasNoMyReply && !hasNoPartnerReply) {
-        return '바나나님이 영기님의 답변을 기다리고 있어요';
+        return `${partnerNickname}님이 ${nickname}님의 답변을 기다리고 있어요`;
       }
     };
 
