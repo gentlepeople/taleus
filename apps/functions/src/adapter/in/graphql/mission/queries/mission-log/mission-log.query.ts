@@ -56,6 +56,7 @@ export class MissionLogQuery {
     const findPartner = await this.findUserUsecase.findPartnerByUserId(userId);
     if (isNull(findPartner)) {
       return {
+        totalCount: 0,
         data: [],
       };
     }
@@ -110,6 +111,8 @@ export class MissionLogQuery {
       };
     });
 
-    return { data: result };
+    const totalCount = await this.findCoupleMissionUsecase.countCompletedByUserId(userId);
+
+    return { data: result, totalCount };
   }
 }

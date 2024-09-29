@@ -148,6 +148,7 @@ type MissionLogQuestionData {
 
 type MissionLogResponse {
   data: [MissionLogMissionData!]!
+  totalCount: Int!
 }
 
 type Mutation {

@@ -50,6 +50,26 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     return count;
   }
 
+  async countCompletedByUserId(userId: string): Promise<number> {
+    const count = await this.databasePort.coupleMission.count({
+      where: {
+        couple: {
+          OR: [
+            {
+              inviterId: userId,
+            },
+            {
+              inviteeId: userId,
+            },
+          ],
+          deletedAt: null,
+        },
+        isCompleted: true,
+      },
+    });
+    return count;
+  }
+
   async findActiveOneByUserId(userId: string): Promise<CoupleMission | null> {
     const getActiveCoupleMission = await this.databasePort.coupleMission.findFirst({
       where: {

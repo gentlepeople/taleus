@@ -11,6 +11,7 @@ export interface ICoupleMissionRepository {
     }[],
   ): Promise<number>;
   countCompletedByCoupleId(coupleId: bigint): Promise<number>;
+  countCompletedByUserId(userId: string): Promise<number>;
   findActiveOneByUserId(userId: string): Promise<CoupleMission | null>;
   findManyCompletedByUserIdSortByCreatedAtDesc(
     userId: string,

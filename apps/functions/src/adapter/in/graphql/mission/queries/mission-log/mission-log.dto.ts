@@ -1,4 +1,4 @@
-import { Field, ArgsType, ObjectType } from '@nestjs/graphql';
+import { Field, ArgsType, ObjectType, Int } from '@nestjs/graphql';
 import { IsBoolean, IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 import { PaginationArgs } from '@/common';
@@ -40,6 +40,9 @@ export class MissionLogMissionData {
 
 @ObjectType()
 export class MissionLogResponse {
+  @Field(() => Int)
+  totalCount: number;
+
   @Field(() => [MissionLogMissionData])
   data: MissionLogMissionData[];
 }
