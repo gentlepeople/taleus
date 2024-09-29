@@ -10,7 +10,9 @@ query Primary_HomeTodayMission($userId: String!) {
         responseType
       }
     }
-    coupleCompleted
+    coupleMission {
+      isCompleted
+    }
     partnerResponse {
       isCompleted
     }

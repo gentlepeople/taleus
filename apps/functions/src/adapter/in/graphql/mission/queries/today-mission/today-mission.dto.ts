@@ -1,7 +1,7 @@
 import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-import { Mission, Response } from '@/domain';
+import { CoupleMission, Mission, Response } from '@/domain';
 
 @ArgsType()
 export class TodayMissionRequest {
@@ -25,8 +25,8 @@ export class TodayMissionResponse {
   @Field(() => Mission)
   mission: Mission;
 
-  @Field(() => Boolean, { nullable: true })
-  coupleCompleted: boolean | null;
+  @Field(() => CoupleMission, { nullable: true })
+  coupleMission: CoupleMission | null;
 
   @Field(() => TodayMissionResponseObject)
   userResponse: TodayMissionResponseObject;

@@ -59,7 +59,7 @@ export class TodayMissionQuery {
           isCompleted: userCompleted,
           data: userResponses,
         },
-        coupleCompleted: null,
+        coupleMission: null,
         partnerResponse: null,
       };
     }
@@ -80,17 +80,16 @@ export class TodayMissionQuery {
         );
     const userCompleted = userResponses.length >= missionQuestionSize;
     const partnerCompleted = partnerResponses.length >= missionQuestionSize;
-    const coupleCompleted = userCompleted && partnerCompleted;
 
     return {
       mission: todayMission,
-      coupleCompleted,
+      coupleMission,
       userResponse: {
         isCompleted: userCompleted,
         data: userResponses,
       },
       partnerResponse: {
-        isCompleted: userCompleted,
+        isCompleted: partnerCompleted,
         data: partnerResponses,
       },
     };

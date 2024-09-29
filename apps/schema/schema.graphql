@@ -58,6 +58,15 @@ type Couple {
   startDate: DateTime
 }
 
+type CoupleMission {
+  coupleId: BigInt!
+  coupleMissionId: BigInt!
+  createdAt: DateTime!
+  isCompleted: Boolean!
+  missionId: BigInt!
+  reminderCount: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -249,7 +258,7 @@ type SubmitMissionResponseResponse {
 }
 
 type TodayMissionResponse {
-  coupleCompleted: Boolean
+  coupleMission: CoupleMission
   mission: Mission!
   partnerResponse: TodayMissionResponseObject
   userResponse: TodayMissionResponseObject!
