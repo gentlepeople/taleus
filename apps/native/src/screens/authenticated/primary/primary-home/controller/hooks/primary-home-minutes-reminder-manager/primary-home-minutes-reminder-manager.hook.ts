@@ -57,7 +57,6 @@ export const usePrimary_HomeMinutesReminderManager: Hook<
   // 액션 실행 함수
   const checkMinutesReminder = useCallback(
     async ({ openPreventModal }: IReminderParams) => {
-      console.log('hi', remainingTime);
       if (isActionBlocked) {
         // TODO:민기 remaining time 실시간으로 모달에서 바뀔 수 있게 modal 에서 interval setting
         openPreventModal(

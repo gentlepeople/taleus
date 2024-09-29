@@ -52,14 +52,12 @@ export const usePrimary_HomeDayReminderManager: Hook<
 
   // 액션 실행 함수
   const checkDayReminder = async ({ openPreventModal }: IReminderParams) => {
-    console.log('hi', isDayReminderBlocked);
     if (isDayReminderBlocked) {
       const hour = remainingTime.slice(0, 2);
       openPreventModal(`독촉 알림은 하루에 한 번씩 보낼 수 있어요\n 남은 시간 : 약 ${hour}시간`);
       return true;
     }
 
-    console.log('여기 옴');
     // 액션을 실행하고 마지막 액션 시간을 저장
     const currentTime = dayjs().valueOf().toString();
     keystore.set(EnumMMKVKeystoreString.LAST_REMINDER_TIME_DAY, currentTime);
