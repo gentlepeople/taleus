@@ -11,6 +11,7 @@ import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
 import { usePrimary_FeedController } from './controller';
 import { Primary_FeedLayout } from './primary-feed.layout';
+import { IFeed } from './primary-feed.type';
 import {
   Primary_Feed_ContentCardView,
   Primary_Feed_ContentEmptyView,
@@ -29,49 +30,17 @@ export type IPrimary_FeedScreenProps = {
   route: Primary_FeedScreenRouteProp;
 };
 
-type IFeedContent = {
-  id: number;
-  submissionDate: string;
-  questionCategory: string;
-  userName: string;
-  userAnswer: string;
-  partnerName: string;
-  partnerAnswer: string;
-};
-
-const data = [
-  {
-    id: 1,
-    submissionDate: '2024/09/22',
-    questionCategory: '질문 카테고리',
-    userName: '영기',
-    userAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-    partnerName: '바나나',
-    partnerAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-  },
-  {
-    id: 2,
-    submissionDate: '2024/09/22',
-    questionCategory: '질문 카테고리',
-    userName: '영기',
-    userAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-    partnerName: '바나나',
-    partnerAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-  },
-  {
-    id: 3,
-    submissionDate: '2024/09/22',
-    questionCategory: '질문 카테고리',
-    userName: '영기',
-    userAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-    partnerName: '바나나',
-    partnerAnswer: '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야',
-  },
-];
-
 export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
-  const { isInitialLoading, isLoadingMore, refetchList, fetchMoreList, goFeedDetail } =
-    usePrimary_FeedController();
+  const {
+    isInitialLoading,
+    isLoadingMore,
+    listData,
+    nickname,
+    partnerNickname,
+    refetchList,
+    fetchMoreList,
+    goFeedDetail,
+  } = usePrimary_FeedController();
 
   if (isInitialLoading) {
     return <LoadingSpinner />;
@@ -83,29 +52,24 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
     }
   };
 
-  const renderItem: ValueOf<FlashListProps<IFeedContent>, 'renderItem'> = ({ item, index }) => {
-    const {
-      id,
-      submissionDate,
-      questionCategory,
-      userName,
-      userAnswer,
-      partnerName,
-      partnerAnswer,
-    } = item;
+  const renderItem: ValueOf<FlashListProps<IFeed>, 'renderItem'> = ({ item, index }) => {
+    const { coupleMissionId, category, answers } = item;
+
+    const { questionTitle, partnerAnswer, userAnswer, formattedDate } = answers[0];
 
     const handlePressContentCard = () => {
-      goFeedDetail(id);
+      goFeedDetail(coupleMissionId);
     };
 
     return (
       <Primary_Feed_ContentCardView
-        submissionDate={submissionDate}
-        questionCategory={questionCategory}
-        userName={userName}
+        submissionDate={formattedDate}
+        questionCategory={category}
+        userName={nickname}
         userAnswer={userAnswer}
-        partnerName={partnerName}
+        partnerName={partnerNickname}
         partnerAnswer={partnerAnswer}
+        questionTitle={questionTitle}
         onPress={handlePressContentCard}
       />
     );
@@ -114,7 +78,7 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
   const renderContent = () => {
     return (
       <FlashList
-        data={data}
+        data={listData}
         renderItem={renderItem}
         estimatedItemSize={size['50-x']}
         ListEmptyComponent={<Primary_Feed_ContentEmptyView />}

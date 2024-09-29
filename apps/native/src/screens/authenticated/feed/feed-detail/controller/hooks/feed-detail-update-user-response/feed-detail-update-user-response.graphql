@@ -1,0 +1,11 @@
+mutation Feed_DetailUpdateUserResponse(
+  $newContent: String!
+  $userId: String!
+  $responseId: BigInt!
+) {
+  updateResponse(newContent: $newContent, userId: $userId, responseId: $responseId) {
+    response {
+      responseId
+    }
+  }
+}

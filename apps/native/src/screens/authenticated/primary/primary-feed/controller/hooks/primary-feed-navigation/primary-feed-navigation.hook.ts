@@ -5,7 +5,7 @@ import { Primary_FeedScreenNavigationProp } from '../../../primary-feed.screen';
 
 type IPrimary_FeedNaviagtionInput = void;
 type IPrimary_FeedNavigationOutput = {
-  goFeedDetail: (id: number) => void;
+  goFeedDetail: (coupleMissionId: number) => void;
 };
 
 export const usePrimary_FeedNavigation: Hook<
@@ -15,10 +15,10 @@ export const usePrimary_FeedNavigation: Hook<
   const navigation = useNavigation<Primary_FeedScreenNavigationProp>();
 
   const goFeedDetail = useCallback(
-    (id: number) => {
+    (coupleMissionId: number) => {
       navigation.navigate('FeedStack', {
         screen: 'Feed_DetailScreen',
-        params: { id },
+        params: { coupleMissionId },
       });
     },
     [navigation],

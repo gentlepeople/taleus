@@ -1,11 +1,18 @@
 query Primary_FeedListData($userId: String!, $skip: Int, $take: Int) {
   completedCoupleMissions(userId: $userId, skip: $skip, take: $take) {
+    totalCount
     data {
       mission {
         category
         missionId
       }
+      coupleMission {
+        coupleMissionId
+      }
       data {
+        question {
+          content
+        }
         partnerResponse {
           content
           responseId

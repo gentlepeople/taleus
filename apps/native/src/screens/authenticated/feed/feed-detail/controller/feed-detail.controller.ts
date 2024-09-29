@@ -1,44 +1,164 @@
-import { useState } from 'react';
 import { PanGesture } from 'react-native-gesture-handler';
 
 import { EDirection } from '~/mobile-ui';
 
-import { useFeed_DetailAnimationKey, useFeed_DetailGestureHandler } from './hooks';
+import { useCallback, useEffect, useMemo } from 'react';
+import { INITIAL_PROGRESS, LAST_PROGRESS } from '../feed-detail.const';
+import { IAnswer } from '../feed-detail.type';
+import {
+  useFeed_DetailAnimationKey,
+  useFeed_DetailData,
+  useFeed_DetailEditManager,
+  useFeed_DetailGestureHandler,
+  useFeed_DetailOpenModal,
+  useFeed_DetailProgress,
+  useFeed_DetailUpdateUserResponse,
+} from './hooks';
 
 type IFeed_DetailControllerInput = void;
 type IFeed_DetailControllerOutput = {
+  isFeedDataLoading: boolean;
+  currentAnswer: IAnswer;
+  currentQuestion: string;
+  submittedDate: string;
+  nickname: string;
+  partnerNickname: string;
+  newContent: string;
+  isEdit: boolean;
+  isCTADisabled: boolean;
   direction: EDirection;
   animationKeyIndex: string;
   panGesture: PanGesture;
   progress: number;
+  startEdit: () => void;
+  pressCTA: () => Promise<void>;
+  setNewContent: (text: string) => void;
 };
 
 export const useFeed_DetailController: Controller<
   IFeed_DetailControllerInput,
   IFeed_DetailControllerOutput
 > = () => {
-  const [progress, setProgress] = useState<number>(1);
+  const { isFeedDataLoading, answers, submittedDate, nickname, partnerNickname } =
+    useFeed_DetailData();
+  const { updateUserResponse } = useFeed_DetailUpdateUserResponse();
+  const { newContent, isEdit, startEdit, endEdit, setContent } = useFeed_DetailEditManager();
+  const { progress, incrementProgress, decrementProgress } = useFeed_DetailProgress();
+  const { openCheckEditModal, openCheckSwipeModal } = useFeed_DetailOpenModal();
 
   const { direction, animationKeyIndex, nextQuestionAnimation, prevQuestionAnimation } =
     useFeed_DetailAnimationKey();
   const { panGesture } = useFeed_DetailGestureHandler({
     onLeftSwipe: () => {
-      if (progress === 3) {
+      if (progress === LAST_PROGRESS) {
+        return;
+      }
+
+      if (isEdit) {
+        openCheckSwipeModal(endEdit);
+        nextQuestionAnimation();
+        incrementProgress();
         return;
       }
 
       nextQuestionAnimation();
-      setProgress((prev) => prev + 1);
+      incrementProgress();
     },
     onRightSwipe: () => {
-      if (progress === 1) {
+      if (progress === INITIAL_PROGRESS) {
+        return;
+      }
+
+      if (isEdit) {
+        openCheckSwipeModal(endEdit);
+        prevQuestionAnimation();
+        decrementProgress();
         return;
       }
 
       prevQuestionAnimation();
-      setProgress((prev) => prev - 1);
+      decrementProgress();
     },
   });
 
-  return { direction, animationKeyIndex, panGesture, progress };
+  const currentAnswer = useMemo(() => {
+    return answers[progress - 1];
+  }, [progress, answers]);
+
+  const currentQuestion = useMemo(() => {
+    if (currentAnswer) {
+      return currentAnswer.questionTitle;
+    }
+  }, [currentAnswer]);
+
+  const currentUserResponseId = useMemo(() => {
+    if (currentAnswer) {
+      return currentAnswer.userResponseId;
+    }
+  }, [currentAnswer]);
+
+  const currentUserAnswer = useMemo(() => {
+    if (currentAnswer) {
+      return currentAnswer.userAnswer;
+    }
+  }, [currentAnswer]);
+
+  const editComplete = useCallback(async () => {
+    await updateUserResponse({ responseId: currentUserResponseId, newContent });
+  }, [updateUserResponse, currentUserResponseId, newContent]);
+
+  const pressCTA = useCallback(async () => {
+    const isNoEditAnything = currentUserAnswer === newContent;
+    if (isNoEditAnything) {
+      endEdit();
+      return;
+    }
+
+    openCheckEditModal({
+      onCancel: () => {
+        endEdit();
+        setContent(currentUserAnswer);
+      },
+      onComplete: async () => {
+        await editComplete();
+        endEdit();
+      },
+    });
+  }, [endEdit, openCheckEditModal, editComplete, newContent, currentUserAnswer]);
+
+  const setNewContent = useCallback(
+    (text: string) => {
+      setContent(text);
+    },
+    [newContent, setContent],
+  );
+
+  useEffect(() => {
+    if (isEdit) {
+      return;
+    }
+
+    setContent(currentUserAnswer);
+  }, [currentUserAnswer, setContent, isEdit]);
+
+  const isCTADisabled = newContent.length > 200;
+
+  return {
+    isFeedDataLoading,
+    currentAnswer,
+    currentQuestion,
+    submittedDate,
+    newContent,
+    nickname,
+    partnerNickname,
+    isEdit,
+    isCTADisabled,
+    direction,
+    animationKeyIndex,
+    panGesture,
+    progress,
+    startEdit,
+    pressCTA,
+    setNewContent,
+  };
 };

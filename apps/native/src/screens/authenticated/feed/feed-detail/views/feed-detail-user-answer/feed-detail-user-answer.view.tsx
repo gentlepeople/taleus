@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 import { Pressable } from 'react-native';
 
 import {
@@ -20,27 +20,31 @@ import {
 type IFeed_Detail_UserAnswerViewProps = {
   userName: string;
   userAnswer: string;
-  onEdit: () => void;
+  newContent: string;
+  isEdit: boolean;
+  onEditStart: () => void;
+  onChangeText: (text: string) => void;
 };
 
 export const Feed_Detail_UserAnswerView = memo<IFeed_Detail_UserAnswerViewProps>(
-  ({ userName, userAnswer, onEdit }) => {
-    const [isEditable, setIsEditable] = useState<boolean>(false);
-
+  ({ userName, userAnswer, newContent, isEdit, onEditStart, onChangeText }) => {
     const handlePressEdit = useCallback(() => {
-      setIsEditable(true);
-      onEdit();
-    }, [onEdit, isEditable, setIsEditable]);
+      onEditStart();
+    }, [onEditStart]);
 
-    if (isEditable) {
+    if (isEdit) {
       const isLengthOvered = userAnswer.length > 200;
+
+      const handleChangeText = (text: string) => {
+        onChangeText(text);
+      };
 
       return (
         <Stack space={spacing['3-x']}>
           <TextInput
             placeholder="답변을 채워주세요"
-            currentValue={userAnswer}
-            onChangeText={() => {}}
+            currentValue={newContent}
+            onChangeText={handleChangeText}
             style={{
               backgroundColor: '#F0F0F0',
               borderRadius: radius['3.75-x'],

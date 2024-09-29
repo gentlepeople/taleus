@@ -10,6 +10,7 @@ type IPrimary_Feed_ContentCardViewProps = {
   userAnswer: string;
   partnerName: string;
   partnerAnswer: string;
+  questionTitle: string;
   onPress: () => void;
 };
 
@@ -21,6 +22,7 @@ export const Primary_Feed_ContentCardView = memo<IPrimary_Feed_ContentCardViewPr
     userAnswer,
     partnerName,
     partnerAnswer,
+    questionTitle,
     onPress,
   }) => {
     const handlePressCard = useCallback(() => {
@@ -48,14 +50,14 @@ export const Primary_Feed_ContentCardView = memo<IPrimary_Feed_ContentCardViewPr
               </Text>
             </Column>
             <Column width="fluid">
-              <Text textType="body/16/bold">{`${submissionDate} 첫번째 질문`}</Text>
+              <Text textType="body/16/bold">{questionTitle}</Text>
+              {/* <Text textType="body/16/bold">{`${submissionDate}`}</Text> */}
             </Column>
-            <Column width="content">
-              <Text textType="body/16/bold" color="text-black">
-                {questionCategory}
-              </Text>
-            </Column>
+            {/* <Column width="content">
+              
+            </Column> */}
           </Columns>
+
           <Stack
             space={spacing['3-x']}
             paddingX={spacing['4-x']}
@@ -78,6 +80,9 @@ export const Primary_Feed_ContentCardView = memo<IPrimary_Feed_ContentCardViewPr
               </Text>
             </Stack>
           </Stack>
+          <Text textType="body/12/bold" color="text-black" textAlignment="right">
+            {submissionDate}
+          </Text>
         </Stack>
       </Pressable>
     );

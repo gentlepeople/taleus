@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 import { GestureDetector } from 'react-native-gesture-handler';
 
-import { SlideViewOrganism, Stack, spacing } from '~/mobile-ui';
+import { LoadingSpinner, SlideViewOrganism, Stack, spacing } from '~/mobile-ui';
 
 import { FeedStackNavigationProp, FeedStackParamList } from '..';
 
@@ -31,46 +31,53 @@ export type IFeed_DetailScreenProps = {
 };
 
 export const Feed_DetailScreen: FC<IFeed_DetailScreenProps> = () => {
-  const { direction, animationKeyIndex, panGesture, progress } = useFeed_DetailController();
+  const {
+    isFeedDataLoading,
+    currentAnswer,
+    currentQuestion,
+    submittedDate,
+    nickname,
+    partnerNickname,
+    newContent,
+    isEdit,
+    isCTADisabled,
+    direction,
+    animationKeyIndex,
+    panGesture,
+    progress,
+    startEdit,
+    pressCTA,
+    setNewContent,
+  } = useFeed_DetailController();
 
-  const data = [
-    {
-      question: '첫번째 질문',
-      partnerAnswer:
-        '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말',
-      userAnswer: '가나다라마바사 아자차카 타파하',
-    },
-    {
-      question: '두번째 질문',
-      partnerAnswer: '가나다라마바사 아자차카 타파하',
-      userAnswer:
-        '바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말 바보야 바보야 우영기 정말',
-    },
-    {
-      question: '세번째 질문',
-      partnerAnswer: '가지마 바보야~ 난 정말 괜찮아',
-      userAnswer: '서울시 은평구 역촌동 ㅋ',
-    },
-  ];
-
-  const currentData = data[progress - 1];
+  if (isFeedDataLoading) {
+    return <LoadingSpinner />;
+  }
 
   const renderContent = () => {
     return (
       <Stack space={spacing['2-x']}>
         <GestureDetector gesture={panGesture}>
           <SlideViewOrganism animationKeyIndex={animationKeyIndex} animationDirection={direction}>
-            <Stack align="center" space={spacing['4-x']} paddingBottom={spacing['6-x']}>
-              <Feed_Detail_QuestionView question={currentData.question} />
+            <Stack
+              align="center"
+              space={spacing['4-x']}
+              paddingTop={spacing['3-x']}
+              paddingBottom={spacing['6-x']}
+            >
+              <Feed_Detail_QuestionView question={currentQuestion} />
               <Stack space={spacing['6-x']} paddingX={spacing['4-x']}>
                 <Feed_Detail_PartnerAnswerView
-                  partnerName="영기"
-                  partnerAnswer={currentData.partnerAnswer}
+                  partnerName={partnerNickname}
+                  partnerAnswer={currentAnswer.partnerAnswer}
                 />
                 <Feed_Detail_UserAnswerView
-                  userName="바나나"
-                  userAnswer={currentData.userAnswer}
-                  onEdit={() => {}}
+                  userName={nickname}
+                  userAnswer={currentAnswer.userAnswer}
+                  newContent={newContent}
+                  isEdit={isEdit}
+                  onEditStart={startEdit}
+                  onChangeText={setNewContent}
                 />
               </Stack>
             </Stack>
@@ -83,9 +90,11 @@ export const Feed_DetailScreen: FC<IFeed_DetailScreenProps> = () => {
 
   return (
     <Feed_DetailLayout
-      header={<Feed_Detail_HeaderView title="여기에 제출 일자 받아와서 넘겨주자" />}
+      header={<Feed_Detail_HeaderView title={submittedDate} />}
       content={renderContent()}
-      footer={<Feed_Detail_CTAView onPressCTA={() => {}} isEditable={false} />}
+      footer={
+        <Feed_Detail_CTAView onPressCTA={pressCTA} isEdit={isEdit} isCTADisabled={isCTADisabled} />
+      }
     />
   );
 };

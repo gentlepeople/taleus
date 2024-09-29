@@ -7,7 +7,7 @@ import { AuthenticatedStackNavigationProp, AuthenticatedStackParamList } from '.
 import { Feed_DetailScreen } from './feed-detail';
 
 export type FeedStackParamList = {
-  Feed_DetailScreen: { id: number };
+  Feed_DetailScreen: { coupleMissionId: number };
 };
 
 export type FeedStackNavigationProp = CompositeNavigationProp<

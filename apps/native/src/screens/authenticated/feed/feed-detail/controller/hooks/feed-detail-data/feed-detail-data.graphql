@@ -1,0 +1,18 @@
+query Feed_DetailData($userId: String!, $coupleMissionId: Int!) {
+  completedCoupleMission(userId: $userId, coupleMissionId: $coupleMissionId) {
+    data {
+      question {
+        content
+      }
+      partnerResponse {
+        content
+        createdAt
+      }
+      userResponse {
+        content
+        createdAt
+        responseId
+      }
+    }
+  }
+}
