@@ -4,14 +4,26 @@ import { Box, Inline, Stack, Text, TextInput, palette, radius, size, spacing } f
 
 type IPrimary_Home_ContentAreaViewProps = {
   isWritable: boolean;
+  showPartnerAnswer: boolean;
   currentValue: string;
   progress: number;
   onChangeText: (answer: string) => void;
   currentAnswer: string;
+  partnerNickname: string;
+  currentPartnerAnswer: string;
 };
 
 export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewProps>(
-  ({ isWritable, currentValue, onChangeText, progress, currentAnswer }) => {
+  ({
+    isWritable,
+    showPartnerAnswer,
+    currentValue,
+    onChangeText,
+    progress,
+    currentAnswer,
+    partnerNickname,
+    currentPartnerAnswer,
+  }) => {
     const handleChangeText = useCallback(
       (text: string) => {
         onChangeText(text);
@@ -52,15 +64,27 @@ export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewPr
 
       const getTitle = () => {
         if (progress === 1) {
-          return '첫';
+          if (showPartnerAnswer) {
+            return `${partnerNickname}님의 첫`;
+          }
+
+          return '나의 첫';
         }
 
         if (progress === 2) {
-          return '두';
+          if (showPartnerAnswer) {
+            return `${partnerNickname}님의 두`;
+          }
+
+          return '나의 두';
         }
 
         if (progress === 3) {
-          return '세';
+          if (showPartnerAnswer) {
+            return `${partnerNickname}님의 세`;
+          }
+
+          return '나의 세';
         }
       };
 
@@ -79,7 +103,7 @@ export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewPr
           >
             <Text textType="body/16/bold">{`나의 ${getTitle()}번째 답변`}</Text>
             <Text textType="body/14/regular" color="text-black">
-              {currentAnswer}
+              {showPartnerAnswer ? currentPartnerAnswer : currentAnswer}
             </Text>
           </Stack>
         </Box>

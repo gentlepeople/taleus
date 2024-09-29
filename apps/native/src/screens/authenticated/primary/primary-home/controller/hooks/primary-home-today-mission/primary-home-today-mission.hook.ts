@@ -15,6 +15,7 @@ type IPrimary_HomeTodayMissionOutput = {
   isCoupled: boolean;
   todayAnswersCompleted: boolean;
   partnerTodayAnswersCompleted: boolean;
+  partnerTodayAnswers: IUserAnswers;
   nickname: string;
   partnerNickname: string;
   coupleMissionId: number;
@@ -50,6 +51,7 @@ export const usePrimary_HomeTodayMission: Hook<
       isCoupled: null,
       todayAnswersCompleted: null,
       partnerTodayAnswersCompleted: null,
+      partnerTodayAnswers: null,
       nickname: '',
       partnerNickname: '',
       coupleMissionId: null,
@@ -67,6 +69,7 @@ export const usePrimary_HomeTodayMission: Hook<
       isCoupled: null,
       todayAnswersCompleted: null,
       partnerTodayAnswersCompleted: null,
+      partnerTodayAnswers: null,
       nickname: '',
       partnerNickname: '',
       coupleMissionId: null,
@@ -101,6 +104,14 @@ export const usePrimary_HomeTodayMission: Hook<
   const isCoupled = currentUser && currentUser.isCoupled;
   const partnerTodayAnswersCompleted =
     isCoupled && todayMission.partnerResponse && todayMission.partnerResponse.isCompleted;
+  const partnerTodayAnswers =
+    partnerTodayAnswersCompleted &&
+    (todayMission.partnerResponse.data.map(({ questionId, content }) => {
+      return {
+        questionId,
+        content,
+      };
+    }) as IUserAnswers);
 
   const coupleMission = todayMission.coupleMission;
   const coupleMissionId = !isNull(coupleMission) && coupleMission.coupleMissionId;
@@ -118,6 +129,7 @@ export const usePrimary_HomeTodayMission: Hook<
     isCoupled,
     todayAnswersCompleted,
     partnerTodayAnswersCompleted,
+    partnerTodayAnswers,
     nickname,
     partnerNickname,
     coupleMissionId,

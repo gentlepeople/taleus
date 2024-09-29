@@ -28,6 +28,7 @@ type IPrimary_HomeControllerOutput = {
   question: string;
   currentValue: string;
   currentUserAnswer: string;
+  currentPartnerAnswer: string;
   nickname: string;
   partnerNickname: string;
   isCTADisabled: boolean;
@@ -36,6 +37,7 @@ type IPrimary_HomeControllerOutput = {
   shouldConnect: boolean;
   hasNoMyReply: boolean;
   hasNoPartnerReply: boolean;
+  showPartnerAnswer: boolean;
   direction: EDirection;
   animationKeyIndex: string;
   panGesture: PanGesture;
@@ -60,6 +62,7 @@ export const usePrimary_HomeController: Controller<
     isCoupled,
     todayAnswersCompleted,
     partnerTodayAnswersCompleted,
+    partnerTodayAnswers,
     nickname,
     partnerNickname,
     coupleMissionId,
@@ -89,6 +92,7 @@ export const usePrimary_HomeController: Controller<
   const shouldConnect = !isCoupled;
   const hasNoMyReply = isCoupled && !todayAnswersCompleted && partnerTodayAnswersCompleted;
   const hasNoPartnerReply = isCoupled && todayAnswersCompleted && !partnerTodayAnswersCompleted;
+  const showPartnerAnswer = isCoupled && todayAnswersCompleted && partnerTodayAnswersCompleted;
 
   const { direction, animationKeyIndex, nextQuestionAnimation, prevQuestionAnimation } =
     usePrimary_HomeAnimationKey();
@@ -152,6 +156,12 @@ export const usePrimary_HomeController: Controller<
       return todayAnswers[progress - 1].content;
     }
   }, [todayAnswers, progress]);
+
+  const currentPartnerAnswer = useMemo(() => {
+    if (!!partnerTodayAnswers) {
+      return partnerTodayAnswers[progress - 1].content;
+    }
+  }, [partnerTodayAnswers, progress]);
 
   const isCTADisabled = useMemo(() => {
     if (isWritable) {
@@ -254,6 +264,7 @@ export const usePrimary_HomeController: Controller<
     question,
     currentValue,
     currentUserAnswer,
+    currentPartnerAnswer,
     nickname,
     partnerNickname,
     isCTADisabled,
@@ -262,6 +273,7 @@ export const usePrimary_HomeController: Controller<
     shouldConnect,
     hasNoMyReply,
     hasNoPartnerReply,
+    showPartnerAnswer,
     direction,
     animationKeyIndex,
     panGesture,
