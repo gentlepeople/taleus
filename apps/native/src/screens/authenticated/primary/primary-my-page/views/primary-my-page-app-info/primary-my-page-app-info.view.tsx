@@ -33,20 +33,18 @@ export const Primary_MyPage_AppInfoView = memo<IPrimary_MyPage_AppInfoViewProps>
           <Text textType="body/12/regular" color="disabled">
             {'앱 정보'}
           </Text>
-          <PressableQuark onPress={() => {}}>
-            <Columns alignY="center">
-              <Column width="fluid">
-                <Text textType="header-2" color="text-black">
-                  {'앱 버전 정보'}
-                </Text>
-              </Column>
-              <Column width="content">
-                <Text textType="header-2" color="disabled">
-                  {'v0.0.1'}
-                </Text>
-              </Column>
-            </Columns>
-          </PressableQuark>
+          <Columns alignY="center">
+            <Column width="fluid">
+              <Text textType="header-2" color="text-black">
+                {'앱 버전 정보'}
+              </Text>
+            </Column>
+            <Column width="content">
+              <Text textType="header-2" color="disabled">
+                {'v0.0.1'}
+              </Text>
+            </Column>
+          </Columns>
         </Stack>
         <Stack space={spacing['5-x']}>
           <PressableQuark onPress={handlePressSignOut}>

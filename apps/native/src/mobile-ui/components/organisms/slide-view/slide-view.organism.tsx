@@ -25,9 +25,12 @@ export const SlideViewOrganism: FC<ISlideViewOrganismProps> = ({
       from={{ translateX: animationDirection * windowWidth, opacity: 0 }}
       animate={{ translateX: 0, opacity: 1 }}
       transition={{ type: 'timing', duration: 500 }}
-      exit={{
-        translateX: animationDirection * windowWidth * -1,
-        opacity: 0,
+      exit={() => {
+        'worklet';
+        return {
+          translateX: animationDirection * windowWidth * -1,
+          opacity: 0,
+        };
       }}
       exitTransition={{
         type: 'timing',

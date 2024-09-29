@@ -57,27 +57,23 @@ export const Authentication_Landing_IntroView = memo<IAuthentication_Landing_Int
   const renderItem = ({ item, index }: IBannerCarouselContent) => {
     const { imageUri, title, description } = item;
 
-    const paddingLeft = index === 0 ? 100 : 0;
-    const paddingRight = index === 2 ? 100 : 0;
     return (
-      <Box style={{ paddingHorizontal: spacing['16-x'] }}>
-        <Stack
-          align="center"
-          space={spacing['7-x']}
-          style={{
-            paddingVertical: spacing['10-x'],
-            borderWidth: 0.5,
-            borderColor: '#00000026',
-            borderRadius: 10,
-          }}
-        >
-          <Image source={imageUri} style={{ width: size['30-x'], height: size['30-x'] }} />
-          <Text textType="body/16/bold">{title}</Text>
-          <Text textType="body/14/regular" color="black-100" textAlignment="center">
-            {description}
-          </Text>
-        </Stack>
-      </Box>
+      <Stack
+        align="center"
+        space={spacing['7-x']}
+        style={{
+          paddingVertical: spacing['10-x'],
+          borderWidth: size['0.25-x'] / 2,
+          borderColor: '#00000026',
+          borderRadius: radius['2.5-x'],
+        }}
+      >
+        <Image source={imageUri} style={{ width: size['30-x'], height: size['30-x'] }} />
+        <Text textType="body/16/bold">{title}</Text>
+        <Text textType="body/14/regular" color="black-100" textAlignment="center">
+          {description}
+        </Text>
+      </Stack>
     );
   };
 
@@ -86,11 +82,13 @@ export const Authentication_Landing_IntroView = memo<IAuthentication_Landing_Int
       <Image source={TALE_US_LOGO} />
       <Carousel
         ref={carouselRef}
-        loop={false}
+        loop={true}
+        autoPlay
+        autoPlayInterval={2000}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 1,
-          parallaxScrollingOffset: 30,
+          parallaxScrollingOffset: 50,
         }}
         style={{
           width: windowWidth,
@@ -99,10 +97,10 @@ export const Authentication_Landing_IntroView = memo<IAuthentication_Landing_Int
         renderItem={renderItem}
         vertical={false}
         width={windowWidth}
-        height={340}
+        height={size['85-x']}
         onProgressChange={progress}
       />
-      <Box paddingTop={340}>
+      <Box paddingTop={spacing['85-x']}>
         <Pagination.Basic
           progress={progress}
           data={[palette['primary'], palette['primary'], palette['primary']]}

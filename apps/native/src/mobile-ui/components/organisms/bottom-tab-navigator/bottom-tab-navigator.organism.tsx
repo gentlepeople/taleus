@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Merge } from 'type-fest';
 
-import { size, spacing } from '../../../theme';
+import { palette, size, spacing } from '../../../theme';
 import { Text } from '../../atoms';
 import { Box, Stack } from '../../layouts';
 
@@ -18,7 +18,7 @@ export const BottomTabNavigator: FC<IBottomTabNavigatorProps> = ({
     <Box
       direction="row"
       style={{
-        backgroundColor: '#FFFFFF',
+        backgroundColor: palette['gray-10'],
       }}
     >
       {state.routes.map((route, index) => {

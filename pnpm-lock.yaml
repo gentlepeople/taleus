@@ -557,8 +557,8 @@ importers:
         specifier: 3.15.1
         version: 3.15.1(@babel/core@7.22.8)(react-native@0.75.2)(react@18.3.1)
       react-native-reanimated-carousel:
-        specifier: 4.0.0-alpha.12
-        version: 4.0.0-alpha.12(@types/react@18.2.6)(react-native-gesture-handler@2.18.1)(react-native-reanimated@3.15.1)(react-native@0.75.2)(react@18.3.1)
+        specifier: 4.0.0-canary.13
+        version: 4.0.0-canary.13(@types/react@18.2.6)(react-native-gesture-handler@2.18.1)(react-native-reanimated@3.15.1)(react-native@0.75.2)(react@18.3.1)
       react-native-safe-area-context:
         specifier: 4.10.9
         version: 4.10.9(react-native@0.75.2)(react@18.3.1)
@@ -17301,8 +17301,8 @@ packages:
       use-latest-callback: 0.1.11(react@18.3.1)
     dev: false
 
-  /react-native-reanimated-carousel@4.0.0-alpha.12(@types/react@18.2.6)(react-native-gesture-handler@2.18.1)(react-native-reanimated@3.15.1)(react-native@0.75.2)(react@18.3.1):
-    resolution: {integrity: sha512-7ZCpU3lfS5NR6PvDpdcOvdHo6UApg0RvlL9/YSih4cEBKdT9sdmsIhnRsiaAJGYdJl5m03wibfPf5cYxCdk64A==}
+  /react-native-reanimated-carousel@4.0.0-canary.13(@types/react@18.2.6)(react-native-gesture-handler@2.18.1)(react-native-reanimated@3.15.1)(react-native@0.75.2)(react@18.3.1):
+    resolution: {integrity: sha512-Dmrs3jP7jM+R7gsp38qiRpuiTiGPdD4qoWbrYgyOgGetbDpCTv3q+CKJ/MHKK5bVlDuERAe7k/UaqfEs/3Q7Ow==}
     peerDependencies:
       '@types/react': '*'
       '@types/react-native': '*'

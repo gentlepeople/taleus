@@ -30,7 +30,7 @@ type IHeaderOrganismProps = {
 
 export const HeaderOrganism: FC<IHeaderOrganismProps> = ({
   title,
-  titleSize = 'large',
+  titleSize,
   onPressExit,
   right,
   left,
@@ -130,7 +130,7 @@ export const HeaderOrganism: FC<IHeaderOrganismProps> = ({
         >
           {typeof title === 'string' ? (
             <Text
-              textType={titleSize === 'large' ? 'header' : 'header-2'}
+              textType={titleSize === 'small' ? 'header-2' : 'header'}
               textAlignment="center"
               color={titleColor ? titleColor : 'text-black'}
               numberOfLines={1}

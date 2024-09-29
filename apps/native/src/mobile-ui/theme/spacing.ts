@@ -50,6 +50,7 @@ const defaultSpacing = {
   '33-x': 132,
   '40-x': 160,
   '50-x': 200,
+  '85-x': 340,
 };
 
 export const spacing = Object.fromEntries(
