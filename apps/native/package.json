@@ -10,7 +10,10 @@
     "ios:masterRelease": "react-native run-ios",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
     "start": "react-native start --reset-cache",
-    "test": "jest"
+    "test": "jest",
+    "build:aab": "cd android && ./gradlew bundleRelease && cd ..",
+    "build:apk": "cd android && ./gradlew assembleRelease && cd ..",
+    "qaBuild": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
     "@apollo/client": "3.7.17",
