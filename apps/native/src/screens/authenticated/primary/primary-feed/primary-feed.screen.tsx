@@ -5,13 +5,17 @@ import { FC } from 'react';
 import { RefreshControl } from 'react-native';
 import { ValueOf } from 'type-fest';
 
-import { Box, palette, size, spacing } from '~/mobile-ui';
+import { Box, LoadingSpinner, palette, size, spacing } from '~/mobile-ui';
 
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
 import { usePrimary_FeedController } from './controller';
 import { Primary_FeedLayout } from './primary-feed.layout';
-import { Primary_Feed_ContentCardView, Primary_Feed_ContentEmptyView } from './views';
+import {
+  Primary_Feed_ContentCardView,
+  Primary_Feed_ContentEmptyView,
+  Primary_Feed_ListFooterSkeletonView,
+} from './views';
 
 export type Primary_FeedScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<PrimaryStackParamList, 'Primary_FeedScreen'>,
@@ -66,7 +70,18 @@ const data = [
 ];
 
 export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
-  const { goFeedDetail } = usePrimary_FeedController();
+  const { isInitialLoading, isLoadingMore, refetchList, fetchMoreList, goFeedDetail } =
+    usePrimary_FeedController();
+
+  if (isInitialLoading) {
+    return <LoadingSpinner />;
+  }
+
+  const renderListFooterComponent = () => {
+    if (isLoadingMore) {
+      return <Primary_Feed_ListFooterSkeletonView />;
+    }
+  };
 
   const renderItem: ValueOf<FlashListProps<IFeedContent>, 'renderItem'> = ({ item, index }) => {
     const {
@@ -104,12 +119,10 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
         estimatedItemSize={size['50-x']}
         ListEmptyComponent={<Primary_Feed_ContentEmptyView />}
         onEndReachedThreshold={0.2}
-        onEndReached={() => {
-          return;
-        }}
+        onEndReached={fetchMoreList}
         refreshControl={
           <RefreshControl
-            // onRefresh={test} refresh 함수 넣으면 됨
+            onRefresh={refetchList}
             refreshing={false}
             colors={[palette['primary']]}
             tintColor={palette['primary']}
@@ -117,7 +130,7 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
         }
         fadingEdgeLength={spacing['10-x']}
         ItemSeparatorComponent={() => <Box style={{ height: spacing['6-x'] }} />}
-        ListFooterComponent={<Box style={{ height: spacing['6-x'] }} />}
+        ListFooterComponent={renderListFooterComponent()}
       />
     );
   };

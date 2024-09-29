@@ -4,7 +4,12 @@ import { useAuth } from '~/providers';
 import { FEED_LIST_QUERY_LIMIT, FEED_LIST_QUERY_OFFSET } from '../../../primary-feed.const';
 
 type IPrimary_FeedListDataInput = void;
-type IPrimary_FeedListDataOutput = {};
+type IPrimary_FeedListDataOutput = {
+  isInitialLoading: boolean;
+  isLoadingMore: boolean;
+  refetchList: () => Promise<void>;
+  fetchMoreList: () => Promise<void>;
+};
 
 export const usePrimary_FeedListData: Hook<
   IPrimary_FeedListDataInput,
@@ -28,9 +33,9 @@ export const usePrimary_FeedListData: Hook<
   };
 
   const fetchMoreList = async () => {
-    if (isFullyLoaded) {
-      return;
-    }
+    // if (isFullyLoaded) {
+    //   return;
+    // }
 
     await fetchMore({
       variables: {
@@ -40,14 +45,19 @@ export const usePrimary_FeedListData: Hook<
   };
 
   const feedLength = data?.completedCoupleMissions?.data.length;
+  //   const feedTotalCount = data?.missionLog.totalCount;
+  //   const isFullyLoaded = feedLength === feedTotalCount;
 
   const isInitialLoading = networkStatus === NetworkStatus.loading && !data;
-  const isFullyLoaded = false;
-
   const isLoadingMore =
     networkStatus === NetworkStatus.fetchMore ||
     networkStatus === NetworkStatus.setVariables ||
     networkStatus === NetworkStatus.refetch;
 
-  return {};
+  return {
+    isInitialLoading,
+    isLoadingMore,
+    refetchList,
+    fetchMoreList,
+  };
 };
