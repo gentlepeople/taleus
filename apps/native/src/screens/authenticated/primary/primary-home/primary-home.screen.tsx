@@ -36,6 +36,7 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
     question,
     currentValue,
     currentUserAnswer,
+    currentPartnerAnswer,
     nickname,
     partnerNickname,
     isCTADisabled,
@@ -47,6 +48,7 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
     shouldConnect,
     hasNoMyReply,
     hasNoPartnerReply,
+    showPartnerAnswer,
     setAnswer,
     pressCTA,
     pressBannerButton,
@@ -76,10 +78,13 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
               <Primary_Home_QuestionAreaView question={question} progress={progress} />
               <Primary_Home_ContentAreaView
                 isWritable={isWritable}
+                showPartnerAnswer={showPartnerAnswer}
                 currentValue={currentValue}
                 onChangeText={setAnswer}
                 progress={progress}
                 currentAnswer={currentUserAnswer}
+                partnerNickname={partnerNickname}
+                currentPartnerAnswer={currentPartnerAnswer}
               />
             </ScrollView>
           </SlideViewOrganism>
