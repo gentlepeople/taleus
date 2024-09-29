@@ -51,17 +51,13 @@ export const Primary_Feed_ContentCardView = memo<IPrimary_Feed_ContentCardViewPr
             </Column>
             <Column width="fluid">
               <Text textType="body/16/bold">{questionTitle}</Text>
-              {/* <Text textType="body/16/bold">{`${submissionDate}`}</Text> */}
             </Column>
-            {/* <Column width="content">
-              
-            </Column> */}
           </Columns>
-
           <Stack
             space={spacing['3-x']}
             paddingX={spacing['4-x']}
-            paddingY={spacing['6-x']}
+            paddingTop={spacing['6-x']}
+            paddingBottom={spacing['4-x']}
             style={{
               borderRadius: radius['4-x'],
               backgroundColor: palette['content-card-bg'],
@@ -79,10 +75,10 @@ export const Primary_Feed_ContentCardView = memo<IPrimary_Feed_ContentCardViewPr
                 {userAnswer}
               </Text>
             </Stack>
+            <Text textType="body/12/bold" color="text-black" textAlignment="right">
+              {submissionDate}
+            </Text>
           </Stack>
-          <Text textType="body/12/bold" color="text-black" textAlignment="right">
-            {submissionDate}
-          </Text>
         </Stack>
       </Pressable>
     );

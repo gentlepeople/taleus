@@ -18,7 +18,7 @@ export const useApolloLink = () => {
 
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: `https://asia-northeast3-taleus-c2609.cloudfunctions.net/graphql`,
+      url: Config.APOLLO_MASTER_ENDPOINT,
       connectionParams: {
         headers: {
           authorization: authToken ? `Bearer ${authToken}` : '',
@@ -55,7 +55,7 @@ export const useApolloLink = () => {
   });
 
   const httplink = new HttpLink({
-    uri: `https://asia-northeast3-taleus-c2609.cloudfunctions.net/graphql`,
+    uri: Config.APOLLO_MASTER_ENDPOINT,
     headers: {
       authorization: authToken ? `Bearer ${authToken}` : '',
       'content-type': 'application/json',

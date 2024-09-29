@@ -35,9 +35,9 @@
           <data android:scheme="taleUs" /> 
           <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
           <data android:host="oauth"
-                  android:scheme="kakaoa61cbb5c5f55a06de8c5420b0fc4273a" />
+                  android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
           <data android:host="kakaolink"
-                  android:scheme="kakaoa61cbb5c5f55a06de8c5420b0fc4273a" />
+                  android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
         </intent-filter>
       </activity>
     </application>

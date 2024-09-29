@@ -5,7 +5,9 @@
   "scripts": {
     "adb": "adb reverse tcp:8081 tcp:8081",
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android:masterRelease": "react-native run-android --mode=masterRelease",
+    "ios:developDebug": "react-native run-ios",
+    "ios:masterRelease": "react-native run-ios",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.yaml --fix",
     "start": "react-native start --reset-cache",
     "test": "jest"

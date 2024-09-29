@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services'
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 // Hermes 엔진 활성화
 project.ext.react = [
@@ -90,6 +91,11 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+            KAKAO_NATIVE_APP_KEY: project.env.get("KAKAO_NATIVE_APP_KEY")
+        ]
+        println "KAKAO_NATIVE_APP_KEY: ${project.env.get("KAKAO_NATIVE_APP_KEY")}"
+
     }
     signingConfigs {
         debug {
@@ -124,6 +130,8 @@ android {
 dependencies {
     // React Native 종속성
     implementation("com.facebook.react:react-android")
+    implementation project(':react-native-config')
+
     implementation "com.kakao.sdk:v2-user:2.6.0" 
 
     // Firebase BoM (Bill of Materials) 추가

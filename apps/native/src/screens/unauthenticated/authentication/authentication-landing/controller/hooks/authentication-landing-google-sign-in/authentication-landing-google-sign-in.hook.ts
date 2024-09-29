@@ -2,6 +2,7 @@ import { useAuthentication_LandingGoogleSignInMutation } from '@gentlepeople/tal
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useAsyncCallback } from 'react-async-hook';
+import Config from 'react-native-config';
 
 import { useMutationIndicator } from '~/hooks';
 import { useApollo } from '~/providers';
@@ -25,7 +26,7 @@ export const useAuthentication_LandingGoogleSignIn: Hook<
       try {
         // TODO:민기 .env 넣어야함
         GoogleSignin.configure({
-          webClientId: '270612131026-3patdjpeg2mud4h5pvd9d4s7kde8jh8q.apps.googleusercontent.com',
+          webClientId: Config.GOOGLE_SIGNIN_WEB_CLIENT_ID,
         });
       } catch (e) {
         console.log('google configure', e);
