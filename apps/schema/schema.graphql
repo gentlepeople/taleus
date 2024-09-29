@@ -45,6 +45,23 @@ The `BigInt` scalar type represents non-fractional signed whole numeric values.
 """
 scalar BigInt
 
+type CompletedCoupleMissionData {
+  partnerResponse: Response!
+  question: Question!
+  userResponse: Response!
+}
+
+type CompletedCoupleMissionResponse {
+  coupleMission: CoupleMission!
+  data: [CompletedCoupleMissionData!]!
+  mission: Mission!
+}
+
+type CompletedCoupleMissionsResponse {
+  data: [CompletedCoupleMissionResponse!]!
+  totalCount: Int!
+}
+
 type Couple {
   """The number of missions this couple has completed."""
   completedMissionCount: Int!
@@ -135,22 +152,6 @@ type Mission {
   title: String!
 }
 
-type MissionLogMissionData {
-  data: [MissionLogQuestionData!]!
-  mission: Mission!
-}
-
-type MissionLogQuestionData {
-  partnerResponse: Response!
-  question: Question!
-  userResponse: Response!
-}
-
-type MissionLogResponse {
-  data: [MissionLogMissionData!]!
-  totalCount: Int!
-}
-
 type Mutation {
   """Authenticates a user via Apple OAuth, registers if new."""
   appleLogin(
@@ -203,18 +204,21 @@ type Mutation {
 }
 
 type Query {
-  couple(coupleId: BigInt!): Couple
-  mission(missionId: BigInt!): Mission
-  missionLog(
+  completedCoupleMission(coupleMissionId: Int!, userId: String!): CompletedCoupleMissionResponse
+  completedCoupleMissions(
     shuffle: Boolean = false
 
-    """Determines how many items to skip before retrieving data."""
-    skip: Int = null
+    """
+    Determines how many items to skip before retrieving data. default value: 0.
+    """
+    skip: Int = 0
 
-    """The number of items to retrieve per page."""
-    take: Int = null
+    """The number of items to retrieve per page. default value: 10."""
+    take: Int = 10
     userId: String!
-  ): MissionLogResponse!
+  ): CompletedCoupleMissionsResponse!
+  couple(coupleId: BigInt!): Couple
+  mission(missionId: BigInt!): Mission
   todayMission(userId: String!): TodayMissionResponse
 
   """get one user by user id."""

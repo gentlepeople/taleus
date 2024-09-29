@@ -1,3 +1,3 @@
 export * from './today-mission';
 export * from './mission';
-export * from './mission-log';
+export * from './completed-couple-mission';

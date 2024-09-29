@@ -14,6 +14,14 @@ export class FindCoupleMissionService implements FindCoupleMissionUsecase {
     private readonly coupleMissionRepository: ICoupleMissionRepository,
   ) {}
 
+  async findOneIncludingQuestionByCoupleMissionId(
+    coupleMissionId: bigint,
+  ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } }) | null> {
+    const findCoupleMission =
+      await this.coupleMissionRepository.findOneIncludingQuestionByCoupleMissionId(coupleMissionId);
+    return findCoupleMission;
+  }
+
   async countCompletedByCoupleId(coupleId: bigint): Promise<number> {
     const countCompleteMissions = await this.coupleMissionRepository.countCompletedByCoupleId(
       coupleId,

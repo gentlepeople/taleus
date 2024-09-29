@@ -19,7 +19,19 @@ export const AUTO_USER_LENGTH = 20;
 // === mission config ===
 export const AUTO_MISSION = true;
 export const AUTO_MISSION_LENGTH = 20;
+export const ONBOARDING_MISSION_ID = 1;
 
 // === question config ===
 export const AUTO_QUESTION = true;
 export const AUTO_QUESTION_LENGTH = 3;
+
+// === couple config ===
+export const AUTO_COUPLE = true;
+
+// === coupleMission config ===
+export const AUTO_COUPLE_MISSION = true;
+export const AUTO_COUPLE_MISSION_LENGTH = 100;
+
+// === response config ===
+export const AUTO_RESPONSE = true;
+export const AUTO_RESPONSE_LENGTH = 1000;

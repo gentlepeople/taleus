@@ -15,4 +15,7 @@ export interface FindCoupleMissionUsecase {
       };
     },
   ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } })[]>;
+  findOneIncludingQuestionByCoupleMissionId(
+    coupleMissionId: bigint,
+  ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } }) | null>;
 }

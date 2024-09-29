@@ -4,6 +4,9 @@ export const COUPLE_MISSION_REPOSITORY = Symbol('COUPLE_MISSION_REPOSITORY');
 
 export interface ICoupleMissionRepository {
   findOneByCoupleMissionId(coupleMissionId: bigint): Promise<CoupleMission | null>;
+  findOneIncludingQuestionByCoupleMissionId(
+    coupleMissionId: bigint,
+  ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } }) | null>;
   createMany(
     data: {
       coupleId: bigint;

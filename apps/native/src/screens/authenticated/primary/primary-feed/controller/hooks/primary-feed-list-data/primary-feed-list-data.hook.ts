@@ -39,7 +39,7 @@ export const usePrimary_FeedListData: Hook<
     });
   };
 
-  const feedLength = data?.missionLog?.data.length;
+  const feedLength = data?.completedCoupleMissions?.data.length;
 
   const isInitialLoading = networkStatus === NetworkStatus.loading && !data;
   const isFullyLoaded = false;

@@ -2,40 +2,27 @@ import { Inject } from '@nestjs/common';
 import { Resolver, Args, Query, Context } from '@nestjs/graphql';
 import isNull from 'lodash/isNull';
 
-import { MissionLogRequest, MissionLogResponse } from './mission-log.dto';
+import {
+  CompletedCoupleMissionRequest,
+  CompletedCoupleMissionResponse,
+  CompletedCoupleMissionsRequest,
+  CompletedCoupleMissionsResponse,
+} from './completed-couple-mission.dto';
 
 import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import { Response } from '@/domain';
 import {
   FIND_COUPLE_MISSION_USECASE,
-  FIND_COUPLE_USECASE,
-  FIND_MISSION_USECASE,
-  FIND_QUESTION_USECASE,
   FIND_RESPONSE_USECASE,
   FIND_USER_USECASE,
   FindCoupleMissionUsecase,
-  FindCoupleUsecase,
-  FindMissionUsecase,
-  FindQuestionUsecase,
   FindResponseUsecase,
   FindUserUsecase,
-  GET_TODAY_MISSION_USECASE,
-  GetTodayMissionUsecase,
 } from '@/ports';
 
 @Resolver()
-export class MissionLogQuery {
+export class CompletedCoupleMissionQuery {
   constructor(
-    @Inject(FIND_MISSION_USECASE)
-    private readonly findMissionUsecase: FindMissionUsecase,
-    @Inject(FIND_COUPLE_USECASE)
-    private readonly findCoupleUsecase: FindCoupleUsecase,
-    @Inject(FIND_QUESTION_USECASE)
-    private readonly findQuestionUsecase: FindQuestionUsecase,
-    @Inject(GET_TODAY_MISSION_USECASE)
-    private readonly getTodayMissionUsecase: GetTodayMissionUsecase,
-    @Inject(FIND_QUESTION_USECASE)
-    private readonly findQUestionUsecase: FindQuestionUsecase,
     @Inject(FIND_RESPONSE_USECASE)
     private readonly findResponseUsecase: FindResponseUsecase,
     @Inject(FIND_USER_USECASE)
@@ -44,12 +31,70 @@ export class MissionLogQuery {
     private readonly findCoupleMissionUsecase: FindCoupleMissionUsecase,
   ) {}
 
-  @Query(() => MissionLogResponse)
+  @Query(() => CompletedCoupleMissionResponse, { nullable: true })
   @UserAuth()
-  async missionLog(
-    @Args() args: MissionLogRequest,
+  async completedCoupleMission(
+    @Args() args: CompletedCoupleMissionRequest,
     @Context() context: GqlContext,
-  ): Promise<MissionLogResponse> {
+  ): Promise<CompletedCoupleMissionResponse | null> {
+    const { userId, coupleMissionId } = args;
+    checkUserPermission(context, userId);
+
+    const completedCoupleMission =
+      await this.findCoupleMissionUsecase.findOneIncludingQuestionByCoupleMissionId(
+        coupleMissionId,
+      );
+    if (isNull(completedCoupleMission)) return null;
+
+    const getUserResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
+      userId,
+      coupleMissionId,
+    );
+
+    const findPartner = await this.findUserUsecase.findPartnerByUserId(userId);
+    const { userId: partnerId } = findPartner;
+
+    const getPartnerResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
+      partnerId,
+      coupleMissionId,
+    );
+
+    const responseMap = new Map<string, Response>();
+    [...getUserResponses, ...getPartnerResponses].forEach((response) => {
+      const key = `${response.questionId}-${response.userId}`;
+      responseMap.set(key, response);
+    });
+
+    const { mission } = completedCoupleMission;
+    const questionData = mission.question.map((question) => {
+      const { questionId } = question;
+
+      const userResponseKey = `${questionId}-${userId}`;
+      const partnerResponseKey = `${questionId}-${partnerId}`;
+
+      const userResponse = responseMap.get(userResponseKey);
+      const partnerResponse = responseMap.get(partnerResponseKey);
+
+      return {
+        question,
+        userResponse,
+        partnerResponse,
+      };
+    });
+
+    return {
+      mission: mission,
+      coupleMission: completedCoupleMission,
+      data: questionData,
+    };
+  }
+
+  @Query(() => CompletedCoupleMissionsResponse)
+  @UserAuth()
+  async completedCoupleMissions(
+    @Args() args: CompletedCoupleMissionsRequest,
+    @Context() context: GqlContext,
+  ): Promise<CompletedCoupleMissionsResponse> {
     const { userId, shuffle, take, skip } = args;
     checkUserPermission(context, userId);
 
@@ -88,7 +133,8 @@ export class MissionLogQuery {
       responseMap.set(key, response);
     });
 
-    const result = completedCoupleMissions.map(({ coupleMissionId, mission }) => {
+    const result = completedCoupleMissions.map((coupleMission) => {
+      const { coupleMissionId, mission } = coupleMission;
       const questionData = mission.question.map((question) => {
         const { questionId } = question;
 
@@ -107,6 +153,7 @@ export class MissionLogQuery {
 
       return {
         mission,
+        coupleMission,
         data: questionData,
       };
     });

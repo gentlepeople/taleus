@@ -27,6 +27,36 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     return findCoupleMission;
   }
 
+  async findOneIncludingQuestionByCoupleMissionId(
+    coupleMissionId: bigint,
+  ): Promise<(CoupleMission & { mission: Mission & { question: Question[] } }) | null> {
+    const findCoupleMission = await this.databasePort.coupleMission.findUnique({
+      where: {
+        coupleMissionId,
+      },
+      include: {
+        mission: {
+          include: {
+            question: {
+              orderBy: {
+                questionOrder: 'asc',
+              },
+            },
+          },
+        },
+      },
+    });
+    return {
+      ...findCoupleMission,
+      mission: {
+        question: findCoupleMission.mission.question.map((question) =>
+          Question.enumConvert(question),
+        ),
+        ...Mission.enumConvert(findCoupleMission.mission),
+      },
+    };
+  }
+
   async createMany(
     data: {
       coupleId: bigint;

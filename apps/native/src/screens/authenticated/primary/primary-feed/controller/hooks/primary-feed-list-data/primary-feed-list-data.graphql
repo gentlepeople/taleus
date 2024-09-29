@@ -1,5 +1,5 @@
 query Primary_FeedListData($userId: String!, $skip: Int, $take: Int) {
-  missionLog(userId: $userId, skip: $skip, take: $take) {
+  completedCoupleMissions(userId: $userId, skip: $skip, take: $take) {
     data {
       mission {
         category
