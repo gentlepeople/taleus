@@ -15,14 +15,37 @@ PODS:
     - React-Core
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.75.2)
+  - Firebase (10.19.0):
+    - Firebase/Core (= 10.19.0)
   - Firebase/AppCheck (10.19.0):
     - Firebase/CoreOnly
     - FirebaseAppCheck (~> 10.19.0)
   - Firebase/Auth (10.19.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.19.0)
+  - Firebase/Core (10.19.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (~> 10.19.0)
   - Firebase/CoreOnly (10.19.0):
     - FirebaseCore (= 10.19.0)
+  - FirebaseAnalytics (10.19.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.19.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseAnalytics/AdIdSupport (10.19.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleAppMeasurement (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - FirebaseAppCheck (10.19.0):
     - AppCheckCore (~> 10.18)
     - FirebaseAppCheckInterop (~> 10.17)
@@ -43,8 +66,33 @@ PODS:
     - GoogleUtilities/Logger (~> 7.12)
   - FirebaseCoreInternal (10.29.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseInstallations (10.29.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
   - fmt (9.1.0)
   - glog (0.3.5)
+  - GoogleAppMeasurement (10.19.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (10.19.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.19.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
+    - GoogleUtilities/MethodSwizzler (~> 7.11)
+    - GoogleUtilities/Network (~> 7.11)
+    - "GoogleUtilities/NSData+zlib (~> 7.11)"
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - GoogleSignIn (7.1.0):
     - AppAuth (< 2.0, >= 1.7.3)
     - GTMAppAuth (< 5.0, >= 4.1.1)
@@ -167,9 +215,20 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - Mixpanel-swift (4.3.0):
+    - Mixpanel-swift/Complete (= 4.3.0)
+  - Mixpanel-swift/Complete (4.3.0)
+  - MixpanelReactNative (3.0.7):
+    - Mixpanel-swift (= 4.3.0)
+    - React-Core
   - MMKV (1.3.9):
     - MMKVCore (~> 1.3.9)
   - MMKVCore (1.3.9)
+  - nanopb (2.30909.1):
+    - nanopb/decode (= 2.30909.1)
+    - nanopb/encode (= 2.30909.1)
+  - nanopb/decode (2.30909.1)
+  - nanopb/encode (2.30909.1)
   - PromisesObjC (2.4.0)
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1809,7 +1868,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - RNCKakaoCore
     - Yoga
-  - RNDateTimePicker (7.6.0):
+  - RNDateTimePicker (8.2.0):
     - React-Core
   - RNDeviceInfo (11.1.0):
     - React-Core
@@ -1973,6 +2032,9 @@ DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
+  - Firebase
+  - FirebaseCore
+  - FirebaseCoreInternal
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - GoogleUtilities
@@ -1980,6 +2042,7 @@ DEPENDENCIES:
   - "kakao-login (from `../node_modules/@react-native-seoul/kakao-login`)"
   - KakaoSDK
   - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -2068,11 +2131,14 @@ SPEC REPOS:
     - AppAuth
     - AppCheckCore
     - Firebase
+    - FirebaseAnalytics
     - FirebaseAppCheck
     - FirebaseAppCheckInterop
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreInternal
+    - FirebaseInstallations
+    - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleUtilities
     - GTMAppAuth
@@ -2090,8 +2156,10 @@ SPEC REPOS:
     - KakaoSDKTemplate
     - KakaoSDKUser
     - lottie-ios
+    - Mixpanel-swift
     - MMKV
     - MMKVCore
+    - nanopb
     - PromisesObjC
     - RecaptchaInterop
     - SocketRocket
@@ -2116,6 +2184,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-seoul/kakao-login"
   lottie-react-native:
     :path: "../node_modules/lottie-react-native"
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -2284,13 +2354,16 @@ SPEC CHECKSUMS:
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 38bb611218305c3bc61803e287b8a81c6f63b619
   Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
+  FirebaseAnalytics: 87513010b13b7c8610164d3602ea10571f76afc1
   FirebaseAppCheck: b14be41cdbc6b55c2ea0963c68c7edbbde45b09f
   FirebaseAppCheckInterop: 6a1757cfd4067d8e00fccd14fcc1b8fd78cfac07
   FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
   FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
   FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
+  FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
+  GoogleAppMeasurement: 68afe759316673c6554dac35a0c7ae8f5d6cb4ed
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
@@ -2310,9 +2383,12 @@ SPEC CHECKSUMS:
   KakaoSDKTemplate: 2b518d4875fb9b3e832d39e957e4e33cb27a9d36
   KakaoSDKUser: 043bcd7e91454ebf3bf64f150c430e6f65f0a08d
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
-  lottie-react-native: 27aac05865dd6de7c90b1064f98374d17336c6db
+  lottie-react-native: 31197e5c65aa7cb59e6affcefaf901588bb708c4
+  Mixpanel-swift: 2192b9a24cf41b870749e4e0e10fbc9822bb2b4a
+  MixpanelReactNative: c13b67753b255ff5598d6371e5738c6c8c6c1b4f
   MMKV: 817ba1eea17421547e01e087285606eb270a8dcb
   MMKVCore: af055b00e27d88cd92fad301c5fecd1ff9b26dd9
+  nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 34cbf122b623037ea9facad2e92e53434c5c7422
@@ -2323,79 +2399,79 @@ SPEC CHECKSUMS:
   React-Core: facd883836d8d1cc1949d2053c58eab5fb22eb75
   React-CoreModules: f92a2cb11d22f6066823ca547c61e900325dfe44
   React-cxxreact: f5595a4cbfe5a4e9d401dffa2c1c78bbbbbe75e4
-  React-debug: 153b1899b6d9e2fde855577e1cd615f7448a03ac
-  React-defaultsnativemodule: 34d0c4dc9d31b2feb5a4f3b573f7c491566b6e08
-  React-domnativemodule: f3f516cd33070e162f1f6bb1ead5a245f0b97db7
-  React-Fabric: 9be6d42b5a1f4353d9e23c2db8532d9e5ccfef4d
-  React-FabricComponents: 897223a1dc15b4e8fa402cba057536cb10852963
-  React-FabricImage: f4aaac50854c2ef195b79d1d4315b9e32c5ca853
-  React-featureflags: 357423aa521ff01107895810f8d9758f8147d64d
-  React-featureflagsnativemodule: 3d62c2171740d6f2f60b86f9a08c12b923817472
-  React-graphics: e41a17337bf4f4dfba8f7315b8ca0a73296800d7
+  React-debug: 4a91c177b5b2efcc546fb50bc2f676f3f589efab
+  React-defaultsnativemodule: bb94c3db425b01c760f41a253de8536b3f5497f0
+  React-domnativemodule: 6c581fd39812cafb024171e091c00905b2c3a3e2
+  React-Fabric: a33cc1fdc62a3085774783bb30970531589d2028
+  React-FabricComponents: 98de5f94cbd35d407f4fc78855298b562d8289cb
+  React-FabricImage: 0ce8fd83844d9edef5825116d38f0e208b9ad786
+  React-featureflags: 37a78859ad71db758e2efdcbdb7384afefa8701e
+  React-featureflagsnativemodule: 52b46e161a151b4653cf1762285e8e899d534e3f
+  React-graphics: c16f1bab97a5d473831a79360d84300e93a614e5
   React-hermes: 7801f8c0e12f326524b461dc368d3e74f3d2a385
-  React-idlecallbacksnativemodule: a7d8ee70043d0c42fad301768ae97997d1c5581c
-  React-ImageManager: d24c9e2b772504aafde31455c39585a03377dece
-  React-jserrorhandler: 571bbbb4569347172cc4c0985a493b7dade32634
+  React-idlecallbacksnativemodule: 58de2ac968ee80947d19dc8fe20def607e5c2de8
+  React-ImageManager: 98a1e5b0b05528dde47ebcd953d916ac66d46c09
+  React-jserrorhandler: 08f1c3465a71a6549c27ad82809ce145ad52d4f1
   React-jsi: 161428ab2c706d5fcd9878d260ff1513fdb356ab
   React-jsiexecutor: abfdc7526151c6755f836235bbaa53b267a0803c
-  React-jsinspector: 02ca2651458d686f47b0803d420fefc1b9c97213
-  React-jsitracing: a63093da2909d8ee0d5a2224534cf605fa7adecc
+  React-jsinspector: f0786053a1a258a4d8dde859d1a820c26ee686f0
+  React-jsitracing: 52b849a77d02e2dc262a3031454c23be8dabb4d9
   React-logger: 8db32983d75dc2ad54f278f344ccb9b256e694fc
-  React-Mapbuffer: db173bede5ac5cb1c82d4a6a8597477ba87c5648
-  React-microtasksnativemodule: 0c1d7b6f26fbeae097279569cf2430255fa3d3a9
+  React-Mapbuffer: 1c08607305558666fd16678b85ef135e455d5c96
+  React-microtasksnativemodule: 87b8de96f937faefece8afd2cb3a518321b2ef99
   react-native-config: 8f7283449bbb048902f4e764affbbf24504454af
-  react-native-mmkv: 54f5626371820ab9385821db1bbb03b6ab62c28a
+  react-native-mmkv: 7d0b6c2a79e73100b933f2947a9c8741d664e18b
   react-native-safe-area-context: ab8f4a3d8180913bd78ae75dd599c94cce3d5e9a
-  react-native-webview: 258fe1f84e4020cd1ecbbbd5185b1623a5e94b75
-  React-nativeconfig: 5fc2b05a590eb704128f5a4fc8ea6fa7b847e6e8
-  React-NativeModulesApple: 88313414ddffd1758f76042733e8f0297acfd502
+  react-native-webview: 282ea79c56ea6b32380dd4464e0f4accf50b224d
+  React-nativeconfig: 57781b79e11d5af7573e6f77cbf1143b71802a6d
+  React-NativeModulesApple: 7ff2e2cfb2e5fa5bdedcecf28ce37e696c6ef1e1
   React-perflogger: 8a360ccf603de6ddbe9ff8f54383146d26e6c936
-  React-performancetimeline: 300691014905e8d25b36415fd2f248a2befcce61
+  React-performancetimeline: 3cfec915adcb3653a5a633b41e711903844c35d8
   React-RCTActionSheet: 1c0e26a88eec41215089cf4436e38188cfe9f01a
   React-RCTAnimation: d87207841b1e2ae1389e684262ea8c73c887cb04
   React-RCTAppDelegate: 4ec7824c0cc9cc4b146ca8ee0fd81b10c316a440
   React-RCTBlob: 79b42cb7db55f34079297687a480dbcf37f023f6
-  React-RCTFabric: 5015bcf3f9aa59817ad301ead0aa451e780fdb18
+  React-RCTFabric: 1dd1661db93716f8cb116e451bd9c211a8d15716
   React-RCTImage: 0c10a75de59f7384a2a55545d5f36fe783e6ecda
   React-RCTLinking: bf08f4f655bf777af292b8d97449072c8bb196ca
   React-RCTNetwork: 1b690846b40fc5685af58e088720657db6814637
   React-RCTSettings: 097e420926dd44153fb25174835b572aded224d6
   React-RCTText: d8fe2ae9f95b2ccd03b2f534286e938254791992
   React-RCTVibration: 976466dba32c0981a836e45ce38bcd4c8d6d924e
-  React-rendererconsistency: c6085ef7593a14a3ca07b82c533e8ce368403748
-  React-rendererdebug: 945ef6d8128f429becb3769a81591c96e3802fd2
-  React-rncore: 14846f4dd48ba5056b11ab89f4a5498f6f02f20f
-  React-RuntimeApple: 171b7b35ec9dc97ba358d691bea07fc81795ca3e
-  React-RuntimeCore: 7dcad4be47b656fdd67f7a6a78cf746948a11890
+  React-rendererconsistency: ee0d6f1b4420e1ad5bb01c02170e7ecbd278e307
+  React-rendererdebug: 7fbf02f30d1e0bb0d96d65cf2548219cb53b29b6
+  React-rncore: 7ffc5be03adbf0a5cbf1b654483f487a899cff08
+  React-RuntimeApple: e623f002e1871de30a443291171d3f2fb134a6ec
+  React-RuntimeCore: a67357d4f073b1dbe6fbefc5273072027f201e1c
   React-runtimeexecutor: 5bb52479abf8081086afb0397dc33dc97202a439
-  React-RuntimeHermes: bfada6b4eb293117496b0b0ef6d31a8142649596
-  React-runtimescheduler: 9577260c8dd7c3c97eb6f5086441784fd5241f62
-  React-utils: f908da1113885e2c08b25247e0ea892c68e2eaf6
-  ReactCodegen: de94475c4712a61ba0b1e1c25eb54db32f56836d
-  ReactCommon: 8da2bad9c1e5901f7b5484e42e59578edeece142
+  React-RuntimeHermes: 860cf64708a12a2fa62366fe51fe000121fa031b
+  React-runtimescheduler: fff88d51ad2c8815fc75930dbac224d680593e6b
+  React-utils: 81a715d9c0a2a49047e77a86f3a2247408540deb
+  ReactCodegen: 60973d382704c793c605b9be0fc7f31cb279442f
+  ReactCommon: 6ef348087d250257c44c0204461c03f036650e9b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCClipboard: 5e503962f0719ace8f7fdfe9c60282b526305c85
-  RNCKakaoCore: f7213859be940d2d7132d94718308b035ac8de93
-  RNCKakaoShare: 3a44e8df413024c3fe9e6c8db455c17d13dc97c9
-  RNCKakaoSocial: 7720514bed957fed8f10b534d764c186c696f9ae
-  RNCKakaoUser: 641d57850cdbccb6b391eb121afb829716a2bed6
-  RNDateTimePicker: ccd988deb223cbb2e669e157ec576c2c6217128c
+  RNCKakaoCore: 247950eec77e40b04ea58528850cdf6ae17571d1
+  RNCKakaoShare: ba64cb66108601cc94006c5d0fb1d758af71ab0c
+  RNCKakaoSocial: 6758e8eb543eda7cd495216b735f40a64a4df154
+  RNCKakaoUser: 5140e32e7bfa8360983f18c670102cf857292ff9
+  RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNDeviceInfo: b899ce37a403a4dea52b7cb85e16e49c04a5b88e
-  RNFBApp: 5ee688b07ed0fa692a3a8fd07df6d6ae41e4c3a0
-  RNFBAppCheck: 774b5d72e44d9a481f08cd688e553ce43a73fa48
-  RNFBAuth: a800af76ce0baed0c839307aa0aa0c2443dbbee6
-  RNFlashList: 997257a094906e3e254183ef90fcf7a5a6a2612d
-  RNGestureHandler: b1bde7ef45d1472a8145a143efc097df8a9173a4
+  RNFBApp: c21258de1485419a845efbba9c09ec946c89891d
+  RNFBAppCheck: 23b35572697170adf340919a916beab712d814de
+  RNFBAuth: 079bb1bc37a912a277aedf366fe5bf4632b069c9
+  RNFlashList: 115dd44377580761bff386a0caebf165424cf16f
+  RNGestureHandler: 6dfe7692a191ee224748964127114edf057a1475
   RNGoogleSignin: 9e68b9bcc3888219357924e32ee563624745647d
   RNLocalize: 4f22418187ecd5ca693231093ff1d912d1b3c9bc
   RNNotifee: 2b7df6e32a9cc24b9af6b410fa7db1cd2f411d6d
-  RNReanimated: ec5fbf21a08bfbfbe7fa52df91ce98dc90dfcc4d
-  RNScreens: de55b9d7de8a017d1588dcb70415492d0b0597c2
+  RNReanimated: 6410b3230e926736e051715d9d4e128ed8efb456
+  RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
   RNSVG: 5da7a24f31968ec74f0b091e3440080f347e279b
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  Yoga: 36d44f1d31d7c11be1067e5c7a70a12c2eed355c
+  Yoga: a1d7895431387402a674fd0d1c04ec85e87909b8
 
-PODFILE CHECKSUM: 509ef1a0b2fea44608d40a5b058c61db28fd49b9
+PODFILE CHECKSUM: 5b1e04190cd97c4485cfc69fc8f763ab8a42d7a7
 
 COCOAPODS: 1.15.2

@@ -138,7 +138,7 @@ export const getTextTypeStyle = (textType: ITextTypes) => {
     'banner-content': {
       fontFamily: 'Pretendard-Regular',
       fontSize: 15,
-      lineHeight: 15,
+      lineHeight: 18,
     },
     'banner-button': {
       fontFamily: 'Pretendard-Regular',

@@ -47,7 +47,7 @@ export const useAuthenticationLandingContentSignInApple: Hook<
         },
       });
 
-      console.log(customTokenData.data?.appleLogin);
+      console.log(customTokenData.data?.appleLogin, 'get apple token');
 
       const success = customTokenData.data?.appleLogin;
       if (success && success.customToken) {
