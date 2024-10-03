@@ -23,7 +23,7 @@ export const usePrimary_FeedListData: Hook<
   const { data, fetchMore, refetch, networkStatus } = usePrimary_FeedListDataQuery({
     notifyOnNetworkStatusChange: true,
     variables: {
-      userId: currentUser && currentUser.id,
+      userId: currentUser ? currentUser.id : '',
       take: FEED_LIST_QUERY_LIMIT, // limit
       skip: FEED_LIST_QUERY_OFFSET, // offset
     },
