@@ -1,24 +1,32 @@
 import React, { Suspense } from 'react';
 
 import { LoadingSpinner, UIProvider } from './mobile-ui';
-import { ApolloProvider, AuthProvider, MMKVProvider, RecoilProvider } from './providers';
+import {
+  ApolloProvider,
+  AuthProvider,
+  MMKVProvider,
+  MixpanelProvider,
+  RecoilProvider,
+} from './providers';
 import { RootNavigator, RootStack } from './screens';
 
 function App(): React.JSX.Element {
   return (
     <RecoilProvider>
       <UIProvider>
-        <Suspense fallback={<LoadingSpinner />}>
-          <ApolloProvider>
-            <AuthProvider>
-              <MMKVProvider>
-                <RootNavigator>
-                  <RootStack />
-                </RootNavigator>
-              </MMKVProvider>
-            </AuthProvider>
-          </ApolloProvider>
-        </Suspense>
+        <MixpanelProvider>
+          <Suspense fallback={<LoadingSpinner />}>
+            <ApolloProvider>
+              <AuthProvider>
+                <MMKVProvider>
+                  <RootNavigator>
+                    <RootStack />
+                  </RootNavigator>
+                </MMKVProvider>
+              </AuthProvider>
+            </ApolloProvider>
+          </Suspense>
+        </MixpanelProvider>
       </UIProvider>
     </RecoilProvider>
   );
