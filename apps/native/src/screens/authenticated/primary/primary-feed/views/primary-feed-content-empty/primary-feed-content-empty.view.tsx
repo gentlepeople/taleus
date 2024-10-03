@@ -13,7 +13,7 @@ export const Primary_Feed_ContentEmptyView = memo<IPrimary_Feed_ContentEmptyView
         autoPlay
       />
       <Text textType="title/20/bold" textAlignment="center">
-        {'아직 답변이 작성된 질문이 없어요!\n오늘의 질문을 작성해봐요'}
+        {'아직 답변이 완료된 질문이 없어요\n상대방과 같이 답변해봐요!'}
       </Text>
     </Stack>
   );

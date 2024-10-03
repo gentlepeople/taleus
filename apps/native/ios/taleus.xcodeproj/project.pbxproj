@@ -8,20 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* taleusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* taleusTests.m */; };
-		062F4FD5A23BBE685D043423 /* Pods_taleus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E8850DB4D7B1F67822D907 /* Pods_taleus.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		361F2EC98825CE541DD7C054 /* Pods_taleus_taleusTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7649F1BF64350CB1A1595745 /* Pods_taleus_taleusTests.framework */; };
+		16BB0F9580568AE75A2DB82D /* libPods-taleus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9263D87D81CCEDB493C901E /* libPods-taleus.a */; };
+		256C2E1C749520E2CD22A033 /* libPods-taleus-taleusTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38545335BCD09052F801B416 /* libPods-taleus-taleusTests.a */; };
 		4F5F6564B41E4DEEA9267421 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 30EAA4973F284666B8A27830 /* Pretendard-SemiBold.otf */; };
 		505CAD0D180541E9B7A75759 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B36490DB41F142E29A8E3075 /* Pretendard-Medium.otf */; };
 		781137FD246D462E94B983DA /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CC770407373449E9B24B4F78 /* Pretendard-Regular.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06A55ACEEDB042F7BC8EC1D2 /* Pretendard-Bold.otf */; };
-		BBA3B5482CAA794E000F87FE /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = BBA3B5472CAA794E000F87FE /* KakaoSDK */; };
 		BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
-		BBA3B5502CAA817E000F87FE /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BBA3B54F2CAA817E000F87FE /* FirebaseAnalytics */; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -50,11 +48,11 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = taleus/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		30EAA4973F284666B8A27830 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.otf"; path = "../src/mobile-ui/assets/font/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		37070F09AE08FCB48D6DE302 /* Pods-taleus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taleus.release.xcconfig"; path = "Target Support Files/Pods-taleus/Pods-taleus.release.xcconfig"; sourceTree = "<group>"; };
-		42E8850DB4D7B1F67822D907 /* Pods_taleus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taleus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38545335BCD09052F801B416 /* libPods-taleus-taleusTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus-taleusTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F6549023FF95D66C7C06EAF /* Pods-taleus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taleus.debug.xcconfig"; path = "Target Support Files/Pods-taleus/Pods-taleus.debug.xcconfig"; sourceTree = "<group>"; };
-		7649F1BF64350CB1A1595745 /* Pods_taleus_taleusTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taleus_taleusTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = taleus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B36490DB41F142E29A8E3075 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/mobile-ui/assets/font/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		B9263D87D81CCEDB493C901E /* libPods-taleus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA3B5452CAA70C9000F87FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BBA3B5512CAC3503000F87FE /* taleus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = taleus.entitlements; path = taleus/taleus.entitlements; sourceTree = "<group>"; };
@@ -69,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				361F2EC98825CE541DD7C054 /* Pods_taleus_taleusTests.framework in Frameworks */,
+				256C2E1C749520E2CD22A033 /* libPods-taleus-taleusTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,9 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBA3B5482CAA794E000F87FE /* KakaoSDK in Frameworks */,
-				BBA3B5502CAA817E000F87FE /* FirebaseAnalytics in Frameworks */,
-				062F4FD5A23BBE685D043423 /* Pods_taleus.framework in Frameworks */,
+				16BB0F9580568AE75A2DB82D /* libPods-taleus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				42E8850DB4D7B1F67822D907 /* Pods_taleus.framework */,
-				7649F1BF64350CB1A1595745 /* Pods_taleus_taleusTests.framework */,
+				B9263D87D81CCEDB493C901E /* libPods-taleus.a */,
+				38545335BCD09052F801B416 /* libPods-taleus-taleusTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,10 +223,6 @@
 			dependencies = (
 			);
 			name = taleus;
-			packageProductDependencies = (
-				BBA3B5472CAA794E000F87FE /* KakaoSDK */,
-				BBA3B54F2CAA817E000F87FE /* FirebaseAnalytics */,
-			);
 			productName = taleus;
 			productReference = 13B07F961A680F5B00A75B9A /* taleus.app */;
 			productType = "com.apple.product-type.application";
@@ -261,10 +253,6 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
-			packageReferences = (
-				BBA3B5462CAA794E000F87FE /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
-				BBA3B54E2CAA817E000F87FE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -619,7 +607,7 @@
 				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -660,6 +648,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -715,7 +704,7 @@
 				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -748,6 +737,7 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-DFOLLY_NO_CONFIG",
@@ -798,38 +788,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		BBA3B5462CAA794E000F87FE /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		BBA3B54E2CAA817E000F87FE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		BBA3B5472CAA794E000F87FE /* KakaoSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BBA3B5462CAA794E000F87FE /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
-			productName = KakaoSDK;
-		};
-		BBA3B54F2CAA817E000F87FE /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BBA3B54E2CAA817E000F87FE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
