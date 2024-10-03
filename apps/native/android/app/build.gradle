@@ -6,7 +6,7 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 
 // Hermes 엔진 활성화
 project.ext.react = [
-    enableHermes: true
+    enableHermes: false
 ]
 
 /**
@@ -64,7 +64,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+ def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -79,7 +79,6 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 def enableSeparateBuildPerCPUArchitecture = true
-def enableProguardInReleaseBuilds = true
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -118,6 +117,8 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            minifyEnabled false // 코드 축소 비활성화
+            shrinkResources false // 리소스 축소 비활성화
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -126,7 +127,8 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
-            shrinkResources true
+            minifyEnabled true // 코드 축소 활성화
+            shrinkResources true // 리소스 축소 활성화
         }
     }
 }

@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  taleus
+//
+//  Created by 우민기 on 9/30/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include? "tmp.xcconfig"

@@ -24,7 +24,6 @@ export const useAuthentication_LandingGoogleSignIn: Hook<
   const { execute: signInWithGoogle, loading: isSigningInWithGoogle } = useAsyncCallback(
     async (): Promise<FirebaseAuthTypes.UserCredential> => {
       try {
-        // TODO:민기 .env 넣어야함
         GoogleSignin.configure({
           webClientId: Config.GOOGLE_SIGNIN_WEB_CLIENT_ID,
         });
