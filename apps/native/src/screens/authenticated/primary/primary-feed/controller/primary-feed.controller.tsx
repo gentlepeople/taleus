@@ -2,6 +2,7 @@ import { useAuth } from '~/providers';
 import { IFeedList } from '../primary-feed.type';
 import {
   usePrimary_FeedListData,
+  usePrimary_FeedMixpanel,
   usePrimary_FeedNavigation,
   usePrimary_FeedPreventOnboardingUser,
 } from './hooks';
@@ -28,6 +29,7 @@ export const usePrimary_FeedController: Controller<
   const { isInitialLoading, isLoadingMore, listData, refetchList, fetchMoreList } =
     usePrimary_FeedListData();
   usePrimary_FeedPreventOnboardingUser();
+  const {} = usePrimary_FeedMixpanel();
 
   const nickname = currentUser && currentUser.nickname;
   const partnerNickname = currentUser && currentUser.partnerNickname;

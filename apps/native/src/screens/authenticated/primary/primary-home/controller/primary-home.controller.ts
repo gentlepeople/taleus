@@ -11,6 +11,7 @@ import {
   usePrimary_HomeKeyboardManager,
   usePrimary_HomeMinutesReminderManager,
   usePrimary_HomeMissionReminder,
+  usePrimary_HomeMixpanel,
   usePrimary_HomeNavigation,
   usePrimary_HomeOnboardingQuestionData,
   usePrimary_HomeOnboardingUserAnswer,
@@ -81,6 +82,11 @@ export const usePrimary_HomeController: Controller<
   const { missionReminder } = usePrimary_HomeMissionReminder({ coupleMissionId });
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
   const { checkMinutesReminder } = usePrimary_HomeMinutesReminderManager();
+  const {
+    clickConnectCoupleMixpanelEvent,
+    requestReminderMixpanelEvent,
+    viewPartnerAnswerMixpanelEvent,
+  } = usePrimary_HomeMixpanel();
 
   const isLoading = isOnboardingQuestionLoading || isTodayMissionLoading;
   const isWritable = isOnboarindgUserWritable || isTodayWritable;
@@ -217,6 +223,7 @@ export const usePrimary_HomeController: Controller<
 
   const pressBannerButton = useCallback(async () => {
     if (!isCoupled) {
+      clickConnectCoupleMixpanelEvent();
       goConnectCouple();
       return;
     }
@@ -242,6 +249,7 @@ export const usePrimary_HomeController: Controller<
         }
       }
 
+      requestReminderMixpanelEvent();
       await missionReminder();
     }
   }, [
@@ -249,6 +257,8 @@ export const usePrimary_HomeController: Controller<
     checkMinutesReminder,
     openPreventMissionReminderModal,
     goConnectCouple,
+    clickConnectCoupleMixpanelEvent,
+    requestReminderMixpanelEvent,
     isCoupled,
     hasNoPartnerReply,
   ]);
@@ -256,6 +266,11 @@ export const usePrimary_HomeController: Controller<
   useEffectOnceWhen(() => {
     setQuestionIds(questions);
   }, !!questions);
+
+  useEffectOnceWhen(() => {
+    // TODO:민기 fix!
+    viewPartnerAnswerMixpanelEvent({ questionId: 1, questionSubId: 1 });
+  }, showPartnerAnswer);
 
   return {
     isLoading,

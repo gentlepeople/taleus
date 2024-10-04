@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { IUserData } from '../authentication-sign-up.type';
 
 import {
+  useAuthentication_SignUpMixpanel,
   useAuthentication_SignUpNavigation,
   useAuthentication_SignUpState,
   useAuthentication_SignUpUpdateUser,
@@ -40,10 +41,12 @@ export const useAuthentication_SignUpController: Controller<
     checkTerms,
   } = useAuthentication_SignUpState();
   const { updateUserInfo } = useAuthentication_SignUpUpdateUser();
+  const { clickSignUpMixpanelEvent } = useAuthentication_SignUpMixpanel();
 
   const signUp = useCallback(async () => {
+    clickSignUpMixpanelEvent();
     await updateUserInfo({ userData, onSuccess: goHome });
-  }, [userData, updateUserInfo, goHome]);
+  }, [userData, updateUserInfo, goHome, clickSignUpMixpanelEvent]);
 
   return {
     userData,

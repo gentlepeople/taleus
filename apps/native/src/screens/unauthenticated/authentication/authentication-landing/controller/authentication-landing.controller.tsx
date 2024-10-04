@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
+import { EAuthType } from '~/providers';
 
 import {
   useAuthenticationLandingContentSignInApple,
   useAuthentication_LandingCheckOnboardingCompleted,
   useAuthentication_LandingGoogleSignIn,
   useAuthentication_LandingKakaoSignIn,
+  useAuthentication_LandingMixpanel,
   useAuthentication_LandingNavigation,
   useAuthentication_LandingOpenPreventBrowseModal,
 } from './hooks';
@@ -27,6 +29,8 @@ export const useAuthentication_LandingController: Controller<
   const { signInWithApple } = useAuthenticationLandingContentSignInApple();
   const { hasOnboardingData } = useAuthentication_LandingCheckOnboardingCompleted();
   const { openPreventBrowseModal } = useAuthentication_LandingOpenPreventBrowseModal();
+  const { clickLoginMixpanelEvent, clickViewMoreMixpanelEvent } =
+    useAuthentication_LandingMixpanel();
 
   const browseApp = useCallback(() => {
     if (hasOnboardingData) {
@@ -35,19 +39,23 @@ export const useAuthentication_LandingController: Controller<
     }
 
     goHome();
-  }, [goHome, hasOnboardingData, openPreventBrowseModal]);
+    clickViewMoreMixpanelEvent();
+  }, [goHome, hasOnboardingData, openPreventBrowseModal, clickViewMoreMixpanelEvent]);
 
   const kakaoSignUp = useCallback(async () => {
     await signInWithKakao();
-  }, [signInWithKakao]);
+    clickLoginMixpanelEvent(EAuthType.KAKAO);
+  }, [signInWithKakao, clickLoginMixpanelEvent]);
 
   const googleSignUp = useCallback(async () => {
     await signInWithGoogle();
-  }, [signInWithGoogle]);
+    clickLoginMixpanelEvent(EAuthType.GOOGLE);
+  }, [signInWithGoogle, clickLoginMixpanelEvent]);
 
   const appleSignUp = useCallback(async () => {
     await signInWithApple();
-  }, [signInWithApple]);
+    clickLoginMixpanelEvent(EAuthType.APPLE);
+  }, [signInWithApple, clickLoginMixpanelEvent]);
 
   return { browseApp, kakaoSignUp, googleSignUp, appleSignUp };
 };

@@ -24,8 +24,8 @@ export const usePrimary_FeedListData: Hook<
     notifyOnNetworkStatusChange: true,
     variables: {
       userId: currentUser ? currentUser.id : '',
-      take: FEED_LIST_QUERY_LIMIT, // limit
-      skip: FEED_LIST_QUERY_OFFSET, // offset
+      take: FEED_LIST_QUERY_LIMIT,
+      skip: FEED_LIST_QUERY_OFFSET,
     },
   });
 

@@ -32,3 +32,8 @@ export type ISubmitAnswersParams = {
 export type IReminderParams = {
   openPreventModal: (title: string) => void;
 };
+
+export type IViewPartnerAnswerMixpanelEventParams = {
+  questionId: number;
+  questionSubId: number;
+};

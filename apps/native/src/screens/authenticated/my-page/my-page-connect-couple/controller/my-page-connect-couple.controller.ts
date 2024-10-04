@@ -6,6 +6,7 @@ import {
   useMyPage_ConnectCoupleConnect,
   useMyPage_ConnectCoupleInputManager,
   useMyPage_ConnectCoupleKakaoShare,
+  useMyPage_ConnectCoupleMixpanel,
   useMyPage_ConnectCoupleNavigation,
 } from './hooks';
 
@@ -33,20 +34,24 @@ export const useMyPage_ConnectCoupleController: Controller<
   const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete });
   const { partnerPersonalCode, changePartnerPersonalCode } = useMyPage_ConnectCoupleInputManager();
   const { kakaoShare } = useMyPage_ConnectCoupleKakaoShare();
+  const { copyCoupleCodeMixpanelEvent, shareCoupleCodeMixpanelEvent } =
+    useMyPage_ConnectCoupleMixpanel();
 
   const isCTADisabled = partnerPersonalCode.length < 8;
 
   const copyUserCode = useCallback(() => {
+    copyCoupleCodeMixpanelEvent(personalCode);
     copyToClipboard(personalCode);
-  }, [copyToClipboard]);
+  }, [copyToClipboard, copyCoupleCodeMixpanelEvent, personalCode]);
 
   const connect = useCallback(async () => {
     await connectCouple(partnerPersonalCode);
   }, [connectCouple, partnerPersonalCode]);
 
   const share = useCallback(async () => {
+    shareCoupleCodeMixpanelEvent(personalCode);
     await kakaoShare(personalCode);
-  }, [kakaoShare, personalCode]);
+  }, [kakaoShare, shareCoupleCodeMixpanelEvent, personalCode]);
 
   return {
     personalCode,
