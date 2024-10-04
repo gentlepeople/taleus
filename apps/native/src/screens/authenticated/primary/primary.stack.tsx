@@ -10,6 +10,7 @@ import {
   AuthenticatedStackParamList,
 } from '../authenticated.stack';
 
+import { useKeyboard } from '@react-native-community/hooks';
 import { usePrimaryMixpanel } from './hooks';
 import { Primary_FeedScreen } from './primary-feed';
 import { Primary_HomeScreen } from './primary-home';
@@ -38,9 +39,12 @@ export type IPrimaryStackProps = {
 export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
   const { selectAppBarMixpanelEvent } = usePrimaryMixpanel();
 
+  const keyboard = useKeyboard();
+  const isKeyboardShown = keyboard.keyboardShown;
+
   return (
     <Tab.Navigator
-      tabBar={BottomTabNavigator}
+      tabBar={isKeyboardShown ? () => null : BottomTabNavigator}
       screenOptions={{ headerShown: false }}
       initialRouteName="Primary_HomeScreen"
     >

@@ -1,8 +1,32 @@
 import { useCallback } from 'react';
 import { EMixpanelEventType, useMixpanel } from '~/providers';
+import { convertCategory } from '~/utils';
+import { IViewAnswerMixpanelEventParams } from '../../../feed-detail.type';
 
 type IFeed_DetailMixpanelInput = void;
-type IFeed_DetailMixpanelOutput = {};
+type IFeed_DetailMixpanelOutput = {
+  viewFirstAnswerMixpanelEvent: ({
+    missionId,
+    questionId,
+    questionOrder,
+    category,
+    formattedDate,
+  }: IViewAnswerMixpanelEventParams) => void;
+  viewSecondAnswerMixpanelEvent: ({
+    missionId,
+    questionId,
+    questionOrder,
+    category,
+    formattedDate,
+  }: IViewAnswerMixpanelEventParams) => void;
+  viewThirdAnswerMixpanelEvent: ({
+    missionId,
+    questionId,
+    questionOrder,
+    category,
+    formattedDate,
+  }: IViewAnswerMixpanelEventParams) => void;
+};
 
 export const useFeed_DetailMixpanel: Hook<
   IFeed_DetailMixpanelInput,
@@ -10,42 +34,81 @@ export const useFeed_DetailMixpanel: Hook<
 > = () => {
   const { mixpanel } = useMixpanel();
 
-  // TODO:민기 fix!
-  const viewFirstAnswerMixpanelEvent = useCallback(() => {
-    mixpanel.trackEvent({
-      type: EMixpanelEventType.VIEW_FIRST_ANSWER,
-      properties: {
-        question_id: 1,
-        question_subid: 1,
-        question_category: '',
-        submit_date: new Date(),
-      },
-    });
-  }, [mixpanel]);
+  const viewFirstAnswerMixpanelEvent = useCallback(
+    ({
+      missionId,
+      questionId,
+      questionOrder,
+      category,
+      formattedDate,
+    }: IViewAnswerMixpanelEventParams) => {
+      const convertedCategory = convertCategory(category);
 
-  const viewSecondeAnswerMixpanelEvent = useCallback(() => {
-    mixpanel.trackEvent({
-      type: EMixpanelEventType.VIEW_SECOND_ANSWER,
-      properties: {
-        question_id: 1,
-        question_subid: 1,
-        question_category: '',
-        submit_date: new Date(),
-      },
-    });
-  }, [mixpanel]);
+      mixpanel.trackEvent({
+        type: EMixpanelEventType.VIEW_FIRST_ANSWER,
+        properties: {
+          mission_id: missionId,
+          question_id: questionId,
+          question_order: questionOrder,
+          question_category: convertedCategory,
+          submit_date: formattedDate,
+        },
+      });
+    },
+    [mixpanel],
+  );
 
-  const viewThirdAnswerMixpanelEvent = useCallback(() => {
-    mixpanel.trackEvent({
-      type: EMixpanelEventType.VIEW_THIRD_ANSWER,
-      properties: {
-        question_id: 1,
-        question_subid: 1,
-        question_category: '',
-        submit_date: new Date(),
-      },
-    });
-  }, [mixpanel]);
+  const viewSecondAnswerMixpanelEvent = useCallback(
+    ({
+      missionId,
+      questionId,
+      questionOrder,
+      category,
+      formattedDate,
+    }: IViewAnswerMixpanelEventParams) => {
+      const convertedCategory = convertCategory(category);
 
-  return {};
+      mixpanel.trackEvent({
+        type: EMixpanelEventType.VIEW_SECOND_ANSWER,
+        properties: {
+          mission_id: missionId,
+          question_id: questionId,
+          question_order: questionOrder,
+          question_category: convertedCategory,
+          submit_date: formattedDate,
+        },
+      });
+    },
+    [mixpanel],
+  );
+
+  const viewThirdAnswerMixpanelEvent = useCallback(
+    ({
+      missionId,
+      questionId,
+      questionOrder,
+      category,
+      formattedDate,
+    }: IViewAnswerMixpanelEventParams) => {
+      const convertedCategory = convertCategory(category);
+
+      mixpanel.trackEvent({
+        type: EMixpanelEventType.VIEW_THIRD_ANSWER,
+        properties: {
+          mission_id: missionId,
+          question_id: questionId,
+          question_order: questionOrder,
+          question_category: convertedCategory,
+          submit_date: formattedDate,
+        },
+      });
+    },
+    [mixpanel],
+  );
+
+  return {
+    viewFirstAnswerMixpanelEvent,
+    viewSecondAnswerMixpanelEvent,
+    viewThirdAnswerMixpanelEvent,
+  };
 };

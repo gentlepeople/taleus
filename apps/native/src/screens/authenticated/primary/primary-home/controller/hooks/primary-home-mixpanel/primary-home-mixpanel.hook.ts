@@ -5,10 +5,10 @@ import { IViewPartnerAnswerMixpanelEventParams } from '../../../primary-home.typ
 type IPrimary_HomeMixpanelInput = void;
 type IPrimary_HomeMixpanelOutput = {
   clickConnectCoupleMixpanelEvent: () => void;
-  requestReminderMixpanelEvent: () => void;
+  requestReminderMixpanelEvent: (missionId: number) => void;
   viewPartnerAnswerMixpanelEvent: ({
-    questionId,
-    questionSubId,
+    missionId,
+    questions,
   }: IViewPartnerAnswerMixpanelEventParams) => void;
 };
 
@@ -25,20 +25,38 @@ export const usePrimary_HomeMixpanel: Hook<
     });
   }, [mixpanel]);
 
-  const requestReminderMixpanelEvent = useCallback(() => {
-    mixpanel.trackEvent({
-      type: EMixpanelEventType.REQUEST_REMINDER,
-      properties: {},
-    });
-  }, [mixpanel]);
+  const requestReminderMixpanelEvent = useCallback(
+    (missionId: number) => {
+      mixpanel.trackEvent({
+        type: EMixpanelEventType.REQUEST_REMINDER,
+        properties: {
+          mission_id: missionId,
+        },
+      });
+    },
+    [mixpanel],
+  );
 
   const viewPartnerAnswerMixpanelEvent = useCallback(
-    ({ questionId, questionSubId }: IViewPartnerAnswerMixpanelEventParams) => {
+    ({ missionId, questions }: IViewPartnerAnswerMixpanelEventParams) => {
+      const { questionIds, questionOrders } = questions.reduce(
+        (acc, q) => {
+          acc.questionIds.push(q.questionId);
+          acc.questionOrders.push(q.questionOrder);
+          return acc;
+        },
+        { questionIds: [], questionOrders: [] } as {
+          questionIds: number[];
+          questionOrders: number[];
+        },
+      );
+
       mixpanel.trackEvent({
         type: EMixpanelEventType.VIEW_PATNER_ANSWER,
         properties: {
-          question_id: 1,
-          question_subid: 1,
+          mission_id: missionId,
+          question_ids: questionIds,
+          question_orders: questionOrders,
         },
       });
     },

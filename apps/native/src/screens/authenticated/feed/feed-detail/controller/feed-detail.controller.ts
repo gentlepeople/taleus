@@ -3,13 +3,14 @@ import { PanGesture } from 'react-native-gesture-handler';
 import { EDirection } from '~/mobile-ui';
 
 import { useCallback, useEffect, useMemo } from 'react';
-import { INITIAL_PROGRESS, LAST_PROGRESS } from '../feed-detail.const';
+import { INITIAL_PROGRESS, LAST_PROGRESS, SECOND_PROGRESS } from '../feed-detail.const';
 import { IAnswer } from '../feed-detail.type';
 import {
   useFeed_DetailAnimationKey,
   useFeed_DetailData,
   useFeed_DetailEditManager,
   useFeed_DetailGestureHandler,
+  useFeed_DetailMixpanel,
   useFeed_DetailOpenModal,
   useFeed_DetailProgress,
   useFeed_DetailUpdateUserResponse,
@@ -39,12 +40,25 @@ export const useFeed_DetailController: Controller<
   IFeed_DetailControllerInput,
   IFeed_DetailControllerOutput
 > = () => {
-  const { isFeedDataLoading, answers, submittedDate, nickname, partnerNickname } =
-    useFeed_DetailData();
+  const {
+    isFeedDataLoading,
+    answers,
+    submittedDate,
+    nickname,
+    partnerNickname,
+    missionId,
+    category,
+    recentDate,
+  } = useFeed_DetailData();
   const { updateUserResponse } = useFeed_DetailUpdateUserResponse();
   const { newContent, isEdit, startEdit, endEdit, setContent } = useFeed_DetailEditManager();
   const { progress, incrementProgress, decrementProgress } = useFeed_DetailProgress();
   const { openCheckEditModal, openCheckSwipeModal } = useFeed_DetailOpenModal();
+  const {
+    viewFirstAnswerMixpanelEvent,
+    viewSecondAnswerMixpanelEvent,
+    viewThirdAnswerMixpanelEvent,
+  } = useFeed_DetailMixpanel();
 
   const { direction, animationKeyIndex, nextQuestionAnimation, prevQuestionAnimation } =
     useFeed_DetailAnimationKey();
@@ -140,6 +154,50 @@ export const useFeed_DetailController: Controller<
 
     setContent(currentUserAnswer);
   }, [currentUserAnswer, setContent, isEdit]);
+
+  useEffect(() => {
+    if (progress === INITIAL_PROGRESS) {
+      viewFirstAnswerMixpanelEvent({
+        missionId,
+        questionId: currentAnswer.questionId,
+        questionOrder: currentAnswer.questionOrder,
+        category,
+        formattedDate: recentDate,
+      });
+      return;
+    }
+
+    if (progress === SECOND_PROGRESS) {
+      viewSecondAnswerMixpanelEvent({
+        missionId,
+        questionId: currentAnswer.questionId,
+        questionOrder: currentAnswer.questionOrder,
+        category,
+        formattedDate: recentDate,
+      });
+      return;
+    }
+
+    if (progress === LAST_PROGRESS) {
+      viewThirdAnswerMixpanelEvent({
+        missionId,
+        questionId: currentAnswer.questionId,
+        questionOrder: currentAnswer.questionOrder,
+        category,
+        formattedDate: recentDate,
+      });
+      return;
+    }
+  }, [
+    progress,
+    currentAnswer,
+    missionId,
+    category,
+    recentDate,
+    viewFirstAnswerMixpanelEvent,
+    viewSecondAnswerMixpanelEvent,
+    viewThirdAnswerMixpanelEvent,
+  ]);
 
   const isCTADisabled = newContent.length > 200;
 

@@ -4,6 +4,7 @@ import { Keyboard } from 'react-native';
 
 type IPrimary_HomeKeyboardManagerInput = void;
 type IPrimary_HomeKeyboardManagerOutput = {
+  isKeyboardShown: boolean;
   hideKeyboard: () => void;
 };
 
@@ -13,11 +14,13 @@ export const usePrimary_HomeKeyboardManager: Hook<
 > = () => {
   const keyboard = useKeyboard();
 
+  const isKeyboardShown = keyboard.keyboardShown;
+
   const hideKeyboard = useCallback(() => {
-    if (keyboard.keyboardShown) {
+    if (isKeyboardShown) {
       Keyboard.dismiss();
     }
-  }, [keyboard, Keyboard]);
+  }, [isKeyboardShown, Keyboard]);
 
-  return { hideKeyboard };
+  return { isKeyboardShown, hideKeyboard };
 };

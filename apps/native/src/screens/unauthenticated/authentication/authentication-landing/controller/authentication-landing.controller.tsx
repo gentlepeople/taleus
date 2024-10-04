@@ -38,8 +38,8 @@ export const useAuthentication_LandingController: Controller<
       return;
     }
 
-    goHome();
     clickViewMoreMixpanelEvent();
+    goHome();
   }, [goHome, hasOnboardingData, openPreventBrowseModal, clickViewMoreMixpanelEvent]);
 
   const kakaoSignUp = useCallback(async () => {

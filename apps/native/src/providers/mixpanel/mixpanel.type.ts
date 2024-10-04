@@ -88,14 +88,17 @@ type IMixpanelShareCoupleCode = {
 
 type IMixpanelRequestReminder = {
   type: EMixpanelEventType.REQUEST_REMINDER;
-  properties: {};
+  properties: {
+    mission_id: number;
+  };
 };
 
 type IMixpanelViewPartnerAnswer = {
   type: EMixpanelEventType.VIEW_PATNER_ANSWER;
   properties: {
-    question_id: number;
-    question_subid: number;
+    mission_id: number;
+    question_ids: number[];
+    question_orders: number[];
   };
 };
 
@@ -122,7 +125,9 @@ type IMixpanelSelectAppBar = {
 type IMixpanelSelectRecord = {
   type: EMixpanelEventType.SELECT_RECORD;
   properties: {
-    question_id: number;
+    mission_id: number;
+    question_ids: number[];
+    question_orders: number[];
     question_category: string;
     submit_date: Date;
   };
@@ -132,8 +137,9 @@ type IMixpanelSelectRecord = {
 type IMixpanelViewFirstAnswer = {
   type: EMixpanelEventType.VIEW_FIRST_ANSWER;
   properties: {
+    mission_id: number;
     question_id: number;
-    question_subid: number;
+    question_order: number;
     question_category: string;
     submit_date: Date;
   };
@@ -143,8 +149,9 @@ type IMixpanelViewFirstAnswer = {
 type IMixpanelViewSecondAnswer = {
   type: EMixpanelEventType.VIEW_SECOND_ANSWER;
   properties: {
+    mission_id: number;
     question_id: number;
-    question_subid: number;
+    question_order: number;
     question_category: string;
     submit_date: Date;
   };
@@ -154,8 +161,9 @@ type IMixpanelViewSecondAnswer = {
 type IMixpanelViewThirdAnswer = {
   type: EMixpanelEventType.VIEW_THIRD_ANSWER;
   properties: {
+    mission_id: number;
     question_id: number;
-    question_subid: number;
+    question_order: number;
     question_category: string;
     submit_date: Date;
   };

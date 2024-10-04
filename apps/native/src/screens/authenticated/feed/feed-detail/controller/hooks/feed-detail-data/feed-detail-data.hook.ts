@@ -1,4 +1,4 @@
-import { useFeed_DetailDataQuery } from '@gentlepeople/taleus-codegen';
+import { EnumMissionCategory, useFeed_DetailDataQuery } from '@gentlepeople/taleus-codegen';
 import { useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import isUndefined from 'lodash/isUndefined';
@@ -14,6 +14,9 @@ type IFeed_DetailDataOutput = {
   submittedDate: string;
   nickname: string;
   partnerNickname: string;
+  missionId: number;
+  category: EnumMissionCategory;
+  recentDate: Date;
 };
 
 export const useFeed_DetailData: Hook<IFeed_DetailDataInput, IFeed_DetailDataOutput> = () => {
@@ -42,17 +45,24 @@ export const useFeed_DetailData: Hook<IFeed_DetailDataInput, IFeed_DetailDataOut
       submittedDate: null,
       nickname: '',
       partnerNickname: '',
+      missionId: null,
+      category: null,
+      recentDate: null,
     };
   }
 
   const missionData = currentData.completedCoupleMission.data;
+  const missionId = currentData.completedCoupleMission.mission.missionId;
+  const category = currentData.completedCoupleMission.mission.category;
 
   const answers = missionData.map(({ question, partnerResponse, userResponse }) => {
-    const { content: questionTitle } = question;
+    const { content: questionTitle, questionId, questionOrder } = question;
     const { content: partnerAnswer } = partnerResponse;
     const { content: userAnswer, responseId } = userResponse;
 
     return {
+      questionId,
+      questionOrder,
       questionTitle,
       partnerAnswer,
       userAnswer,
@@ -63,12 +73,21 @@ export const useFeed_DetailData: Hook<IFeed_DetailDataInput, IFeed_DetailDataOut
   const partnerCreatedAt = missionData[0].partnerResponse.createdAt;
   const userCreatedAt = missionData[0].userResponse.createdAt;
   const recentDate = dayjs(partnerCreatedAt).isAfter(dayjs(userCreatedAt))
-    ? partnerCreatedAt
-    : userCreatedAt;
+    ? (partnerCreatedAt as Date)
+    : (userCreatedAt as Date);
   const submittedDate = dayjs(recentDate).format('YYYY년 MM월 DD일');
 
   const nickname = currentUser.nickname;
   const partnerNickname = currentUser.partnerNickname;
 
-  return { isFeedDataLoading: false, answers, submittedDate, nickname, partnerNickname };
+  return {
+    isFeedDataLoading: false,
+    answers,
+    submittedDate,
+    nickname,
+    partnerNickname,
+    missionId,
+    category,
+    recentDate,
+  };
 };

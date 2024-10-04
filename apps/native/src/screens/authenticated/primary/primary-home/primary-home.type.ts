@@ -34,6 +34,6 @@ export type IReminderParams = {
 };
 
 export type IViewPartnerAnswerMixpanelEventParams = {
-  questionId: number;
-  questionSubId: number;
+  missionId: number;
+  questions: IQuestions;
 };
