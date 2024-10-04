@@ -11,6 +11,7 @@ import {
   usePrimary_HomeKeyboardManager,
   usePrimary_HomeMinutesReminderManager,
   usePrimary_HomeMissionReminder,
+  usePrimary_HomeMixpanel,
   usePrimary_HomeNavigation,
   usePrimary_HomeOnboardingQuestionData,
   usePrimary_HomeOnboardingUserAnswer,
@@ -75,20 +76,26 @@ export const usePrimary_HomeController: Controller<
     savedOnboardingData,
     todayMissionId,
   });
-  const { hideKeyboard } = usePrimary_HomeKeyboardManager();
+  const { isKeyboardShown, hideKeyboard } = usePrimary_HomeKeyboardManager();
   const { openOnboardingUserModal, openPreventMissionReminderModal } = usePrimary_HomeOpenModal();
   const { goConnectCouple } = usePrimary_HomeNavigation();
   const { missionReminder } = usePrimary_HomeMissionReminder({ coupleMissionId });
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
   const { checkMinutesReminder } = usePrimary_HomeMinutesReminderManager();
+  const {
+    clickConnectCoupleMixpanelEvent,
+    requestReminderMixpanelEvent,
+    viewPartnerAnswerMixpanelEvent,
+  } = usePrimary_HomeMixpanel();
 
   const isLoading = isOnboardingQuestionLoading || isTodayMissionLoading;
   const isWritable = isOnboarindgUserWritable || isTodayWritable;
 
   const showBanner =
-    !isOnboarindgUserWritable ||
-    !(isCoupled && !todayAnswersCompleted && !partnerTodayAnswersCompleted) ||
-    !(isCoupled && todayAnswersCompleted && partnerTodayAnswersCompleted);
+    (!isOnboarindgUserWritable ||
+      !(isCoupled && !todayAnswersCompleted && !partnerTodayAnswersCompleted) ||
+      !(isCoupled && todayAnswersCompleted && partnerTodayAnswersCompleted)) &&
+    !isKeyboardShown;
   const shouldConnect = !isCoupled;
   const hasNoMyReply = isCoupled && !todayAnswersCompleted && partnerTodayAnswersCompleted;
   const hasNoPartnerReply = isCoupled && todayAnswersCompleted && !partnerTodayAnswersCompleted;
@@ -217,9 +224,12 @@ export const usePrimary_HomeController: Controller<
 
   const pressBannerButton = useCallback(async () => {
     if (!isCoupled) {
+      clickConnectCoupleMixpanelEvent();
       goConnectCouple();
       return;
     }
+
+    requestReminderMixpanelEvent(todayMissionId);
 
     if (hasNoPartnerReply) {
       if (isPremiumUser) {
@@ -249,13 +259,20 @@ export const usePrimary_HomeController: Controller<
     checkMinutesReminder,
     openPreventMissionReminderModal,
     goConnectCouple,
+    clickConnectCoupleMixpanelEvent,
+    requestReminderMixpanelEvent,
     isCoupled,
     hasNoPartnerReply,
+    todayMissionId,
   ]);
 
   useEffectOnceWhen(() => {
     setQuestionIds(questions);
   }, !!questions);
+
+  useEffectOnceWhen(() => {
+    viewPartnerAnswerMixpanelEvent({ missionId: todayMissionId, questions });
+  }, showPartnerAnswer);
 
   return {
     isLoading,

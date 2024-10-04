@@ -3,16 +3,23 @@ query Feed_DetailData($userId: String!, $coupleMissionId: Int!) {
     data {
       question {
         content
+        questionId
+        questionOrder
       }
       partnerResponse {
         content
         createdAt
+        responseId
       }
       userResponse {
         content
         createdAt
         responseId
       }
+    }
+    mission {
+      missionId
+      category
     }
   }
 }

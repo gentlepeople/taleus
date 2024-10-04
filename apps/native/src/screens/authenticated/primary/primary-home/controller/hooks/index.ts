@@ -5,6 +5,7 @@ export * from './primary-home-gesture-handler';
 export * from './primary-home-keyboard-manager';
 export * from './primary-home-minutes-reminder-manager';
 export * from './primary-home-mission-reminder';
+export * from './primary-home-mixpanel';
 export * from './primary-home-navigation';
 export * from './primary-home-onboarding-question-data';
 export * from './primary-home-onboarding-user-answers';

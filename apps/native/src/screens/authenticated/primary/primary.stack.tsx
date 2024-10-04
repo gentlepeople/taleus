@@ -10,6 +10,8 @@ import {
   AuthenticatedStackParamList,
 } from '../authenticated.stack';
 
+import { useKeyboard } from '@react-native-community/hooks';
+import { usePrimaryMixpanel } from './hooks';
 import { Primary_FeedScreen } from './primary-feed';
 import { Primary_HomeScreen } from './primary-home';
 import { Primary_MyPageScreen } from './primary-my-page';
@@ -35,23 +37,25 @@ export type IPrimaryStackProps = {
 };
 
 export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
-  //   const { handlePressHomeTab, handlePressTodayTab, handlePressStatsTab, handlePressMoreTab } =
-  //     usePrimaryTabMixpanel();
+  const { selectAppBarMixpanelEvent } = usePrimaryMixpanel();
+
+  const keyboard = useKeyboard();
+  const isKeyboardShown = keyboard.keyboardShown;
 
   return (
     <Tab.Navigator
-      tabBar={BottomTabNavigator}
+      tabBar={isKeyboardShown ? () => null : BottomTabNavigator}
       screenOptions={{ headerShown: false }}
       initialRouteName="Primary_HomeScreen"
     >
       <Tab.Screen
         name="Primary_FeedScreen"
         component={Primary_FeedScreen}
-        // listeners={() => ({
-        //   tabPress: () => {
-        //     return;
-        //   },
-        // })}
+        listeners={() => ({
+          tabPress: () => {
+            selectAppBarMixpanelEvent('Feed');
+          },
+        })}
         options={{
           tabBarLabel: '우리기록',
           tabBarIcon: ({ color, size }) => {
@@ -62,6 +66,11 @@ export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
       <Tab.Screen
         name="Primary_HomeScreen"
         component={Primary_HomeScreen}
+        listeners={() => ({
+          tabPress: () => {
+            selectAppBarMixpanelEvent('Home');
+          },
+        })}
         options={{
           tabBarLabel: '오늘의 질문',
           tabBarIcon: ({ color, size }) => {
@@ -72,6 +81,11 @@ export const PrimaryStack: FC<IPrimaryStackProps> = ({ navigation, route }) => {
       <Tab.Screen
         name="Primary_MyPageScreen"
         component={Primary_MyPageScreen}
+        listeners={() => ({
+          tabPress: () => {
+            selectAppBarMixpanelEvent('My');
+          },
+        })}
         options={{
           tabBarLabel: '마이페이지',
           tabBarIcon: ({ color, size }) => {

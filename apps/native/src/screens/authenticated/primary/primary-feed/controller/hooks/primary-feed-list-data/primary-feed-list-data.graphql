@@ -12,6 +12,8 @@ query Primary_FeedListData($userId: String!, $skip: Int, $take: Int) {
       data {
         question {
           content
+          questionId
+          questionOrder
         }
         partnerResponse {
           content

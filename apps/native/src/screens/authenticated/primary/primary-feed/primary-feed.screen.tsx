@@ -40,6 +40,7 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
     refetchList,
     fetchMoreList,
     goFeedDetail,
+    selectRecordMixpanelEvent,
   } = usePrimary_FeedController();
 
   if (isInitialLoading) {
@@ -53,11 +54,30 @@ export const Primary_FeedScreen: FC<IPrimary_FeedScreenProps> = () => {
   };
 
   const renderItem: ValueOf<FlashListProps<IFeed>, 'renderItem'> = ({ item, index }) => {
-    const { coupleMissionId, category, answers } = item;
+    const { missionId, coupleMissionId, category, answers, formattedDate } = item;
 
-    const { questionTitle, partnerAnswer, userAnswer, formattedDate } = answers[0];
+    const { questionIds, questionOrders } = answers.reduce(
+      (acc, q) => {
+        acc.questionIds.push(q.questionId);
+        acc.questionOrders.push(q.questionOrder);
+        return acc;
+      },
+      { questionIds: [], questionOrders: [] } as {
+        questionIds: number[];
+        questionOrders: number[];
+      },
+    );
+
+    const { questionTitle, partnerAnswer, userAnswer } = answers[0];
 
     const handlePressContentCard = () => {
+      selectRecordMixpanelEvent({
+        missionId,
+        questionIds,
+        questionOrders,
+        category,
+        formattedDate,
+      });
       goFeedDetail(coupleMissionId);
     };
 

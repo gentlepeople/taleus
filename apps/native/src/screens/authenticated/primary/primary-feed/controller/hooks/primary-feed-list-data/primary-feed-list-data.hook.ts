@@ -24,8 +24,8 @@ export const usePrimary_FeedListData: Hook<
     notifyOnNetworkStatusChange: true,
     variables: {
       userId: currentUser ? currentUser.id : '',
-      take: FEED_LIST_QUERY_LIMIT, // limit
-      skip: FEED_LIST_QUERY_OFFSET, // offset
+      take: FEED_LIST_QUERY_LIMIT,
+      skip: FEED_LIST_QUERY_OFFSET,
     },
   });
 
@@ -53,30 +53,36 @@ export const usePrimary_FeedListData: Hook<
 
   const listData = data?.completedCoupleMissions.data?.map(({ mission, coupleMission, data }) => {
     const { coupleMissionId } = coupleMission && coupleMission;
-    const { category } = mission && mission;
+    const { category, missionId } = mission && mission;
 
     const answers = data?.map(({ question, partnerResponse, userResponse }) => {
-      const { content: questionTitle } = question;
-      const { content: partnerAnswer, createdAt: partnerCreatedAt } = partnerResponse;
-      const { content: userAnswer, createdAt: userCreatedAt } = userResponse;
-
-      const recentDate = dayjs(partnerCreatedAt).isAfter(dayjs(userCreatedAt))
-        ? partnerCreatedAt
-        : userCreatedAt;
-      const formattedDate = dayjs(recentDate).format('YYYY/MM/DD');
+      const { content: questionTitle, questionId, questionOrder } = question;
+      const { content: partnerAnswer } = partnerResponse;
+      const { content: userAnswer } = userResponse;
 
       return {
+        questionId,
+        questionOrder,
         questionTitle,
         partnerAnswer,
         userAnswer,
-        formattedDate,
       };
     });
 
+    const userCreatedAt = data?.[0].userResponse.createdAt;
+    const partnerCreatedAt = data?.[0].partnerResponse.createdAt;
+
+    const recentDate = dayjs(partnerCreatedAt).isAfter(dayjs(userCreatedAt))
+      ? partnerCreatedAt
+      : userCreatedAt;
+    const formattedDate = dayjs(recentDate).format('YYYY/MM/DD');
+
     return {
+      missionId,
       coupleMissionId,
       category,
       answers,
+      formattedDate,
     };
   }) as IFeedList;
 
