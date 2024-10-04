@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ModalProvider } from 'react-native-modalfy';
 import { ValueOf } from 'type-fest';
 
-import { useAuth } from '~/providers';
+import { useDidMount } from 'rooks';
+import { useAuth, useOneSignal } from '~/providers';
 import { AuthenticatedStack, AuthenticatedStackParamList } from './authenticated';
 import { CommonStack, CommonStackParamList } from './common';
 import { modalStack } from './modal';
@@ -19,6 +20,10 @@ const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export const RootStack = ({}) => {
   const { currentUser } = useAuth();
+
+  const { requestPermission } = useOneSignal();
+
+  useDidMount(requestPermission);
 
   return (
     <ModalProvider stack={modalStack}>
