@@ -6,6 +6,7 @@ import {
   AuthProvider,
   MMKVProvider,
   MixpanelProvider,
+  OneSignalProvider,
   RecoilProvider,
 } from './providers';
 import { RootNavigator, RootStack } from './screens';
@@ -14,19 +15,21 @@ function App(): React.JSX.Element {
   return (
     <RecoilProvider>
       <UIProvider>
-        <MixpanelProvider>
-          <Suspense fallback={<LoadingSpinner />}>
-            <ApolloProvider>
-              <AuthProvider>
-                <MMKVProvider>
-                  <RootNavigator>
-                    <RootStack />
-                  </RootNavigator>
-                </MMKVProvider>
-              </AuthProvider>
-            </ApolloProvider>
-          </Suspense>
-        </MixpanelProvider>
+        <MMKVProvider>
+          <MixpanelProvider>
+            <Suspense fallback={<LoadingSpinner />}>
+              <OneSignalProvider>
+                <ApolloProvider>
+                  <AuthProvider>
+                    <RootNavigator>
+                      <RootStack />
+                    </RootNavigator>
+                  </AuthProvider>
+                </ApolloProvider>
+              </OneSignalProvider>
+            </Suspense>
+          </MixpanelProvider>
+        </MMKVProvider>
       </UIProvider>
     </RecoilProvider>
   );
