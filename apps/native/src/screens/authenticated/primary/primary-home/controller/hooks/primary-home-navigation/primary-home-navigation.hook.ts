@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { useDidMount } from 'rooks';
 import { Primary_HomeScreenNavigationProp } from '../../../primary-home.screen';
 
 type IPrimary_HomeNavigationInput = void;
@@ -18,6 +19,12 @@ export const usePrimary_HomeNavigation: Hook<
       screen: 'MyPage_ConnectCoupleScreen',
     });
   }, [navigation]);
+
+  useDidMount(() => {
+    navigation.navigate('NotificationStack', {
+      screen: 'Notification_MissionScreen',
+    });
+  });
 
   return { goConnectCouple };
 };
