@@ -57,8 +57,8 @@ export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
   return (
     <Box
       paddingX={spacing['11-x']}
-      paddingTop={spacing['14-x']}
-      paddingBottom={spacing['10-x']}
+      paddingTop={spacing['12-x']}
+      paddingBottom={spacing['8-x']}
       style={{
         backgroundColor: palette['white-100'],
         width: width - 2 * spacing['8-x'],
@@ -161,5 +161,5 @@ export const Dialog: ModalComponentWithOptions<IDialogProps> = ({ modal }) => {
 };
 
 Dialog.modalOptions = {
-  backBehavior: 'pop',
+  backBehavior: 'none',
 };

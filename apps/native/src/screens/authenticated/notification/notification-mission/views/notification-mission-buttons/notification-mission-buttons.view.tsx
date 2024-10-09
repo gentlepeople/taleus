@@ -6,10 +6,11 @@ import { Box, PressableQuark, Stack, Text, palette, radius, size, spacing } from
 type INotification_Mission_ButtonsViewProps = {
   notificationTime: Date;
   onChangeDate: (time: Date) => void;
+  onPressDefaultTime: () => void;
 };
 
 export const Notification_Mission_ButtonsView = memo<INotification_Mission_ButtonsViewProps>(
-  ({ notificationTime, onChangeDate }) => {
+  ({ notificationTime, onChangeDate, onPressDefaultTime }) => {
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 
     const openDatePicker = useCallback(() => {
@@ -29,6 +30,10 @@ export const Notification_Mission_ButtonsView = memo<INotification_Mission_Butto
       [onChangeDate],
     );
 
+    const handlePressDefaultTime = useCallback(() => {
+      onPressDefaultTime();
+    }, [onPressDefaultTime]);
+
     return (
       <>
         <Stack paddingX={spacing['7.5-x']} space={spacing['2-x']}>
@@ -42,7 +47,7 @@ export const Notification_Mission_ButtonsView = memo<INotification_Mission_Butto
               </Text>
             </Box>
           </PressableQuark>
-          <PressableQuark>
+          <PressableQuark onPress={handlePressDefaultTime}>
             <Box
               paddingY={spacing['2.5-x']}
               style={{

@@ -1,25 +1,16 @@
-import dayjs from 'dayjs';
 import { memo } from 'react';
 
 import { CELEBRATE_LOTTIE, Inline, Lottie, Stack, Text, size, spacing } from '~/mobile-ui';
+import { IFormattedTime } from '../../notification-mission.type';
 
 type INotification_Mission_ContentViewProps = {
   nickname: string;
-  notificationTime: Date;
+  formattedTime: IFormattedTime;
 };
 
 export const Notification_Mission_ContentView = memo<INotification_Mission_ContentViewProps>(
-  ({ nickname, notificationTime }) => {
-    const parsedDate = dayjs(notificationTime);
-
-    const hour = parsedDate.hour();
-    const minute = parsedDate.minute();
-
-    const period = hour >= 12 ? '오후' : '오전';
-
-    const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
-    const formattedHourWithZero = formattedHour < 10 ? '0' + formattedHour : formattedHour;
-    const formattedMinuteWithZero = minute < 10 ? '0' + minute : minute;
+  ({ nickname, formattedTime }) => {
+    const { period, formattedHourWithZero, formattedMinuteWithZero } = formattedTime;
 
     return (
       <Stack space={spacing['4-x']} align="center">

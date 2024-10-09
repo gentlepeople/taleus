@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { useDidMount } from 'rooks';
 import { Primary_HomeScreenNavigationProp } from '../../../primary-home.screen';
 
 type IPrimary_HomeNavigationInput = void;
 type IPrimary_HomeNavigationOutput = {
   goConnectCouple: () => void;
+  goNotificationMission: () => void;
 };
 
 export const usePrimary_HomeNavigation: Hook<
@@ -20,11 +20,11 @@ export const usePrimary_HomeNavigation: Hook<
     });
   }, [navigation]);
 
-  useDidMount(() => {
+  const goNotificationMission = useCallback(() => {
     navigation.navigate('NotificationStack', {
       screen: 'Notification_MissionScreen',
     });
-  });
+  }, [navigation]);
 
-  return { goConnectCouple };
+  return { goConnectCouple, goNotificationMission };
 };

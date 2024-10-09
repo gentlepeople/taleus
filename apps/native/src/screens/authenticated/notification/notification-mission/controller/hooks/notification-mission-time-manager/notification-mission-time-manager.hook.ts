@@ -1,9 +1,12 @@
-import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
+import { DEFAULT_NOTIFICATION_TIME } from '../../../notification-mission.const';
+import { IFormattedTime } from '../../../notification-mission.type';
+import { formatTime } from '../../../notification-mission.util';
 
 type INotification_MissionTimeManagerInput = void;
 type INotification_MissionTimeManagerOutput = {
   notificationTime: Date;
+  formattedTime: IFormattedTime;
   setMissionTime: (time: Date) => void;
 };
 
@@ -11,9 +14,7 @@ export const useNotification_MissionTimeManager: Hook<
   INotification_MissionTimeManagerInput,
   INotification_MissionTimeManagerOutput
 > = () => {
-  const [notificationTime, setNotificationTime] = useState<Date>(
-    dayjs().hour(10).minute(0).second(0).millisecond(0).toDate(),
-  );
+  const [notificationTime, setNotificationTime] = useState<Date>(DEFAULT_NOTIFICATION_TIME);
 
   const setMissionTime = useCallback(
     (time: Date) => {
@@ -22,5 +23,7 @@ export const useNotification_MissionTimeManager: Hook<
     [setNotificationTime],
   );
 
-  return { notificationTime, setMissionTime };
+  const formattedTime = formatTime(notificationTime);
+
+  return { notificationTime, formattedTime, setMissionTime };
 };

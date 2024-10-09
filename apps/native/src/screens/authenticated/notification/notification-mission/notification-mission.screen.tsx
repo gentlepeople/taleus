@@ -24,15 +24,17 @@ export type INotification_MissionScreenProps = {
 };
 
 export const Notification_MissionScreen: FC<INotification_MissionScreenProps> = () => {
-  const { nickname, notificationTime, setMissionTime } = useNotification_MissionController();
+  const { nickname, notificationTime, formattedTime, changeDate, submitWithDefaultTime } =
+    useNotification_MissionController();
 
   const renderContent = () => {
     return (
       <Stack space={spacing['15-x']} style={{ flex: 1, justifyContent: 'center' }}>
-        <Notification_Mission_ContentView nickname={nickname} notificationTime={notificationTime} />
+        <Notification_Mission_ContentView nickname={nickname} formattedTime={formattedTime} />
         <Notification_Mission_ButtonsView
           notificationTime={notificationTime}
-          onChangeDate={setMissionTime}
+          onChangeDate={changeDate}
+          onPressDefaultTime={submitWithDefaultTime}
         />
       </Stack>
     );
