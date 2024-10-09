@@ -1,0 +1,7 @@
+mutation Notification_MissionTimeSubmit($notificationTime: String!, $userId: String!) {
+  updateNotificationTime(notificationTime: $notificationTime, userId: $userId) {
+    user {
+      userId
+    }
+  }
+}

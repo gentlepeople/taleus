@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { PanGesture } from 'react-native-gesture-handler';
 import { useEffectOnceWhen } from 'rooks';
 import { EDirection } from '~/mobile-ui';
-import { LAST_PROGRESS } from '../primary-home.const';
+import { LAST_PROGRESS, ONBOARDING_MISSION_ID } from '../primary-home.const';
 import {
   usePrimary_HomeAnimationKey,
   usePrimary_HomeAnswerInputManager,
@@ -78,7 +78,7 @@ export const usePrimary_HomeController: Controller<
   });
   const { isKeyboardShown, hideKeyboard } = usePrimary_HomeKeyboardManager();
   const { openOnboardingUserModal, openPreventMissionReminderModal } = usePrimary_HomeOpenModal();
-  const { goConnectCouple } = usePrimary_HomeNavigation();
+  const { goConnectCouple, goNotificationMission } = usePrimary_HomeNavigation();
   const { missionReminder } = usePrimary_HomeMissionReminder({ coupleMissionId });
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
   const { checkMinutesReminder } = usePrimary_HomeMinutesReminderManager();
@@ -208,7 +208,13 @@ export const usePrimary_HomeController: Controller<
       await submitAnswers({
         answers: userAnswer,
         missionId: todayMissionId,
-        onCompleted: resetProgress,
+        onCompleted: () => {
+          resetProgress();
+
+          if (todayMissionId === ONBOARDING_MISSION_ID) {
+            goNotificationMission();
+          }
+        },
       });
     }
   }, [
@@ -220,6 +226,7 @@ export const usePrimary_HomeController: Controller<
     saveOnboardingUserAnswer,
     resetProgress,
     submitAnswers,
+    goNotificationMission,
   ]);
 
   const pressBannerButton = useCallback(async () => {

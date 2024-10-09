@@ -5,6 +5,7 @@ import { Primary_HomeScreenNavigationProp } from '../../../primary-home.screen';
 type IPrimary_HomeNavigationInput = void;
 type IPrimary_HomeNavigationOutput = {
   goConnectCouple: () => void;
+  goNotificationMission: () => void;
 };
 
 export const usePrimary_HomeNavigation: Hook<
@@ -19,5 +20,11 @@ export const usePrimary_HomeNavigation: Hook<
     });
   }, [navigation]);
 
-  return { goConnectCouple };
+  const goNotificationMission = useCallback(() => {
+    navigation.navigate('NotificationStack', {
+      screen: 'Notification_MissionScreen',
+    });
+  }, [navigation]);
+
+  return { goConnectCouple, goNotificationMission };
 };

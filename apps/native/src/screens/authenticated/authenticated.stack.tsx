@@ -11,14 +11,14 @@ import { RootStackParamList } from '../root.stack';
 
 import { FeedStack, FeedStackParamList } from './feed';
 import { MyPageStack, MyPageStackParamList } from './my-page';
+import { NotificationStack, NotificationStackParamList } from './notification';
 import { PrimaryStack, PrimaryStackParamList } from './primary';
-
-// Primary stack 만드는거부터 진행 탭 스크린들
 
 export type AuthenticatedStackParamList = {
   PrimaryStack: NavigatorScreenParams<PrimaryStackParamList>;
   FeedStack: NavigatorScreenParams<FeedStackParamList>;
   MyPageStack: NavigatorScreenParams<MyPageStackParamList>;
+  NotificationStack: NavigatorScreenParams<NotificationStackParamList>;
 };
 
 export type AuthenticatedStackNavigationProp = StackNavigationProp<
@@ -42,6 +42,7 @@ export const AuthenticatedStack = () => {
       <AuthenticatedStackNavigator.Screen name="PrimaryStack" component={PrimaryStack} />
       <AuthenticatedStackNavigator.Screen name="FeedStack" component={FeedStack} />
       <AuthenticatedStackNavigator.Screen name="MyPageStack" component={MyPageStack} />
+      <AuthenticatedStackNavigator.Screen name="NotificationStack" component={NotificationStack} />
     </AuthenticatedStackNavigator.Navigator>
   );
 };
