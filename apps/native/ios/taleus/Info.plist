@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakaoa61cbb5c5f55a06de8c5420b0fc4273a</string>
+				<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
 			</array>
 		</dict>
 		<dict>
@@ -35,7 +35,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.270612131026-7gkjuudm2f457os6dv4s6r198kopcgsu</string>
+				<string>$(GOOGLE_OAUTH_CLIENT_ID)</string>
 			</array>
 		</dict>
 	</array>
