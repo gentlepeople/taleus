@@ -54,6 +54,7 @@
     "react-keyed-flatten-children": "3.0.0",
     "react-native": "0.75.2",
     "react-native-bars": "2.4.3",
+    "react-native-bootsplash": "6.1.4",
     "react-native-config": "1.5.3",
     "react-native-device-info": "11.1.0",
     "react-native-gesture-handler": "2.20.0",
