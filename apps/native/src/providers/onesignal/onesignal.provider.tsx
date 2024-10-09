@@ -25,7 +25,7 @@ export const OneSignalProvider = ({ children }: IOneSignalProviderProps) => {
   const [isOneSignalReady, setIsOneSignalReady] = useState<boolean>(false);
 
   const setMixpanelNotificationUserProperty = useCallback((permission: boolean) => {
-    mixpanel.getPeople().set('notification', permission);
+    // mixpanel.getPeople().set('notification', permission);
   }, []);
 
   const requestPermission = useCallback(async () => {

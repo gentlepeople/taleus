@@ -1,8 +1,10 @@
 #import "AppDelegate.h"
+#import "RNBootSplash.h" 
 
 #import <React/RCTBundleURLProvider.h>
 #import <RNKakaoLogins.h>
 #import <Firebase.h>
+#import <UserNotifications/UserNotifications.h>
 
 @implementation AppDelegate
 
@@ -25,6 +27,16 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+  [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge)
+                        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+      if (granted) {
+          NSLog(@"Notification permission granted.");
+      } else {
+          NSLog(@"Notification permission denied.");
+      }
+  }];
+
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -40,6 +52,10 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (void)customizeRootView:(RCTRootView *)rootView {
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // Initialize the splash screen
 }
 
 @end

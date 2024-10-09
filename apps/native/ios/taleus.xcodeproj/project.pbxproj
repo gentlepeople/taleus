@@ -18,12 +18,14 @@
 		71E3D06D41132237024557E7 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9592AA43C84CB318C3B1904F /* libPods-OneSignalNotificationServiceExtension.a */; };
 		781137FD246D462E94B983DA /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CC770407373449E9B24B4F78 /* Pretendard-Regular.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		AF7B549223694CEB9724F3ED /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C4597DBC1A40E5BFFD5D55 /* BootSplash.storyboard */; };
 		B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06A55ACEEDB042F7BC8EC1D2 /* Pretendard-Bold.otf */; };
 		BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
 		BBBBF7EC2CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
+		E3E57F27964C46E8A1F04880 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 460FF23938124F778936597E /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,7 @@
 		37070F09AE08FCB48D6DE302 /* Pods-taleus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taleus.release.xcconfig"; path = "Target Support Files/Pods-taleus/Pods-taleus.release.xcconfig"; sourceTree = "<group>"; };
 		38545335BCD09052F801B416 /* libPods-taleus-taleusTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus-taleusTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4293F2C4789FC85411AD2BB4 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		460FF23938124F778936597E /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = taleus/Colors.xcassets; sourceTree = "<group>"; };
 		6F6549023FF95D66C7C06EAF /* Pods-taleus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taleus.debug.xcconfig"; path = "Target Support Files/Pods-taleus/Pods-taleus.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = taleus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9592AA43C84CB318C3B1904F /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +93,7 @@
 		CC770407373449E9B24B4F78 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.otf"; path = "../src/mobile-ui/assets/font/Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		D3E48B40EAE24D1E90D57983 /* Pods-taleus-taleusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taleus-taleusTests.release.xcconfig"; path = "Target Support Files/Pods-taleus-taleusTests/Pods-taleus-taleusTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F4C4597DBC1A40E5BFFD5D55 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = taleus/BootSplash.storyboard; sourceTree = "<group>"; };
 		FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = taleus/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +155,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */,
+				F4C4597DBC1A40E5BFFD5D55 /* BootSplash.storyboard */,
+				460FF23938124F778936597E /* Colors.xcassets */,
 			);
 			name = taleus;
 			sourceTree = "<group>";
@@ -267,11 +273,11 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				BBBBF7ED2CAF13C500C72F7D /* Embed Foundation Extensions */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F6E38337FF8625325253A7E7 /* [CP] Embed Pods Frameworks */,
 				6A93F927E53E8F904B6CFCAE /* [CP] Copy Pods Resources */,
 				1E432ED0E703CA5921F878D7 /* [CP-User] [RNFB] Core Configuration */,
-				BBBBF7ED2CAF13C500C72F7D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -363,6 +369,8 @@
 				B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */,
 				4F5F6564B41E4DEEA9267421 /* Pretendard-SemiBold.otf in Resources */,
 				505CAD0D180541E9B7A75759 /* Pretendard-Medium.otf in Resources */,
+				AF7B549223694CEB9724F3ED /* BootSplash.storyboard in Resources */,
+				E3E57F27964C46E8A1F04880 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

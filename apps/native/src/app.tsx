@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
-
+import RNBootSplash from 'react-native-bootsplash';
+import { useDidMount } from 'rooks';
 import { LoadingSpinner, UIProvider } from './mobile-ui';
 import {
   ApolloProvider,
@@ -12,6 +13,10 @@ import {
 import { RootNavigator, RootStack } from './screens';
 
 function App(): React.JSX.Element {
+  useDidMount(() => {
+    RNBootSplash.hide();
+  });
+
   return (
     <RecoilProvider>
       <UIProvider>
