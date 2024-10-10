@@ -9,7 +9,7 @@ import { KAKAO_AUTH_PORT } from '@/ports';
   imports: [
     HttpModule.register({
       baseURL: 'https://kapi.kakao.com/v2/',
-      timeout: 5000,
+      timeout: 10000,
       maxRedirects: 5,
     }),
   ],

@@ -33,7 +33,6 @@ export class KakaoLoginService implements KakaoLoginUsecase {
   async execute(accessToken: string): Promise<{ userId: string; customToken: string }> {
     const { id: kakaoAccountId, kakao_account: kakaoAccount } =
       await this.kakaoAuthPort.getUserAccount(accessToken);
-    console.log(kakaoAccountId, kakaoAccount);
     const oauthProviderId = `kakao:${kakaoAccountId}`;
 
     const userProperties = {

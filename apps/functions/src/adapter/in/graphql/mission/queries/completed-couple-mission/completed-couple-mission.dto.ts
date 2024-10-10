@@ -1,7 +1,7 @@
 import { Field, ArgsType, ObjectType, Int } from '@nestjs/graphql';
-import { IsBoolean, IsNotEmpty, IsString, IsOptional, IsDefined, IsNumber } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString, IsOptional, IsDefined } from 'class-validator';
 
-import { PaginationArgs } from '@/common';
+import { IsBigInt, PaginationArgs } from '@/common';
 import { CoupleMission, Mission, Question, Response } from '@/domain';
 
 @ArgsType()
@@ -26,7 +26,7 @@ export class CompletedCoupleMissionRequest {
 
   @Field(() => Int)
   @IsDefined()
-  @IsNumber()
+  @IsBigInt()
   coupleMissionId: bigint;
 }
 

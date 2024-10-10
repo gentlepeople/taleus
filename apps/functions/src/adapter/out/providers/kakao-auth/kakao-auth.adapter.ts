@@ -2,7 +2,7 @@ import { AuthenticationError } from '@nestjs/apollo';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
-import { firstValueFrom, map } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 
 import { sampleKakaoAccount } from './kakao-auth.const';
 
@@ -18,18 +18,20 @@ export class KakaoAuthAdapter implements KakaoAuthPort {
         return sampleKakaoAccount;
       }
 
-      const kakaoAccount: IKakaoAuthPortUserAccountType = await firstValueFrom(
+      const kakaoAccount: IKakaoAuthPortUserAccountType = await lastValueFrom(
         this.httpService
           .get('user/me', {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
           })
           .pipe(map((response: AxiosResponse) => response.data)),
       );
+
       return kakaoAccount;
     } catch (e: any) {
-      throw new AuthenticationError(`Error in KakaoAuthAdapter:getUserAccount: ${e}`);
+      throw new AuthenticationError(`Error in KakaoAuthAdapter:getUserAccount: ${e.code} ${e}`);
     }
   }
 }
