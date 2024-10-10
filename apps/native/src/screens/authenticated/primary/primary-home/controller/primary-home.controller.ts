@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { PanGesture } from 'react-native-gesture-handler';
 import { useEffectOnceWhen } from 'rooks';
 import { EDirection } from '~/mobile-ui';
-import { LAST_PROGRESS, ONBOARDING_MISSION_ID } from '../primary-home.const';
+import { LAST_PROGRESS } from '../primary-home.const';
 import {
   usePrimary_HomeAnimationKey,
   usePrimary_HomeAnswerInputManager,
@@ -79,7 +79,7 @@ export const usePrimary_HomeController: Controller<
   const { isKeyboardShown, hideKeyboard } = usePrimary_HomeKeyboardManager();
   const { openOnboardingUserModal, openPreventMissionReminderModal } = usePrimary_HomeOpenModal();
   const { goConnectCouple, goNotificationMission } = usePrimary_HomeNavigation();
-  const { missionReminder } = usePrimary_HomeMissionReminder({ coupleMissionId });
+  const { missionReminder } = usePrimary_HomeMissionReminder();
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
   const { checkMinutesReminder } = usePrimary_HomeMinutesReminderManager();
   const {
@@ -92,9 +92,9 @@ export const usePrimary_HomeController: Controller<
   const isWritable = isOnboarindgUserWritable || isTodayWritable;
 
   const showBanner =
-    (!isOnboarindgUserWritable ||
-      !(isCoupled && !todayAnswersCompleted && !partnerTodayAnswersCompleted) ||
-      !(isCoupled && todayAnswersCompleted && partnerTodayAnswersCompleted)) &&
+    (!isCoupled ||
+      (isCoupled && !todayAnswersCompleted && partnerTodayAnswersCompleted) ||
+      (isCoupled && todayAnswersCompleted && !partnerTodayAnswersCompleted)) &&
     !isKeyboardShown;
   const shouldConnect = !isCoupled;
   const hasNoMyReply = isCoupled && !todayAnswersCompleted && partnerTodayAnswersCompleted;
@@ -208,12 +208,13 @@ export const usePrimary_HomeController: Controller<
       await submitAnswers({
         answers: userAnswer,
         missionId: todayMissionId,
+        coupleMissionId: coupleMissionId,
         onCompleted: () => {
           resetProgress();
-
-          if (todayMissionId === ONBOARDING_MISSION_ID) {
-            goNotificationMission();
-          }
+          // TODO:민기 skip for first release
+          // if (todayMissionId === ONBOARDING_MISSION_ID) {
+          //   goNotificationMission();
+          // }
         },
       });
     }
@@ -221,8 +222,12 @@ export const usePrimary_HomeController: Controller<
     userAnswer,
     progress,
     isLastQuestion,
+    todayMissionId,
+    coupleMissionId,
+    isOnboarindgUserWritable,
     incrementProgress,
     hideKeyboard,
+    openOnboardingUserModal,
     saveOnboardingUserAnswer,
     resetProgress,
     submitAnswers,
@@ -236,31 +241,32 @@ export const usePrimary_HomeController: Controller<
       return;
     }
 
-    requestReminderMixpanelEvent(todayMissionId);
+    // TODO:민기 skip for first release
+    // requestReminderMixpanelEvent(todayMissionId);
 
-    if (hasNoPartnerReply) {
-      if (isPremiumUser) {
-        const isBlocked = await checkDayReminder({
-          openPreventModal: openPreventMissionReminderModal,
-        });
+    // if (hasNoPartnerReply) {
+    //   if (isPremiumUser) {
+    //     const isBlocked = await checkDayReminder({
+    //       openPreventModal: openPreventMissionReminderModal,
+    //     });
 
-        if (isBlocked) {
-          return;
-        }
-      }
+    //     if (isBlocked) {
+    //       return;
+    //     }
+    //   }
 
-      if (!isPremiumUser) {
-        const isBlocked = await checkMinutesReminder({
-          openPreventModal: openPreventMissionReminderModal,
-        });
+    //   if (!isPremiumUser) {
+    //     const isBlocked = await checkMinutesReminder({
+    //       openPreventModal: openPreventMissionReminderModal,
+    //     });
 
-        if (isBlocked) {
-          return;
-        }
-      }
+    //     if (isBlocked) {
+    //       return;
+    //     }
+    //   }
 
-      await missionReminder();
-    }
+    //   await missionReminder(coupleMissionId);
+    // }
   }, [
     checkDayReminder,
     checkMinutesReminder,
@@ -269,8 +275,10 @@ export const usePrimary_HomeController: Controller<
     clickConnectCoupleMixpanelEvent,
     requestReminderMixpanelEvent,
     isCoupled,
+    isPremiumUser,
     hasNoPartnerReply,
     todayMissionId,
+    coupleMissionId,
   ]);
 
   useEffectOnceWhen(() => {

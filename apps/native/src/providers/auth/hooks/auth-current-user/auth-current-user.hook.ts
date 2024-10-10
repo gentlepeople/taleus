@@ -94,7 +94,7 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
   const isProfileCompleted = data.user.isProfileCompleted;
   const isCoupled = data.user.isCoupled;
   const coupleId = isCoupled && data.user.couple && data.user.couple.coupleId;
-  const partnerNickname = isCoupled ? data.user.partner.nickname : '';
+  const partnerNickname = isCoupled ? data.user?.partner?.nickname : '';
 
   return {
     currentUser: {
