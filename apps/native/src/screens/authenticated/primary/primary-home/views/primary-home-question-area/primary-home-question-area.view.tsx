@@ -9,8 +9,9 @@ type IPrimary_Home_QuestionAreaViewProps = {
 
 export const Primary_Home_QuestionAreaView = memo<IPrimary_Home_QuestionAreaViewProps>(
   ({ question, progress }) => {
+    // TODO:민기 배너 있을 때 8-x 괜찮은지 확인 필요, 별로면 banner condition 가져와서 조건부 처리
     return (
-      <Stack paddingTop={spacing['3-x']} paddingBottom={spacing['5-x']} space={spacing['5-x']}>
+      <Stack paddingTop={spacing['8-x']} paddingBottom={spacing['5-x']} space={spacing['5-x']}>
         <Stack space={spacing['1-x']}>
           <Text
             textType="custom"

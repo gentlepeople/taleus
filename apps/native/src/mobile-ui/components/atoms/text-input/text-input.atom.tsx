@@ -3,7 +3,7 @@ import { StyleProp, TextStyle } from 'react-native';
 import { TextInput as NativeTextInput } from 'react-native-paper';
 
 import { palette, radius, size } from '../../../theme';
-import { getTextColorStyle, getTextTypeStyle } from '../text';
+import { getTextTypeStyle } from '../text';
 
 export type ITextInputProps = {
   placeholder: string;
@@ -35,7 +35,6 @@ export const TextInput: FC<ITextInputProps> = ({
   maxLength,
 }) => {
   const textTypeStyle = getTextTypeStyle('body/14/regular');
-  const textColorStyle = getTextColorStyle(currentValue ? 'text-black' : 'gray-20');
 
   const handleChangeTextInput = (text: string) => {
     onChangeText(text);
@@ -55,7 +54,6 @@ export const TextInput: FC<ITextInputProps> = ({
       contentStyle={[
         {
           ...textTypeStyle,
-          ...textColorStyle,
           textAlign: textAlignCenter ? 'center' : 'auto',
         },
         contentStyle,
@@ -76,6 +74,8 @@ export const TextInput: FC<ITextInputProps> = ({
       activeOutlineColor={isLengthOvered ? palette['danger'] : palette['primary']}
       editable={editable}
       maxLength={maxLength}
+      placeholderTextColor={palette['gray-20']}
+      textColor={palette['text-black']}
     />
   );
 };

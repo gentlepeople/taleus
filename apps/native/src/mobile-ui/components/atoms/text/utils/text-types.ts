@@ -83,7 +83,7 @@ export const getTextTypeStyle = (textType: ITextTypes) => {
     ['body/14/regular']: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 14,
-      lineHeight: 19.6,
+      lineHeight: 17.6,
     },
     ['body/12/bold']: {
       fontFamily: 'Pretendard-Bold',

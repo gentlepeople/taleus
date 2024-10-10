@@ -2,7 +2,7 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
-import { HeaderOrganism, ScrollView, Stack, spacing } from '~/mobile-ui';
+import { HeaderOrganism, Stack, spacing } from '~/mobile-ui';
 
 import { AuthenticationStackNavigationProp, AuthenticationStackParamList } from '..';
 
@@ -58,36 +58,29 @@ export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> 
 
   const renderContent = () => {
     return (
-      <Stack space={spacing['9-x']}>
-        <HeaderOrganism title={'회원가입'} left={{ type: 'button' }} />
-        <ScrollView>
-          <Stack space={spacing['11.5-x']}>
-            <Authentication_SignUp_NicknameView value={nickname} onChangeText={writeNickname} />
-            <Authentication_SignUp_GenderView onSelect={selectGender} selectedValue={gender} />
-            <Authentication_SignUp_BirthDateView
-              birthDate={birthDate}
-              onChangeDate={setBirthDate}
-            />
-            <Authentication_SignUp_AnniversaryView
-              coupleStartDate={coupleStartDate}
-              onChangeDate={setCoupleStartDate}
-            />
-            <Authentication_SignUp_PolicyView
-              isCheckedPolicy={consentToCollectPersonalInformation}
-              isCheckedTerms={termsOfServiceAgreement}
-              onPressPolicy={checkPolicy}
-              onPressTerms={checkTerms}
-              onPressShowPolicy={goPolicyWebView}
-              onPressShowTerms={goTermsWebView}
-            />
-          </Stack>
-        </ScrollView>
+      <Stack paddingTop={spacing['9-x']} space={spacing['11.5-x']}>
+        <Authentication_SignUp_NicknameView value={nickname} onChangeText={writeNickname} />
+        <Authentication_SignUp_GenderView onSelect={selectGender} selectedValue={gender} />
+        <Authentication_SignUp_BirthDateView birthDate={birthDate} onChangeDate={setBirthDate} />
+        <Authentication_SignUp_AnniversaryView
+          coupleStartDate={coupleStartDate}
+          onChangeDate={setCoupleStartDate}
+        />
+        <Authentication_SignUp_PolicyView
+          isCheckedPolicy={consentToCollectPersonalInformation}
+          isCheckedTerms={termsOfServiceAgreement}
+          onPressPolicy={checkPolicy}
+          onPressTerms={checkTerms}
+          onPressShowPolicy={goPolicyWebView}
+          onPressShowTerms={goTermsWebView}
+        />
       </Stack>
     );
   };
 
   return (
     <Authentication_SignUpLayout
+      header={<HeaderOrganism title={'회원가입'} left={{ type: 'button' }} />}
       content={renderContent()}
       footer={<Authentication_SignUp_CTAView isCTADisabled={isCTADisabled} onPress={signUp} />}
     />

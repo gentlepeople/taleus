@@ -23,6 +23,11 @@ export const Primary_Home_BannerView = memo<IPrimary_Home_BannerViewProps>(
   }) => {
     const shouldShowButton = !(!shouldConnect && hasNoMyReply && !hasNoPartnerReply);
 
+    // TODO:민기 skip for first release
+    if (!hasNoMyReply && hasNoPartnerReply) {
+      return null;
+    }
+
     const getBannerContent = () => {
       if (shouldConnect) {
         return '아직 커플연결이 안되어있어요😢';
