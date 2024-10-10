@@ -90,7 +90,8 @@ android {
         applicationId "com.taleus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        // Release version
+        versionCode 2 // should update when upload App Bundle(everytime)
         versionName "0.0.1"
         manifestPlaceholders = [
             KAKAO_NATIVE_APP_KEY: project.env.get("KAKAO_NATIVE_APP_KEY")
