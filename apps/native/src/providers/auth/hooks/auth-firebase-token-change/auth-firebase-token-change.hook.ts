@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { useState } from 'react';
+import { OneSignal } from 'react-native-onesignal';
 import { useDidMount } from 'rooks';
-
 import { useApollo } from '../../../apollo';
 
 type IAuthFirebaseTokenChangeHookInput = void;
@@ -30,8 +30,13 @@ export const useAuthFirebaseTokenChange: Hook<
       try {
         if (!user) {
           await apolloClient.clearStore();
+          OneSignal.logout();
+          // 나중에 태그 추가하게 되면 삭제하도록
+          // OneSignal.User.removeTags(['NICKNAME', 'YOB', 'ORGANIZATION_ID']);
           setUserId(null);
         } else {
+          OneSignal.login(user.uid);
+          console.log(user.uid);
           setUserId(user.uid);
         }
       } catch (e) {}

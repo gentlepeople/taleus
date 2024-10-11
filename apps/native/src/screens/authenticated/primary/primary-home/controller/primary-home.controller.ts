@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { PanGesture } from 'react-native-gesture-handler';
 import { useEffectOnceWhen } from 'rooks';
 import { EDirection } from '~/mobile-ui';
-import { LAST_PROGRESS } from '../primary-home.const';
+import { LAST_PROGRESS, ONBOARDING_MISSION_ID } from '../primary-home.const';
 import {
   usePrimary_HomeAnimationKey,
   usePrimary_HomeAnswerInputManager,
@@ -211,10 +211,10 @@ export const usePrimary_HomeController: Controller<
         coupleMissionId: coupleMissionId,
         onCompleted: () => {
           resetProgress();
-          // TODO:민기 skip for first release
-          // if (todayMissionId === ONBOARDING_MISSION_ID) {
-          //   goNotificationMission();
-          // }
+
+          if (todayMissionId === ONBOARDING_MISSION_ID) {
+            goNotificationMission();
+          }
         },
       });
     }
@@ -241,32 +241,31 @@ export const usePrimary_HomeController: Controller<
       return;
     }
 
-    // TODO:민기 skip for first release
-    // requestReminderMixpanelEvent(todayMissionId);
+    requestReminderMixpanelEvent(todayMissionId);
 
-    // if (hasNoPartnerReply) {
-    //   if (isPremiumUser) {
-    //     const isBlocked = await checkDayReminder({
-    //       openPreventModal: openPreventMissionReminderModal,
-    //     });
+    if (hasNoPartnerReply) {
+      if (isPremiumUser) {
+        const isBlocked = await checkDayReminder({
+          openPreventModal: openPreventMissionReminderModal,
+        });
 
-    //     if (isBlocked) {
-    //       return;
-    //     }
-    //   }
+        if (isBlocked) {
+          return;
+        }
+      }
 
-    //   if (!isPremiumUser) {
-    //     const isBlocked = await checkMinutesReminder({
-    //       openPreventModal: openPreventMissionReminderModal,
-    //     });
+      if (!isPremiumUser) {
+        const isBlocked = await checkMinutesReminder({
+          openPreventModal: openPreventMissionReminderModal,
+        });
 
-    //     if (isBlocked) {
-    //       return;
-    //     }
-    //   }
+        if (isBlocked) {
+          return;
+        }
+      }
 
-    //   await missionReminder(coupleMissionId);
-    // }
+      await missionReminder(coupleMissionId);
+    }
   }, [
     checkDayReminder,
     checkMinutesReminder,
