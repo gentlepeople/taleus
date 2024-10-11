@@ -63,11 +63,17 @@ export const usePrimary_MyPageController: Controller<
   }, [goWebView]);
 
   const openPolicy = useCallback(() => {
-    goWebView({ title: '이용약관', uri: 'www.naver.com' });
+    goWebView({
+      title: '이용약관',
+      uri: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80288ff4e6189d366e9e',
+    });
   }, [goWebView]);
 
   const openTerms = useCallback(() => {
-    goWebView({ title: '개인정보 처리 방침', uri: 'www.naver.com' });
+    goWebView({
+      title: '개인정보 처리 방침',
+      uri: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80c7ac3ddb9450170323',
+    });
   }, [goWebView]);
 
   return {

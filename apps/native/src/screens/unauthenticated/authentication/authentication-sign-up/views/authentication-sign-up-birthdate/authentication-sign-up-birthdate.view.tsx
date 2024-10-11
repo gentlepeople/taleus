@@ -1,8 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { memo, useCallback, useState } from 'react';
-import { Pressable } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Stack, Text, TextInput, size, spacing } from '~/mobile-ui';
+import { PressableQuark, Stack, Text, TextInput, size, spacing } from '~/mobile-ui';
 
 type IAuthentication_SignUp_BirthDateViewProps = {
   birthDate: Date;
@@ -41,10 +40,7 @@ export const Authentication_SignUp_BirthDateView = memo<IAuthentication_SignUp_B
           <Text textType="body/14/medium" color="text-black">
             {'생년월일'}
           </Text>
-          <Pressable
-            onPress={openDatePicker}
-            style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
-          >
+          <PressableQuark onPress={openDatePicker}>
             <Stack horizontal align="center" space={spacing['2.5-x']}>
               <Stack horizontal align="center" space={spacing['2-x']}>
                 <TextInput
@@ -83,7 +79,7 @@ export const Authentication_SignUp_BirthDateView = memo<IAuthentication_SignUp_B
                 </Text>
               </Stack>
             </Stack>
-          </Pressable>
+          </PressableQuark>
         </Stack>
         <DateTimePickerModal
           confirmTextIOS={'확인'}

@@ -12,9 +12,9 @@ export const Primary_MyPageLayout: FC<IPrimary_MyPageLayoutProps> = ({ header, c
     <BasicLayout>
       <Rows>
         <Row height="content">{header}</Row>
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
-          <Row height="fluid">{content}</Row>
-        </ScrollView>
+        <Row height="fluid">
+          <ScrollView>{content}</ScrollView>
+        </Row>
       </Rows>
     </BasicLayout>
   );

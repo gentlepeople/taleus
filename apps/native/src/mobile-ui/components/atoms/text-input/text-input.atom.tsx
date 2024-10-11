@@ -73,6 +73,7 @@ export const TextInput: FC<ITextInputProps> = ({
       outlineColor={isLengthOvered ? palette['danger'] : palette['gray-20']}
       activeOutlineColor={isLengthOvered ? palette['danger'] : palette['primary']}
       editable={editable}
+      pointerEvents={editable ? 'auto' : 'none'}
       maxLength={maxLength}
       placeholderTextColor={palette['gray-20']}
       textColor={palette['text-black']}
