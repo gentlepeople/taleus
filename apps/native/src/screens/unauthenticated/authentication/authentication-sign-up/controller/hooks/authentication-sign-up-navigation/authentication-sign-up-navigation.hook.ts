@@ -30,7 +30,7 @@ export const useAuthentication_SignUpNavigation: Hook<
       screen: 'WebViewScreen',
       params: {
         title: '개인정보 수집 및 이용 동의',
-        linkUrl: 'https://naver.com',
+        linkUrl: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80c7ac3ddb9450170323',
       },
     });
   }, [navigation]);
@@ -40,7 +40,7 @@ export const useAuthentication_SignUpNavigation: Hook<
       screen: 'WebViewScreen',
       params: {
         title: '서비스 이용약관 동의',
-        linkUrl: 'https://naver.com',
+        linkUrl: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80288ff4e6189d366e9e',
       },
     });
   }, [navigation]);
