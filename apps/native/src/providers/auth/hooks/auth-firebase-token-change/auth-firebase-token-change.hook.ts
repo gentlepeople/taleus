@@ -36,7 +36,6 @@ export const useAuthFirebaseTokenChange: Hook<
           setUserId(null);
         } else {
           OneSignal.login(user.uid);
-          console.log(user.uid);
           setUserId(user.uid);
         }
       } catch (e) {}

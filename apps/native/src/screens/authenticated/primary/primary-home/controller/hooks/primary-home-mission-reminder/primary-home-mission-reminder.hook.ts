@@ -28,10 +28,6 @@ export const usePrimary_HomeMissionReminder: Hook<
           coupleMissionId,
         },
       });
-
-      console.log(result.data.remindMissionPartner.message, 'message');
-      console.log(result.data.remindMissionPartner.success, 'success');
-      console.log(result.errors, 'errors');
     },
     [missionRemind],
   );
