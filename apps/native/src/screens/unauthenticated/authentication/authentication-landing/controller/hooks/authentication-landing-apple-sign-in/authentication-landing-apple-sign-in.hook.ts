@@ -35,8 +35,6 @@ export const useAuthenticationLandingContentSignInApple: Hook<
         throw 'Apple Sign-In failed - no identify token returned';
       }
 
-      console.log(appleAuthRequestResponse, 'appleAuthRequestResponse');
-
       // Create a Firebase credential from the response
       const { identityToken, nonce } = appleAuthRequestResponse;
 
@@ -46,8 +44,6 @@ export const useAuthenticationLandingContentSignInApple: Hook<
           nonce,
         },
       });
-
-      console.log(customTokenData.data?.appleLogin, 'get apple token');
 
       const success = customTokenData.data?.appleLogin;
       if (success && success.customToken) {
