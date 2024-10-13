@@ -3,6 +3,7 @@ import RNBootSplash from 'react-native-bootsplash';
 import { useDidMount } from 'rooks';
 import { LoadingSpinner, UIProvider } from './mobile-ui';
 import {
+  AdMobProvider,
   ApolloProvider,
   AuthProvider,
   MMKVProvider,
@@ -23,15 +24,17 @@ function App(): React.JSX.Element {
         <MMKVProvider>
           <MixpanelProvider>
             <Suspense fallback={<LoadingSpinner />}>
-              <OneSignalProvider>
-                <ApolloProvider>
-                  <AuthProvider>
-                    <RootNavigator>
-                      <RootStack />
-                    </RootNavigator>
-                  </AuthProvider>
-                </ApolloProvider>
-              </OneSignalProvider>
+              <AdMobProvider>
+                <OneSignalProvider>
+                  <ApolloProvider>
+                    <AuthProvider>
+                      <RootNavigator>
+                        <RootStack />
+                      </RootNavigator>
+                    </AuthProvider>
+                  </ApolloProvider>
+                </OneSignalProvider>
+              </AdMobProvider>
             </Suspense>
           </MixpanelProvider>
         </MMKVProvider>

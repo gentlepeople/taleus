@@ -9,6 +9,8 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 
 import { RootStackParamList } from '../root.stack';
 
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { useAdMob } from '../../providers';
 import { FeedStack, FeedStackParamList } from './feed';
 import { MyPageStack, MyPageStackParamList } from './my-page';
 import { NotificationStack, NotificationStackParamList } from './notification';
@@ -37,13 +39,27 @@ export type IAuthenticatedStackProps = {
 };
 
 export const AuthenticatedStack = () => {
+  const {
+    bannerAd: { bannerAdUnitId, bannerRef },
+  } = useAdMob();
+
   return (
-    <AuthenticatedStackNavigator.Navigator screenOptions={{ headerShown: false }}>
-      <AuthenticatedStackNavigator.Screen name="PrimaryStack" component={PrimaryStack} />
-      <AuthenticatedStackNavigator.Screen name="FeedStack" component={FeedStack} />
-      <AuthenticatedStackNavigator.Screen name="MyPageStack" component={MyPageStack} />
-      <AuthenticatedStackNavigator.Screen name="NotificationStack" component={NotificationStack} />
-    </AuthenticatedStackNavigator.Navigator>
+    <>
+      <AuthenticatedStackNavigator.Navigator screenOptions={{ headerShown: false }}>
+        <AuthenticatedStackNavigator.Screen name="PrimaryStack" component={PrimaryStack} />
+        <AuthenticatedStackNavigator.Screen name="FeedStack" component={FeedStack} />
+        <AuthenticatedStackNavigator.Screen name="MyPageStack" component={MyPageStack} />
+        <AuthenticatedStackNavigator.Screen
+          name="NotificationStack"
+          component={NotificationStack}
+        />
+      </AuthenticatedStackNavigator.Navigator>
+      <BannerAd
+        ref={bannerRef}
+        unitId={bannerAdUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
+    </>
   );
 };
 

@@ -523,6 +523,9 @@ importers:
       react-native:
         specifier: 0.75.2
         version: 0.75.2(@babel/core@7.22.8)(@babel/preset-env@7.22.7)(@types/react@18.2.6)(react@18.3.1)(typescript@5.4.2)
+      react-native-admob-native-ads:
+        specifier: 0.7.6
+        version: 0.7.6(react-native@0.75.2)
       react-native-bars:
         specifier: 2.4.3
         version: 2.4.3(react-native@0.75.2)(react@18.3.1)
@@ -538,6 +541,9 @@ importers:
       react-native-gesture-handler:
         specifier: 2.20.0
         version: 2.20.0(react-native@0.75.2)(react@18.3.1)
+      react-native-google-mobile-ads:
+        specifier: 14.2.5
+        version: 14.2.5(react@18.3.1)
       react-native-icomoon:
         specifier: 0.1.1
         version: 0.1.1(react-native@0.75.2)(react@18.3.1)
@@ -589,6 +595,9 @@ importers:
       react-native-svg:
         specifier: 15.6.0
         version: 15.6.0(react-native@0.75.2)(react@18.3.1)
+      react-native-vector-icons:
+        specifier: 10.2.0
+        version: 10.2.0
       react-native-webview:
         specifier: 13.12.1
         version: 13.12.1(react-native@0.75.2)(react@18.3.1)
@@ -4825,6 +4834,10 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
     dev: true
+
+  /@iabtcf/core@1.5.6:
+    resolution: {integrity: sha512-u2q9thI9vLurYZdGtyJsDYOqoeLc4EgQsYGSc+UVibYII61B/ENJPZS6eFlML1F0hSoTR/goptpo5nGRDkKd2w==}
+    dev: false
 
   /@iarna/toml@2.2.5:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
@@ -11041,6 +11054,11 @@ packages:
     resolution: {integrity: sha512-JeMq7fEshyepOWDfcfHK06N3MhyPhz++vtqWhMT5O9A3K42rdsEDpfdVqjaqaAhsw6a+ZqeDvQVtD0hFHQWrzg==}
     engines: {node: '>= 0.6.0'}
     dev: true
+
+  /dequal@2.0.3:
+    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
+    engines: {node: '>=6'}
+    dev: false
 
   /destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
@@ -17438,6 +17456,14 @@ packages:
       react-is: 18.3.1
     dev: false
 
+  /react-native-admob-native-ads@0.7.6(react-native@0.75.2):
+    resolution: {integrity: sha512-nApNDUVKrjXqwSxxrIvn1R0IJQs3VHwViK6G4Mbo2irNW8iP/RYC/t6fvvbH9emtHle0AYTwvwIW5JiuieuN8Q==}
+    peerDependencies:
+      react-native: '*'
+    dependencies:
+      react-native: 0.75.2(@babel/core@7.22.8)(@babel/preset-env@7.22.7)(@types/react@18.2.6)(react@18.3.1)(typescript@5.4.2)
+    dev: false
+
   /react-native-bars@2.4.3(react-native@0.75.2)(react@18.3.1):
     resolution: {integrity: sha512-CcqMqDN3Vp7xcOLzHlLmdK+1MBKF2S2tBqWUw/bKLtX/cRGgJwhXvCLD7fctA91V7Jh4vWiGmQPqWGHHXRfnog==}
     peerDependencies:
@@ -17498,6 +17524,20 @@ packages:
       prop-types: 15.8.1
       react: 18.3.1
       react-native: 0.75.2(@babel/core@7.22.8)(@babel/preset-env@7.22.7)(@types/react@18.2.6)(react@18.3.1)(typescript@5.4.2)
+    dev: false
+
+  /react-native-google-mobile-ads@14.2.5(react@18.3.1):
+    resolution: {integrity: sha512-Py1eJz+8jd3Jzj6OglaIs61M9lWMz5HiAEx60K3tB7HZtKgwZoyIX/M1h6WbFtyOh1c0vdC+umfxrq5ny0+0qw==}
+    peerDependencies:
+      expo: '>=47.0.0'
+    peerDependenciesMeta:
+      expo:
+        optional: true
+    dependencies:
+      '@iabtcf/core': 1.5.6
+      use-deep-compare-effect: 1.8.1(react@18.3.1)
+    transitivePeerDependencies:
+      - react
     dev: false
 
   /react-native-icomoon@0.1.1(react-native@0.75.2)(react@18.3.1):
@@ -20103,6 +20143,17 @@ packages:
   /urlpattern-polyfill@8.0.2:
     resolution: {integrity: sha512-Qp95D4TPJl1kC9SKigDcqgyM2VDVO4RiJc2d4qe5GrYm+zbIQCWWKAFaJNQ4BhdFeDGwBmAxqJBwWSJDb9T3BQ==}
     dev: true
+
+  /use-deep-compare-effect@1.8.1(react@18.3.1):
+    resolution: {integrity: sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13'
+    dependencies:
+      '@babel/runtime': 7.20.0
+      dequal: 2.0.3
+      react: 18.3.1
+    dev: false
 
   /use-latest-callback@0.1.11(react@18.3.1):
     resolution: {integrity: sha512-8nhb73STSD/z3GTHklvNjL8F9wMOo0bj0AFnulpIYuFTm6aQlT3ZcNbXF2YurKImIY8+kpSFSDHZZyQmurGrhw==}
