@@ -1,3 +1,4 @@
+export * from './ad-mob';
 export * from './apollo';
 export * from './auth';
 export * from './mixpanel';

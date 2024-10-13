@@ -1,7 +1,6 @@
 import isArray from 'lodash/isArray';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { Platform } from 'react-native';
-import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 import Config from 'react-native-config';
 import { LogLevel, NotificationWillDisplayEvent, OneSignal } from 'react-native-onesignal';
@@ -47,20 +46,7 @@ export const OneSignalProvider = ({ children }: IOneSignalProviderProps) => {
     return OneSignal.Notifications.hasPermission();
   }, []);
 
-  const requestTrackingPermission = async () => {
-    if (Platform.OS === 'ios') {
-      const status = await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
-      if (status === RESULTS.GRANTED) {
-        console.log('Tracking permission granted.');
-      } else {
-        console.log('Tracking permission denied.');
-      }
-    }
-  };
-
   useEffect(() => {
-    // for iOS request tracking permission(because of Native Bug)
-    requestTrackingPermission();
     //OneSignal Init Code
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
     OneSignal.initialize(Config.ONESIGNAL_MASTER_APP_ID);
