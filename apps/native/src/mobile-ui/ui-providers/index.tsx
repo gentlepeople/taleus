@@ -12,8 +12,11 @@ import { palette } from '../theme';
 
 import { ScrollProvider } from './scroll';
 import { StacksProvider } from './stacks';
+import { ToastProvider } from './toast';
 
 export * from './scroll';
+export * from './stacks';
+export * from './toast';
 
 export type IMobileUIContext = {};
 
@@ -30,19 +33,21 @@ export const UIProvider = ({ children }: MobileUIProviderProps) => {
       <StatusBar animated barStyle="light-content" />
       <StacksProvider>
         <ScrollProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView style={{ flex: 1 }}>
-              <MutationIndicatorProvider>
-                <KeyboardAvoidingView
-                  style={{ flex: 1 }}
-                  behavior="padding"
-                  enabled={Platform.OS === 'ios'}
-                >
-                  {children}
-                </KeyboardAvoidingView>
-              </MutationIndicatorProvider>
-            </SafeAreaView>
-          </GestureHandlerRootView>
+          <ToastProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <SafeAreaView style={{ flex: 1 }}>
+                <MutationIndicatorProvider>
+                  <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior="padding"
+                    enabled={Platform.OS === 'ios'}
+                  >
+                    {children}
+                  </KeyboardAvoidingView>
+                </MutationIndicatorProvider>
+              </SafeAreaView>
+            </GestureHandlerRootView>
+          </ToastProvider>
         </ScrollProvider>
       </StacksProvider>
     </SafeAreaProvider>
