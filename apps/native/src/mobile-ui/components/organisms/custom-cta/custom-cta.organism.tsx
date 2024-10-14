@@ -8,14 +8,14 @@ import { Box, Stack } from '../../layouts';
 export type ICustomCTA = {
   label: string;
   onPress: () => void | Promise<void>;
-  color?: string;
+  color?: keyof typeof palette;
   iconName?: string;
   imageSource?: ImageSourcePropType;
   textColor?: ITextColor;
   textType?: ITextTypes;
   disabled?: boolean;
   border?: boolean;
-  borderColor?: string;
+  borderColor?: keyof typeof palette;
 };
 
 export type ICustomCTAOrganismProps = {
