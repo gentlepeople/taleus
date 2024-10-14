@@ -18,14 +18,29 @@ export const RootNavigator = ({ children }: IRootNavigatorProps) => {
   const routeNameRef = useRef<string>();
 
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: ['taleUs://'],
+    prefixes: ['taleus://', 'https://taleus.com'],
     getInitialURL: async () => {
       const url = await Linking.getInitialURL();
+      if (url && url.includes('kakao')) {
+        const personalCode = url.split('=')[1];
+
+        if (personalCode) {
+          return `taleus://my-page/connect-couple?partnerPersonalCode=${personalCode}`;
+        }
+      }
+
       return url;
     },
     subscribe: (listener) => {
       // First, you may want to do the default deep link handling
       const onReceiveURL = async ({ url }: { url: string }) => {
+        if (url && url.includes('kakao')) {
+          const personalCode = url.split('=')[1];
+          if (personalCode) {
+            return listener(`taleus://my-page/connect-couple?partnerPersonalCode=${personalCode}`);
+          }
+        }
+
         return listener(url);
       };
 

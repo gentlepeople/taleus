@@ -8,8 +8,10 @@ import {
   useToast as useNativeToast,
 } from 'react-native-toast-notifications';
 
-import { Icon, Text } from '../../components/atoms';
-import { Box, Stack } from '../../components/layouts';
+import { Icon } from '../../components/atoms/icon';
+import { Text } from '../../components/atoms/text';
+import { Box } from '../../components/layouts/box';
+import { Stack } from '../../components/layouts/stack';
 
 import { palette, radius, size, spacing } from '../../theme';
 

@@ -20,6 +20,7 @@ type IMyPage_ConnectCoupleControllerOutput = {
   copyUserCode: () => void;
   connect: () => Promise<void>;
   share: () => Promise<void>;
+  exit: () => void;
 };
 
 export const useMyPage_ConnectCoupleController: Controller<
@@ -30,7 +31,7 @@ export const useMyPage_ConnectCoupleController: Controller<
     currentUser: { personalCode },
   } = useAuth();
 
-  const { goConnectComplete } = useMyPage_ConnectCoupleNavigation();
+  const { goConnectComplete, goHome } = useMyPage_ConnectCoupleNavigation();
   const { copyToClipboard } = useMyPage_ConnectCoupleClipboardCopy();
   const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete });
   const { partnerPersonalCode, changePartnerPersonalCode } = useMyPage_ConnectCoupleInputManager();
@@ -56,6 +57,10 @@ export const useMyPage_ConnectCoupleController: Controller<
     await kakaoShare(personalCode);
   }, [kakaoShare, shareCoupleCodeMixpanelEvent, personalCode]);
 
+  const exit = useCallback(() => {
+    goHome();
+  }, [goHome]);
+
   return {
     personalCode,
     partnerPersonalCode,
@@ -64,5 +69,6 @@ export const useMyPage_ConnectCoupleController: Controller<
     copyUserCode,
     connect,
     share,
+    exit,
   };
 };
