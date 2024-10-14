@@ -23,6 +23,7 @@
 		BB509E512CBD43CF004E748E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB509E502CBD43CF004E748E /* GoogleService-Info.plist */; };
 		BB509E552CBD804F004E748E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB509E542CBD804F004E748E /* File.swift */; };
 		BB705BEB2CBB69A000E09587 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB705BEA2CBB69A000E09587 /* StoreKit.framework */; };
+		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
 		BBBBF7EC2CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
