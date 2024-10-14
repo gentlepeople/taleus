@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
 import { useAuth } from '~/providers';
-import { DEFAULT_NOTIFICATION_TIME } from '../notification-mission.const';
-import { IFormattedTime } from '../notification-mission.type';
-import { formatTime } from '../notification-mission.util';
+
 import {
   useNotification_MissionNavigation,
   useNotification_MissionOpenModal,
@@ -14,9 +12,9 @@ type INotification_MissionControllerInput = void;
 type INotification_MissionControllerOutput = {
   nickname: string;
   notificationTime: Date;
-  formattedTime: IFormattedTime;
+  formattedTime: string;
   changeDate: (time: Date) => void;
-  submitWithDefaultTime: () => void;
+  submit: () => void;
 };
 
 export const useNotification_MissionController: Controller<
@@ -35,25 +33,16 @@ export const useNotification_MissionController: Controller<
   const changeDate = useCallback(
     (time: Date) => {
       setMissionTime(time);
-
-      openTimeSubmitModal({
-        formattedTime: formatTime(time),
-        onSubmit: async () => await submitMissionTime(time),
-      });
     },
-    [setMissionTime, openTimeSubmitModal, submitMissionTime],
+    [setMissionTime],
   );
 
-  const submitWithDefaultTime = useCallback(() => {
-    const time = DEFAULT_NOTIFICATION_TIME;
-
-    setMissionTime(time);
-
+  const submit = useCallback(() => {
     openTimeSubmitModal({
-      formattedTime: formatTime(time),
-      onSubmit: async () => await submitMissionTime(time),
+      formattedTime,
+      onSubmit: async () => await submitMissionTime(notificationTime),
     });
-  }, [setMissionTime, openTimeSubmitModal, submitMissionTime]);
+  }, [formattedTime, notificationTime, openTimeSubmitModal, submitMissionTime]);
 
-  return { nickname, notificationTime, formattedTime, changeDate, submitWithDefaultTime };
+  return { nickname, notificationTime, formattedTime, changeDate, submit };
 };
