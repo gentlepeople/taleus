@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { EAuthType } from '~/providers';
 
+import { SharedValue, useSharedValue } from 'react-native-reanimated';
 import {
   useAuthenticationLandingContentSignInApple,
   useAuthentication_LandingCheckOnboardingCompleted,
@@ -17,12 +18,16 @@ type IAuthentication_LandingControllerOutput = {
   kakaoSignUp: () => Promise<void>;
   googleSignUp: () => Promise<void>;
   appleSignUp: () => Promise<void>;
+
+  progress: SharedValue<number>;
 };
 
 export const useAuthentication_LandingController: Controller<
   IAuthentication_LandingControllerInput,
   IAuthentication_LandingControllerOutput
 > = () => {
+  const progress = useSharedValue<number>(0);
+
   const { goHome } = useAuthentication_LandingNavigation();
   const { signInWithKakao } = useAuthentication_LandingKakaoSignIn();
   const { signInWithGoogle } = useAuthentication_LandingGoogleSignIn();
@@ -57,5 +62,11 @@ export const useAuthentication_LandingController: Controller<
     clickLoginMixpanelEvent(EAuthType.APPLE);
   }, [signInWithApple, clickLoginMixpanelEvent]);
 
-  return { browseApp, kakaoSignUp, googleSignUp, appleSignUp };
+  return {
+    browseApp,
+    kakaoSignUp,
+    googleSignUp,
+    appleSignUp,
+    progress,
+  };
 };

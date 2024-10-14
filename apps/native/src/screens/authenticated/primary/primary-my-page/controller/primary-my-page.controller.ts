@@ -36,7 +36,7 @@ export const usePrimary_MyPageController: Controller<
 > = () => {
   const { isUserInfoDataLoading, nickname, isCoupled, coupleData } =
     usePrimary_MyPageUserInfoData();
-  const { goWebView, goEditUserInfo, goConnectCouple, goLanding } = usePrimary_MyPageNavigation();
+  const { goWebView, goEditUserInfo, goConnectCouple } = usePrimary_MyPageNavigation();
   const { signOut } = usePrimary_MyPageSignOut();
   const { deleteUser } = usePrimary_MyPageDeleteUser();
   const { openDialogModal } = usePrimary_MyPageOpenModal();
