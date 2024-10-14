@@ -5,17 +5,30 @@
 #import <RNKakaoLogins.h>
 #import <Firebase.h>
 #import <UserNotifications/UserNotifications.h>
+#import <React/RCTLinkingManager.h> // LinkingManager 헤더 추가
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)app
      openURL:(NSURL *)url
      options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
- if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
+  
+  
+  if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
     return [RNKakaoLogins handleOpenUrl: url];
- }
+  }
 
- return NO;
+  // LinkingManager를 통해 다른 URL 스킴 처리
+  return [RCTLinkingManager application:app openURL:url options:options];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+    restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+  
+  // Universal Links 처리
+  return [RCTLinkingManager application:application
+                   continueUserActivity:userActivity
+                     restorationHandler:restorationHandler];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,8 +36,6 @@
   [FIRApp configure];
 
   self.moduleName = @"tale-us";
-  // You can add your custom initial props in the dictionary below.
-  // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];

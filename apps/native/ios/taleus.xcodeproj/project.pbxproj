@@ -24,6 +24,7 @@
 		BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BB509E512CBD43CF004E748E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB509E502CBD43CF004E748E /* GoogleService-Info.plist */; };
+		BB509E552CBD804F004E748E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB509E542CBD804F004E748E /* File.swift */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
 		BBBBF7EC2CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
@@ -87,6 +88,8 @@
 		B9263D87D81CCEDB493C901E /* libPods-taleus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB705BEA2CBB69A000E09587 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BB509E502CBD43CF004E748E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BB509E532CBD804F004E748E /* taleus-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "taleus-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB509E542CBD804F004E748E /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBA3B5452CAA70C9000F87FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BBA3B5512CAC3503000F87FE /* taleus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = taleus.entitlements; path = taleus/taleus.entitlements; sourceTree = "<group>"; };
 		BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +190,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BB509E542CBD804F004E748E /* File.swift */,
 				BBA3B5452CAA70C9000F87FE /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* taleus */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -196,6 +200,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				D333708BAF40427FB1287864 /* Resources */,
+				BB509E532CBD804F004E748E /* taleus-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -327,7 +332,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1540;
 					};
 					BBBBF7E42CAF13C500C72F7D = {
 						CreatedOnToolsVersion = 15.4;
@@ -581,6 +586,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				BB509E552CBD804F004E748E /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,6 +619,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0604C443AF29A9410F74543A /* Pods-taleus-taleusTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -640,6 +647,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3E48B40EAE24D1E90D57983 /* Pods-taleus-taleusTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = taleusTests/Info.plist;
@@ -685,6 +693,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.taleus;
 				PRODUCT_NAME = taleus;
+				SWIFT_OBJC_BRIDGING_HEADER = "taleus-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -715,6 +724,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.taleus;
 				PRODUCT_NAME = taleus;
+				SWIFT_OBJC_BRIDGING_HEADER = "taleus-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

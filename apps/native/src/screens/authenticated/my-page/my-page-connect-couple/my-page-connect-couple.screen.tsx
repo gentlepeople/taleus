@@ -38,6 +38,7 @@ export const MyPage_ConnectCoupleScreen: FC<IMyPage_ConnectCoupleScreenProps> = 
     changePartnerPersonalCode,
     connect,
     share,
+    exit,
   } = useMyPage_ConnectCoupleController();
 
   const renderContent = () => {
@@ -60,7 +61,7 @@ export const MyPage_ConnectCoupleScreen: FC<IMyPage_ConnectCoupleScreenProps> = 
 
   return (
     <MyPage_ConnectCoupleLayout
-      header={<MyPage_ConnectCouple_HeaderView />}
+      header={<MyPage_ConnectCouple_HeaderView onExit={exit} />}
       content={renderContent()}
     />
   );
