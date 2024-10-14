@@ -20,6 +20,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AF7B549223694CEB9724F3ED /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C4597DBC1A40E5BFFD5D55 /* BootSplash.storyboard */; };
 		B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06A55ACEEDB042F7BC8EC1D2 /* Pretendard-Bold.otf */; };
+		BB705BEB2CBB69A000E09587 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB705BEA2CBB69A000E09587 /* StoreKit.framework */; };
 		BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
@@ -83,6 +84,7 @@
 		9592AA43C84CB318C3B1904F /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B36490DB41F142E29A8E3075 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/mobile-ui/assets/font/Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		B9263D87D81CCEDB493C901E /* libPods-taleus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB705BEA2CBB69A000E09587 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BBA3B5452CAA70C9000F87FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BBA3B5512CAC3503000F87FE /* taleus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = taleus.entitlements; path = taleus/taleus.entitlements; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16BB0F9580568AE75A2DB82D /* libPods-taleus.a in Frameworks */,
+				BB705BEB2CBB69A000E09587 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +167,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB705BEA2CBB69A000E09587 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				B9263D87D81CCEDB493C901E /* libPods-taleus.a */,
 				38545335BCD09052F801B416 /* libPods-taleus-taleusTests.a */,
@@ -802,10 +806,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -891,10 +892,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

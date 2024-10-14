@@ -574,6 +574,9 @@ importers:
       react-native-permissions:
         specifier: 4.1.5
         version: 4.1.5(react-native@0.75.2)(react@18.3.1)
+      react-native-purchases:
+        specifier: 8.2.3
+        version: 8.2.3(react-native@0.75.2)(react@18.3.1)
       react-native-reanimated:
         specifier: 3.15.4
         version: 3.15.4(@babel/core@7.22.8)(react-native@0.75.2)(react@18.3.1)
@@ -7115,6 +7118,10 @@ packages:
   /@repeaterjs/repeater@3.0.6:
     resolution: {integrity: sha512-Javneu5lsuhwNCryN+pXH93VPQ8g0dBX7wItHFgYiwQmzE1sVdg5tWHiOgHywzL2W21XQopa7IwIEnNbmeUJYA==}
     dev: true
+
+  /@revenuecat/purchases-typescript-internal@13.4.0:
+    resolution: {integrity: sha512-y3+tUEhBs7kcqd6pAQnX1x2rGfztCYAPzyzGR7gHgVKeBsGIu18GpokhjqzzxyJD/bNXJICwhnj4R4omf8KHmw==}
+    dev: false
 
   /@rnx-kit/console@1.1.0:
     resolution: {integrity: sha512-N+zFhTSXroiK4eL26vs61Pmtl7wzTPAKLd4JKw9/fk5cNAHUscCXF/uclzuYN61Ye5AwygIvcwbm9wv4Jfa92A==}
@@ -17669,6 +17676,17 @@ packages:
       react-native-windows:
         optional: true
     dependencies:
+      react: 18.3.1
+      react-native: 0.75.2(@babel/core@7.22.8)(@babel/preset-env@7.22.7)(@types/react@18.2.6)(react@18.3.1)(typescript@5.4.2)
+    dev: false
+
+  /react-native-purchases@8.2.3(react-native@0.75.2)(react@18.3.1):
+    resolution: {integrity: sha512-5iWhfhebOHekqskrvL22xiJPiED+260JakMDtApA8XekkbEo+ozUEDUZ56x+Z/Q5t4uJo4SPylKxSpT6nHQ/rg==}
+    peerDependencies:
+      react: '>= 16.6.3'
+      react-native: '*'
+    dependencies:
+      '@revenuecat/purchases-typescript-internal': 13.4.0
       react: 18.3.1
       react-native: 0.75.2(@babel/core@7.22.8)(@babel/preset-env@7.22.7)(@types/react@18.2.6)(react@18.3.1)(typescript@5.4.2)
     dev: false
