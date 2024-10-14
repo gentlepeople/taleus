@@ -5,6 +5,7 @@ import {
   CustomCTA,
   PressableQuark,
   Stack,
+  TALE_US_SMILE_LOGO,
   Text,
   palette,
   radius,
@@ -57,6 +58,7 @@ export const MyPage_ConnectCouple_MyCodeView = memo<IMyPage_ConnectCouple_MyCode
                 label: '코드 복사하기',
                 onPress: handlePressCopy,
                 textColor: 'white-100',
+                imageSource: TALE_US_SMILE_LOGO,
               },
               {
                 label: '카카오 공유하기',

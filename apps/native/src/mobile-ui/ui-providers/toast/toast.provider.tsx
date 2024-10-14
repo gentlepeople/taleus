@@ -22,7 +22,7 @@ const TOAST_DEFAULT_DURATION = 4000;
 export const ToastProvider = ({ children }: IToastProviderProps) => {
   const { width } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
-  console.log('hi');
+
   const initialProps: Partial<ComponentProps<typeof NativeToastProvider>> = {
     placement: 'top',
     offsetTop: top + spacing['2-x'],
