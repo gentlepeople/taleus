@@ -25,6 +25,7 @@
 		BB705BEB2CBB69A000E09587 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB705BEA2CBB69A000E09587 /* StoreKit.framework */; };
 		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
 		BB509E512CBD43CF004E748E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB509E502CBD43CF004E748E /* GoogleService-Info.plist */; };
+		BB509E552CBD804F004E748E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB509E542CBD804F004E748E /* File.swift */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
 		BBBBF7EC2CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
@@ -92,6 +93,8 @@
 		BB509E542CBD804F004E748E /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BB705BEA2CBB69A000E09587 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BB509E502CBD43CF004E748E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BB509E532CBD804F004E748E /* taleus-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "taleus-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB509E542CBD804F004E748E /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBA3B5452CAA70C9000F87FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		BBA3B5512CAC3503000F87FE /* taleus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = taleus.entitlements; path = taleus/taleus.entitlements; sourceTree = "<group>"; };
 		BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
