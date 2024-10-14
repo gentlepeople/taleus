@@ -11,7 +11,7 @@ import { Box, Stack } from '../../layouts';
 type IHeaderOrganismProps = {
   title?: string | ReactElement;
   titleSize?: 'small' | 'large';
-  onPressExit?: () => void;
+  onPressExit?: () => void | Promise<void>;
   right?: {
     type: string;
     text: string;

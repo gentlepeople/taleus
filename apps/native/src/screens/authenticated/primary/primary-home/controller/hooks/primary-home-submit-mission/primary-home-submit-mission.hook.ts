@@ -23,13 +23,21 @@ export const usePrimary_HomeSubmitMission: Hook<
 
   const submitAnswers = useCallback(
     async ({ answers, missionId, coupleMissionId, onCompleted }: ISubmitAnswersParams) => {
+      const defulatVariables = {
+        userId: currentUser && currentUser.id,
+        missionId,
+        data: answers,
+      };
+
+      const variables = coupleMissionId
+        ? {
+            ...defulatVariables,
+            coupleMissionId: coupleMissionId,
+          }
+        : defulatVariables;
+
       const result = await submitMission({
-        variables: {
-          userId: currentUser && currentUser.id,
-          missionId,
-          data: answers,
-          coupleMissionId: coupleMissionId,
-        },
+        variables: variables,
       });
 
       if (result.data.submitMissionResponse.success) {
