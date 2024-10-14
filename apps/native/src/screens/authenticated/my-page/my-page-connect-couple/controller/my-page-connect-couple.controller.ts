@@ -9,6 +9,7 @@ import {
   useMyPage_ConnectCoupleKakaoShare,
   useMyPage_ConnectCoupleMixpanel,
   useMyPage_ConnectCoupleNavigation,
+  useMyPage_ConnectCouplePartnerData,
 } from './hooks';
 
 type IMyPage_ConnectCoupleControllerInput = void;
@@ -33,7 +34,8 @@ export const useMyPage_ConnectCoupleController: Controller<
 
   const { goConnectComplete, goHome } = useMyPage_ConnectCoupleNavigation();
   const { copyToClipboard } = useMyPage_ConnectCoupleClipboardCopy();
-  const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete });
+  const { checkIsCoupled } = useMyPage_ConnectCouplePartnerData();
+  const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete, checkIsCoupled });
   const { partnerPersonalCode, changePartnerPersonalCode } = useMyPage_ConnectCoupleInputManager();
   const { kakaoShare } = useMyPage_ConnectCoupleKakaoShare();
   const { copyCoupleCodeMixpanelEvent, shareCoupleCodeMixpanelEvent } =

@@ -24,18 +24,19 @@ export type INotification_MissionScreenProps = {
 };
 
 export const Notification_MissionScreen: FC<INotification_MissionScreenProps> = () => {
-  const { nickname, notificationTime, formattedTime, changeDate, submitWithDefaultTime } =
+  const { nickname, notificationTime, formattedTime, changeDate, submit } =
     useNotification_MissionController();
 
   const renderContent = () => {
     return (
-      <Stack space={spacing['15-x']} style={{ flex: 1, justifyContent: 'center' }}>
-        <Notification_Mission_ContentView nickname={nickname} formattedTime={formattedTime} />
-        <Notification_Mission_ButtonsView
+      <Stack space={spacing['10-x']} style={{ flex: 1, justifyContent: 'center' }}>
+        <Notification_Mission_ContentView
+          nickname={nickname}
           notificationTime={notificationTime}
+          formattedTime={formattedTime}
           onChangeDate={changeDate}
-          onPressDefaultTime={submitWithDefaultTime}
         />
+        <Notification_Mission_ButtonsView onPress={submit} />
       </Stack>
     );
   };

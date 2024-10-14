@@ -5,6 +5,7 @@ import { useAuth } from '../../../../../../../providers';
 
 type IMyPage_ConnectCoupleConnectInput = {
   goConnectComplete: () => void;
+  checkIsCoupled: () => Promise<boolean>;
 };
 type IMyPage_ConnectCoupleConnectOuput = {
   connectCouple: (inviteePersonalCode: string) => Promise<void>;
@@ -13,7 +14,7 @@ type IMyPage_ConnectCoupleConnectOuput = {
 export const useMyPage_ConnectCoupleConnect: Hook<
   IMyPage_ConnectCoupleConnectInput,
   IMyPage_ConnectCoupleConnectOuput
-> = ({ goConnectComplete }) => {
+> = ({ goConnectComplete, checkIsCoupled }) => {
   const {
     currentUser: { id: userId },
   } = useAuth();
@@ -31,6 +32,13 @@ export const useMyPage_ConnectCoupleConnect: Hook<
 
   const connectCouple = useCallback(
     async (inviteePersonalCode: string) => {
+      const isCoupled = await checkIsCoupled();
+
+      if (isCoupled) {
+        goConnectComplete();
+        return;
+      }
+
       await connect({
         variables: {
           inviteePersonalCode,
@@ -38,7 +46,7 @@ export const useMyPage_ConnectCoupleConnect: Hook<
         },
       });
     },
-    [connect],
+    [connect, checkIsCoupled, goConnectComplete],
   );
 
   return { connectCouple };

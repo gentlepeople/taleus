@@ -1,0 +1,6 @@
+query MyPage_ConnectCouplePartnerData($userId: String!) {
+  user(userId: $userId) {
+    userId
+    isCoupled
+  }
+}

@@ -15,10 +15,8 @@ export const useNotification_MissionOpenModal: Hook<
 
   const openTimeSubmitModal = useCallback(
     ({ formattedTime, onSubmit }: ITimeSubmitModalParams) => {
-      const { period, formattedHourWithZero, formattedMinuteWithZero } = formattedTime;
-
       openModal('Dialog', {
-        title: `${period} ${formattedHourWithZero} : ${formattedMinuteWithZero} 에\n질문을 받아볼 수 있어요\n정말 이 시간으로 설정하시겠어요?`,
+        title: `${formattedTime}에 질문을 받아볼 수 있어요\n정말 이 시간으로 설정하시겠어요?`,
         buttonHorizontal: false,
         okayButton: {
           label: '확인',
