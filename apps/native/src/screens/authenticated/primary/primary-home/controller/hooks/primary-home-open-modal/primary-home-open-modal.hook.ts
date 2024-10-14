@@ -8,6 +8,7 @@ type IPrimary_HomeOpenModalInput = void;
 type IPrimary_HomeOpenModalOutput = {
   openOnboardingUserModal: ({ onPressOkay }: IOnboardingUserModalParams) => void;
   openPreventMissionReminderModal: (title: string) => void;
+  openPreventBannerModal: () => void;
 };
 
 export const usePrimary_HomeOpenModal: Hook<
@@ -56,5 +57,26 @@ export const usePrimary_HomeOpenModal: Hook<
     [openModal],
   );
 
-  return { openOnboardingUserModal, openPreventMissionReminderModal };
+  const openPreventBannerModal = useCallback(() => {
+    openModal('Dialog', {
+      title: '로그인 후 이용 가능해요!',
+      buttonHorizontal: true,
+      okayButton: {
+        label: '로그인하러 가기',
+        onPress: () => {
+          navigation.navigate('UnauthenticatedStack', {
+            screen: 'AuthenticationStack',
+            params: {
+              screen: 'Authentication_LandingScreen',
+            },
+          });
+        },
+      },
+      cancelButton: {
+        label: '더 둘러보기',
+      },
+    });
+  }, [openModal]);
+
+  return { openOnboardingUserModal, openPreventMissionReminderModal, openPreventBannerModal };
 };

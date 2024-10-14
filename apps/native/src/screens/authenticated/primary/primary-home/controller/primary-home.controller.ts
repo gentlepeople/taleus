@@ -77,7 +77,8 @@ export const usePrimary_HomeController: Controller<
     todayMissionId,
   });
   const { isKeyboardShown, hideKeyboard } = usePrimary_HomeKeyboardManager();
-  const { openOnboardingUserModal, openPreventMissionReminderModal } = usePrimary_HomeOpenModal();
+  const { openOnboardingUserModal, openPreventMissionReminderModal, openPreventBannerModal } =
+    usePrimary_HomeOpenModal();
   const { goConnectCouple, goNotificationMission } = usePrimary_HomeNavigation();
   const { missionReminder } = usePrimary_HomeMissionReminder();
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
@@ -235,6 +236,11 @@ export const usePrimary_HomeController: Controller<
   ]);
 
   const pressBannerButton = useCallback(async () => {
+    if (isOnboarindgUserWritable) {
+      openPreventBannerModal();
+      return;
+    }
+
     if (!isCoupled) {
       clickConnectCoupleMixpanelEvent();
       goConnectCouple();
@@ -270,6 +276,7 @@ export const usePrimary_HomeController: Controller<
     checkDayReminder,
     checkMinutesReminder,
     openPreventMissionReminderModal,
+    openPreventBannerModal,
     goConnectCouple,
     clickConnectCoupleMixpanelEvent,
     requestReminderMixpanelEvent,

@@ -7,8 +7,6 @@ import { LoadingSpinner, ScrollView, SlideViewOrganism, palette } from '~/mobile
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
 import { GestureDetector } from 'react-native-gesture-handler';
-import { useDidMount } from 'rooks';
-import { useAdMob } from '../../../../providers';
 import { usePrimary_HomeController } from './controller';
 import { Primary_HomeLayout } from './primary-home.layout';
 import {
@@ -31,8 +29,6 @@ export type IPrimary_HomeScreenProps = {
 };
 
 export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
-  const { showRewardedInterstitialAd } = useAdMob();
-
   const {
     isLoading,
     isWritable,
@@ -57,10 +53,6 @@ export const Primary_HomeScreen: FC<IPrimary_HomeScreenProps> = () => {
     pressCTA,
     pressBannerButton,
   } = usePrimary_HomeController();
-
-  useDidMount(() => {
-    showRewardedInterstitialAd();
-  });
 
   if (isLoading) {
     return <LoadingSpinner />;
