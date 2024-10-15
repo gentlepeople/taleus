@@ -15,12 +15,9 @@ import {
   PushNotificationPort,
   ScheduleDailyMissionUsecase,
   SYSTEM_NOTIFICATION_PORT,
+  SystemNotificationPort,
 } from '@/ports';
-import {
-  EnumSystemNotificationMessageTarget,
-  EnumPushNotificationTemplate,
-  SystemNotificationAdapter,
-} from '@/providers';
+import { EnumSystemNotificationMessageTarget, EnumPushNotificationTemplate } from '@/providers';
 
 @Injectable()
 export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase {
@@ -36,7 +33,7 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
     @Inject(PUSH_NOTIFICATION_PORT)
     private readonly pushNotificationPort: PushNotificationPort,
     @Inject(SYSTEM_NOTIFICATION_PORT)
-    private readonly systemNotificationAdapter: SystemNotificationAdapter,
+    private readonly systemNotificationAdapter: SystemNotificationPort,
   ) {}
 
   async execute(event: { scheduleTime: string }): Promise<number> {

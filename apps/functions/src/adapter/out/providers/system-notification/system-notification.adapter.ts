@@ -3,8 +3,6 @@ import { SectionBlock } from '@slack/types';
 import { IncomingWebhook, IncomingWebhookSendArguments } from '@slack/webhook';
 import isNil from 'lodash/isNil';
 
-import { ConfigAdapter } from '../config';
-
 import {
   EnumSystemNotificationMessageTarget,
   ISystemNotificationType,
@@ -16,8 +14,6 @@ import { SystemNotificationPort } from '@/ports';
 
 @Injectable()
 export class SystemNotificationAdapter implements SystemNotificationPort {
-  constructor(private readonly configAdapter: ConfigAdapter) {}
-
   async send({ target, content }: ISystemNotificationType): Promise<void> {
     if (isLocal) {
       console.log('Notification skipped in local environment.');
@@ -44,6 +40,7 @@ export class SystemNotificationAdapter implements SystemNotificationPort {
     }));
 
     return {
+      ...(content.text && { text: content.text }),
       attachments: [
         {
           color: this.getColorByStatus(content.status),
@@ -69,10 +66,10 @@ export class SystemNotificationAdapter implements SystemNotificationPort {
   private getSlackWebhookUrl(target: EnumSystemNotificationMessageTarget): string {
     switch (target) {
       case EnumSystemNotificationMessageTarget.CRASH: {
-        return this.configAdapter.get('SLACK_CRASH_URL');
+        return process.env.SLACK_CRASH_URL;
       }
       case EnumSystemNotificationMessageTarget.SCHEDULER: {
-        return this.configAdapter.get('SLACK_SCHEDULER_URL');
+        return process.env.SLACK_SCHEDULER_URL;
       }
     }
   }
