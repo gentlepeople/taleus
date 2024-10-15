@@ -33,9 +33,15 @@ export const AdMobProvider = ({ children }: IAdMobProviderProps) => {
     {},
   );
 
-  const showRewardedInterstitialAd = useCallback(async () => {
+  const isLoaded = rewarededInterstitialAd.loaded;
+
+  const showRewardedInterstitialAd = useCallback(() => {
     rewarededInterstitialAd.show();
-  }, []);
+
+    if (!isLoaded) {
+      rewarededInterstitialAd.load();
+    }
+  }, [rewarededInterstitialAd, isLoaded]);
 
   const getDeviceId = useCallback(async () => {
     const deviceId = await DeviceInfo.getUniqueId();
@@ -84,8 +90,10 @@ export const AdMobProvider = ({ children }: IAdMobProviderProps) => {
   }, []);
 
   useEffect(() => {
-    rewarededInterstitialAd.load();
-  }, []);
+    if (!isLoaded) {
+      rewarededInterstitialAd.load();
+    }
+  }, [isLoaded]);
 
   return (
     <AdMobContext.Provider

@@ -15,7 +15,7 @@ import { useApolloLink } from '../apollo-link';
 
 export const useApolloInit = () => {
   const [apolloClient, setApolloClient] = useState<ApolloClient<NormalizedCacheObject>>();
-  const [isTokenUpdating, setIsTokenUpdating] = useState<boolean>();
+  const [isTokenUpdating, setIsTokenUpdating] = useState<boolean>(true);
   const { link, setAuthToken } = useApolloLink();
 
   const getIdToken = async () => {
@@ -59,6 +59,7 @@ export const useApolloInit = () => {
 
   useDidMount(() => {
     (async () => {
+      setIsTokenUpdating(true);
       const token = await getIdToken();
 
       if (!isNull(token)) {
