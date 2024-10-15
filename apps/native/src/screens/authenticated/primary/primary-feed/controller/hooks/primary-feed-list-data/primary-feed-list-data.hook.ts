@@ -47,7 +47,8 @@ export const usePrimary_FeedListData: Hook<
     });
   };
 
-  const feedLength = data?.completedCoupleMissions?.data.length;
+  const feedData = data?.completedCoupleMissions?.data;
+  const feedLength = feedData && feedData.length;
   const feedTotalCount = data?.completedCoupleMissions.totalCount;
   const isFullyLoaded = feedLength === feedTotalCount;
 

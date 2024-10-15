@@ -92,13 +92,12 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         // Release version
-        versionCode 2 // should update when upload App Bundle(everytime)
+        versionCode 3 // should update when upload App Bundle(everytime)
         versionName "0.0.1"
         manifestPlaceholders = [
             KAKAO_NATIVE_APP_KEY: project.env.get("KAKAO_NATIVE_APP_KEY")
         ]
-        println "KAKAO_NATIVE_APP_KEY: ${project.env.get("KAKAO_NATIVE_APP_KEY")}"
-
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", "\"${project.env.get("KAKAO_NATIVE_APP_KEY")}\""
     }
     signingConfigs {
         debug {
@@ -128,9 +127,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-
-            minifyEnabled true // 코드 축소 활성화
-            shrinkResources true // 리소스 축소 활성화
+            shrinkResources enableProguardInReleaseBuilds
         }
     }
 }
@@ -150,6 +147,8 @@ dependencies {
     // Auth, Firestore 
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

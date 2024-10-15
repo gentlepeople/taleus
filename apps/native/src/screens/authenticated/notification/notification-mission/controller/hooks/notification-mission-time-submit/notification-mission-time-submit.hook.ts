@@ -29,14 +29,12 @@ export const useNotification_MissionTimeSubmit: Hook<
     async (notificationTime: Date) => {
       const formattedNotificationTime = dayjs(notificationTime).format('HH:mm');
 
-      const result = await submitNotificationMissionTime({
+      await submitNotificationMissionTime({
         variables: {
           userId: currentUserId,
           notificationTime: formattedNotificationTime,
         },
       });
-
-      console.log(result.data.updateNotificationTime.user);
     },
     [currentUserId, submitNotificationMissionTime],
   );

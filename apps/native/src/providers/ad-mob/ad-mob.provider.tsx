@@ -77,7 +77,6 @@ export const AdMobProvider = ({ children }: IAdMobProviderProps) => {
     (async () => {
       await requestTrackingPermission();
       const deviceId = await getDeviceId();
-      console.log(deviceId, 'device id for admob');
       await setAdMobConfig(deviceId);
       await initialize();
     })();

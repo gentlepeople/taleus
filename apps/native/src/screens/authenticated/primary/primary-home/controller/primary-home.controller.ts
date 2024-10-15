@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { PanGesture } from 'react-native-gesture-handler';
-import { useEffectOnceWhen } from 'rooks';
+import { useDidMount, useEffectOnceWhen } from 'rooks';
 import { EDirection } from '~/mobile-ui';
 import { LAST_PROGRESS, ONBOARDING_MISSION_ID } from '../primary-home.const';
 import {
@@ -66,6 +66,7 @@ export const usePrimary_HomeController: Controller<
     partnerTodayAnswers,
     nickname,
     partnerNickname,
+    isPartnerDeleted,
     coupleMissionId,
     isPremiumUser,
   } = usePrimary_HomeTodayMission();
@@ -77,8 +78,12 @@ export const usePrimary_HomeController: Controller<
     todayMissionId,
   });
   const { isKeyboardShown, hideKeyboard } = usePrimary_HomeKeyboardManager();
-  const { openOnboardingUserModal, openPreventMissionReminderModal, openPreventBannerModal } =
-    usePrimary_HomeOpenModal();
+  const {
+    openOnboardingUserModal,
+    openPreventMissionReminderModal,
+    openPreventBannerModal,
+    openPartnerDeletedModal,
+  } = usePrimary_HomeOpenModal();
   const { goConnectCouple, goNotificationMission } = usePrimary_HomeNavigation();
   const { missionReminder } = usePrimary_HomeMissionReminder();
   const { checkDayReminder } = usePrimary_HomeDayReminderManager();
@@ -236,6 +241,11 @@ export const usePrimary_HomeController: Controller<
   ]);
 
   const pressBannerButton = useCallback(async () => {
+    if (isPartnerDeleted) {
+      openPartnerDeletedModal();
+      return;
+    }
+
     if (isOnboarindgUserWritable) {
       openPreventBannerModal();
       return;
@@ -277,11 +287,13 @@ export const usePrimary_HomeController: Controller<
     checkMinutesReminder,
     openPreventMissionReminderModal,
     openPreventBannerModal,
+    openPartnerDeletedModal,
     goConnectCouple,
     clickConnectCoupleMixpanelEvent,
     requestReminderMixpanelEvent,
     isCoupled,
     isPremiumUser,
+    isPartnerDeleted,
     hasNoPartnerReply,
     todayMissionId,
     coupleMissionId,
@@ -294,6 +306,12 @@ export const usePrimary_HomeController: Controller<
   useEffectOnceWhen(() => {
     viewPartnerAnswerMixpanelEvent({ missionId: todayMissionId, questions });
   }, showPartnerAnswer);
+
+  useDidMount(() => {
+    if (isPartnerDeleted) {
+      openPartnerDeletedModal();
+    }
+  });
 
   return {
     isLoading,
