@@ -2,13 +2,14 @@ import { useMyPage_ConnectCoupleConnectMutation } from '@gentlepeople/taleus-cod
 import { useCallback } from 'react';
 import { useMutationIndicator } from '~/hooks';
 import { useAuth } from '../../../../../../../providers';
+import { IConnectCoupleParams } from '../../../my-page-connect-couple.type';
 
 type IMyPage_ConnectCoupleConnectInput = {
   goConnectComplete: () => void;
   checkIsCoupled: () => Promise<boolean>;
 };
 type IMyPage_ConnectCoupleConnectOuput = {
-  connectCouple: (inviteePersonalCode: string) => Promise<void>;
+  connectCouple: (params: IConnectCoupleParams) => Promise<void>;
 };
 
 export const useMyPage_ConnectCoupleConnect: Hook<
@@ -31,7 +32,7 @@ export const useMyPage_ConnectCoupleConnect: Hook<
   useMutationIndicator([isConnecting]);
 
   const connectCouple = useCallback(
-    async (inviteePersonalCode: string) => {
+    async ({ inviteePersonalCode, onFailed }: IConnectCoupleParams) => {
       const isCoupled = await checkIsCoupled();
 
       if (isCoupled) {
@@ -39,12 +40,17 @@ export const useMyPage_ConnectCoupleConnect: Hook<
         return;
       }
 
-      await connect({
+      const result = await connect({
         variables: {
           inviteePersonalCode,
           inviterId: userId,
         },
       });
+
+      const isFailed = !result.data.registerCouple.success;
+      if (isFailed) {
+        onFailed();
+      }
     },
     [connect, checkIsCoupled, goConnectComplete],
   );

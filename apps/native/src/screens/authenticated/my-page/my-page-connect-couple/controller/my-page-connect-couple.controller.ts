@@ -4,12 +4,12 @@ import { useAuth } from '~/providers';
 import {
   useMyPage_ConnectCoupleClipboardCopy,
   useMyPage_ConnectCoupleConnect,
-  useMyPage_ConnectCoupleCopyCompletedToast,
   useMyPage_ConnectCoupleInputManager,
   useMyPage_ConnectCoupleKakaoShare,
   useMyPage_ConnectCoupleMixpanel,
   useMyPage_ConnectCoupleNavigation,
   useMyPage_ConnectCouplePartnerData,
+  useMyPage_ConnectCoupleToast,
 } from './hooks';
 
 type IMyPage_ConnectCoupleControllerInput = void;
@@ -40,7 +40,8 @@ export const useMyPage_ConnectCoupleController: Controller<
   const { kakaoShare } = useMyPage_ConnectCoupleKakaoShare();
   const { copyCoupleCodeMixpanelEvent, shareCoupleCodeMixpanelEvent } =
     useMyPage_ConnectCoupleMixpanel();
-  const { showCopyCompletedToast } = useMyPage_ConnectCoupleCopyCompletedToast();
+  const { showCopyCompletedToast, showPersonalCodeNotAvailableToast } =
+    useMyPage_ConnectCoupleToast();
 
   const isCTADisabled = partnerPersonalCode.length < 8;
 
@@ -51,7 +52,10 @@ export const useMyPage_ConnectCoupleController: Controller<
   }, [copyToClipboard, copyCoupleCodeMixpanelEvent, showCopyCompletedToast, personalCode]);
 
   const connect = useCallback(async () => {
-    await connectCouple(partnerPersonalCode);
+    await connectCouple({
+      inviteePersonalCode: partnerPersonalCode,
+      onFailed: showPersonalCodeNotAvailableToast,
+    });
   }, [connectCouple, partnerPersonalCode]);
 
   const share = useCallback(async () => {
