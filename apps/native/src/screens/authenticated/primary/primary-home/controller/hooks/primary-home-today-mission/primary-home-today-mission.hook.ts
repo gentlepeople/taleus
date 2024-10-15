@@ -18,6 +18,7 @@ type IPrimary_HomeTodayMissionOutput = {
   partnerTodayAnswers: IUserAnswers;
   nickname: string;
   partnerNickname: string;
+  isPartnerDeleted: boolean;
   coupleMissionId: number;
   isPremiumUser: boolean;
 };
@@ -54,6 +55,7 @@ export const usePrimary_HomeTodayMission: Hook<
       partnerTodayAnswers: null,
       nickname: '',
       partnerNickname: '',
+      isPartnerDeleted: null,
       coupleMissionId: null,
       isPremiumUser: null,
     };
@@ -72,6 +74,7 @@ export const usePrimary_HomeTodayMission: Hook<
       partnerTodayAnswers: null,
       nickname: '',
       partnerNickname: '',
+      isPartnerDeleted: null,
       coupleMissionId: null,
       isPremiumUser: null,
     };
@@ -118,6 +121,7 @@ export const usePrimary_HomeTodayMission: Hook<
 
   const nickname = currentUser.nickname;
   const partnerNickname = currentUser.partnerNickname;
+  const isPartnerDeleted = currentUser.isPartnerDeleted;
   const isPremiumUser = false;
 
   return {
@@ -132,6 +136,7 @@ export const usePrimary_HomeTodayMission: Hook<
     partnerTodayAnswers,
     nickname,
     partnerNickname,
+    isPartnerDeleted,
     coupleMissionId,
     isPremiumUser,
   };

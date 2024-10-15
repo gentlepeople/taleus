@@ -9,6 +9,7 @@ type IPrimary_HomeOpenModalOutput = {
   openOnboardingUserModal: ({ onPressOkay }: IOnboardingUserModalParams) => void;
   openPreventMissionReminderModal: (title: string) => void;
   openPreventBannerModal: () => void;
+  openPartnerDeletedModal: () => void;
 };
 
 export const usePrimary_HomeOpenModal: Hook<
@@ -78,5 +79,20 @@ export const usePrimary_HomeOpenModal: Hook<
     });
   }, [openModal]);
 
-  return { openOnboardingUserModal, openPreventMissionReminderModal, openPreventBannerModal };
+  const openPartnerDeletedModal = useCallback(() => {
+    openModal('Dialog', {
+      title: '연인이 서비스를 탈퇴했어요.\n30일이 지나면 이전 데이터가\n모두 사라져요.',
+      buttonHorizontal: false,
+      okayButton: {
+        label: '확인',
+      },
+    });
+  }, [openModal]);
+
+  return {
+    openOnboardingUserModal,
+    openPreventMissionReminderModal,
+    openPreventBannerModal,
+    openPartnerDeletedModal,
+  };
 };
