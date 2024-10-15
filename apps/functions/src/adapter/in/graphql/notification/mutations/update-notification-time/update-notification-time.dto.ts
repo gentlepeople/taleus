@@ -1,5 +1,5 @@
 import { ObjectType, Field, ArgsType } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 import { User } from '@/domain';
 
@@ -15,6 +15,9 @@ export class UpdateNotificationTimeRequest {
   })
   @IsNotEmpty()
   @IsString()
+  @Matches(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+    message: 'Time must be in the format HH:mm',
+  })
   notificationTime: string;
 }
 

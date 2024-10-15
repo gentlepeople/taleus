@@ -36,11 +36,11 @@ export interface IUserRepository {
     },
   ): Promise<boolean>;
   updateCoupleStartDate(userId: string, coupleStartDate: Date): Promise<boolean>;
-  updateNotificationTime(userId: string, notificationTime: Date): Promise<boolean>;
+  updateNotificationTime(userId: string, notificationTime: string): Promise<boolean>;
   updateNotificationTimeWithPartner(
     userId: string,
     partnerId: string,
-    notificationTime: Date,
+    notificationTime: string,
   ): Promise<boolean>;
   softDeleteOne(userId: string): Promise<boolean>;
   updateSubscriptionStatus(
