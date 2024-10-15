@@ -3,14 +3,20 @@ import {
   EnumOAuthProviderType,
   EnumSubscriptionStatus,
   user,
-} from '@gentlepeople/taleus-schema';
-import { Injectable, Inject } from '@nestjs/common';
-import isNull from 'lodash/isNull';
+} from "@gentlepeople/taleus-schema";
+import { Inject, Injectable } from "@nestjs/common";
+import isNull from "lodash/isNull";
 
-import { DEFAULT_ANONYMOUS_USER_OBJECT } from '../../../common';
+import { DEFAULT_ANONYMOUS_USER_OBJECT } from "../../../common";
 
-import { User } from '@/domain';
-import { IUserRepository, DATABASE_PORT, DatabasePort, TIME_PORT, TimePort } from '@/ports';
+import { User } from "@/domain";
+import {
+  DATABASE_PORT,
+  DatabasePort,
+  IUserRepository,
+  TIME_PORT,
+  TimePort,
+} from "@/ports";
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -66,7 +72,9 @@ export class UserRepository implements IUserRepository {
     return this.enumConvert(findUser);
   }
 
-  async findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null> {
+  async findOneByOAuthProviderId(
+    oauthProviderId: string,
+  ): Promise<User | null> {
     const findUser = await this.databasePort.user.findFirst({
       where: {
         oauthProviderId,
@@ -192,7 +200,10 @@ export class UserRepository implements IUserRepository {
     return this.enumConvert(findUser);
   }
 
-  async updateCoupleStartDate(userId: string, coupleStartDate: Date): Promise<boolean> {
+  async updateCoupleStartDate(
+    userId: string,
+    coupleStartDate: Date,
+  ): Promise<boolean> {
     await this.databasePort.user.update({
       where: {
         userId,
@@ -205,7 +216,10 @@ export class UserRepository implements IUserRepository {
     return true;
   }
 
-  async updateNotificationTime(userId: string, notificationTime: string): Promise<boolean> {
+  async updateNotificationTime(
+    userId: string,
+    notificationTime: string,
+  ): Promise<boolean> {
     await this.databasePort.user.update({
       where: {
         userId,
