@@ -73,10 +73,12 @@ export const ToastProvider = ({ children }: IToastProviderProps) => {
             align="center"
             marginBottom={spacing['3-x']}
           >
-            <Box>{/* <Icon name="error" size={size['7-x']} color="#FFC107" /> */}</Box>
-            {/* <Text variant="titleSmall" color="onPrimary">
+            <Box>
+              <Icon name="error" size={size['7-x']} color="#FFC107" />
+            </Box>
+            <Text textType="body/14/medium" color="white-100">
               {message}
-            </Text> */}
+            </Text>
           </Stack>
         );
       },
