@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { useDidMount } from 'rooks';
 import { Primary_HomeScreenNavigationProp } from '../../../primary-home.screen';
 
 type IPrimary_HomeNavigationInput = void;
@@ -25,6 +26,14 @@ export const usePrimary_HomeNavigation: Hook<
       screen: 'Notification_MissionScreen',
     });
   }, [navigation]);
+
+  const test = () => {
+    navigation.navigate('MembershipPurchaseStack', {
+      screen: 'MembershipPurchase_SelectPayPlanScreen',
+    });
+  };
+
+  useDidMount(test);
 
   return { goConnectCouple, goNotificationMission };
 };

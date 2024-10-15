@@ -25,6 +25,7 @@ export type ITextTypes =
   | 'banner-button'
   | 'card-content'
   | 'biggest'
+  | 'biggest-regular'
   | 'code'
   | 'custom';
 
@@ -152,6 +153,11 @@ export const getTextTypeStyle = (textType: ITextTypes) => {
     },
     biggest: {
       fontFamily: 'Pretendard-Bold',
+      fontSize: 25,
+      lineHeight: 36.2,
+    },
+    'biggest-regular': {
+      fontFamily: 'Pretendard-Regular',
       fontSize: 25,
       lineHeight: 36.2,
     },

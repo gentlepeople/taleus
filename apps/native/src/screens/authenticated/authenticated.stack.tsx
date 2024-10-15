@@ -12,6 +12,7 @@ import { RootStackParamList } from '../root.stack';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { useAdMob } from '../../providers';
 import { FeedStack, FeedStackParamList } from './feed';
+import { MembershipPurchaseStack, MembershipPurchaseStackParamList } from './membership-purchase';
 import { MyPageStack, MyPageStackParamList } from './my-page';
 import { NotificationStack, NotificationStackParamList } from './notification';
 import { PrimaryStack, PrimaryStackParamList } from './primary';
@@ -21,6 +22,7 @@ export type AuthenticatedStackParamList = {
   FeedStack: NavigatorScreenParams<FeedStackParamList>;
   MyPageStack: NavigatorScreenParams<MyPageStackParamList>;
   NotificationStack: NavigatorScreenParams<NotificationStackParamList>;
+  MembershipPurchaseStack: NavigatorScreenParams<MembershipPurchaseStackParamList>;
 };
 
 export type AuthenticatedStackNavigationProp = StackNavigationProp<
@@ -52,6 +54,10 @@ export const AuthenticatedStack = () => {
         <AuthenticatedStackNavigator.Screen
           name="NotificationStack"
           component={NotificationStack}
+        />
+        <AuthenticatedStackNavigator.Screen
+          name="MembershipPurchaseStack"
+          component={MembershipPurchaseStack}
         />
       </AuthenticatedStackNavigator.Navigator>
       <BannerAd
