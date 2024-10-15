@@ -38,8 +38,8 @@ export class CompletedCoupleMissionData {
   @Field(() => Response)
   userResponse: Response;
 
-  @Field(() => Response)
-  partnerResponse: Response;
+  @Field(() => Response, { nullable: true })
+  partnerResponse: Response | null;
 }
 
 @ObjectType()

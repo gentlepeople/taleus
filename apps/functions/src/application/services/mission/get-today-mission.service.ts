@@ -39,18 +39,18 @@ export class GetTodayMissionService implements GetTodayMissionUsecase {
       };
     }
 
-    const findActiveCoupleMission = await this.coupleMissionRepository.findActiveOneByUserId(
+    const findLatestCoupleMission = await this.coupleMissionRepository.findLatestOneByUserId(
       userId,
     );
 
-    if (isNull(findActiveCoupleMission)) {
+    if (isNull(findLatestCoupleMission)) {
       return null;
     }
-    const { missionId } = findActiveCoupleMission;
+    const { missionId } = findLatestCoupleMission;
     const findTodayMission = await this.missionRepository.findOneByMissionId(missionId);
     return {
       mission: findTodayMission,
-      coupleMission: findActiveCoupleMission,
+      coupleMission: findLatestCoupleMission,
     };
   }
 }

@@ -69,7 +69,7 @@ export class User {
   readonly updatedAt: Date;
 
   @Field(() => Boolean)
-  readonly isAnonymous: boolean;
+  readonly isDeleted: boolean;
 
   constructor(props: UserProps) {
     this.userId = props.userId;
@@ -86,7 +86,7 @@ export class User {
     this.isProfileCompleted = props.isProfileCompleted;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
-    this.isAnonymous = !isNull(props.deletedAt);
+    this.isDeleted = !isNull(props.deletedAt);
   }
 
   @Field(() => Boolean)

@@ -100,8 +100,8 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
     return count;
   }
 
-  async findActiveOneByUserId(userId: string): Promise<CoupleMission | null> {
-    const getActiveCoupleMission = await this.databasePort.coupleMission.findFirst({
+  async findLatestOneByUserId(userId: string): Promise<CoupleMission | null> {
+    const getLatestCoupleMission = await this.databasePort.coupleMission.findFirst({
       where: {
         couple: {
           OR: [
@@ -114,14 +114,12 @@ export class CoupleMissionRepository implements ICoupleMissionRepository {
           ],
           deletedAt: null,
         },
-
-        isCompleted: false,
       },
       orderBy: {
         createdAt: 'desc',
       },
     });
-    return getActiveCoupleMission;
+    return getLatestCoupleMission;
   }
 
   async findManyCompletedByUserIdSortByCreatedAtDesc(
