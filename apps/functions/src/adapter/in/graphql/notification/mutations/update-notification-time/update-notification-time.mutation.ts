@@ -36,9 +36,7 @@ export class UpdateNotificationTimeMutation {
     const { userId, notificationTime } = args;
     checkUserPermission(context, userId);
 
-    const notificationDateTime = this.timePort.get(`2000-01-01T${notificationTime}:00Z`);
-
-    await this.updateNotificationTimeUsecase.execute(userId, notificationDateTime);
+    await this.updateNotificationTimeUsecase.execute(userId, notificationTime);
     const findUser = await this.findUserUsecase.findOneByUserId(userId);
 
     return { user: findUser };

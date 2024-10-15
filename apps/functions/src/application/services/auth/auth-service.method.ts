@@ -89,5 +89,5 @@ export const isUserPersonalCodeUnique = async (
   code: string,
 ): Promise<boolean> => {
   const existingUser = await userRepository.findOneByPersonalCode(code);
-  return !existingUser; // Return true if no user with the code exists
+  return !existingUser;
 };

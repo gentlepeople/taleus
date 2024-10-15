@@ -4,7 +4,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
 import { DEFAULT_ANONYMOUS_USER_OBJECT, ONBOARDING_MISSION_ID } from '../../../common';
-import { SCHEDULER_DAILY_MISSION_INTERVAL_MINUTES } from '../providers';
 
 import { Couple } from '@/domain';
 import { DATABASE_PORT, DatabasePort, ICoupleRepository, TIME_PORT, TimePort } from '@/ports';
@@ -211,19 +210,13 @@ export class CoupleRepository implements ICoupleRepository {
       };
     })[]
   > {
-    const date = this.timePort.dayjs();
-    date.set('hour', hour);
-    date.set('minute', minute);
-    const previousDate = date.subtract(SCHEDULER_DAILY_MISSION_INTERVAL_MINUTES, 'minute');
+    const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 
     const findCouples = await this.databasePort.couple.findMany({
       where: {
         deletedAt: null,
         inviter: {
-          notificationTime: {
-            gt: previousDate.toDate(),
-            lte: date.toDate(),
-          },
+          notificationTime: timeString,
           deletedAt: null,
         },
         invitee: {

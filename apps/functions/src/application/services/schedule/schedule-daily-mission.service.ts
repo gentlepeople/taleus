@@ -93,7 +93,8 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
           target: EnumSystemNotificationMessageTarget.SCHEDULER,
           content: {
             status: 'LOG',
-            title: '[SUCCESS] Mission(오늘의 질문) 배달 완료',
+            text: '🚚💨 *[SUCCESS] Daily Mission*',
+            title: '✅ 오늘의 질문 배달 완료',
             data: [
               {
                 dataTitle: 'Schedule Time',
@@ -119,12 +120,13 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
       await this.systemNotificationAdapter.send({
         target: EnumSystemNotificationMessageTarget.SCHEDULER,
         content: {
+          text: '🚚💥 *[FAILED] Daily Mission*',
           status: 'ERROR',
-          title: '[FAILED] Mission(오늘의 질문) 배달 실패',
+          title: '❌ 오늘의 질문 배달 실패',
           data: [
             {
               dataTitle: 'Schedule Time',
-              dataDescription: eventScheduleTime.format('YYYY년 MM월 DD일 HH시 mm분'),
+              dataDescription: eventScheduleTime.format('YYYY-MM-DD HH:mm'),
             },
             {
               dataTitle: 'ERROR',
@@ -134,6 +136,7 @@ export class ScheduleDailyMissionService implements ScheduleDailyMissionUsecase 
           ],
         },
       });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       throw new Error(`Error ScheduleDailyMissionService: ${e}`);
     }
   }
