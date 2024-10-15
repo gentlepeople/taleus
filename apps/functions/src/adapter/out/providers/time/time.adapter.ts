@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import dayjs, { Dayjs as DefaultDayjs, extend } from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import utc from 'dayjs/plugin/utc';
 
-// import "dayjs/locale/ko";
-// import "dayjs/locale/ja";
-// import "dayjs/locale/en";
+import 'dayjs/locale/ko';
+import 'dayjs/locale/en';
 
 import { DEFAULT_LOCALE, DEFAULT_TIMEZONE } from './time.const';
 
 import { TimePort } from '@/ports';
 
-// extend(utc);
+extend(utc);
 // extend(isBetween);
 extend(timezone);
 // extend(duration);
@@ -74,20 +74,22 @@ export class TimeAdapter implements TimePort {
   }
 
   public dayjs(
-    date?: string | number | Date,
-    format?: { locale?: string; format?: string; utc?: boolean } | string | string[],
+    date?: dayjs.ConfigType,
+    format?: dayjs.OptionType,
     locale?: string,
     strict?: boolean,
   ): Dayjs {
-    return dayjs(date, format, locale || this.locale, strict);
+    return dayjs(date, format, locale || this.locale, strict).tz();
   }
 
   public get(
-    date?: string | number | Date,
-    format?: { locale?: string; format?: string; utc?: boolean } | string | string[],
+    date?: dayjs.ConfigType,
+    format?: dayjs.OptionType,
     locale?: string,
     strict?: boolean,
   ): Date {
-    return dayjs(date, format, locale || this.locale, strict).toDate();
+    return dayjs(date, format, locale || this.locale, strict)
+      .tz()
+      .toDate();
   }
 }

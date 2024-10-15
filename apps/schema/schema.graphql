@@ -204,7 +204,7 @@ type Mutation {
 }
 
 type Query {
-  completedCoupleMission(coupleMissionId: Int!, userId: String!): CompletedCoupleMissionResponse
+  completedCoupleMission(coupleMissionId: BigInt!, userId: String!): CompletedCoupleMissionResponse
   completedCoupleMissions(
     shuffle: Boolean = false
 
