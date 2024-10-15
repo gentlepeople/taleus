@@ -1,9 +1,9 @@
 export enum EnumSystemNotificationMessageTarget {
-  'CRASH' = 'CRASH',
-  'SCHEDULER' = 'SCHEDULER',
+  "CRASH" = "CRASH",
+  "SCHEDULER" = "SCHEDULER",
 }
 
-export type SystemNotificationContentStatusType = 'LOG' | 'WARN' | 'ERROR';
+export type SystemNotificationContentStatusType = "LOG" | "WARN" | "ERROR";
 
 export type ISystemNotificationType = {
   target: EnumSystemNotificationMessageTarget;
