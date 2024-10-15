@@ -6,6 +6,7 @@ import { MyPage_ConnectCoupleScreenNavigationProp } from '../../../my-page-conne
 type IMyPage_ConnectCoupleNavigationInput = void;
 type IMyPage_ConnectCoupleNavigationOutput = {
   goConnectComplete: () => void;
+  goHome: () => void;
 };
 
 export const useMyPage_ConnectCoupleNavigation: Hook<
@@ -18,5 +19,11 @@ export const useMyPage_ConnectCoupleNavigation: Hook<
     navigation.replace('MyPage_ConnectCompleteScreen');
   }, [navigation]);
 
-  return { goConnectComplete };
+  const goHome = useCallback(() => {
+    navigation.replace('PrimaryStack', {
+      screen: 'Primary_HomeScreen',
+    });
+  }, [navigation]);
+
+  return { goConnectComplete, goHome };
 };

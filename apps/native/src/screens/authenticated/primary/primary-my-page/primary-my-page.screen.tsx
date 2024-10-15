@@ -2,7 +2,7 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
-import { Divider, LoadingSpinner, Stack } from '~/mobile-ui';
+import { Divider, LoadingSpinner, Stack, spacing } from '~/mobile-ui';
 
 import { PrimaryStackNavigationProp, PrimaryStackParamList } from '..';
 
@@ -53,7 +53,7 @@ export const Primary_MyPageScreen: FC<IPrimary_MyPageScreenProps> = () => {
 
   const renderContent = () => {
     return (
-      <Stack>
+      <Stack paddingBottom={spacing['4-x']}>
         <Primary_MyPage_UserInfoView
           userName={nickname}
           isCoupled={isCoupled}

@@ -36,7 +36,7 @@ export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewPr
         const isLengthOvered = currentValue.length > 200;
 
         return (
-          <Stack paddingX={spacing['4-x']} space={spacing['3-x']}>
+          <Stack align="center" paddingX={spacing['4-x']} space={spacing['3-x']}>
             <TextInput
               placeholder="답변을 채워주세요"
               currentValue={currentValue}
@@ -89,7 +89,7 @@ export const Primary_Home_ContentAreaView = memo<IPrimary_Home_ContentAreaViewPr
       };
 
       return (
-        <Box paddingX={spacing['4-x']}>
+        <Box paddingX={spacing['4-x']} alignX="center" alignY="center">
           <Stack
             space={spacing['3-x']}
             paddingX={spacing['4-x']}

@@ -49,8 +49,8 @@ export const Authentication_SignUp_AnniversaryView =
             <Stack horizontal align="center" space={spacing['2.5-x']}>
               <Stack horizontal align="center" space={spacing['2-x']}>
                 <TextInput
-                  placeholder={String(year)}
-                  currentValue=""
+                  placeholder={''}
+                  currentValue={String(year)}
                   editable={false}
                   width={size['21.25-x']}
                   textAlignCenter
@@ -61,8 +61,8 @@ export const Authentication_SignUp_AnniversaryView =
               </Stack>
               <Stack horizontal align="center" space={spacing['2-x']}>
                 <TextInput
-                  placeholder={String(month).padStart(2, '0')}
-                  currentValue=""
+                  placeholder={''}
+                  currentValue={String(month).padStart(2, '0')}
                   editable={false}
                   width={size['18.5-x']}
                   textAlignCenter
@@ -73,8 +73,8 @@ export const Authentication_SignUp_AnniversaryView =
               </Stack>
               <Stack horizontal align="center" space={spacing['2-x']}>
                 <TextInput
-                  placeholder={String(day).padStart(2, '0')}
-                  currentValue=""
+                  placeholder={''}
+                  currentValue={String(day).padStart(2, '0')}
                   editable={false}
                   width={size['18.5-x']}
                   textAlignCenter

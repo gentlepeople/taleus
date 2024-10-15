@@ -77,21 +77,29 @@ export const Authentication_SignUp_PolicyView = memo<IAuthentication_SignUp_Poli
             </Pressable>
           </Column>
           <Column width="fluid">
-            <Pressable
-              onPress={handlePressShowPolicy}
-              style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
-            >
-              <Columns alignY="center">
-                <Column width="fluid">
-                  <Text textType="button-2" color="text-black">
-                    {'개인정보 수집이용 동의'}
-                  </Text>
-                </Column>
-                <Column width="content">
+            <Columns alignY="center">
+              <Column width="fluid">
+                <Text textType="button-2" color="text-black">
+                  {'개인정보 수집이용 동의'}
+                </Text>
+              </Column>
+              <Column width="content">
+                <Pressable
+                  onPress={handlePressShowPolicy}
+                  style={({ pressed }) => [
+                    { opacity: pressed ? 0.6 : 1 },
+                    {
+                      width: size['6-x'],
+                      height: size['6-x'],
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                  ]}
+                >
                   <Icon name="right-arrow" size={12} />
-                </Column>
-              </Columns>
-            </Pressable>
+                </Pressable>
+              </Column>
+            </Columns>
           </Column>
         </Columns>
         {/* button 2 */}
@@ -121,21 +129,29 @@ export const Authentication_SignUp_PolicyView = memo<IAuthentication_SignUp_Poli
             </Pressable>
           </Column>
           <Column width="fluid">
-            <Pressable
-              onPress={handlePressShowTerms}
-              style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
-            >
-              <Columns alignY="center">
-                <Column width="fluid">
-                  <Text textType="button-2" color="text-black">
-                    {'서비스 이용약관 동의'}
-                  </Text>
-                </Column>
-                <Column width="content">
+            <Columns alignY="center">
+              <Column width="fluid">
+                <Text textType="button-2" color="text-black">
+                  {'서비스 이용약관 동의'}
+                </Text>
+              </Column>
+              <Column width="content">
+                <Pressable
+                  onPress={handlePressShowTerms}
+                  style={({ pressed }) => [
+                    { opacity: pressed ? 0.6 : 1 },
+                    {
+                      width: size['6-x'],
+                      height: size['6-x'],
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                  ]}
+                >
                   <Icon name="right-arrow" size={12} />
-                </Column>
-              </Columns>
-            </Pressable>
+                </Pressable>
+              </Column>
+            </Columns>
           </Column>
         </Columns>
       </Stack>

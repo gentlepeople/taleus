@@ -6,6 +6,7 @@ import { IUserData } from '../authentication-sign-up.type';
 import {
   useAuthentication_SignUpMixpanel,
   useAuthentication_SignUpNavigation,
+  useAuthentication_SignUpSignOut,
   useAuthentication_SignUpState,
   useAuthentication_SignUpUpdateUser,
 } from './hooks';
@@ -23,6 +24,7 @@ type IAuthentication_SignUpControllerOutput = {
   goPolicyWebView: () => void;
   goTermsWebView: () => void;
   signUp: () => Promise<void>;
+  goBackLanding: () => Promise<void>;
 };
 
 export const useAuthentication_SignUpController: Controller<
@@ -42,11 +44,16 @@ export const useAuthentication_SignUpController: Controller<
   } = useAuthentication_SignUpState();
   const { updateUserInfo } = useAuthentication_SignUpUpdateUser();
   const { clickSignUpMixpanelEvent } = useAuthentication_SignUpMixpanel();
+  const { signOut } = useAuthentication_SignUpSignOut();
 
   const signUp = useCallback(async () => {
     clickSignUpMixpanelEvent();
     await updateUserInfo({ userData, onSuccess: goHome });
   }, [userData, updateUserInfo, goHome, clickSignUpMixpanelEvent]);
+
+  const goBackLanding = useCallback(async () => {
+    await signOut();
+  }, [signOut]);
 
   return {
     userData,
@@ -60,5 +67,6 @@ export const useAuthentication_SignUpController: Controller<
     goPolicyWebView,
     goTermsWebView,
     signUp,
+    goBackLanding,
   };
 };

@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import { EnumMMKVKeystoreString, useMMKV } from '~/providers';
 
@@ -13,7 +14,8 @@ export const useAuthentication_LandingCheckOnboardingCompleted: Hook<
   const { keystore } = useMMKV();
 
   const onboardingData = keystore.getString(EnumMMKVKeystoreString.ANSWER_BEFORE_SIGN_IN);
-  const hasOnboardingData = !isUndefined(onboardingData);
+  const hasOnboardingData =
+    !isUndefined(onboardingData) && onboardingData && !isEmpty(onboardingData);
 
   return { hasOnboardingData };
 };

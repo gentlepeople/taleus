@@ -8,6 +8,8 @@ import {
   useMyPage_ConnectCoupleKakaoShare,
   useMyPage_ConnectCoupleMixpanel,
   useMyPage_ConnectCoupleNavigation,
+  useMyPage_ConnectCouplePartnerData,
+  useMyPage_ConnectCoupleToast,
 } from './hooks';
 
 type IMyPage_ConnectCoupleControllerInput = void;
@@ -19,6 +21,7 @@ type IMyPage_ConnectCoupleControllerOutput = {
   copyUserCode: () => void;
   connect: () => Promise<void>;
   share: () => Promise<void>;
+  exit: () => void;
 };
 
 export const useMyPage_ConnectCoupleController: Controller<
@@ -29,29 +32,41 @@ export const useMyPage_ConnectCoupleController: Controller<
     currentUser: { personalCode },
   } = useAuth();
 
-  const { goConnectComplete } = useMyPage_ConnectCoupleNavigation();
+  const { goConnectComplete, goHome } = useMyPage_ConnectCoupleNavigation();
   const { copyToClipboard } = useMyPage_ConnectCoupleClipboardCopy();
-  const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete });
+  const { checkIsCoupled } = useMyPage_ConnectCouplePartnerData();
+  const { connectCouple } = useMyPage_ConnectCoupleConnect({ goConnectComplete, checkIsCoupled });
   const { partnerPersonalCode, changePartnerPersonalCode } = useMyPage_ConnectCoupleInputManager();
   const { kakaoShare } = useMyPage_ConnectCoupleKakaoShare();
   const { copyCoupleCodeMixpanelEvent, shareCoupleCodeMixpanelEvent } =
     useMyPage_ConnectCoupleMixpanel();
+  const { showCopyCompletedToast, showPersonalCodeNotAvailableToast, showIsCoupledBlockToast } =
+    useMyPage_ConnectCoupleToast();
 
   const isCTADisabled = partnerPersonalCode.length < 8;
 
   const copyUserCode = useCallback(() => {
     copyCoupleCodeMixpanelEvent(personalCode);
     copyToClipboard(personalCode);
-  }, [copyToClipboard, copyCoupleCodeMixpanelEvent, personalCode]);
+    showCopyCompletedToast();
+  }, [copyToClipboard, copyCoupleCodeMixpanelEvent, showCopyCompletedToast, personalCode]);
 
   const connect = useCallback(async () => {
-    await connectCouple(partnerPersonalCode);
+    await connectCouple({
+      inviteePersonalCode: partnerPersonalCode,
+      onBlock: showIsCoupledBlockToast,
+      onFailed: showPersonalCodeNotAvailableToast,
+    });
   }, [connectCouple, partnerPersonalCode]);
 
   const share = useCallback(async () => {
     shareCoupleCodeMixpanelEvent(personalCode);
     await kakaoShare(personalCode);
   }, [kakaoShare, shareCoupleCodeMixpanelEvent, personalCode]);
+
+  const exit = useCallback(() => {
+    goHome();
+  }, [goHome]);
 
   return {
     personalCode,
@@ -61,5 +76,6 @@ export const useMyPage_ConnectCoupleController: Controller<
     copyUserCode,
     connect,
     share,
+    exit,
   };
 };

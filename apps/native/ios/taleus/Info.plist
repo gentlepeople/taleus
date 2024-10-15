@@ -38,15 +38,23 @@
 				<string>$(GOOGLE_OAUTH_CLIENT_ID)</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>taleus</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>taleus</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>KAKAO_APP_KEY</key>
-	<string>kakao$(KAKAO_NATIVE_APP_KEY)</string>
-	<key>KAKAO_NATIVE_APP_KEY</key>
-	<string>${KAKAO_NATIVE_APP_KEY}</string>
+	<string>$(KAKAO_NATIVE_APP_KEY)</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -77,28 +85,24 @@
 		<string>Pretendard-SemiBold.otf</string>
 		<string>Pretendard-Medium.otf</string>
 		<string>AntDesign.ttf</string>
- 		<string>Entypo.ttf</string>
- 		<string>EvilIcons.ttf</string>
- 		<string>Feather.ttf</string>
- 		<string>FontAwesome.ttf</string>
- 		<string>FontAwesome5_Brands.ttf</string>
- 		<string>FontAwesome5_Regular.ttf</string>
- 		<string>FontAwesome5_Solid.ttf</string>
- 		<string>FontAwesome6_Brands.ttf</string>
- 		<string>FontAwesome6_Regular.ttf</string>
- 		<string>FontAwesome6_Solid.ttf</string>
- 		<string>Foundation.ttf</string>
- 		<string>Ionicons.ttf</string>
- 		<string>MaterialIcons.ttf</string>
- 		<string>MaterialCommunityIcons.ttf</string>
- 		<string>SimpleLineIcons.ttf</string>
- 		<string>Octicons.ttf</string>
- 		<string>Zocial.ttf</string>
- 		<string>Fontisto.ttf</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>FontAwesome6_Brands.ttf</string>
+		<string>FontAwesome6_Regular.ttf</string>
+		<string>FontAwesome6_Solid.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

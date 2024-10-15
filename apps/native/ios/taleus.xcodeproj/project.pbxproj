@@ -20,8 +20,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		AF7B549223694CEB9724F3ED /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C4597DBC1A40E5BFFD5D55 /* BootSplash.storyboard */; };
 		B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 06A55ACEEDB042F7BC8EC1D2 /* Pretendard-Bold.otf */; };
-		BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
-		BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */; };
+		BB509E512CBD43CF004E748E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB509E502CBD43CF004E748E /* GoogleService-Info.plist */; };
+		BB509E552CBD804F004E748E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB509E542CBD804F004E748E /* File.swift */; };
 		BBBBF7E82CAF13C500C72F7D /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */; };
 		BBBBF7EC2CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FBCE1326891AED3915CD4C04 /* PrivacyInfo.xcprivacy */; };
@@ -83,8 +83,10 @@
 		9592AA43C84CB318C3B1904F /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B36490DB41F142E29A8E3075 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.otf"; path = "../src/mobile-ui/assets/font/Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		B9263D87D81CCEDB493C901E /* libPods-taleus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-taleus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB509E502CBD43CF004E748E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BB509E532CBD804F004E748E /* taleus-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "taleus-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB509E542CBD804F004E748E /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		BBA3B5452CAA70C9000F87FE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BBA3B5512CAC3503000F87FE /* taleus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = taleus.entitlements; path = taleus/taleus.entitlements; sourceTree = "<group>"; };
 		BBBBF7E52CAF13C500C72F7D /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBBF7E72CAF13C500C72F7D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -146,8 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				BBA3B5512CAC3503000F87FE /* taleus.entitlements */,
-				BBA3B54B2CAA80B6000F87FE /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				BB509E502CBD43CF004E748E /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -182,6 +184,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BB509E542CBD804F004E748E /* File.swift */,
 				BBA3B5452CAA70C9000F87FE /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* taleus */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -191,6 +194,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				D333708BAF40427FB1287864 /* Resources */,
+				BB509E532CBD804F004E748E /* taleus-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -322,7 +326,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1540;
 					};
 					BBBBF7E42CAF13C500C72F7D = {
 						CreatedOnToolsVersion = 15.4;
@@ -354,7 +358,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBA3B54D2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,13 +366,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				BBA3B54C2CAA80B6000F87FE /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				BBF8EB908790C147182F7A92 /* PrivacyInfo.xcprivacy in Resources */,
 				781137FD246D462E94B983DA /* Pretendard-Regular.otf in Resources */,
 				B9FB9986D1584622AE656DE4 /* Pretendard-Bold.otf in Resources */,
 				4F5F6564B41E4DEEA9267421 /* Pretendard-SemiBold.otf in Resources */,
 				505CAD0D180541E9B7A75759 /* Pretendard-Medium.otf in Resources */,
+				BB509E512CBD43CF004E748E /* GoogleService-Info.plist in Resources */,
 				AF7B549223694CEB9724F3ED /* BootSplash.storyboard in Resources */,
 				E3E57F27964C46E8A1F04880 /* Colors.xcassets in Resources */,
 			);
@@ -577,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				BB509E552CBD804F004E748E /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -609,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0604C443AF29A9410F74543A /* Pods-taleus-taleusTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -636,6 +641,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3E48B40EAE24D1E90D57983 /* Pods-taleus-taleusTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = taleusTests/Info.plist;
@@ -681,6 +687,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.taleus;
 				PRODUCT_NAME = taleus;
+				SWIFT_OBJC_BRIDGING_HEADER = "taleus-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -711,6 +718,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.taleus;
 				PRODUCT_NAME = taleus;
+				SWIFT_OBJC_BRIDGING_HEADER = "taleus-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

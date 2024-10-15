@@ -45,6 +45,7 @@ export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> 
     goPolicyWebView,
     goTermsWebView,
     signUp,
+    goBackLanding,
   } = useAuthentication_SignUpController();
 
   const {
@@ -80,7 +81,9 @@ export const Authentication_SignUpScreen: FC<IAuthentication_SignUpScreenProps> 
 
   return (
     <Authentication_SignUpLayout
-      header={<HeaderOrganism title={'회원가입'} left={{ type: 'button' }} />}
+      header={
+        <HeaderOrganism title={'회원가입'} left={{ type: 'button' }} onPressExit={goBackLanding} />
+      }
       content={renderContent()}
       footer={<Authentication_SignUp_CTAView isCTADisabled={isCTADisabled} onPress={signUp} />}
     />

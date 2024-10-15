@@ -17,24 +17,36 @@ export const useMyPage_ConnectCoupleKakaoShare: Hook<
           content: {
             title: '❤️ 내 연인의 커플 코드 ❤️',
             description: personalCode,
+            imageUrl: null,
             link: {
-              mobileWebUrl: `taleUs://my-page/connect-couple?partnerPersonalCode=${personalCode}`,
-              webUrl: `taleUs://my-page/connect-couple?partnerPersonalCode=${personalCode}`,
+              mobileWebUrl: `taleus://my-page/connect-couple`,
+              webUrl: `taleus://my-page/connect-couple`,
+              iosExecutionParams: {
+                partnerPersonalCode: personalCode,
+              },
+              androidExecutionParams: {
+                partnerPersonalCode: personalCode,
+              },
             },
-            imageUrl: '',
           },
           buttons: [
             {
               title: '앱에서 연결하기',
               link: {
-                mobileWebUrl: `taleUs://my-page/connect-couple?partnerPersonalCode=${personalCode}`,
-                webUrl: `taleUs://my-page/connect-couple?partnerPersonalCode=${personalCode}`,
+                mobileWebUrl: `taleus://my-page/connect-couple`,
+                webUrl: `taleus://my-page/connect-couple`,
+                iosExecutionParams: {
+                  partnerPersonalCode: personalCode,
+                },
+                androidExecutionParams: {
+                  partnerPersonalCode: personalCode,
+                },
               },
             },
           ],
         },
         useWebBrowserIfKakaoTalkNotAvailable: true,
-      });
+      }).catch((e) => console.log(e));
     },
     [shareFeedTemplate],
   );

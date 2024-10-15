@@ -27,6 +27,13 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+      <!-- taleus:// 스킴을 위한 딥 링크 설정 -->
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="taleus" />
+      </intent-filter>
     </activity>
     <activity
       android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -35,7 +42,6 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="taleUs" />
         <data
           android:host="oauth"
           android:scheme="kakao${KAKAO_NATIVE_APP_KEY}" />
