@@ -9,7 +9,6 @@ import { StackNavigationProp, createStackNavigator } from '@react-navigation/sta
 
 import { RootStackParamList } from '../root.stack';
 
-import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { useAdMob } from '../../providers';
 import { FeedStack, FeedStackParamList } from './feed';
 import { MembershipPurchaseStack, MembershipPurchaseStackParamList } from './membership-purchase';
@@ -60,11 +59,11 @@ export const AuthenticatedStack = () => {
           component={MembershipPurchaseStack}
         />
       </AuthenticatedStackNavigator.Navigator>
-      <BannerAd
+      {/* <BannerAd
         ref={bannerRef}
         unitId={bannerAdUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
+      /> */}
     </>
   );
 };

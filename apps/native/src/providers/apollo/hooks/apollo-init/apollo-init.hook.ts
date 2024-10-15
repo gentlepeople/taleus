@@ -9,6 +9,7 @@ import auth from '@react-native-firebase/auth';
 import { useState } from 'react';
 import { useDidMount } from 'rooks';
 
+import { offsetLimitPagination } from '@apollo/client/utilities';
 import isNull from 'lodash/isNull';
 import { useApolloLink } from '../apollo-link';
 
@@ -38,7 +39,9 @@ export const useApolloInit = () => {
     const cache = new InMemoryCache({
       typePolicies: {
         Query: {
-          fields: {},
+          fields: {
+            completedCoupleMissions: offsetLimitPagination(),
+          },
         },
       },
     });
