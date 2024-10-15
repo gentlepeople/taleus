@@ -5,6 +5,7 @@ type IMyPage_ConnectCoupleToastInput = void;
 type IMyPage_ConnectCoupleToastOutput = {
   showCopyCompletedToast: () => void;
   showPersonalCodeNotAvailableToast: () => void;
+  showIsCoupledBlockToast: () => void;
 };
 
 export const useMyPage_ConnectCoupleToast: Hook<
@@ -25,8 +26,15 @@ export const useMyPage_ConnectCoupleToast: Hook<
     });
   }, [toast]);
 
+  const showIsCoupledBlockToast = useCallback(() => {
+    toast.show('이미 연결된 상대방이 있어요', {
+      type: 'error',
+    });
+  }, [toast]);
+
   return {
     showCopyCompletedToast,
     showPersonalCodeNotAvailableToast,
+    showIsCoupledBlockToast,
   };
 };

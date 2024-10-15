@@ -69,9 +69,12 @@ export const useFeed_DetailController: Controller<
       }
 
       if (isEdit) {
-        openCheckSwipeModal(endEdit);
-        nextQuestionAnimation();
-        incrementProgress();
+        openCheckSwipeModal(() => {
+          endEdit();
+          nextQuestionAnimation();
+          incrementProgress();
+        });
+
         return;
       }
 
@@ -156,6 +159,10 @@ export const useFeed_DetailController: Controller<
   }, [currentUserAnswer, setContent, isEdit]);
 
   useEffect(() => {
+    if (isFeedDataLoading) {
+      return;
+    }
+
     if (progress === INITIAL_PROGRESS) {
       viewFirstAnswerMixpanelEvent({
         missionId,
@@ -199,7 +206,7 @@ export const useFeed_DetailController: Controller<
     viewThirdAnswerMixpanelEvent,
   ]);
 
-  const isCTADisabled = newContent.length > 200;
+  const isCTADisabled = newContent && newContent.length > 200;
 
   return {
     isFeedDataLoading,

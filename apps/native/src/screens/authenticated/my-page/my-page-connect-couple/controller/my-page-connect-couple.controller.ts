@@ -40,7 +40,7 @@ export const useMyPage_ConnectCoupleController: Controller<
   const { kakaoShare } = useMyPage_ConnectCoupleKakaoShare();
   const { copyCoupleCodeMixpanelEvent, shareCoupleCodeMixpanelEvent } =
     useMyPage_ConnectCoupleMixpanel();
-  const { showCopyCompletedToast, showPersonalCodeNotAvailableToast } =
+  const { showCopyCompletedToast, showPersonalCodeNotAvailableToast, showIsCoupledBlockToast } =
     useMyPage_ConnectCoupleToast();
 
   const isCTADisabled = partnerPersonalCode.length < 8;
@@ -54,6 +54,7 @@ export const useMyPage_ConnectCoupleController: Controller<
   const connect = useCallback(async () => {
     await connectCouple({
       inviteePersonalCode: partnerPersonalCode,
+      onBlock: showIsCoupledBlockToast,
       onFailed: showPersonalCodeNotAvailableToast,
     });
   }, [connectCouple, partnerPersonalCode]);

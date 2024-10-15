@@ -18,7 +18,7 @@ export const Feed_Detail_PartnerAnswerView = memo<IFeed_Detail_PartnerAnswerView
           borderRadius: radius['3.75-x'],
           backgroundColor: palette['content-card-bg'],
           width: size['82-x'],
-          height: size['60-x'],
+          height: size['55-x'],
         }}
       >
         <Text textType="body/16/bold">{partnerName}</Text>
