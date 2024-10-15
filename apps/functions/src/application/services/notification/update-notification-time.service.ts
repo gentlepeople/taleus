@@ -19,7 +19,7 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
     private readonly pushNotificationPort: PushNotificationPort,
   ) {}
 
-  async execute(userId: string, notificationTime: Date): Promise<void> {
+  async execute(userId: string, notificationTime: string): Promise<void> {
     const partner = await this.userRepository.findPartnerByUserId(userId);
     const isCouple = !isNull(partner);
     if (isCouple) {

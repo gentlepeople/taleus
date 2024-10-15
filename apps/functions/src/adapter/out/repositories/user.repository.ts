@@ -30,9 +30,7 @@ export class UserRepository implements IUserRepository {
       ...object,
       gender: object.gender as EnumGender,
       oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
-      notificationTime: object.notificationTime
-        ? object.notificationTime.toTimeString().slice(0, 5)
-        : null,
+      notificationTime: object.notificationTime,
       subscriptionStatus: object.subscriptionStatus as EnumSubscriptionStatus,
     });
   }
@@ -52,9 +50,7 @@ export class UserRepository implements IUserRepository {
       ...object,
       gender: object.gender as EnumGender,
       oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
-      notificationTime: object.notificationTime
-        ? object.notificationTime.toTimeString().slice(0, 5)
-        : null,
+      notificationTime: object.notificationTime,
       subscriptionStatus: object.subscriptionStatus as EnumSubscriptionStatus,
     });
   }
@@ -209,7 +205,7 @@ export class UserRepository implements IUserRepository {
     return true;
   }
 
-  async updateNotificationTime(userId: string, notificationTime: Date): Promise<boolean> {
+  async updateNotificationTime(userId: string, notificationTime: string): Promise<boolean> {
     await this.databasePort.user.update({
       where: {
         userId,
@@ -225,7 +221,7 @@ export class UserRepository implements IUserRepository {
   async updateNotificationTimeWithPartner(
     userId: string,
     partnerId: string,
-    notificationTime: Date,
+    notificationTime: string,
   ): Promise<boolean> {
     const { count } = await this.databasePort.user.updateMany({
       where: {
