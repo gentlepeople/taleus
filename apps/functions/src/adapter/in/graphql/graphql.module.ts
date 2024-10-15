@@ -31,6 +31,7 @@ import { ServiceModule } from '@/services';
         sortSchema: true,
         introspection: true,
         autoSchemaFile: true,
+        context: ({ req }) => ({ req }),
         // subscriptions: {
         //   'graphql-ws': true,
         // },

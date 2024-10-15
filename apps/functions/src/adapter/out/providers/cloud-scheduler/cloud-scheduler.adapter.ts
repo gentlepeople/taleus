@@ -47,6 +47,7 @@ export class CloudSchedulerAdapter implements OnModuleInit, CloudSchedulerPort {
         await this.createSchedulerJob(jobData);
       } else {
         logger.error('[Event] Error checking cloud scheduler job:', error);
+        throw error;
       }
     }
   }
@@ -71,7 +72,7 @@ export class CloudSchedulerAdapter implements OnModuleInit, CloudSchedulerPort {
       });
       logger.log(`[Event] Updated cloud scheduler job: ${response.name}`);
     } catch (error) {
-      logger.error('[Event] Error updating cloud scheduler job:', error);
+      throw error;
     }
   }
 

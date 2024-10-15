@@ -1,4 +1,4 @@
-query Feed_DetailData($userId: String!, $coupleMissionId: Int!) {
+query Feed_DetailData($userId: String!, $coupleMissionId: BigInt!) {
   completedCoupleMission(userId: $userId, coupleMissionId: $coupleMissionId) {
     data {
       question {
