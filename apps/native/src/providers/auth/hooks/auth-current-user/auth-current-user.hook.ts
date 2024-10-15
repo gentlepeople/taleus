@@ -13,6 +13,7 @@ export type IAuthCurrentUser = {
   isCoupled: boolean;
   coupleId: number;
   partnerNickname: string;
+  isPartnerDeleted: boolean;
 } | null;
 
 // type MembershipInfo = Merge<CustomerInfo, { activeMembership?: PurchasesEntitlementInfo }>;
@@ -95,6 +96,7 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
   const isCoupled = data.user.isCoupled;
   const coupleId = isCoupled && data.user.couple && data.user.couple.coupleId;
   const partnerNickname = isCoupled ? data.user?.partner?.nickname : '';
+  const isPartnerDeleted = isCoupled && data.user.partner && data.user.partner.isDeleted;
 
   return {
     currentUser: {
@@ -109,6 +111,7 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
       isCoupled,
       coupleId,
       partnerNickname,
+      isPartnerDeleted,
     },
     isLoadingCurrentUser: isLoadingCurrentUser,
   };
