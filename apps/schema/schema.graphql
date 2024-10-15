@@ -46,7 +46,7 @@ The `BigInt` scalar type represents non-fractional signed whole numeric values.
 scalar BigInt
 
 type CompletedCoupleMissionData {
-  partnerResponse: Response!
+  partnerResponse: Response
   question: Question!
   userResponse: Response!
 }
@@ -309,10 +309,10 @@ type User {
   createdAt: DateTime!
   email: String!
   gender: EnumGender!
-  isAnonymous: Boolean!
 
   """Determine if the user is currently in a couple."""
   isCoupled: Boolean!
+  isDeleted: Boolean!
   isProfileCompleted: Boolean!
   isSubscriptionActive: Boolean!
   nickname: String!

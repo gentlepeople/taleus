@@ -52,12 +52,14 @@ export class CompletedCoupleMissionQuery {
     );
 
     const findPartner = await this.findUserUsecase.findPartnerByUserId(userId);
-    const { userId: partnerId } = findPartner;
+    const { userId: partnerId, isDeleted: partnerIsDeleted } = findPartner;
 
-    const getPartnerResponses = await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
-      partnerId,
-      coupleMissionId,
-    );
+    const getPartnerResponses = partnerIsDeleted
+      ? []
+      : await this.findResponseUsecase.findManyByUserIdAndCoupleMissionId(
+          partnerId,
+          coupleMissionId,
+        );
 
     const responseMap = new Map<string, Response>();
     [...getUserResponses, ...getPartnerResponses].forEach((response) => {
@@ -73,7 +75,7 @@ export class CompletedCoupleMissionQuery {
       const partnerResponseKey = `${questionId}-${partnerId}`;
 
       const userResponse = responseMap.get(userResponseKey);
-      const partnerResponse = responseMap.get(partnerResponseKey);
+      const partnerResponse = responseMap.get(partnerResponseKey) || null;
 
       return {
         question,

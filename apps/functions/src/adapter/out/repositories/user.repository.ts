@@ -21,6 +21,22 @@ export class UserRepository implements IUserRepository {
     private readonly timePort: TimePort,
   ) {}
 
+  private enumConvert(object: user): User {
+    if (isNull(object)) {
+      return null;
+    }
+
+    return new User({
+      ...object,
+      gender: object.gender as EnumGender,
+      oauthProviderType: object.oauthProviderType as EnumOAuthProviderType,
+      notificationTime: object.notificationTime
+        ? object.notificationTime.toTimeString().slice(0, 5)
+        : null,
+      subscriptionStatus: object.subscriptionStatus as EnumSubscriptionStatus,
+    });
+  }
+
   private enumConvertAndAnonymizeUser(object: user): User {
     if (isNull(object)) {
       return null;
@@ -51,7 +67,7 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    return this.enumConvertAndAnonymizeUser(findUser);
+    return this.enumConvert(findUser);
   }
 
   async findOneByOAuthProviderId(oauthProviderId: string): Promise<User | null> {
@@ -62,7 +78,7 @@ export class UserRepository implements IUserRepository {
       },
     });
 
-    return this.enumConvertAndAnonymizeUser(findUser);
+    return this.enumConvert(findUser);
   }
 
   async createOne(data: {
@@ -146,9 +162,9 @@ export class UserRepository implements IUserRepository {
   }
 
   async findPartnerByUserId(userId: string): Promise<User | null> {
+    // find one even if the partner has withdrawn.
     const findCouple = await this.databasePort.couple.findFirst({
       where: {
-        deletedAt: null,
         OR: [
           {
             inviteeId: userId,
@@ -165,15 +181,19 @@ export class UserRepository implements IUserRepository {
     const { inviteeId, inviterId } = findCouple;
     const partnerId = inviterId === userId ? inviteeId : inviterId;
 
-    const findPartner = await this.findOneByUserId(partnerId);
-    return findPartner;
+    const findPartner = await this.databasePort.user.findUnique({
+      where: {
+        userId: partnerId,
+      },
+    });
+    return this.enumConvertAndAnonymizeUser(findPartner);
   }
 
   async findOneByPersonalCode(personalCode: string): Promise<User | null> {
     const findUser = await this.databasePort.user.findFirst({
       where: { personalCode, deletedAt: null },
     });
-    return this.enumConvertAndAnonymizeUser(findUser);
+    return this.enumConvert(findUser);
   }
 
   async updateCoupleStartDate(userId: string, coupleStartDate: Date): Promise<boolean> {

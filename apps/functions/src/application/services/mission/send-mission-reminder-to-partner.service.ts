@@ -47,7 +47,7 @@ export class SendMissionReminderToPartnerService implements SendMissionReminderT
     }
 
     // 2. Error if partner has left.
-    const isPartnerDeleted = findPartner.isAnonymous;
+    const isPartnerDeleted = findPartner.isDeleted;
     if (isPartnerDeleted) {
       return {
         success: false,
