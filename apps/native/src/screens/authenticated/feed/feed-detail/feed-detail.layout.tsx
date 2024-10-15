@@ -13,9 +13,9 @@ export const Feed_DetailLayout = memo<IFeed_DetailLayoutProps>(({ header, conten
     <BasicLayout>
       <Rows>
         <Row height="content">{header}</Row>
-        <ScrollView>
-          <Row height="fluid">{content}</Row>
-        </ScrollView>
+        <Row height="fluid">
+          <ScrollView>{content}</ScrollView>
+        </Row>
         <Row height="content">{footer}</Row>
       </Rows>
     </BasicLayout>

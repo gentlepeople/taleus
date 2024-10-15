@@ -32,11 +32,10 @@ export const useMyPage_ConnectCoupleConnect: Hook<
   useMutationIndicator([isConnecting]);
 
   const connectCouple = useCallback(
-    async ({ inviteePersonalCode, onFailed }: IConnectCoupleParams) => {
+    async ({ inviteePersonalCode, onBlock, onFailed }: IConnectCoupleParams) => {
       const isCoupled = await checkIsCoupled();
-
       if (isCoupled) {
-        goConnectComplete();
+        onBlock();
         return;
       }
 
@@ -47,7 +46,8 @@ export const useMyPage_ConnectCoupleConnect: Hook<
         },
       });
 
-      const isFailed = !result.data.registerCouple.success;
+      const isFailed =
+        !result.data.registerCouple.success && result.data.registerCouple.code === 'INVALID_CODE';
       if (isFailed) {
         onFailed();
       }

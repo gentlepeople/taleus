@@ -49,7 +49,7 @@ export const Feed_Detail_UserAnswerView = memo<IFeed_Detail_UserAnswerViewProps>
               backgroundColor: '#F0F0F0',
               borderRadius: radius['3.75-x'],
               width: size['82-x'],
-              height: size['60-x'],
+              height: size['55-x'],
             }}
             multiLine
             isLengthOvered={isLengthOvered}
@@ -75,7 +75,7 @@ export const Feed_Detail_UserAnswerView = memo<IFeed_Detail_UserAnswerViewProps>
           borderRadius: radius['3.75-x'],
           backgroundColor: palette['content-card-bg'],
           width: size['82-x'],
-          height: size['60-x'],
+          height: size['55-x'],
         }}
       >
         <Columns>
