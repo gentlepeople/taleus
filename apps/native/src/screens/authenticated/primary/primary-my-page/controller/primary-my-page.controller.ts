@@ -1,5 +1,11 @@
 import { useCallback } from 'react';
-import { DELETE_USER_DIALOG_TITLE, SIGN_OUT_DIALOG_TITLE } from '../primary-my-page.const';
+import {
+  DELETE_USER_DIALOG_TITLE,
+  MY_PAGE_INQUIRY_URL,
+  MY_PAGE_POLICY_URL,
+  MY_PAGE_TERMS_URL,
+  SIGN_OUT_DIALOG_TITLE,
+} from '../primary-my-page.const';
 import {
   usePrimary_MyPageDeleteUser,
   usePrimary_MyPageNavigation,
@@ -59,20 +65,20 @@ export const usePrimary_MyPageController: Controller<
   }, [signOut, openDialogModal]);
 
   const openFeedbackAndInquiry = useCallback(() => {
-    goWebView({ title: '피드백 / 문의하기', uri: 'www.naver.com' });
+    goWebView({ title: '피드백 / 문의하기', uri: MY_PAGE_INQUIRY_URL });
   }, [goWebView]);
 
   const openPolicy = useCallback(() => {
     goWebView({
       title: '이용약관',
-      uri: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80288ff4e6189d366e9e',
+      uri: MY_PAGE_POLICY_URL,
     });
   }, [goWebView]);
 
   const openTerms = useCallback(() => {
     goWebView({
       title: '개인정보 처리 방침',
-      uri: 'https://www.notion.so/kyewmw/TaleUs-11068bc12aea80c7ac3ddb9450170323',
+      uri: MY_PAGE_TERMS_URL,
     });
   }, [goWebView]);
 
