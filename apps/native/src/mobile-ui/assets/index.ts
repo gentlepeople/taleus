@@ -20,6 +20,5 @@ export const APPLE_LOGO_IMAGE = appleLogo as ImageSourcePropType;
 export const GOOGLE_LOGO_IMAGE = googleLogo as ImageSourcePropType;
 export const KAKAO_LOGO_IMAGE = kakaoLogo as ImageSourcePropType;
 export const MEMBERSHIP_COUPLE_IMAGE = membershipCouple as ImageSourcePropType;
-export const TALE_US_SMILE_LOGO = taleusSmileLogo as ImageSourcePropType;
 
 export * from './lotties';
