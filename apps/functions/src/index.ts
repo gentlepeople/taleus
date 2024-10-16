@@ -17,7 +17,7 @@ firestore.settings({ ignoreUndefinedProperties: true });
 const functionsGlobalOptions: GlobalOptions = {
   region: 'asia-northeast3',
   memory: '2GiB',
-  minInstances: 0,
+  minInstances: 1,
   timeoutSeconds: 600,
   vpcConnector: process.env.VPC_CONNECTOR,
   vpcConnectorEgressSettings: 'ALL_TRAFFIC',
