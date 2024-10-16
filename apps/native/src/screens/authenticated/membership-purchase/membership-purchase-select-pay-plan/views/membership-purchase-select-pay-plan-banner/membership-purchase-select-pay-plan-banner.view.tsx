@@ -1,18 +1,17 @@
 import { memo } from 'react';
 import { ImageBackground } from 'react-native';
-import { Box, MEMBERSHIP_COUPLE_IMAGE, Text, radius, size, spacing } from '~/mobile-ui';
+import { Box, MEMBERSHIP_COUPLE_IMAGE, Text, radius, spacing } from '~/mobile-ui';
 
 type IMembershipPurchase_SelectPayPlan_BannerViewProps = {};
 
 export const MembershipPurchase_SelectPayPlan_BannerView =
   memo<IMembershipPurchase_SelectPayPlan_BannerViewProps>(() => {
     return (
-      <Box paddingX={spacing['3-x']} paddingTop={spacing['7-x']}>
+      <Box paddingTop={spacing['6-x']}>
         <Box style={{ borderRadius: radius['4-x'] }}>
           <ImageBackground
             source={MEMBERSHIP_COUPLE_IMAGE}
             style={{
-              width: size['85-x'],
               aspectRatio: 340 / 179,
               paddingTop: spacing['6-x'],
               paddingLeft: spacing['4-x'],

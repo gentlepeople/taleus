@@ -2,7 +2,7 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { FC } from 'react';
 
-import { Stack } from '~/mobile-ui';
+import { Stack, spacing } from '~/mobile-ui';
 
 import { MembershipPurchaseStackNavigationProp, MembershipPurchaseStackParamList } from '..';
 import { MembershipPurchase_SelectPayPlanLayout } from './membership-purchase-select-pay-plan.layout';
@@ -35,7 +35,7 @@ export const MembershipPurchase_SelectPayPlanScreen: FC<
 > = () => {
   const renderContent = () => {
     return (
-      <Stack>
+      <Stack space={spacing['6-x']} paddingX={spacing['4-x']}>
         <MembershipPurchase_SelectPayPlan_BannerView />
         <MembershipPurchase_SelectPayPlan_IntroductionView />
         <MembershipPurchase_SelectPayPlan_ListView />

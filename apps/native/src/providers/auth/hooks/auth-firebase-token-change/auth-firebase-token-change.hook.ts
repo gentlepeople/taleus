@@ -1,6 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import { useState } from 'react';
+import { Platform } from 'react-native';
+import Config from 'react-native-config';
 import { OneSignal } from 'react-native-onesignal';
+import Purchases from 'react-native-purchases';
 import { useDidMount } from 'rooks';
 import { useApollo } from '../../../apollo';
 
@@ -36,6 +39,18 @@ export const useAuthFirebaseTokenChange: Hook<
           setUserId(null);
         } else {
           OneSignal.login(user.uid);
+          Purchases.configure({
+            apiKey: Platform.select({
+              ios: Config.REVENUE_CAT_PUBLIC_API_KEY_IOS,
+              android: Config.REVENUE_CAT_PUBLIC_API_KEY_ANDROID,
+            }),
+            appUserID: user.uid,
+          });
+          try {
+            await Purchases.syncPurchases();
+          } catch (e) {
+            console.log('error syncing purchases', e);
+          }
           setUserId(user.uid);
         }
       } catch (e) {}

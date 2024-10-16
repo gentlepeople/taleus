@@ -14,6 +14,7 @@ export const palette = {
   'banner-bg': '#FFEBD3',
   'content-card-bg': '#FFF5E9',
   'code-divider': '#F2F2F2',
+  'box-border': '#E3E3E3',
   placeholder: '#D9D9D9',
   danger: '#BA1A1A',
   disabled: '#C9C9C9',

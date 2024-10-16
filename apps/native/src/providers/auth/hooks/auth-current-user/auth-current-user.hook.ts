@@ -1,5 +1,11 @@
 import { NetworkStatus } from '@apollo/client';
 import { EnumGender, useAuthCurrentUserQuery } from '@gentlepeople/taleus-codegen';
+import isNull from 'lodash/isNull';
+import { useState } from 'react';
+import { useAsyncCallback } from 'react-async-hook';
+import Purchases, { CustomerInfo, PurchasesEntitlementInfo } from 'react-native-purchases';
+import { useDidUpdate } from 'rooks';
+import { Merge } from 'type-fest';
 
 export type IAuthCurrentUser = {
   id: string;
@@ -16,7 +22,7 @@ export type IAuthCurrentUser = {
   isPartnerDeleted: boolean;
 } | null;
 
-// type MembershipInfo = Merge<CustomerInfo, { activeMembership?: PurchasesEntitlementInfo }>;
+type MembershipInfo = Merge<CustomerInfo, { activeMembership?: PurchasesEntitlementInfo }>;
 
 type IAuthCurrentUserHookInput = {
   userId: string | null;
@@ -29,7 +35,7 @@ type IAuthCurrentUserHookReturn = {
 export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUserHookReturn> = ({
   userId,
 }) => {
-  // const [membershipInfo, setMembershipInfo] = useState<CustomerInfo>(null);
+  const [membershipInfo, setMembershipInfo] = useState<CustomerInfo>(null);
   const {
     data,
     loading: isLoadingUserData,
@@ -42,22 +48,22 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
     fetchPolicy: 'no-cache',
   });
 
-  // const { execute: fetchMembershipInfo, loading: isFetchingMembershipInfo } = useAsyncCallback(
-  //   async () => {
-  //     const membershipInfo = await Purchases.getCustomerInfo();
-  //     setMembershipInfo(membershipInfo);
-  //   },
-  // );
+  const { execute: fetchMembershipInfo, loading: isFetchingMembershipInfo } = useAsyncCallback(
+    async () => {
+      const membershipInfo = await Purchases.getCustomerInfo();
+      setMembershipInfo(membershipInfo);
+    },
+  );
 
-  // useDidUpdate(() => {
-  //   (async () => {
-  //     await fetchMembershipInfo();
-  //   })();
-  // }, [userId]);
+  useDidUpdate(() => {
+    (async () => {
+      await fetchMembershipInfo();
+    })();
+  }, [userId]);
 
-  // Purchases.addCustomerInfoUpdateListener((info) => {
-  //   setMembershipInfo(info);
-  // });
+  Purchases.addCustomerInfoUpdateListener((info) => {
+    setMembershipInfo(info);
+  });
 
   if (!userId) {
     return {
@@ -69,7 +75,8 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
   const isLoadingCurrentUser =
     isLoadingUserData ||
     networkStatus === NetworkStatus.refetch ||
-    networkStatus === NetworkStatus.setVariables;
+    networkStatus === NetworkStatus.setVariables ||
+    isFetchingMembershipInfo;
   if (isLoadingCurrentUser) {
     return {
       currentUser: null,
@@ -97,6 +104,15 @@ export const useAuthCurrentUser: Hook<IAuthCurrentUserHookInput, IAuthCurrentUse
   const coupleId = isCoupled && data.user.couple && data.user.couple.coupleId;
   const partnerNickname = isCoupled ? data.user?.partner?.nickname : '';
   const isPartnerDeleted = isCoupled && data.user.partner && data.user.partner.isDeleted;
+
+  const userActiveEntitlementInfo = !isNull(membershipInfo) && membershipInfo.entitlements.active;
+  const userActiveEntitlements = Object.keys(userActiveEntitlementInfo);
+  const userActiveMembership = userActiveEntitlements.length > 0 ? userActiveEntitlements[0] : null;
+  const userActiveMembershipInfo = userActiveMembership
+    ? userActiveEntitlementInfo[userActiveMembership]
+    : null;
+
+  const isPremiumUser = !!userActiveMembershipInfo;
 
   return {
     currentUser: {

@@ -279,6 +279,8 @@ PODS:
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
   - PromisesObjC (2.4.0)
+  - PurchasesHybridCommon (13.4.0):
+    - RevenueCat (= 5.4.0)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1825,6 +1827,7 @@ PODS:
     - React-perflogger (= 0.75.2)
     - React-utils (= 0.75.2)
   - RecaptchaInterop (100.0.0)
+  - RevenueCat (5.4.0)
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNBootSplash (6.1.4):
@@ -2018,6 +2021,9 @@ PODS:
   - RNNotifee/NotifeeCore (9.0.2):
     - React-Core
   - RNPermissions (4.1.5):
+    - React-Core
+  - RNPurchases (8.2.3):
+    - PurchasesHybridCommon (= 13.4.0)
     - React-Core
   - RNReanimated (3.15.4):
     - DoubleConversion
@@ -2232,6 +2238,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -2277,7 +2284,9 @@ SPEC REPOS:
     - nanopb
     - OneSignalXCFramework
     - PromisesObjC
+    - PurchasesHybridCommon
     - RecaptchaInterop
+    - RevenueCat
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2464,6 +2473,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@notifee/react-native"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNPurchases:
+    :path: "../node_modules/react-native-purchases"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -2523,6 +2534,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OneSignalXCFramework: 46ca7cd13f44fc5bec42ec3a5f4ff1548a9244d4
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  PurchasesHybridCommon: 961b9e17f271b452aeb921fb3c78f2f543702032
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 34cbf122b623037ea9facad2e92e53434c5c7422
   RCTRequired: 24c446d7bcd0f517d516b6265d8df04dc3eb1219
@@ -2585,6 +2597,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 60973d382704c793c605b9be0fc7f31cb279442f
   ReactCommon: 6ef348087d250257c44c0204461c03f036650e9b
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  RevenueCat: cb9c3684b01deb0d3db2011db09e638fcb5ad0e0
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNBootSplash: 811d734a334afaf155bd588f3c10c34ead166265
   RNCAsyncStorage: d35c79ffba52c1013013e16b1fc295aec2feabb6
@@ -2605,6 +2618,7 @@ SPEC CHECKSUMS:
   RNLocalize: 4f22418187ecd5ca693231093ff1d912d1b3c9bc
   RNNotifee: 2b7df6e32a9cc24b9af6b410fa7db1cd2f411d6d
   RNPermissions: 823a796649f4938762a6a2a211d9f3e0a4028dc3
+  RNPurchases: 441b4e0a0afea31df7578c3a222747a64c8a4893
   RNReanimated: 6410b3230e926736e051715d9d4e128ed8efb456
   RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
   RNSVG: 5da7a24f31968ec74f0b091e3440080f347e279b
