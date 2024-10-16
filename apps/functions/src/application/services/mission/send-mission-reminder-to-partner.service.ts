@@ -115,7 +115,7 @@ export class SendMissionReminderToPartnerService implements SendMissionReminderT
     // 7. Reminder is allowed
     await this.pushNotificationPort.send(
       [findPartner.userId],
-      EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
+      EnumPushNotificationTemplate.REMIND_MISSION_TO_PARTNER_ALARM,
       { nickname: findUser.nickname },
     );
 
