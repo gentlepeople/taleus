@@ -3,7 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { logger } from 'firebase-functions/v2';
 
 import { WebhookSubscriptionPeriodType, WebhookSubscriptionStatusType } from '@/domain';
-import { SyncSubscriptionStatusUsecase, IUserRepository, USER_REPOSITORY } from '@/ports';
+import {
+  SyncSubscriptionStatusUsecase,
+  IUserRepository,
+  USER_REPOSITORY,
+  ANALYTICS_PORT,
+  AnalyticsPort,
+} from '@/ports';
 
 const FAILED_MESSAGE = 'Webhook received, but processing failed.';
 
@@ -12,6 +18,8 @@ export class SyncSubscriptionStatusService implements SyncSubscriptionStatusUsec
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
+    @Inject(ANALYTICS_PORT)
+    private readonly analyticsPort: AnalyticsPort,
   ) {}
 
   async execute(event: {
@@ -85,11 +93,18 @@ export class SyncSubscriptionStatusService implements SyncSubscriptionStatusUsec
   }
 
   private async updateStatus(
-    appUserId: string,
+    userId: string,
     status: EnumSubscriptionStatus,
     successMessage: string,
   ): Promise<{ success: boolean; message: string }> {
-    const success = await this.userRepository.updateSubscriptionStatus(appUserId, status);
+    const success = await this.userRepository.updateSubscriptionStatus(userId, status);
+    //TODO: move to database trigger event
+    this.analyticsPort.setProfileProperties({
+      distinctId: userId,
+      properties: {
+        subscription_status: status,
+      },
+    });
     return {
       success,
       message: success ? successMessage : FAILED_MESSAGE,

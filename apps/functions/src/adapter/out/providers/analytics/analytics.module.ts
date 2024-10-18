@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import { ConfigAdapter } from '../config';
 
@@ -6,6 +6,7 @@ import { AnalyticsAdapter } from './analytics.adapter';
 
 import { CONFIG_PORT, ANALYTICS_PORT } from '@/ports';
 
+@Global()
 @Module({
   providers: [
     {

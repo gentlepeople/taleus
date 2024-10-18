@@ -10,8 +10,6 @@ import { UserAuth, checkUserPermission, GqlContext } from '@/common';
 import {
   FIND_USER_USECASE,
   FindUserUsecase,
-  TIME_PORT,
-  TimePort,
   UPDATE_NOTIFICATION_TIME_USECASE,
   UpdateNotificationTimeUsecase,
 } from '@/ports';
@@ -23,8 +21,6 @@ export class UpdateNotificationTimeMutation {
     private readonly updateNotificationTimeUsecase: UpdateNotificationTimeUsecase,
     @Inject(FIND_USER_USECASE)
     private readonly findUserUsecase: FindUserUsecase,
-    @Inject(TIME_PORT)
-    private readonly timePort: TimePort,
   ) {}
 
   @Mutation(() => UpdateNotificationTimeResponse)

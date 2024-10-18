@@ -22,23 +22,18 @@ export class UpdateNotificationTimeService implements UpdateNotificationTimeUsec
   async execute(userId: string, notificationTime: string): Promise<void> {
     const partner = await this.userRepository.findPartnerByUserId(userId);
     const isCouple = !isNull(partner);
+
+    await this.userRepository.updateNotificationTime(userId, notificationTime);
+
     if (isCouple) {
       const { userId: partnerId } = partner;
-      const updateSuccess = await this.userRepository.updateNotificationTimeWithPartner(
-        userId,
-        partnerId,
-        notificationTime,
+      await this.userRepository.updateNotificationTime(partnerId, notificationTime);
+      const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
+      await this.pushNotificationPort.send(
+        [partnerId],
+        EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
+        { nickname: userNickname },
       );
-      if (updateSuccess) {
-        const { nickname: userNickname } = await this.userRepository.findOneByUserId(userId);
-        await this.pushNotificationPort.send(
-          [partnerId],
-          EnumPushNotificationTemplate.UPDATE_PARTNER_NOTIFICATION_TIME_ALARM,
-          { nickname: userNickname },
-        );
-      }
-    } else {
-      await this.userRepository.updateNotificationTime(userId, notificationTime);
     }
   }
 }

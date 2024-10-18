@@ -4,17 +4,24 @@ import { Injectable, Inject } from '@nestjs/common';
 import isNull from 'lodash/isNull';
 
 import { DEFAULT_ANONYMOUS_USER_OBJECT, ONBOARDING_MISSION_ID } from '../../../common';
+import { EnumAnalyticsEventType } from '../providers';
 
 import { Couple } from '@/domain';
-import { DATABASE_PORT, DatabasePort, ICoupleRepository, TIME_PORT, TimePort } from '@/ports';
+import {
+  ANALYTICS_PORT,
+  AnalyticsPort,
+  DATABASE_PORT,
+  DatabasePort,
+  ICoupleRepository,
+} from '@/ports';
 
 @Injectable()
 export class CoupleRepository implements ICoupleRepository {
   constructor(
     @Inject(DATABASE_PORT)
     private readonly databasePort: DatabasePort,
-    @Inject(TIME_PORT)
-    private readonly timePort: TimePort,
+    @Inject(ANALYTICS_PORT)
+    private readonly analyticsPort: AnalyticsPort,
   ) {}
 
   private convertAnonymizeUser(
@@ -128,6 +135,22 @@ export class CoupleRepository implements ICoupleRepository {
         data: {
           coupleMissionId: createCoupleMissionId,
         },
+      });
+      //TODO: move to database trigger event
+      [inviteeId, inviterId].forEach((userId) => {
+        this.analyticsPort.sendEvent({
+          type: EnumAnalyticsEventType.connect_couple_complete,
+          distinct_id: userId,
+          properties: {
+            connect_status: true,
+          },
+        });
+        this.analyticsPort.setProfileProperties({
+          distinctId: userId,
+          properties: {
+            connect_status: true,
+          },
+        });
       });
 
       return createCouple;
